@@ -1,59 +1,91 @@
-let currentQuestionIndex = 0;
-let score = 0;
+
 let questions = [
   {
     question: "Apa ibu kota Indonesia?",
     options: ["Jakarta", "Bandung", "Surabaya", "Medan"],
-    answer: "Jakarta"
+    answer: 0
   },
   {
     question: "Siapa penemu lampu pijar?",
-    options: ["Albert Einstein", "Thomas Edison", "Isaac Newton", "Galileo"],
-    answer: "Thomas Edison"
+    options: ["Einstein", "Edison", "Newton", "Tesla"],
+    answer: 1
   }
 ];
 
+let currentQuestion = 0;
+let score = 0;
+let totalQuestions = 0;
+let timerInterval;
+
 function startQuiz() {
+  document.getElementById('setup').style.display = 'none';
   document.getElementById('quizContainer').style.display = 'block';
-  currentQuestionIndex = 0;
-  score = 0;
+  totalQuestions = questions.length;
+  startTimer(60 * 60);
   showQuestion();
 }
 
 function showQuestion() {
-  let q = questions[currentQuestionIndex];
+  let q = questions[currentQuestion];
   document.getElementById('question').innerText = q.question;
   let optionsHTML = "";
-  q.options.forEach(opt => {
-    optionsHTML += `<button class='option-button' onclick='checkAnswer("${opt}")'>${opt}</button>`;
+  q.options.forEach((opt, i) => {
+    optionsHTML += `<button class="option-button" onclick="selectOption(${i})">${String.fromCharCode(65 + i)}. ${opt}</button>`;
   });
   document.getElementById('options').innerHTML = optionsHTML;
+  document.getElementById('feedback').innerText = "";
 }
 
-function checkAnswer(selected) {
-  const correct = questions[currentQuestionIndex].answer;
-  const feedback = document.getElementById("feedback");
-  if (selected === correct) {
-    feedback.innerText = "Wah kamu benar! Kamu cerdas! 🎉";
+function selectOption(index) {
+  let q = questions[currentQuestion];
+  if (index === q.answer) {
     score++;
+    document.getElementById('feedback').innerText = "Benar!";
   } else {
-    feedback.innerText = "Wah salah... Jawaban yang benar adalah: " + correct;
+    document.getElementById('feedback').innerText = "Salah! Kunci jawaban: " + q.options[q.answer];
   }
-}
-
-function resetQuestion() {
-  currentQuestionIndex++;
-  document.getElementById("feedback").innerText = "";
-  if (currentQuestionIndex < questions.length) {
-    showQuestion();
-  } else {
-    endQuiz();
-  }
+  setTimeout(() => {
+    currentQuestion++;
+    if (currentQuestion < totalQuestions) {
+      showQuestion();
+    } else {
+      endQuiz();
+    }
+  }, 1500);
 }
 
 function endQuiz() {
-  document.getElementById("quizContainer").style.display = "none";
-  const resultText = `Kuis selesai! Skormu: ${score}/${questions.length}`;
-  document.getElementById("resultText").innerText = resultText;
-  document.getElementById("result").style.display = "block";
+  clearInterval(timerInterval);
+  document.getElementById('quizContainer').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+  let percentage = (score / totalQuestions) * 100;
+  let message = "";
+  if (percentage <= 25) {
+    message = "Semangat! Terus belajar dan jangan menyerah.";
+  } else if (percentage <= 50) {
+    message = "Lumayan! Masih bisa ditingkatkan.";
+  } else if (percentage <= 75) {
+    message = "Bagus! Kamu hampir menguasai materi.";
+  } else {
+    message = "Luar biasa! Kamu hebat dan siap menginspirasi.";
+  }
+  document.getElementById('resultText').innerText =
+    "Skor Kamu: " + percentage.toFixed(2) + "%
+" + message;
+}
+
+function startTimer(duration) {
+  let timer = duration;
+  const display = document.getElementById('timer');
+  timerInterval = setInterval(function () {
+    let minutes = parseInt(timer / 60, 10);
+    let seconds = parseInt(timer % 60, 10);
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    display.textContent = minutes + ":" + seconds;
+    if (--timer < 0) {
+      clearInterval(timerInterval);
+      endQuiz();
+    }
+  }, 1000);
 }

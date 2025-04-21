@@ -1,14 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quiz PERGUNU Interaktif</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Quiz Interaktif PERGUNU</h1>
-  <div id="configPanel">
+
+  <div id="setup">
     <label for="categorySelect">Kategori:</label>
     <select id="categorySelect">
       <option value="">-- Pilih Kategori --</option>
@@ -19,9 +21,8 @@
       <option value="IPS">IPS</option>
       <option value="Bahasa Indonesia">Bahasa Indonesia</option>
       <option value="Bahasa Inggris">Bahasa Inggris</option>
-      <option value="Sejarah">Sejarah</option>
       <option value="Agama">Agama</option>
-      <option value="PPKN">PPKN</option>
+      <option value="PKN">PPKN / PKN</option>
     </select>
 
     <label for="levelSelect">Level:</label>
@@ -39,18 +40,22 @@
       <option value="SMA">SMA</option>
       <option value="Umum">Umum</option>
     </select>
+
+    <button onclick="startQuiz()">Mulai Quiz</button>
   </div>
-  <button onclick="startQuiz()">Mulai Quiz</button>
-  <div id="quizContainer" style="display:none;">
-    <div id="question"></div>
+
+  <div id="quizContainer" style="display: none;">
+    <div id="timer"></div>
+    <div id="question" class="question"></div>
     <div id="options"></div>
     <div id="feedback"></div>
-    <button onclick="resetQuestion()">Soal Selanjutnya</button>
     <button onclick="endQuiz()">Selesaikan Quiz</button>
   </div>
-  <div id="result" style="display:none;">
+
+  <div id="result" style="display: none;">
     <p id="resultText"></p>
   </div>
+
   <script src="main.js"></script>
 </body>
 </html>
