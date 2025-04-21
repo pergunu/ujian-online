@@ -8,7 +8,49 @@
 </head>
 <body>
   <h1>Quiz Interaktif PERGUNU</h1>
-  <div id="quiz-app">Loading...</div>
+  <div id="configPanel">
+    <label for="categorySelect">Kategori:</label>
+    <select id="categorySelect">
+      <option value="">-- Pilih Kategori --</option>
+      <option value="Umum">Umum</option>
+      <option value="Pelajar">Pelajar</option>
+      <option value="Matematika">Matematika</option>
+      <option value="IPA">IPA</option>
+      <option value="IPS">IPS</option>
+      <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+      <option value="Bahasa Inggris">Bahasa Inggris</option>
+      <option value="Sejarah">Sejarah</option>
+      <option value="Agama">Agama</option>
+      <option value="PPKN">PPKN</option>
+    </select>
+
+    <label for="levelSelect">Level:</label>
+    <select id="levelSelect">
+      <option value="">-- Pilih Level --</option>
+      <option value="Mudah">Mudah</option>
+      <option value="Sangat Sulit">Sangat Sulit</option>
+    </select>
+
+    <label for="schoolLevelSelect">Tingkatan Pertanyaan:</label>
+    <select id="schoolLevelSelect">
+      <option value="">-- Semua --</option>
+      <option value="SD">SD</option>
+      <option value="SMP">SMP</option>
+      <option value="SMA">SMA</option>
+      <option value="Umum">Umum</option>
+    </select>
+  </div>
+  <button onclick="startQuiz()">Mulai Quiz</button>
+  <div id="quizContainer" style="display:none;">
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="feedback"></div>
+    <button onclick="resetQuestion()">Soal Selanjutnya</button>
+    <button onclick="endQuiz()">Selesaikan Quiz</button>
+  </div>
+  <div id="result" style="display:none;">
+    <p id="resultText"></p>
+  </div>
   <script src="main.js"></script>
 </body>
 </html>
