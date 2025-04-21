@@ -1,18 +1,7 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #f0f8ff, #ffffff);
+  color: #333;
   padding: 20px;
-}
-#quizContainer, #result {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  margin-top: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-button {
-  padding: 10px 15px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
+  text-align: center;
 }

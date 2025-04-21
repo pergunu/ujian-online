@@ -2,52 +2,13 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kuis PERGUNU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz PERGUNU Interaktif</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Kuis Interaktif PERGUNU</h1>
-
-  <div>
-    <label for="level">Pilih Level:</label>
-    <select id="level">
-      <option value="mudah">Mudah</option>
-      <option value="sulit">Sulit</option>
-    </select>
-
-    <label for="grade">Tingkatan Pertanyaan:</label>
-    <select id="grade">
-      <option value="SD">SD</option>
-      <option value="SMP">SMP</option>
-      <option value="SMA">SMA</option>
-      <option value="Umum">Umum</option>
-    </select>
-
-    <label for="category">Kategori:</label>
-    <select id="category">
-      <option value="Umum">Umum</option>
-      <option value="Agama">Agama</option>
-      <option value="PPKN">PPKN / PKN</option>
-    </select>
-
-    <button onclick="startQuiz()">Mulai Kuis</button>
-  </div>
-
-  <div id="quizContainer">
-    <div class="timer" id="timer">Waktu Tersisa: 60:00</div>
-    <h2 id="question">Pertanyaan akan muncul di sini</h2>
-    <div id="options"></div>
-    <div id="feedback"></div>
-    <br>
-    <button onclick="resetQuestion()">Pertanyaan Berikutnya</button>
-  </div>
-
-  <div id="result">
-    <h2>Hasil Kuis</h2>
-    <p id="resultText"></p>
-  </div>
-
+  <h1>Quiz Interaktif PERGUNU</h1>
+  <div id="quiz-app">Loading...</div>
   <script src="main.js"></script>
 </body>
 </html>
