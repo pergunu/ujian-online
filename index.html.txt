@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PERGUNU SITUBONDO</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #fdfaf5, #e0dfd4);
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      color: #222;
+    }
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .stars::before, .stars::after {
+      content: '';
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(white 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: twinkle 10s linear infinite;
+      opacity: 0.2;
+    }
+    .stars::after {
+      animation-duration: 15s;
+      background-size: 80px 80px;
+    }
+    @keyframes twinkle {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-50px, -50px); }
+    }
+    .container {
+      z-index: 1;
+      position: relative;
+      text-align: center;
+      background-color: #ffffffdd;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      max-width: 620px;
+      margin: auto;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .logo {
+      width: 80px;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2.6rem;
+      font-weight: bold;
+      margin: 0.5rem 0;
+      color: #28a745; /* Hijau */
+    }
+    p {
+      font-size: 1.1rem;
+      margin: 1rem 0;
+    }
+    .note {
+      font-weight: bold;
+      color: #dc3545; /* Merah */
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      gap: 1rem;
+    }
+    .buttons button {
+      flex: 1;
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .masuk {
+      background-color: #007bff;
+      color: white;
+    }
+    .masuk:hover {
+      background-color: #0056b3;
+    }
+    .keluar {
+      background-color: #dc3545;
+      color: white;
+    }
+    .keluar:hover {
+      background-color: #a71d2a;
+    }
+    .footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #007bff; /* Biru */
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <div class="container">
+    <img src="https://raw.githubusercontent.com/pergunu/pergunu-landing/refs/heads/main/logo-pergunu.png" alt="Logo PERGUNU" class="logo">
+    <h1>PERGUNU SITUBONDO</h1>
+    <p>Selamat datang di Website Resmi PERGUNU Situbondo. Klik tombol di bawah untuk melanjutkan kunjungan Anda.</p>
+    <p class="note">Disarankan untuk menekan tombol <em>"Jelajah Website Tanpa Iklan"</em> setelah masuk agar pengalaman menjelajah lebih ringan dan nyaman.</p>
+    <div class="buttons">
+      <button class="keluar" onclick="alert('Terima kasih atas kunjungan Anda di website kami!');">Keluar</button>
+      <button class="masuk" onclick="window.location.href='https://sites.google.com/view/pergunusitubondo/menu';">Iya, Masuk</button>
+    </div>
+    <div class="footer">
+      Website ini dikembangkan oleh Cendhanu Tim Kreatif PERGUNU Situbondo sejak 2025 untuk mendukung pendidikan dan profesionalisme guru di Indonesia.
+    </div>
+  </div>
+</body>
+</html>
