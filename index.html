@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kuis Pergunu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Kuis Pergunu Situbondo</h1>
+    <div id="intro">
+      <label for="kategori">Kategori:</label>
+      <select id="kategori">
+        <option value="umum">Umum</option>
+        <option value="pelajar">Pelajar</option>
+      </select>
+
+      <div id="tingkatan-wrapper" style="display:none;">
+        <label for="tingkatan">Tingkatan:</label>
+        <select id="tingkatan">
+          <option value="sd">SD</option>
+          <option value="smp">SMP</option>
+          <option value="smk">SMK</option>
+        </select>
+      </div>
+
+      <label for="level">Level:</label>
+      <select id="level">
+        <option value="mudah">Mudah</option>
+        <option value="sulit">Sulit</option>
+      </select>
+
+      <button id="mulai">Mulai Quiz</button>
+    </div>
+
+    <div id="kuis-container" style="display:none;">
+      <div id="pertanyaan-box"></div>
+      <div id="jawaban-box"></div>
+      <button id="selanjutnya">Pertanyaan Selanjutnya</button>
+      <button id="selesai">Selesaikan Quiz</button>
+      <div id="skor-box"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

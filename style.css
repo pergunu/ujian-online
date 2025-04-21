@@ -1,0 +1,41 @@
+
+body {
+  font-family: sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+h1 {
+  text-align: center;
+  color: #00695c;
+}
+select, button {
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+}
+button {
+  background: #00796b;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background: #004d40;
+}
+#pertanyaan-box {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+#jawaban-box button {
+  display: block;
+  margin: 5px 0;
+}
