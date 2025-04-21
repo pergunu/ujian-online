@@ -1,0 +1,40 @@
+{
+  "mudah": [
+    {
+      "pertanyaan": "Apa ibu kota Indonesia?",
+      "jawaban": [
+        {
+          "text": "Jakarta",
+          "benar": true
+        },
+        {
+          "text": "Bandung",
+          "benar": false
+        },
+        {
+          "text": "Surabaya",
+          "benar": false
+        }
+      ]
+    }
+  ],
+  "sulit": [
+    {
+      "pertanyaan": "Siapa penulis 'Laskar Pelangi'?",
+      "jawaban": [
+        {
+          "text": "Andrea Hirata",
+          "benar": true
+        },
+        {
+          "text": "Tere Liye",
+          "benar": false
+        },
+        {
+          "text": "Pramoedya Ananta Toer",
+          "benar": false
+        }
+      ]
+    }
+  ]
+}
