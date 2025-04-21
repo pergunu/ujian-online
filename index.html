@@ -3,46 +3,53 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kuis Pergunu</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Quiz Pergunu</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f0f0f0; }
+    h1, h2 { color: #2c3e50; }
+    select, button { padding: 10px; margin: 5px 0; }
+    .option-button { display: block; margin: 5px 0; padding: 10px; background-color: #3498db; color: white; border: none; cursor: pointer; }
+    .option-button:hover { background-color: #2980b9; }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Kuis Pergunu Situbondo</h1>
-    <div id="intro">
-      <label for="kategori">Kategori:</label>
-      <select id="kategori">
-        <option value="umum">Umum</option>
-        <option value="pelajar">Pelajar</option>
-      </select>
-
-      <div id="tingkatan-wrapper" style="display:none;">
-        <label for="tingkatan">Tingkatan:</label>
-        <select id="tingkatan">
-          <option value="sd">SD</option>
-          <option value="smp">SMP</option>
-          <option value="smk">SMK</option>
-        </select>
-      </div>
-
-      <label for="level">Level:</label>
-      <select id="level">
-        <option value="mudah">Mudah</option>
-        <option value="sulit">Sulit</option>
-      </select>
-
-      <button id="mulai">Mulai Quiz</button>
-    </div>
-
-    <div id="kuis-container" style="display:none;">
-      <div id="pertanyaan-box"></div>
-      <div id="jawaban-box"></div>
-      <button id="selanjutnya">Pertanyaan Selanjutnya</button>
-      <button id="selesai">Selesaikan Quiz</button>
-      <div id="skor-box"></div>
-    </div>
+  <h1>Quiz Pergunu</h1>
+  <div>
+    <label for="categorySelect">Kategori:</label>
+    <select id="categorySelect">
+      <option value="umum">Umum</option>
+      <option value="agama">Agama</option>
+      <option value="sejarah">Sejarah</option>
+    </select>
+    <br>
+    <label for="levelSelect">Tingkat Kesulitan:</label>
+    <select id="levelSelect">
+      <option value="mudah">Mudah</option>
+      <option value="sedang">Sedang</option>
+      <option value="sulit">Sulit</option>
+    </select>
+    <br>
+    <label for="schoolLevelSelect">Jenjang Sekolah:</label>
+    <select id="schoolLevelSelect">
+      <option value="SD">SD</option>
+      <option value="SMP">SMP</option>
+      <option value="SMA">SMA</option>
+    </select>
+    <br>
+    <button onclick="startQuiz()">Mulai Quiz</button>
   </div>
-  <script src="script.js"></script>
+
+  <div id="quizContainer" style="display:none;">
+    <h2 id="question">Pertanyaan</h2>
+    <div id="options"></div>
+  </div>
+
+  <div id="result" style="display:none;">
+    <h2>Hasil</h2>
+    <p id="resultText"></p>
+    <button onclick="startQuiz()">Ulangi</button>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 </html>
