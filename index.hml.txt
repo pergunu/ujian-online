@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interaktif Pergunu</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title">Quiz Interaktif Pergunu</h1>
+
+        <div id="setup" class="card fadeIn">
+            <label for="category">Pilih Materi Pelajaran:</label>
+            <select id="category">
+                <option value="umum">Umum (Universal)</option>
+                <option value="bindo">Bahasa Indonesia</option>
+                <option value="bing">Bahasa Inggris</option>
+                <option value="matematika">Matematika</option>
+                <option value="sejarah">Sejarah</option>
+                <option value="ipa">IPA</option>
+                <option value="ips">IPS</option>
+                <option value="agama">Agama</option>
+                <option value="ppkn">PPKN</option>
+            </select>
+
+            <label for="level">Pilih Tingkatan Pertanyaan:</label>
+            <select id="level">
+                <option value="sd">SD</option>
+                <option value="smp">SMP</option>
+                <option value="sma">SMA</option>
+                <option value="umum">Umum</option>
+            </select>
+
+            <label for="difficulty">Pilih Tingkat Kesulitan:</label>
+            <select id="difficulty">
+                <option value="mudah">Mudah</option>
+                <option value="sedang">Sedang</option>
+                <option value="sulit">Sulit</option>
+            </select>
+
+            <label for="nama">Nama Peserta:</label>
+            <input type="text" id="nama" placeholder="Masukkan Nama Anda">
+
+            <button id="startBtn" class="start-btn">Mulai Kuis</button>
+        </div>
+
+        <div id="quizContainer" class="card fadeIn" style="display:none;">
+            <div id="timer"></div>
+            <div id="progressContainer" class="progress-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+
+            <div id="question"></div>
+            <div id="options"></div>
+            <div id="feedback"></div>
+
+            <div class="quiz-actions">
+                <button id="nextBtn" class="start-btn" style="display:none;">Lanjutkan</button>
+                <button id="resetBtn" class="start-btn">Reset Soal</button>
+                <button id="finishBtn" class="start-btn">Selesaikan Quiz</button>
+            </div>
+        </div>
+
+        <div id="result" class="card fadeIn" style="display:none;">
+            <h2 id="resultText"></h2>
+            <div id="moralMessage"></div>
+            <div id="resultDetails"></div>
+            <button id="downloadPdfBtn" class="start-btn">Download PDF</button>
+            <button id="downloadJpegBtn" class="start-btn">Download JPEG</button>
+            <button id="restartBtn" class="start-btn">Main Lagi</button>
+        </div>
+
+        <audio id="adzanAudio" src="https://voca.ro/191XmlGPAXQ2" preload="auto"></audio>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
