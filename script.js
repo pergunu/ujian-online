@@ -281,23 +281,4 @@ function displayResultDetails() {
     const level = document.getElementById('level').value;
     const difficulty = document.getElementById('difficulty').value;
     const today = new Date();
-    const date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
-
-    resultDetails.innerHTML = `
-        <p>Nama Peserta: ${nama}</p>
-        <p>Materi Pelajaran: ${category}</p>
-        <p>Tingkat: ${level}</p>
-        <p>Kesulitan: ${difficulty}</p>
-        <p>Tanggal: ${date}</p>
-    `;
-}
-
-function showMoralMessage(percentage) {
-    let message = "";
-    let color = "";
-    let animationClass = "";
-
-    if (percentage <= 25) {
-        message = "Tetap semangat, belajar dari kesalahan adalah kunci sukses!";
-        color = "red";
-        animationClass
+    const date = today.getDate() + '-'
