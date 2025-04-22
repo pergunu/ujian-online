@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,7 +10,6 @@
 <body>
 <div class="container">
   <h1 class="title">Kuis Interaktif PERGUNU</h1>
-
   <div id="setup" class="card fadeIn">
     <label for="category">Pilih Materi Pelajaran:</label>
     <select id="category">
@@ -51,8 +51,12 @@
     <div id="question"></div>
     <div id="options"></div>
     <div id="feedback"></div>
-    <button id="nextBtn" class="start-btn" style="display:none;">Lanjutkan</button>
-    <button id="resetBtn" class="start-btn">Reset Soal</button>
+
+    <div class="quiz-actions">
+      <button id="nextBtn" class="start-btn" style="display:none;">Lanjutkan</button>
+      <button id="resetBtn" class="start-btn">Reset Soal</button>
+      <button id="finishBtn" class="start-btn">Selesaikan Quiz</button>
+    </div>
   </div>
 
   <div id="result" class="card fadeIn" style="display:none;">
@@ -64,6 +68,6 @@
 
 <audio id="adzanAudio" src="https://voca.ro/191XmlGPAXQ2" preload="auto"></audio>
 
-<script src="main.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
