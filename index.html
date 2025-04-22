@@ -1,61 +1,40 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quiz PERGUNU Interaktif</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Interaktif PERGUNU</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Quiz Interaktif PERGUNU</h1>
+    <div class="container">
+        <h1 class="title">Kuis Interaktif PERGUNU</h1>
 
-  <div id="setup">
-    <label for="categorySelect">Kategori:</label>
-    <select id="categorySelect">
-      <option value="">-- Pilih Kategori --</option>
-      <option value="Umum">Umum</option>
-      <option value="Pelajar">Pelajar</option>
-      <option value="Matematika">Matematika</option>
-      <option value="IPA">IPA</option>
-      <option value="IPS">IPS</option>
-      <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-      <option value="Bahasa Inggris">Bahasa Inggris</option>
-      <option value="Agama">Agama</option>
-      <option value="PKN">PPKN / PKN</option>
-    </select>
+        <!-- Quiz Container -->
+        <div id="quizContainer" class="card" style="display: none;">
+            <div id="timer"></div>
+            <div id="progressContainer" class="progress-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
 
-    <label for="levelSelect">Level:</label>
-    <select id="levelSelect">
-      <option value="">-- Pilih Level --</option>
-      <option value="Mudah">Mudah</option>
-      <option value="Sangat Sulit">Sangat Sulit</option>
-    </select>
+            <div id="question"></div>
+            <div id="options"></div>
+            <div id="feedback"></div>
+        </div>
 
-    <label for="schoolLevelSelect">Tingkatan Pertanyaan:</label>
-    <select id="schoolLevelSelect">
-      <option value="">-- Semua --</option>
-      <option value="SD">SD</option>
-      <option value="SMP">SMP</option>
-      <option value="SMA">SMA</option>
-      <option value="Umum">Umum</option>
-    </select>
+        <!-- Result -->
+        <div id="result" class="card" style="display: none;">
+            <h2 id="resultText"></h2>
+            <div id="moralMessage"></div>
+        </div>
 
-    <button onclick="startQuiz()">Mulai Quiz</button>
-  </div>
+        <!-- Quiz Actions -->
+        <div class="quiz-actions">
+            <button id="startBtn" class="start-btn">Mulai Kuis</button>
+            <button id="nextBtn" class="start-btn" style="display: none;">Lanjutkan</button>
+        </div>
+    </div>
 
-  <div id="quizContainer" style="display: none;">
-    <div id="timer"></div>
-    <div id="question" class="question"></div>
-    <div id="options"></div>
-    <div id="feedback"></div>
-    <button onclick="endQuiz()">Selesaikan Quiz</button>
-  </div>
-
-  <div id="result" style="display: none;">
-    <p id="resultText"></p>
-  </div>
-
-  <script src="main.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
