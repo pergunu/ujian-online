@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Interaktif PERGUNU</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <h1 class="title">Quiz Interaktif PERGUNU</h1>
+
+  <!-- Form Identitas Peserta -->
+  <div id="userForm" class="card fadeIn">
+    <label for="name">Nama:</label>
+    <input type="text" id="name" required>
+
+    <label for="participantType">Kategori Peserta:</label>
+    <select id="participantType">
+      <option value="umum">Umum</option>
+      <option value="pelajar">Pelajar</option>
+    </select>
+
+    <div id="professionGroup" style="display:none;">
+      <label for="profession">Profesi:</label>
+      <input type="text" id="profession">
+    </div>
+
+    <div id="schoolGroup" style="display:none;">
+      <label for="school">Nama Sekolah/Universitas:</label>
+      <input type="text" id="school">
+    </div>
+
+    <label for="age">Usia:</label>
+    <input type="number" id="age" required>
+
+    <label for="phone">Nomor HP:</label>
+    <input type="text" id="phone" required>
+
+    <button id="submitUserForm" class="start-btn">Kirim Data</button>
+  </div>
+
+  <!-- Setup Quiz -->
+  <div id="setup" class="card fadeIn" style="display:none;">
+    <label for="category">Pilih Materi Pelajaran:</label>
+    <select id="category">
+      <option value="umum">Umum (Universal)</option>
+      <option value="bindo">Bahasa Indonesia</option>
+      <option value="bing">Bahasa Inggris</option>
+      <option value="matematika">Matematika</option>
+      <option value="sejarah">Sejarah</option>
+      <option value="ipa">IPA</option>
+      <option value="ips">IPS</option>
+      <option value="agama">Agama</option>
+      <option value="ppkn">PPKN</option>
+    </select>
+
+    <label for="level">Pilih Tingkatan Pertanyaan:</label>
+    <select id="level">
+      <option value="sd">SD</option>
+      <option value="smp">SMP</option>
+      <option value="sma">SMA</option>
+      <option value="umum">Umum</option>
+    </select>
+
+    <label for="difficulty">Pilih Tingkat Kesulitan:</label>
+    <select id="difficulty">
+      <option value="mudah">Mudah</option>
+      <option value="sedang">Sedang</option>
+      <option value="sulit">Sangat Sulit</option>
+    </select>
+
+    <button id="startBtn" class="start-btn">Mulai Quiz</button>
+  </div>
+
+  <!-- Quiz Area -->
+  <div id="quizContainer" class="card fadeIn" style="display:none;">
+    <div id="timer"></div>
+    <div id="progressContainer" class="progress-container">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="feedback"></div>
+
+    <div class="quiz-actions">
+      <button id="nextBtn" class="start-btn" style="display:none;">Lanjutkan</button>
+      <button id="resetBtn" class="start-btn">Reset Soal</button>
+      <button id="finishBtn" class="start-btn">Selesaikan Quiz</button>
+    </div>
+  </div>
+
+  <!-- Result Area -->
+  <div id="result" class="card fadeIn" style="display:none;">
+    <h2 id="resultText"></h2>
+    <div id="moralMessage"></div>
+    <button id="restartBtn" class="start-btn">Main Lagi</button>
+    <button id="likeBtn" class="start-btn">Saya Suka Game Quiz PERGUNU</button>
+  </div>
+</div>
+
+<!-- Audio Adzan -->
+<audio id="adzanAudio" src="https://voca.ro/191XmlGPAXQ2" preload="auto"></audio>
+
+<!-- Syarat & Ketentuan -->
+<footer class="card fadeIn">
+  <div class="terms">
+    <h4>Syarat & Ketentuan</h4>
+    <ul>
+      <li>Wajib mengisi identitas lengkap sebelum memulai quiz.</li>
+      <li>Data hanya digunakan untuk keperluan penilaian quiz dan tidak disalahgunakan.</li>
+      <li>Skor quiz akan disimpan maksimal 30 hari dan dihapus otomatis jika tidak ada aktivitas baru.</li>
+      <li>Quiz akan berhenti otomatis jika waktu habis (60 menit) atau melebihi 100 soal dalam 4 jam.</li>
+      <li>Quiz akan memberikan notifikasi saat waktu sholat tiba.</li>
+    </ul>
+    <p class="developer-credit">
+      Dibuat oleh <b>Cendhanu</b> – Tim Kreatif PERGUNU Situbondo • 2025
+    </p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
