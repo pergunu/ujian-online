@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZ PERGUNU - Uji Pengetahuan Anda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeInDown 1s;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+        }
+
+        .btn-warning:hover {
+            background-color: #d35400;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .quiz-info {
+            display: flex;
+            gap: 20px;
+        }
+
+        .quiz-info span {
+            background-color: var(--light);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .timer {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--danger);
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .option {
+            background-color: var(--light);
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option:hover {
+            background-color: #e0e0e0;
+        }
+
+        .option.selected {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .option.correct {
+            background-color: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .option.incorrect {
+            background-color: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        .option-label {
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .option-desc {
+            font-size: 0.9rem;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            animation: fadeIn 0.5s;
+        }
+
+        .feedback.correct {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid var(--danger);
+        }
+
+        .feedback p {
+            margin-bottom: 10px;
+        }
+
+        .correct-answer {
+            font-weight: 500;
+            color: var(--secondary);
+        }
+
+        .explanation {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .result-container {
+            text-align: center;
+            animation: fadeIn 1s;
+        }
+
+        .score {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 20px 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .score.A {
+            color: #27ae60;
+        }
+
+        .score.B {
+            color: #3498db;
+        }
+
+        .score.C {
+            color: #f39c12;
+        }
+
+        .score.D {
+            color: #e74c3c;
+        }
+
+        .score-message {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            border-radius: 50%;
+            animation: confetti 5s ease-in-out infinite;
+            z-index: 1000;
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .prayer-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--warning);
+            color: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            animation: slideInRight 0.5s;
+            display: none;
+        }
+
+        .prayer-notification button {
+            background: none;
+            border: none;
+            color: white;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #eee;
+            margin: 30px 0;
+        }
+
+        .watermark {
+            position: absolute;
+            opacity: 0.1;
+            font-size: 10rem;
+            font-weight: 700;
+            color: var(--primary);
+            z-index: -1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .share-btn {
+            margin-top: 20px;
+            background-color: #4267B2;
+        }
+
+        .share-btn:hover {
+            background-color: #365899;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .quiz-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .quiz-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Registration Form -->
+        <div id="registration-form" class="card animate__animated animate__fadeIn">
+            <header>
+                <h1>QUIZ PERGUNU</h1>
+                <p>Uji pengetahuan Anda dengan kuis interaktif kami</p>
+            </header>
+            
+            <div class="divider"></div>
+            
+            <form id="user-form">
+                <div class="form-group">
+                    <label for="name">Nama Lengkap:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Kategori Peserta:</label>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <label style="display: flex; align-items: center;">
+                            <input type="radio" name="category" value="umum" checked style="width: auto; margin-right: 5px;"> Umum
+                        </label>
+                        <label style="display: flex; align-items: center;">
+                            <input type="radio" name="category" value="pelajar" style="width: auto; margin-right: 5px;"> Pelajar
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="profesi-group">
+                    <label for="profesi">Profesi:</label>
+                    <input type="text" id="profesi" name="profesi" required>
+                </div>
+                
+                <div class="form-group hidden" id="sekolah-group">
+                    <label for="sekolah">Nama Sekolah/Universitas:</label>
+                    <input type="text" id="sekolah" name="sekolah">
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">Usia:</label>
+                    <input type="number" id="age" name="age" min="10" max="100" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Nomor HP:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quiz-category">Kategori Kuis:</label>
+                    <select id="quiz-category" name="quiz-category" required>
+                        <option value="">-- Pilih Kategori --</option>
+                        <option value="umum">Umum</option>
+                        <option value="pelajar">Pelajar</option>
+                        <option value="tebak-logika">Tebak Logika & Jenaka</option>
+                        <option value="sambung-lagu">Sambung Lagu</option>
+                        <option value="sambung-pribahasa">Sambung Pribahasa</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quiz-level">Tingkatan Pertanyaan:</label>
+                    <select id="quiz-level" name="quiz-level" required>
+                        <option value="">-- Pilih Tingkatan --</option>
+                        <option value="sd">SD</option>
+                        <option value="smp">SMP</option>
+                        <option value="sma">SMA</option>
+                        <option value="umum">Umum</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <p style="font-size: 0.9rem; color: #666;">
+                        Dengan mengisi formulir ini, Anda menyetujui <a href="#" id="show-terms" style="color: var(--primary);">syarat dan ketentuan</a> yang berlaku.
+                    </p>
+                </div>
+                
+                <button type="submit" class="btn btn-secondary">Mulai Kuis</button>
+            </form>
+        </div>
+        
+        <!-- Terms and Conditions Modal -->
+        <div id="terms-modal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; display: flex; justify-content: center; align-items: center;">
+            <div class="card" style="max-width: 800px; max-height: 80vh; overflow-y: auto;">
+                <h2 style="margin-bottom: 20px;">Syarat dan Ketentuan</h2>
+                
+                <p style="margin-bottom: 15px;">Selamat datang di QUIZ PERGUNU. Dengan mengakses dan menggunakan aplikasi ini, Anda setuju untuk terikat oleh syarat dan ketentuan berikut:</p>
+                
+                <h3 style="margin: 15px 0 10px 0;">1. Penggunaan Aplikasi</h3>
+                <p style="margin-bottom: 15px;">Aplikasi ini ditujukan untuk tujuan pendidikan dan hiburan. Anda setuju untuk menggunakan aplikasi ini secara bertanggung jawab dan sesuai dengan tujuan yang dimaksudkan.</p>
+                
+                <h3 style="margin: 15px 0 10px 0;">2. Data Pengguna</h3>
+                <p style="margin-bottom: 15px;">Data yang Anda berikan (nama, usia, nomor HP) hanya digunakan untuk keperluan identifikasi hasil kuis dan tidak akan disimpan secara permanen atau dibagikan ke pihak ketiga.</p>
+                
+                <h3 style="margin: 15px 0 10px 0;">3. Hak Kekayaan Intelektual</h3>
+                <p style="margin-bottom: 15px;">Seluruh konten dalam aplikasi ini, termasuk tetapi tidak terbatas pada pertanyaan, jawaban, dan desain antarmuka, merupakan hak milik tim kreatif PERGUNU SITUBONDO dan dilindungi oleh undang-undang hak cipta.</p>
+                
+                <h3 style="margin: 15px 0 10px 0;">4. Pembatasan Tanggung Jawab</h3>
+                <p style="margin-bottom: 15px;">Tim kreatif PERGUNU SITUBONDO tidak bertanggung jawab atas ketidakakuratan informasi dalam pertanyaan kuis atau kerugian yang mungkin timbul dari penggunaan aplikasi ini.</p>
+                
+                <h3 style="margin: 15px 0 10px 0;">5. Perubahan Ketentuan</h3>
+                <p style="margin-bottom: 15px;">Kami berhak mengubah syarat dan ketentuan ini kapan saja tanpa pemberitahuan sebelumnya. Perubahan akan berlaku segera setelah diposting di aplikasi.</p>
+                
+                <h3 style="margin: 15px 0 10px 0;">6. Kontak</h3>
+                <p style="margin-bottom: 15px;">Untuk pertanyaan lebih lanjut, Anda dapat menghubungi tim kami di alamat email: pergunu.situbondo@gmail.com</p>
+                
+                <p style="margin-top: 20px; font-style: italic;">Dibuat oleh: Tim Kreatif PERGUNU SITUBONDO (Cendhanu) - 2025</p>
+                
+                <button id="close-terms" class="btn" style="margin-top: 20px;">Saya Mengerti</button>
+            </div>
+        </div>
+        
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="card hidden">
+            <div class="watermark">PERGUNU</div>
+            
+            <div class="quiz-header">
+                <div class="quiz-info">
+                    <span id="quiz-category-display">Kategori: Umum</span>
+                    <span id="quiz-level-display">Tingkat: SMA</span>
+                    <span id="question-count">Soal: 1/100</span>
+                </div>
+                <div class="timer" id="timer">60:00</div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="question-container">
+                <div class="question" id="question">
+                    Memuat pertanyaan...
+                </div>
+                
+                <div class="options" id="options">
+                    <!-- Options will be inserted here by JavaScript -->
+                </div>
+                
+                <div id="feedback" class="feedback hidden">
+                    <!-- Feedback will be inserted here by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="quiz-controls">
+                <button id="reset-btn" class="btn btn-warning">Reset Soal</button>
+                <div>
+                    <button id="next-btn" class="btn btn-secondary">Soal Selanjutnya</button>
+                    <button id="finish-btn" class="btn btn-danger hidden">Selesaikan Kuis</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Result Container -->
+        <div id="result-container" class="card hidden">
+            <div class="result-container">
+                <h2>Hasil Kuis Anda</h2>
+                <div class="divider"></div>
+                
+                <div id="user-result-info" style="margin-bottom: 20px;">
+                    <p><strong>Nama:</strong> <span id="result-name"></span></p>
+                    <p><strong>Kategori:</strong> <span id="result-category"></span></p>
+                    <p><strong>Tingkatan:</strong> <span id="result-level"></span></p>
+                </div>
+                
+                <div class="score" id="score">0%</div>
+                <div class="score-message" id="score-message"></div>
+                
+                <div id="moral-message" style="margin-bottom: 20px; font-style: italic; color: #666;"></div>
+                
+                <div style="margin-bottom: 20px;">
+                    <p><strong>Jawaban Benar:</strong> <span id="correct-answers">0</span> dari <span id="total-questions">0</span> soal</p>
+                    <p><strong>Waktu Tersisa:</strong> <span id="time-remaining">00:00</span></p>
+                </div>
+                
+                <button id="restart-btn" class="btn btn-secondary">Mulai Kuis Baru</button>
+                <button id="share-btn" class="btn share-btn">Bagikan Hasil</button>
+                <button id="like-btn" class="btn" style="margin-top: 20px; background-color: #e84393;">Saya Suka Game Quiz PERGUNU</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Prayer Notification -->
+    <div class="prayer-notification" id="prayer-notification">
+        <button id="close-prayer-notification">&times;</button>
+        <h3>Waktu Sholat Telah Tiba</h3>
+        <p id="prayer-time-message">Waktu Shubuh telah tiba. Mari berhenti sejenak untuk menunaikan ibadah.</p>
+        <audio id="adzan-audio" src="https://voca.ro/191XmlGPAXQ2" preload="auto"></audio>
+    </div>
+    
+    <script>
+        // DOM Elements
+        const registrationForm = document.getElementById('registration-form');
+        const userForm = document.getElementById('user-form');
+        const quizContainer = document.getElementById('quiz-container');
+        const resultContainer = document.getElementById('result-container');
+        const termsModal = document.getElementById('terms-modal');
+        const showTermsBtn = document.getElementById('show-terms');
+        const closeTermsBtn = document.getElementById('close-terms');
+        const prayerNotification = document.getElementById('prayer-notification');
+        const closePrayerBtn = document.getElementById('close-prayer-notification');
+        const adzanAudio = document.getElementById('adzan-audio');
+        
+        // Form elements
+        const categoryRadios = document.querySelectorAll('input[name="category"]');
+        const profesiGroup = document.getElementById('profesi-group');
+        const sekolahGroup = document.getElementById('sekolah-group');
+        
+        // Quiz elements
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const feedbackElement = document.getElementById('feedback');
+        const timerElement = document.getElementById('timer');
+        const quizCategoryDisplay = document.getElementById('quiz-category-display');
+        const quizLevelDisplay = document.getElementById('quiz-level-display');
+        const questionCountDisplay = document.getElementById('question-count');
+        const resetBtn = document.getElementById('reset-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        
+        // Result elements
+        const resultName = document.getElementById('result-name');
+        const resultCategory = document.getElementById('result-category');
+        const resultLevel = document.getElementById('result-level');
+        const scoreElement = document.getElementById('score');
+        const scoreMessage = document.getElementById('score-message');
+        const moralMessage = document.getElementById('moral-message');
+        const correctAnswers = document.getElementById('correct-answers');
+        const totalQuestions = document.getElementById('total-questions');
+        const timeRemaining = document.getElementById('time-remaining');
+        const restartBtn = document.getElementById('restart-btn');
+        const shareBtn = document.getElementById('share-btn');
+        const likeBtn = document.getElementById('like-btn');
+        
+        // Quiz variables
+        let currentQuestionIndex = 0;
+        let questions = [];
+        let userAnswers = [];
+        let score = 0;
+        let timer;
+        let timeLeft = 60 * 60; // 60 minutes in seconds
+        let quizStarted = false;
+        let userData = {};
+        
+        // Prayer times (in 24-hour format)
+        const prayerTimes = {
+            shubuh: '04:30',
+            dzuhur: '12:00',
+            ashar: '15:30',
+            maghrib: '18:00',
+            isya: '19:30'
+        };
+        
+        // Event Listeners
+        userForm.addEventListener('submit', startQuiz);
+        showTermsBtn.addEventListener('click', showTerms);
+        closeTermsBtn.addEventListener('click', closeTerms);
+        categoryRadios.forEach(radio => {
+            radio.addEventListener('change', toggleCategoryFields);
+        });
+        resetBtn.addEventListener('click', resetQuestion);
+        nextBtn.addEventListener('click', nextQuestion);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', restartQuiz);
+        shareBtn.addEventListener('click', shareResult);
+        likeBtn.addEventListener('click', showLikeEffect);
+        closePrayerBtn.addEventListener('click', closePrayerNotification);
+        
+        // Initialize
+        toggleCategoryFields();
+        checkPrayerTimes();
+        setInterval(checkPrayerTimes, 60000); // Check every minute
+        
+        // Functions
+        function toggleCategoryFields() {
+            const selectedCategory = document.querySelector('input[name="category"]:checked').value;
+            if (selectedCategory === 'pelajar') {
+                profesiGroup.classList.add('hidden');
+                sekolahGroup.classList.remove('hidden');
+                document.getElementById('sekolah').required = true;
+                document.getElementById('profesi').required = false;
+            } else {
+                profesiGroup.classList.remove('hidden');
+                sekolahGroup.classList.add('hidden');
+                document.getElementById('profesi').required = true;
+                document.getElementById('sekolah').required = false;
+            }
+        }
+        
+        function showTerms(e) {
+            e.preventDefault();
+            termsModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeTerms() {
+            termsModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function startQuiz(e) {
+            e.preventDefault();
+            
+            // Get user data
+            userData = {
+                name: document.getElementById('name').value,
+                category: document.querySelector('input[name="category"]:checked').value,
+                profesi: document.getElementById('profesi').value,
+                sekolah: document.getElementById('sekolah').value,
+                age: document.getElementById('age').value,
+                phone: document.getElementById('phone').value,
+                quizCategory: document.getElementById('quiz-category').value,
+                quizLevel: document.getElementById('quiz-level').value
+            };
+            
+            // Hide registration form and show quiz
+            registrationForm.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            
+            // Set quiz info
+            quizCategoryDisplay.textContent = `Kategori: ${getCategoryName(userData.quizCategory)}`;
+            quizLevelDisplay.textContent = `Tingkat: ${getLevelName(userData.quizLevel)}`;
+            
+            // Generate questions based on category and level
+            generateQuestions(userData.quizCategory, userData.quizLevel);
+            
+            // Start timer
+            startTimer();
+            
+            // Show first question
+            showQuestion();
+        }
+        
+        function getCategoryName(category) {
+            const categories = {
+                'umum': 'Umum',
+                'pelajar': 'Pelajar',
+                'tebak-logika': 'Tebak Logika & Jenaka',
+                'sambung-lagu': 'Sambung Lagu',
+                'sambung-pribahasa': 'Sambung Pribahasa'
+            };
+            return categories[category] || category;
+        }
+        
+        function getLevelName(level) {
+            const levels = {
+                'sd': 'SD',
+                'smp': 'SMP',
+                'sma': 'SMA',
+                'umum': 'Umum'
+            };
+            return levels[level] || level;
+        }
+        
+        function generateQuestions(category, level) {
+            // In a real implementation, this would fetch questions from an API
+            // For this example, we'll generate mock questions
+            
+            questions = [];
+            const questionCount = 100;
+            
+            for (let i = 0; i < questionCount; i++) {
+                const questionNumber = i + 1;
+                let questionText = '';
+                let options = [];
+                let correctAnswer = '';
+                let explanation = '';
+                
+                // Generate different types of questions based on category
+                if (category === 'tebak-logika') {
+                    questionText = `Tebak Logika #${questionNumber}: ${getLogicQuestion()}`;
+                    options = getLogicOptions();
+                    correctAnswer = 'A';
+                    explanation = 'Ini adalah penjelasan mengapa jawaban tersebut benar dalam konteks logika jenaka.';
+                } 
+                else if (category === 'sambung-lagu') {
+                    const song = getSongLyric();
+                    questionText = `Sambung Lagu #${questionNumber}: "${song.lyric}"...`;
+                    options = song.options;
+                    correctAnswer = song.correct;
+                    explanation = `Lagu ini berjudul "${song.title}" dinyanyikan oleh ${song.artist}.`;
+                }
+                else if (category === 'sambung-pribahasa') {
+                    const proverb = getProverb();
+                    questionText = `Sambung Pribahasa #${questionNumber}: "${proverb.start}"...`;
+                    options = proverb.options;
+                    correctAnswer = proverb.correct;
+                    explanation = `Pribahasa lengkapnya adalah "${proverb.start} ${proverb.correctText}". Artinya: ${proverb.meaning}`;
+                }
+                else {
+                    // General knowledge questions
+                    const subject = getRandomSubject(level);
+                    questionText = `Pertanyaan #${questionNumber}: ${subject.question}`;
+                    options = subject.options;
+                    correctAnswer = subject.correctAnswer;
+                    explanation = subject.explanation;
+                }
+                
+                questions.push({
+                    text: questionText,
+                    options: options,
+                    correctAnswer: correctAnswer,
+                    explanation: explanation,
+                    category: category,
+                    level: level,
+                    difficulty: getRandomDifficulty()
+                });
+            }
+            
+            // Initialize user answers array
+            userAnswers = new Array(questionCount).fill(null);
+        }
+        
+        function getRandomSubject(level) {
+            const subjects = {
+                'ipa': ['Biologi', 'Fisika', 'Kimia'],
+                'ips': ['Ekonomi', 'Geografi', 'Sejarah', 'Sosiologi'],
+                'matematika': ['Aritmatika', 'Aljabar', 'Geometri', 'Statistika'],
+                'bahasa': ['Bahasa Indonesia', 'Bahasa Inggris'],
+                'ppkn': ['Hukum', 'Sosial', 'Negara'],
+                'agama': ['Akidah', 'Akhlak', 'Fiqih', 'Sejarah Islam']
+            };
+            
+            const randomSubject = Object.keys(subjects)[Math.floor(Math.random() * Object.keys(subjects).length)];
+            const randomTopic = subjects[randomSubject][Math.floor(Math.random() * subjects[randomSubject].length)];
+            
+            let question = '';
+            let options = [];
+            let correctAnswer = '';
+            let explanation = '';
+            
+            // Generate question based on subject and level
+            if (randomSubject === 'ipa') {
+                if (randomTopic === 'Biologi') {
+                    question = `Apa fungsi utama mitokondria dalam sel? (${randomTopic} - ${level.toUpperCase()})`;
+                    options = [
+                        { label: 'A', text: 'Tempat sintesis protein', desc: 'Ribosom adalah organel yang bertanggung jawab untuk sintesis protein' },
+                        { label: 'B', text: 'Pembuatan energi (ATP)', desc: 'Mitokondria dikenal sebagai "powerhouse" sel karena menghasilkan energi' },
+                        { label: 'C', text: 'Pencernaan intraseluler', desc: 'Lisosom bertanggung jawab untuk pencernaan intraseluler' },
+                        { label: 'D', text: 'Penyimpanan materi genetik', desc: 'Nukleus menyimpan DNA sel' }
+                    ];
+                    correctAnswer = 'B';
+                    explanation = 'Mitokondria adalah organel sel yang berfungsi sebagai tempat berlangsungnya respirasi sel untuk menghasilkan energi dalam bentuk ATP.';
+                }
+                // More IPA questions...
+            }
+            // More subject questions...
+            
+            // If no specific question generated, create a generic one
+            if (!question) {
+                question = `Apa ibukota Indonesia? (${randomTopic} - ${level.toUpperCase()})`;
+                options = [
+                    { label: 'A', text: 'Jakarta', desc: 'Ibukota negara Republik Indonesia' },
+                    { label: 'B', text: 'Bandung', desc: 'Ibukota provinsi Jawa Barat' },
+                    { label: 'C', text: 'Surabaya', desc: 'Ibukota provinsi Jawa Timur' },
+                    { label: 'D', text: 'Medan', desc: 'Ibukota provinsi Sumatera Utara' }
+                ];
+                correctAnswer = 'A';
+                explanation = 'Jakarta adalah ibukota negara Indonesia sejak tahun 1945. Sebelumnya bernama Batavia pada masa penjajahan Belanda.';
+            }
+            
+            return {
+                question: question,
+                options: options,
+                correctAnswer: correctAnswer,
+                explanation: explanation
+            };
+        }
+        
+        function getLogicQuestion() {
+            const logicQuestions = [
+                "Apa yang selalu datang tetapi tidak pernah tiba?",
+                "Apa yang bisa dibawa ke ruangan yang gelap untuk membuatnya terang?",
+                "Apa yang semakin banyak Anda ambil, semakin banyak Anda tinggalkan?",
+                "Apa yang memiliki kota tetapi tidak ada rumah, memiliki hutan tetapi tidak ada pohon, memiliki sungai tetapi tidak ada air?"
+            ];
+            
+            return logicQuestions[Math.floor(Math.random() * logicQuestions.length)];
+        }
+        
+        function getLogicOptions() {
+            return [
+                { label: 'A', text: 'Hari esok', desc: 'Hari esok selalu "datang" tetapi tidak pernah benar-benar "tiba"' },
+                { label: 'B', text: 'Masa lalu', desc: 'Masa lalu sudah terjadi dan tidak bisa datang lagi' },
+                { label: 'C', text: 'Angin', desc: 'Angin bisa datang dan pergi' },
+                { label: 'D', text: 'Mimpi', desc: 'Mimpi bisa datang saat tidur' }
+            ];
+        }
+        
+        function getSongLyric() {
+            const songs = [
+                {
+                    title: "Indonesia Raya",
+                    artist: "W.R. Supratman",
+                    lyric: "Indonesia tanah airku",
+                    options: [
+                        { label: 'A', text: 'Tanah tumpah darahku', desc: 'Lanjutan lagu kebangsaan Indonesia' },
+                        { label: 'B', text: 'Tanah yang kucintai', desc: 'Bukan lirik resmi lagu Indonesia Raya' },
+                        { label: 'C', text: 'Tanah pusaka kami', desc: 'Bagian dari lagu lain' },
+                        { label: 'D', text: 'Tanah para pahlawan', desc: 'Bukan lirik resmi' }
+                    ],
+                    correct: 'A'
+                },
+                // More songs...
+            ];
+            
+            return songs[Math.floor(Math.random() * songs.length)];
+        }
+        
+        function getProverb() {
+            const proverbs = [
+                {
+                    start: "Air beriak",
+                    options: [
+                        { label: 'A', text: 'tanda tak dalam', desc: 'Peribahasa tentang orang yang banyak bicara biasanya tidak berilmu' },
+                        { label: 'B', text: 'tanda banyak ikan', desc: 'Bukan peribahasa yang tepat' },
+                        { label: 'C', text: 'tanda akan hujan', desc: 'Tidak berhubungan dengan peribahasa' },
+                        { label: 'D', text: 'tanda bahaya', desc: 'Bukan makna peribahasa ini' }
+                    ],
+                    correct: 'A',
+                    correctText: 'tanda tak dalam',
+                    meaning: 'Orang yang banyak bicara biasanya tidak berilmu dalam.'
+                },
+                // More proverbs...
+            ];
+            
+            return proverbs[Math.floor(Math.random() * proverbs.length)];
+        }
+        
+        function getRandomDifficulty() {
+            const difficulties = ['Mudah', 'Sedang', 'Sulit'];
+            return difficulties[Math.floor(Math.random() * difficulties.length)];
+        }
+        
+        function showQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                finishQuiz();
+                return;
+            }
+            
+            const question = questions[currentQuestionIndex];
+            questionElement.textContent = question.text;
+            
+            // Update question count
+            questionCountDisplay.textContent = `Soal: ${currentQuestionIndex + 1}/${questions.length}`;
+            
+            // Clear previous options
+            optionsElement.innerHTML = '';
+            
+            // Add new options
+            question.options.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.innerHTML = `
+                    <span class="option-label">${option.label}</span>
+                    <span class="option-text">${option.text}</span>
+                    <div class="option-desc">${option.desc}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectAnswer(option.label));
+                
+                // If user already answered this question, show their answer
+                if (userAnswers[currentQuestionIndex] === option.label) {
+                    optionElement.classList.add('selected');
+                    if (option.label === question.correctAnswer) {
+                        optionElement.classList.add('correct');
+                    } else {
+                        optionElement.classList.add('incorrect');
+                    }
+                }
+                
+                optionsElement.appendChild(optionElement);
+            });
+            
+            // Show feedback if already answered
+            if (userAnswers[currentQuestionIndex] !== null) {
+                showFeedback();
+            } else {
+                feedbackElement.classList.add('hidden');
+            }
+            
+            // Show finish button if last question
+            if (currentQuestionIndex === questions.length - 1) {
+                nextBtn.classList.add('hidden');
+                finishBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                finishBtn.classList.add('hidden');
+            }
+        }
+        
+        function selectAnswer(answer) {
+            // Don't allow changing answers
+            if (userAnswers[currentQuestionIndex] !== null) return;
+            
+            const question = questions[currentQuestionIndex];
+            userAnswers[currentQuestionIndex] = answer;
+            
+            // Update score if correct
+            if (answer === question.correctAnswer) {
+                score++;
+            }
+            
+            // Highlight selected answer
+            const optionElements = document.querySelectorAll('.option');
+            optionElements.forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+                
+                const optionLabel = option.querySelector('.option-label').textContent;
+                if (optionLabel === answer) {
+                    option.classList.add('selected');
+                    
+                    if (answer === question.correctAnswer) {
+                        option.classList.add('correct');
+                    } else {
+                        option.classList.add('incorrect');
+                    }
+                } else if (optionLabel === question.correctAnswer) {
+                    option.classList.add('correct');
+                }
+            });
+            
+            showFeedback();
+        }
+        
+        function showFeedback() {
+            const question = questions[currentQuestionIndex];
+            const userAnswer = userAnswers[currentQuestionIndex];
+            
+            feedbackElement.innerHTML = '';
+            feedbackElement.classList.remove('hidden');
+            
+            if (userAnswer === question.correctAnswer) {
+                feedbackElement.classList.add('correct');
+                feedbackElement.classList.remove('incorrect');
+                
+                const correctResponses = [
+                    "Wow, kamu cerdas sekali!",
+                    "Luar biasa! Saya iri sama kamu!",
+                    "Benar sekali! Pengetahuanmu sangat mengagumkan!",
+                    "Hebat! Kamu benar-benar menguasai materi ini!",
+                    "Jawaban tepat! Kamu memang berbakat!"
+                ];
+                
+                const randomResponse = correctResponses[Math.floor(Math.random() * correctResponses.length)];
+                
+                feedbackElement.innerHTML = `
+                    <p>${randomResponse}</p>
+                    <p class="explanation">${question.explanation}</p>
+                `;
+            } else {
+                feedbackElement.classList.add('incorrect');
+                feedbackElement.classList.remove('correct');
+                
+                const incorrectResponses = [
+                    "Wah, kamu salah… tapi jangan menyerah ya!",
+                    "Hampir benar kok, coba lagi yuk!",
+                    "Sayang sekali jawabannya kurang tepat!",
+                    "Tidak masalah salah, yang penting belajar!",
+                    "Oops, jawabanmu belum tepat. Yuk pelajari lagi!"
+                ];
+                
+                const randomResponse = incorrectResponses[Math.floor(Math.random() * incorrectResponses.length)];
+                
+                feedbackElement.innerHTML = `
+                    <p>${randomResponse}</p>
+                    <p><strong class="correct-answer">Jawaban benar: ${question.correctAnswer}. ${question.options.find(o => o.label === question.correctAnswer).text}</strong></p>
+                    <p class="explanation">${question.explanation}</p>
+                `;
+            }
+        }
+        
+        function resetQuestion() {
+            if (confirm("Apakah Anda yakin ingin me-reset soal ini? Soal yang tidak dijawab akan dihitung sebagai salah.")) {
+                userAnswers[currentQuestionIndex] = null;
+                showQuestion();
+            }
+        }
+        
+        function nextQuestion() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
+        
+        function finishQuiz() {
+            clearInterval(timer);
+            quizContainer.classList.add('hidden');
+            resultContainer.classList.remove('hidden');
+            
+            // Calculate score percentage
+            const percentage = Math.round((score / questions.length) * 100);
+            
+            // Display user info
+            resultName.textContent = userData.name;
+            resultCategory.textContent = getCategoryName(userData.quizCategory);
+            resultLevel.textContent = getLevelName(userData.quizLevel);
+            
+            // Display score
+            scoreElement.textContent = `${percentage}%`;
+            correctAnswers.textContent = score;
+            totalQuestions.textContent = questions.length;
+            
+            // Calculate time remaining
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timeRemaining.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Set score class and message based on percentage
+            let scoreClass = '';
+            let message = '';
+            let moral = '';
+            
+            if (percentage >= 75) {
+                scoreClass = 'A';
+                message = 'Luar biasa! Kamu benar-benar ahli! Saya bangga pada kamu!';
+                moral = 'Dengan prestasi seperti ini, kamu pantas menjadi teladan bagi yang lain. Teruslah berbagi ilmu dan menginspirasi!';
+            } else if (percentage >= 50) {
+                scoreClass = 'B';
+                message = 'Keren! Pemahaman kamu sudah sangat baik!';
+                moral = 'Kamu memiliki dasar pengetahuan yang kuat. Dengan sedikit usaha ekstra, kamu bisa mencapai level yang lebih tinggi!';
+            } else if (percentage >= 25) {
+                scoreClass = 'C';
+                message = 'Hasil yang bagus, tetap berusaha untuk lebih baik lagi!';
+                moral = 'Setiap perjalanan dimulai dengan langkah pertama. Teruslah belajar dan jangan takut membuat kesalahan!';
+            } else {
+                scoreClass = 'D';
+                message = 'Tetap semangat, belajar dari kesalahan adalah kunci sukses!';
+                moral = 'Kegagalan adalah kesuksesan yang tertunda. Setiap jawaban salah adalah peluang untuk belajar sesuatu yang baru!';
+            }
+            
+            scoreElement.classList.add(scoreClass);
+            scoreMessage.textContent = message;
+            moralMessage.textContent = moral;
+        }
+        
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+        
+        function restartQuiz() {
+            // Reset quiz variables
+            currentQuestionIndex = 0;
+            questions = [];
+            userAnswers = [];
+            score = 0;
+            timeLeft = 60 * 60;
+            
+            // Hide result and show registration form
+            resultContainer.classList.add('hidden');
+            registrationForm.classList.remove('hidden');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        function shareResult() {
+            // In a real implementation, this would share the result to social media
+            // For this example, we'll create a PDF of the result
+            
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Add watermark
+            doc.setFontSize(60);
+            doc.setTextColor(200, 200, 200);
+            doc.text('PERGUNU', 105, 150, { angle: 45 });
+            
+            // Add content
+            doc.setFontSize(24);
+            doc.setTextColor(0, 0, 0);
+            doc.text('HASIL KUIS PERGUNU', 105, 20, { align: 'center' });
+            
+            doc.setFontSize(12);
+            doc.text(`Nama: ${userData.name}`, 20, 40);
+            doc.text(`Kategori: ${getCategoryName(userData.quizCategory)}`, 20, 50);
+            doc.text(`Tingkatan: ${getLevelName(userData.quizLevel)}`, 20, 60);
+            
+            // Add score with color
+            const percentage = Math.round((score / questions.length) * 100);
+            let scoreColor;
+            
+            if (percentage >= 75) scoreColor = [39, 174, 96]; // Green
+            else if (percentage >= 50) scoreColor = [52, 152, 219]; // Blue
+            else if (percentage >= 25) scoreColor = [243, 156, 18]; // Orange
+            else scoreColor = [231, 76, 60]; // Red
+            
+            doc.setFontSize(48);
+            doc.setTextColor(...scoreColor);
+            doc.text(`${percentage}%`, 105, 90, { align: 'center' });
+            
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.text(`Jawaban benar: ${score} dari ${questions.length} soal`, 105, 110, { align: 'center' });
+            
+            // Add date
+            const today = new Date();
+            doc.text(`Tanggal: ${today.toLocaleDateString('id-ID')}`, 20, 280);
+            
+            // Save the PDF
+            doc.save(`Hasil Kuis PERGUNU - ${userData.name}.pdf`);
+        }
+        
+        function showLikeEffect() {
+            // Create confetti effect
+            for (let i = 0; i < 100; i++) {
+                createConfetti();
+            }
+            
+            // Show thank you message
+            alert('Terima kasih telah menyukai Game Quiz PERGUNU! Kami akan terus berinovasi untuk Anda!');
+        }
+        
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            
+            // Random position
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * -window.innerHeight;
+            
+            // Random color
+            const colors = ['#f1c40f', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Random size
+            const size = Math.random() * 10 + 5;
+            
+            // Set styles
+            confetti.style.left = `${x}px`;
+            confetti.style.top = `${y}px`;
+            confetti.style.backgroundColor = color;
+            confetti.style.width = `${size}px`;
+            confetti.style.height = `${size}px`;
+            confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            
+            document.body.appendChild(confetti);
+            
+            // Remove after animation
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+        
+        function checkPrayerTimes() {
+            const now = new Date();
+            const currentHours = now.getHours().toString().padStart(2, '0');
+            const currentMinutes = now.getMinutes().toString().padStart(2, '0');
+            const currentTime = `${currentHours}:${currentMinutes}`;
+            
+            // Check each prayer time
+            for (const [prayer, time] of Object.entries(prayerTimes)) {
+                if (currentTime === time) {
+                    showPrayerNotification(prayer);
+                    break;
+                }
+            }
+        }
+        
+        function showPrayerNotification(prayer) {
+            const prayerNames = {
+                shubuh: 'Shubuh',
+                dzuhur: 'Dzuhur',
+                ashar: 'Ashar',
+                maghrib: 'Maghrib',
+                isya: 'Isya'
+            };
+            
+            document.getElementById('prayer-time-message').textContent = 
+                `Waktu ${prayerNames[prayer]} telah tiba. Mari berhenti sejenak untuk menunaikan ibadah.`;
+            
+            prayerNotification.style.display = 'block';
+            adzanAudio.play();
+        }
+        
+        function closePrayerNotification() {
+            prayerNotification.style.display = 'none';
+            adzanAudio.pause();
+            adzanAudio.currentTime = 0;
+        }
+    </script>
+</body>
+</html>
