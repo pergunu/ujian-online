@@ -1,31 +1,24 @@
 <?php
-require_once 'includes/auth.php';
-require_once 'config/constants.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (login($_POST['username'], $_POST['password'])) {
-        $_SESSION['loggedin'] = true;
-        header('Location: dashboard.php');
-        exit;
-    } else {
-        $error = "Username/Password salah!";
-    }
+session_start();
+if (isset($_SESSION['logged_in'])) {
+    header("Location: index.php");
+    exit;
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Game Quiz</title>
+    <title>Login - QUIZ PERGUNU</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <form method="POST">
-        <h2>Login</h2>
-        <?php if (isset($error)) echo "<p>$error</p>"; ?>
-        
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Masuk</button>
-    </form>
+    <div class="login-container">
+        <form id="loginForm" action="process/login.php" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
