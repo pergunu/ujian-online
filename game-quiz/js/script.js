@@ -1,27 +1,14 @@
-document.getElementById('requestOTP').addEventListener('click', async () => {
-    const response = await fetch('request-otp.php');
-    const data = await response.json();
+// Update bagian login untuk handle form submission
+document.getElementById('loginForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
     
-    // Di production, buka link WhatsApp
-    window.open(data.whatsapp_url, '_blank');
+    // Validasi client-side
+    const username = document.querySelector('input[name="username"]').value;
+    const password = document.querySelector('input[name="password"]').value;
     
-    // Di development, tampilkan OTP di console
-    console.log("OTP (development only):", data.otp);
-    
-    // Proses verifikasi
-    const otp = prompt("Masukkan OTP yang dikirim ke WhatsApp:");
-    if (otp) {
-        const verify = await fetch('verify-otp.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `otp=${otp}`
-        });
-        
-        const result = await verify.json();
-        alert(result.status === 'success' 
-            ? "OTP valid!" 
-            : "OTP salah/kadaluarsa!");
+    if (username === "Cendhanu" && password === "1499") {
+        this.submit(); // Lanjut ke proses PHP
+    } else {
+        alert("Login gagal! Credential salah.");
     }
 });
