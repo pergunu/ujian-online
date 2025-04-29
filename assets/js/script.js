@@ -1,121 +1,70 @@
-// script.js
-// Konfigurasi
-const config = {
-  timerPerSoal: 30, // Detik
-  enableSound: true
-};
+// Inisialisasi Quiz
+let currentQuestion = 0;
+let score = 0;
+const quizContainer = document.getElementById('quiz-container');
+const resultContainer = document.getElementById('result-container');
 
-// Efek suara
-const sounds = {
-  correct: new Audio('assets/sounds/correct.mp3'),
-  wrong: new Audio('assets/sounds/wrong.mp3'),
-  finish: new Audio('assets/sounds/finish.mp3')
-};
+function loadQuestion() {
+  const q = questions[currentQuestion];
+  
+  document.getElementById('question').innerHTML = `
+    <span class="q-number">${currentQuestion + 1}.</span>
+    ${q.question}
+  `;
 
-// Inisialisasi quiz
-function initQuiz() {
-  let currentQuestion = 0;
-  let score = 0;
-  let timer;
-
-  // Load soal
-  function loadQuestion() {
-    clearInterval(timer);
-    const category = Object.keys(questions)[0];
-    const q = questions[category][currentQuestion];
-
-    // Update UI
-    document.getElementById('question').innerHTML = `
-      <span class="q-number">${currentQuestion + 1}.</span>
-      ${q.question}
-    `;
-
-    // Buat opsi A-E
-    let optionsHTML = '';
-    const optionLetters = ['A', 'B', 'C', 'D', 'E'];
-    q.options.forEach((opt, i) => {
-      optionsHTML += `
-        <div class="option" 
-             data-index="${i}" 
-             onclick="checkAnswer(${i}, ${q.answer})">
-          <span class="option-letter">${optionLetters[i]}</span>
-          ${opt}
-        </div>
-      `;
-    });
-
-    document.getElementById('options').innerHTML = optionsHTML;
-    startTimer();
-  }
-
-  // Timer
-  function startTimer() {
-    let timeLeft = config.timerPerSoal;
-    updateTimerDisplay(timeLeft);
-
-    timer = setInterval(() => {
-      timeLeft--;
-      updateTimerDisplay(timeLeft);
-
-      if (timeLeft <= 0) {
-        clearInterval(timer);
-        handleTimeOut();
-      }
-    }, 1000);
-  }
-
-  // Cek jawaban
-  window.checkAnswer = (selectedIdx, correctIdx) => {
-    clearInterval(timer);
-    const options = document.querySelectorAll('.option');
-    
-    options.forEach(opt => {
-      opt.style.pointerEvents = 'none';
-      if (parseInt(opt.dataset.index) === correctIdx) {
-        opt.classList.add('correct');
-      } else if (parseInt(opt.dataset.index) === selectedIdx) {
-        opt.classList.add('wrong');
-      }
-    });
-
-    // Play sound
-    if (config.enableSound) {
-      if (selectedIdx === correctIdx) {
-        sounds.correct.play();
-        score++;
-      } else {
-        sounds.wrong.play();
-      }
-    }
-
-    // Next question
-    setTimeout(() => {
-      currentQuestion++;
-      if (currentQuestion < questions[Object.keys(questions)[0]].length) {
-        loadQuestion();
-      } else {
-        showResult();
-      }
-    }, 2000);
-  };
-
-  // Tampilkan hasil
-  function showResult() {
-    if (config.enableSound) sounds.finish.play();
-    document.getElementById('quiz-container').innerHTML = `
-      <div class="result-card">
-        <h2>Quiz Selesai! 🎉</h2>
-        <p class="score">Nilai Anda: 
-          <span>${score}/${questions[Object.keys(questions)[0]].length}</span>
-        </p>
-        <button onclick="window.print()">Cetak Hasil</button>
-        <button onclick="initQuiz()">Ulangi Quiz</button>
+  let optionsHTML = '';
+  q.options.forEach((opt, i) => {
+    optionsHTML += `
+      <div class="option" onclick="checkAnswer(${i})">
+        <span class="option-letter">${String.fromCharCode(65 + i)}.</span>
+        ${opt}
       </div>
     `;
-  }
+  });
+  
+  document.getElementById('options').innerHTML = optionsHTML;
+}
 
+function checkAnswer(selectedIdx) {
+  const q = questions[currentQuestion];
+  const options = document.querySelectorAll('.option');
+  
+  options.forEach((opt, i) => {
+    opt.style.pointerEvents = 'none';
+    if (i === q.answer) {
+      opt.style.background = 'rgba(46, 204, 113, 0.3)';
+      opt.style.borderColor = '#2ecc71';
+    } else if (i === selectedIdx) {
+      opt.style.background = 'rgba(231, 76, 60, 0.3)';
+      opt.style.borderColor = '#e74c3c';
+    }
+  });
+
+  if (selectedIdx === q.answer) score++;
+  
+  setTimeout(() => {
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  }, 1500);
+}
+
+function showResult() {
+  quizContainer.style.display = 'none';
+  resultContainer.style.display = 'block';
+  document.getElementById('score').textContent = `Skor Anda: ${score}/${questions.length}`;
+}
+
+function resetQuiz() {
+  currentQuestion = 0;
+  score = 0;
+  quizContainer.style.display = 'block';
+  resultContainer.style.display = 'none';
   loadQuestion();
 }
 
-// Start quiz
-document.addEventListener('DOMContentLoaded', initQuiz);
+// Mulai quiz
+loadQuestion();
