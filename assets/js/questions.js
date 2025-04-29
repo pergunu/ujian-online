@@ -1,23 +1,27 @@
 // questions.js
 const questions = {
-    dasar: [
-        {
-            question: "Siapa pendiri NU?",
-            options: [
-                "A. KH. Hasyim Asy'ari", 
-                "B. KH. Ahmad Dahlan", 
-                "C. Buya Hamka"
-            ],
-            answer: 0
-        },
-        {
-            question: "Tahun berapa NU didirikan?",
-            options: [
-                "A. 1926", 
-                "B. 1945", 
-                "C. 1938"
-            ],
-            answer: 0
-        }
-    ]
+  sejarah_nu: [
+    {
+      question: "Siapa pendiri Nahdlatul Ulama (NU)?",
+      options: [
+        "KH. Hasyim Asy'ari", 
+        "KH. Ahmad Dahlan", 
+        "Buya Hamka",
+        "KH. Wahab Hasbullah",
+        "KH. Ali Maksum"
+      ],
+      answer: 0 // Jawaban A
+    },
+    {
+      question: "Tahun berapa NU didirikan?",
+      options: [
+        "1926", 
+        "1945", 
+        "1938",
+        "1912",
+        "1954"
+      ],
+      answer: 0 // Jawaban A
+    }
+  ]
 };
