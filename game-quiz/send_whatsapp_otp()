@@ -1,6 +1,0 @@
-function send_real_whatsapp($no_hp, $otp) {
-    $api_url = "https://api.whatsapp.com/send";
-    $message = urlencode("Kode OTP Anda: $otp");
-    
-    file_get_contents("$api_url?phone=$no_hp&text=$message");
-}
