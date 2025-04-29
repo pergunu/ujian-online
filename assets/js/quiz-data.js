@@ -1,0 +1,25 @@
+// Database Soal (A-E)
+const questions = [
+  {
+    question: "Siapa pendiri Nahdlatul Ulama?",
+    options: [
+      "A. KH. Hasyim Asy'ari",
+      "B. KH. Ahmad Dahlan",
+      "C. Buya Hamka",
+      "D. KH. Wahab Hasbullah",
+      "E. KH. Ali Maksum"
+    ],
+    answer: 0
+  },
+  {
+    question: "Tahun berapa NU didirikan?",
+    options: [
+      "A. 1926",
+      "B. 1945",
+      "C. 1938",
+      "D. 1912",
+      "E. 1954"
+    ],
+    answer: 0
+  }
+];
