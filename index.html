@@ -1,34 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>QUIZ PERGUNU</title>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f5f7fa;
-            margin: 0;
-            padding: 20px;
-        }
-        .quiz-container {
-            max-width: 800px;
-            margin: 30px auto;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-    </style>
+  <title>QUIZ PERGUNU - Modern</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <div class="quiz-container">
-        <!-- Paste Embed Code Quizizz Anda di Bawah Ini -->
-        <div style="width:100%;display:flex;flex-direction:column;gap:8px;min-height:635px;">
-            <iframe 
-                src="https://quizizz.com/embed/quiz/68105852a8220f5e36152b36" 
-                title="Quiz PERGUNU" 
-                style="flex:1;" 
-                frameborder="0" 
-                allowfullscreen>
-            </iframe>
-        </div>
+  <div class="monitor">
+    <div class="screen">
+      <h1 class="quiz-title">QUIZ PERGUNU</h1>
+      
+      <div id="quiz-container">
+        <!-- Konten quiz akan dimuat di sini oleh script.js -->
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <button class="btn" id="next-btn">Lanjut</button>
+      </div>
+
+      <div id="result-container" style="display:none;">
+        <h2 style="color: var(--secondary);">Quiz Selesai!</h2>
+        <p id="score" style="color: white;"></p>
+        <button class="btn" onclick="resetQuiz()">Ulangi</button>
+      </div>
     </div>
+  </div>
+
+  <script src="assets/js/quiz-data.js"></script>
+  <script src="assets/js/script.js"></script>
 </body>
 </html>
