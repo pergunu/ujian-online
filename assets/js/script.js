@@ -1,50 +1,121 @@
 // script.js
-document.addEventListener('DOMContentLoaded', () => {
-    const quizContainer = document.getElementById('quiz-container');
-    let currentQuestion = 0;
-    let score = 0;
+// Konfigurasi
+const config = {
+  timerPerSoal: 30, // Detik
+  enableSound: true
+};
 
-    // Load soal dari questions.js
-    function loadQuestion() {
-        const category = Object.keys(questions)[0]; // Ambil kategori pertama
-        const q = questions[category][currentQuestion];
+// Efek suara
+const sounds = {
+  correct: new Audio('assets/sounds/correct.mp3'),
+  wrong: new Audio('assets/sounds/wrong.mp3'),
+  finish: new Audio('assets/sounds/finish.mp3')
+};
 
-        quizContainer.innerHTML = `
-            <div class="question">${q.question}</div>
-            <div class="options">
-                ${q.options.map((opt, i) => 
-                    `<div class="option" onclick="checkAnswer(${i})">${opt}</div>`
-                ).join('')}
-            </div>
-            <div id="result"></div>
-        `;
+// Inisialisasi quiz
+function initQuiz() {
+  let currentQuestion = 0;
+  let score = 0;
+  let timer;
+
+  // Load soal
+  function loadQuestion() {
+    clearInterval(timer);
+    const category = Object.keys(questions)[0];
+    const q = questions[category][currentQuestion];
+
+    // Update UI
+    document.getElementById('question').innerHTML = `
+      <span class="q-number">${currentQuestion + 1}.</span>
+      ${q.question}
+    `;
+
+    // Buat opsi A-E
+    let optionsHTML = '';
+    const optionLetters = ['A', 'B', 'C', 'D', 'E'];
+    q.options.forEach((opt, i) => {
+      optionsHTML += `
+        <div class="option" 
+             data-index="${i}" 
+             onclick="checkAnswer(${i}, ${q.answer})">
+          <span class="option-letter">${optionLetters[i]}</span>
+          ${opt}
+        </div>
+      `;
+    });
+
+    document.getElementById('options').innerHTML = optionsHTML;
+    startTimer();
+  }
+
+  // Timer
+  function startTimer() {
+    let timeLeft = config.timerPerSoal;
+    updateTimerDisplay(timeLeft);
+
+    timer = setInterval(() => {
+      timeLeft--;
+      updateTimerDisplay(timeLeft);
+
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        handleTimeOut();
+      }
+    }, 1000);
+  }
+
+  // Cek jawaban
+  window.checkAnswer = (selectedIdx, correctIdx) => {
+    clearInterval(timer);
+    const options = document.querySelectorAll('.option');
+    
+    options.forEach(opt => {
+      opt.style.pointerEvents = 'none';
+      if (parseInt(opt.dataset.index) === correctIdx) {
+        opt.classList.add('correct');
+      } else if (parseInt(opt.dataset.index) === selectedIdx) {
+        opt.classList.add('wrong');
+      }
+    });
+
+    // Play sound
+    if (config.enableSound) {
+      if (selectedIdx === correctIdx) {
+        sounds.correct.play();
+        score++;
+      } else {
+        sounds.wrong.play();
+      }
     }
 
-    window.checkAnswer = (selectedIdx) => {
-        const category = Object.keys(questions)[0];
-        const q = questions[category][currentQuestion];
-        
-        if (selectedIdx === q.answer) {
-            document.getElementById('result').innerHTML = 
-                '<p style="color:green;">Benar!</p>';
-            score++;
-        } else {
-            document.getElementById('result').innerHTML = 
-                `<p style="color:red;">Salah! Jawaban benar: ${q.options[q.answer]}</p>`;
-        }
+    // Next question
+    setTimeout(() => {
+      currentQuestion++;
+      if (currentQuestion < questions[Object.keys(questions)[0]].length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }, 2000);
+  };
 
-        setTimeout(() => {
-            currentQuestion++;
-            if (currentQuestion < questions[Object.keys(questions)[0]].length) {
-                loadQuestion();
-            } else {
-                quizContainer.innerHTML = `
-                    <h2>Quiz Selesai!</h2>
-                    <p>Nilai Anda: ${score}/${questions[Object.keys(questions)[0]].length}</p>
-                `;
-            }
-        }, 1500);
-    }
+  // Tampilkan hasil
+  function showResult() {
+    if (config.enableSound) sounds.finish.play();
+    document.getElementById('quiz-container').innerHTML = `
+      <div class="result-card">
+        <h2>Quiz Selesai! 🎉</h2>
+        <p class="score">Nilai Anda: 
+          <span>${score}/${questions[Object.keys(questions)[0]].length}</span>
+        </p>
+        <button onclick="window.print()">Cetak Hasil</button>
+        <button onclick="initQuiz()">Ulangi Quiz</button>
+      </div>
+    `;
+  }
 
-    loadQuestion();
-});
+  loadQuestion();
+}
+
+// Start quiz
+document.addEventListener('DOMContentLoaded', initQuiz);
