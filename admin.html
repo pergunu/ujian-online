@@ -1,67 +1,142 @@
+
+---
+
+### 🖥️ **2. File `admin.html` (Panel Admin Modern)**
+```html
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Panel</title>
+  <title>Admin Panel - QUIZ PERGUNU</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* Khusus Admin */
+    .admin-panel {
+      background: rgba(26, 37, 47, 0.9);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: 50px auto;
+      border: 2px solid var(--secondary);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      color: var(--secondary);
+      display: block;
+      margin-bottom: 8px;
+    }
+    
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid #333;
+      border-radius: 5px;
+      color: white;
+      font-family: 'Poppins';
+    }
+    
+    .btn-admin {
+      background: var(--secondary);
+      color: var(--dark);
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <div class="admin-container">
-    <div id="auth">
-      <h2>LOGIN ADMIN</h2>
-      <input type="password" id="password" placeholder="Masukkan Password">
-      <button onclick="login()">MASUK</button>
-      <p id="error" style="color:red;"></p>
-    </div>
-
-    <div id="panel" style="display:none;">
-      <h2>TAMBAH SOAL BARU</h2>
-      <textarea id="newQuestion" placeholder="Pertanyaan..."></textarea>
-      <input type="text" id="opt1" placeholder="Opsi A">
-      <input type="text" id="opt2" placeholder="Opsi B">
-      <input type="text" id="opt3" placeholder="Opsi C">
-      <input type="text" id="opt4" placeholder="Opsi D">
-      <input type="text" id="opt5" placeholder="Opsi E">
-      <select id="correct">
-        <option value="0">Jawaban Benar: A</option>
-        <option value="1">B</option>
-        <option value="2">C</option>
-        <option value="3">D</option>
-        <option value="4">E</option>
-      </select>
-      <button onclick="addQuestion()">SIMPAN</button>
+  <div class="monitor">
+    <div class="screen">
+      <!-- Form Login Admin -->
+      <div id="login-form" class="admin-panel">
+        <h2 style="color: var(--secondary); text-align: center;">ADMIN PANEL</h2>
+        <div class="form-group">
+          <label>Password:</label>
+          <input type="password" id="admin-password" placeholder="Masukkan password">
+        </div>
+        <button class="btn btn-admin" onclick="checkPassword()">MASUK</button>
+        <p id="error-msg" style="color: #e74c3c; text-align: center;"></p>
+      </div>
+      
+      <!-- Panel Utama (Tersembunyi Awal) -->
+      <div id="main-panel" class="admin-panel" style="display: none;">
+        <h2 style="color: var(--secondary); border-bottom: 1px solid var(--secondary); padding-bottom: 10px;">
+          TAMBAH SOAL BARU
+        </h2>
+        
+        <div class="form-group">
+          <label>Pertanyaan:</label>
+          <textarea id="new-question" rows="3" placeholder="Tulis pertanyaan..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>Opsi Jawaban:</label>
+          <input type="text" id="opt-a" placeholder="Opsi A">
+          <input type="text" id="opt-b" placeholder="Opsi B">
+          <input type="text" id="opt-c" placeholder="Opsi C">
+          <input type="text" id="opt-d" placeholder="Opsi D">
+          <input type="text" id="opt-e" placeholder="Opsi E">
+        </div>
+        
+        <div class="form-group">
+          <label>Jawaban Benar:</label>
+          <select id="correct-answer">
+            <option value="0">A</option>
+            <option value="1">B</option>
+            <option value="2">C</option>
+            <option value="3">D</option>
+            <option value="4">E</option>
+          </select>
+        </div>
+        
+        <button class="btn btn-admin" onclick="addQuestion()">SIMPAN SOAL</button>
+        <hr style="border-color: #333; margin: 20px 0;">
+        <button class="btn" onclick="location.href='index.html'">KEMBALI KE QUIZ</button>
+      </div>
     </div>
   </div>
 
-  <script src="assets/js/quiz-data.js"></script>
   <script>
     // Proteksi Password
-    function login() {
-      if (document.getElementById("password").value === "65614222") {
-        document.getElementById("auth").style.display = "none";
-        document.getElementById("panel").style.display = "block";
+    function checkPassword() {
+      const password = "65614222";
+      const input = document.getElementById("admin-password").value;
+      
+      if (input === password) {
+        document.getElementById("login-form").style.display = "none";
+        document.getElementById("main-panel").style.display = "block";
       } else {
-        document.getElementById("error").textContent = "Password salah!";
+        document.getElementById("error-msg").textContent = "Password salah!";
       }
     }
-
-    // Tambah Soal Manual
+    
+    // Tambah Soal Baru
     function addQuestion() {
-      const newQ = {
-        question: document.getElementById("newQuestion").value,
+      const newQuestion = {
+        question: document.getElementById("new-question").value,
         options: [
-          document.getElementById("opt1").value,
-          document.getElementById("opt2").value,
-          document.getElementById("opt3").value,
-          document.getElementById("opt4").value,
-          document.getElementById("opt5").value
+          document.getElementById("opt-a").value,
+          document.getElementById("opt-b").value,
+          document.getElementById("opt-c").value,
+          document.getElementById("opt-d").value,
+          document.getElementById("opt-e").value
         ],
-        answer: parseInt(document.getElementById("correct").value)
+        answer: parseInt(document.getElementById("correct-answer").value)
       };
-
-      questions.push(newQ);
       
       // Simpan ke quiz-data.js (manual)
-      alert(`Salin kode berikut ke quiz-data.js:\n\nquestions.push(${JSON.stringify(newQ, null, 2)});`);
+      alert(`Salin kode berikut ke assets/js/quiz-data.js:\n\nquestions.push(${JSON.stringify(newQuestion, null, 2)});`);
+      
+      // Reset form
+      document.getElementById("new-question").value = "";
+      document.getElementById("opt-a").value = "";
+      document.getElementById("opt-b").value = "";
+      document.getElementById("opt-c").value = "";
+      document.getElementById("opt-d").value = "";
+      document.getElementById("opt-e").value = "";
     }
   </script>
 </body>
