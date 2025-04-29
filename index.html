@@ -1,31 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QUIZ PERGUNU - Modern</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <div class="monitor">
-    <div class="screen">
+  <div class="quiz-container">
+    <div class="quiz-header">
       <h1 class="quiz-title">QUIZ PERGUNU</h1>
-      
-      <div id="quiz-container">
-        <!-- Konten quiz akan dimuat di sini oleh script.js -->
-        <div class="question" id="question"></div>
-        <div class="options" id="options"></div>
-        <button class="btn" id="next-btn">Lanjut</button>
-      </div>
-
-      <div id="result-container" style="display:none;">
-        <h2 style="color: var(--secondary);">Quiz Selesai!</h2>
-        <p id="score" style="color: white;"></p>
-        <button class="btn" onclick="resetQuiz()">Ulangi</button>
-      </div>
+      <p>Uji pengetahuan Anda tentang Nahdlatul Ulama</p>
+    </div>
+    
+    <div id="quiz-container">
+      <div class="question" id="question"></div>
+      <div class="options" id="options"></div>
+      <button class="btn" id="next-btn" style="display: none;">LANJUT</button>
+    </div>
+    
+    <div id="result-container" class="result-container">
+      <h2 class="result-title">SELESAI!</h2>
+      <p>Skor Anda: <span id="score">0</span></p>
+      <button class="btn" onclick="resetQuiz()">ULANGI QUIZ</button>
     </div>
   </div>
 
-  <script src="assets/js/quiz-data.js"></script>
   <script src="assets/js/script.js"></script>
 </body>
 </html>
