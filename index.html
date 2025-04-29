@@ -5,28 +5,209 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QUIZ PERGUNU - Modern</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --secondary: #f1c40f;
+      --correct: #2ecc71;
+      --wrong: #e74c3c;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a2a3a, #2c3e50);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+    .quiz-container {
+      width: 90%;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .quiz-title {
+      color: var(--secondary);
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .question {
+      font-size: 1.3rem;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .option {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+    }
+    .option:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+    .option.correct {
+      background: rgba(46, 204, 113, 0.2);
+      border-color: var(--correct);
+    }
+    .option.wrong {
+      background: rgba(231, 76, 60, 0.2);
+      border-color: var(--wrong);
+    }
+    .btn {
+      background: var(--secondary);
+      color: #2c3e50;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      display: block;
+      width: 200px;
+      margin: 0 auto;
+      transition: all 0.3s;
+    }
+    .btn:hover {
+      background: #e67e22;
+      box-shadow: 0 5px 15px rgba(230, 126, 34, 0.4);
+    }
+    .music-controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      background: rgba(0,0,0,0.7);
+      padding: 10px;
+      border-radius: 50px;
+    }
+    @media (max-width: 768px) {
+      .options { grid-template-columns: 1fr; }
+      .quiz-container { width: 95%; padding: 20px; }
+    }
+  </style>
 </head>
 <body>
   <div class="quiz-container">
-    <div class="quiz-header">
-      <h1 class="quiz-title">QUIZ PERGUNU</h1>
-      <p>Uji pengetahuan Anda tentang Nahdlatul Ulama</p>
-    </div>
-    
+    <h1 class="quiz-title">QUIZ PERGUNU</h1>
     <div id="quiz-container">
       <div class="question" id="question"></div>
       <div class="options" id="options"></div>
-      <button class="btn" id="next-btn" style="display: none;">LANJUT</button>
+      <button class="btn" id="next-btn" style="display:none;">LANJUT</button>
     </div>
-    
-    <div id="result-container" class="result-container">
-      <h2 class="result-title">SELESAI!</h2>
+    <div id="result-container" style="display:none; text-align:center;">
+      <h2 style="color: var(--secondary);">SELESAI!</h2>
       <p>Skor Anda: <span id="score">0</span></p>
-      <button class="btn" onclick="resetQuiz()">ULANGI QUIZ</button>
+      <button class="btn" onclick="resetQuiz()">ULANGI</button>
     </div>
   </div>
 
-  <script src="assets/js/script.js"></script>
+  <!-- Kontrol Musik -->
+  <div class="music-controls">
+    <button id="musicToggle">🔊 ON</button>
+    <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="0.3">
+  </div>
+
+  <audio id="bgMusic" loop>
+    <source src="https://voca.ro/1bfqk8pHsC8g" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // Variabel
+    let currentQuestion = 0;
+    let score = 0;
+    const questions = [
+      {
+        question: "Siapa pendiri NU?",
+        options: ["A. KH. Hasyim Asy'ari", "B. KH. Ahmad Dahlan", "C. Buya Hamka", "D. KH. Wahab Hasbullah", "E. KH. Ali Maksum"],
+        answer: 0
+      },
+      {
+        question: "Tahun berapa NU didirikan?",
+        options: ["A. 1926", "B. 1945", "C. 1938", "D. 1912", "E. 1954"],
+        answer: 0
+      }
+    ];
+
+    // Fungsi
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById("question").innerHTML = `${currentQuestion + 1}. ${q.question}`;
+      
+      let optionsHTML = '';
+      q.options.forEach((opt, i) => {
+        optionsHTML += `<div class="option" onclick="selectAnswer(${i})">${opt}</div>`;
+      });
+      document.getElementById("options").innerHTML = optionsHTML;
+    }
+
+    function selectAnswer(selectedIdx) {
+      const q = questions[currentQuestion];
+      const options = document.querySelectorAll('.option');
+      
+      options.forEach((opt, i) => {
+        opt.style.pointerEvents = 'none';
+        if (i === q.answer) opt.classList.add('correct');
+        else if (i === selectedIdx) opt.classList.add('wrong');
+      });
+
+      // Mainkan suara
+      new Audio(`assets/sounds/${selectedIdx === q.answer ? 'correct' : 'wrong'}.mp3`).play();
+
+      if (selectedIdx === q.answer) score++;
+      document.getElementById("next-btn").style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) loadQuestion();
+      else showResult();
+    }
+
+    function showResult() {
+      document.getElementById("quiz-container").style.display = 'none';
+      document.getElementById("result-container").style.display = 'block';
+      document.getElementById("score").textContent = score;
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById("quiz-container").style.display = 'block';
+      document.getElementById("result-container").style.display = 'none';
+      loadQuestion();
+    }
+
+    // Kontrol Musik
+    const bgMusic = document.getElementById('bgMusic');
+    document.getElementById('musicToggle').addEventListener('click', () => {
+      bgMusic.paused ? bgMusic.play() : bgMusic.pause();
+    });
+    document.getElementById('volumeControl').addEventListener('input', (e) => {
+      bgMusic.volume = e.target.value;
+    });
+
+    // Init
+    loadQuestion();
+    document.getElementById('next-btn').addEventListener('click', nextQuestion);
+    bgMusic.volume = 0.3;
+  </script>
 </body>
 </html>
