@@ -1,66 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Quiz PERGUNU</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+    <title>QUIZ PERGUNU</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 30px auto;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
-  <div class="quiz-container">
-    <h1>QUIZ PERGUNU</h1>
-    <div id="question"></div>
-    <div id="options" class="options-grid"></div>
-    <div id="result"></div>
-  </div>
-
-  <script src="assets/js/quiz-data.js"></script>
-  <script>
-    // Logika Quiz
-    let currentQuestion = 0;
-    let score = 0;
-    const totalQuestions = questions.length;
-
-    function loadQuestion() {
-      const q = questions[currentQuestion];
-      document.getElementById("question").textContent = `${currentQuestion + 1}. ${q.question}`;
-      
-      let optionsHTML = '';
-      q.options.forEach((opt, i) => {
-        optionsHTML += `<button class="option" onclick="checkAnswer(${i})">${opt}</button>`;
-      });
-      
-      document.getElementById("options").innerHTML = optionsHTML;
-    }
-
-    function checkAnswer(selectedIdx) {
-      const q = questions[currentQuestion];
-      const options = document.querySelectorAll(".option");
-      
-      options.forEach((opt, i) => {
-        opt.disabled = true;
-        if (i === q.answer) opt.classList.add("correct");
-        else if (i === selectedIdx) opt.classList.add("wrong");
-      });
-
-      if (selectedIdx === q.answer) score++;
-      
-      setTimeout(() => {
-        currentQuestion++;
-        if (currentQuestion < totalQuestions) loadQuestion();
-        else showResult();
-      }, 1500);
-    }
-
-    function showResult() {
-      document.getElementById("quiz-container").innerHTML = `
-        <div class="result">
-          <h2>Selesai!</h2>
-          <p>Nilai Anda: ${score}/${totalQuestions}</p>
-          <button onclick="location.reload()">Ulangi</button>
+    <div class="quiz-container">
+        <!-- Paste Embed Code Quizizz Anda di Bawah Ini -->
+        <div style="width:100%;display:flex;flex-direction:column;gap:8px;min-height:635px;">
+            <iframe 
+                src="https://quizizz.com/embed/quiz/68105852a8220f5e36152b36" 
+                title="Quiz PERGUNU" 
+                style="flex:1;" 
+                frameborder="0" 
+                allowfullscreen>
+            </iframe>
         </div>
-      `;
-    }
-
-    loadQuestion();
-  </script>
+    </div>
 </body>
 </html>
