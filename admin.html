@@ -1,82 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Panel</title>
-    <style>
-        body { font-family: Arial; max-width: 600px; margin: 0 auto; padding: 20px; }
-        .protected { display: none; }
-    </style>
-</head>
-<body>
-    <div id="auth">
-        <h2>Masukkan Password Admin</h2>
-        <input type="password" id="adminPass" placeholder="Password">
-        <button onclick="checkPassword()">Masuk</button>
-        <p id="error" style="color:red;"></p>
-    </div>
+<!-- Tambahkan di bagian form -->
+<script src="assets/js/ai.js"></script>
+<script>
+  async function generateWithAI() {
+    const prompt = document.getElementById("ai-prompt").value;
+    const question = await OpenAI.generateQuestion(prompt);
+    
+    if (question) {
+      document.getElementById("ai-result").innerHTML = `
+        <pre>${JSON.stringify(question, null, 2)}</pre>
+        <button onclick="addToQuiz(${JSON.stringify(question)})">Tambahkan</button>
+      `;
+    }
+  }
 
-    <div id="adminPanel" class="protected">
-        <h2>Tambah Soal Baru</h2>
-        <select id="category">
-            <option value="dasar">Level Dasar</option>
-            <option value="lanjut">Level Lanjut</option>
-        </select>
-        <textarea id="newQuestion" placeholder="Pertanyaan..."></textarea>
-        <input type="text" id="opt1" placeholder="Opsi 1">
-        <input type="text" id="opt2" placeholder="Opsi 2">
-        <input type="text" id="opt3" placeholder="Opsi 3">
-        <input type="number" id="correct" placeholder="Index Jawaban (0,1,2)">
-        <button onclick="addQuestion()">Simpan Soal</button>
-        <hr>
-        <h3>Generate Soal via AI</h3>
-        <textarea id="aiPrompt" placeholder="Contoh: Buat 1 soal tentang sejarah NU tingkat lanjut"></textarea>
-        <button onclick="generateAI()">Generate</button>
-        <div id="aiResult"></div>
-    </div>
-
-    <script>
-        // Proteksi Password
-        function checkPassword() {
-            if (document.getElementById("adminPass").value === "65614222") {
-                document.getElementById("auth").style.display = "none";
-                document.getElementById("adminPanel").style.display = "block";
-            } else {
-                document.getElementById("error").innerText = "Password salah!";
-            }
-        }
-
-        // Tambah soal manual
-        function addQuestion() {
-            const category = document.getElementById("category").value;
-            const newQ = {
-                question: document.getElementById("newQuestion").value,
-                options: [
-                    document.getElementById("opt1").value,
-                    document.getElementById("opt2").value,
-                    document.getElementById("opt3").value
-                ],
-                answer: parseInt(document.getElementById("correct").value)
-            };
-            
-            // Simpan ke questions.js (harus manual via GitHub)
-            alert("Salin soal berikut ke file assets/questions.js:\n\n" + 
-                  JSON.stringify(newQ, null, 2) + "\n\n" +
-                  "Lalu commit di GitHub.");
-        }
-
-        // Generate soal AI (simulasi)
-        function generateAI() {
-            const prompt = document.getElementById("aiPrompt").value;
-            // Simulasi hasil AI (di real implementation, pakai API OpenAI)
-            const aiResponse = {
-                question: prompt.split("tentang")[1] + "?",
-                options: ["A. Benar", "B. Salah", "C. Tidak relevan"],
-                answer: 0
-            };
-            document.getElementById("aiResult").innerHTML = 
-                `<pre>${JSON.stringify(aiResponse, null, 2)}</pre>` +
-                `<button onclick="copyToClipboard('${JSON.stringify(aiResponse)}')">Salin</button>`;
-        }
-    </script>
-</body>
-</html>
+  function addToQuiz(question) {
+    // Tambahkan ke questions.js secara manual
+    alert("Salin ini ke questions.js:\n\n" + 
+          `questions.kategori.push(${JSON.stringify(question)});`);
+  }
+</script>
