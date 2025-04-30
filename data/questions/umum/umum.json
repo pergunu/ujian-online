@@ -1,0 +1,28 @@
+[
+    {
+        "id": "umum-1",
+        "question": "Organ tubuh manusia yang berfungsi untuk memompa darah adalah...",
+        "options": {
+            "A": {"text": "Paru-paru", "description": "Organ pernapasan"},
+            "B": {"text": "Hati", "description": "Organ detoksifikasi"},
+            "C": {"text": "Jantung", "description": "Organ pemompa darah"},
+            "D": {"text": "Ginjal", "description": "Organ penyaring darah"}
+        },
+        "correctAnswer": "C",
+        "difficulty": "mudah",
+        "explanation": "Jantung adalah organ berotot yang memompa darah melalui pembuluh darah dalam sistem sirkulasi."
+    },
+    {
+        "id": "umum-2",
+        "question": "Planet terdekat dari matahari dalam tata surya kita adalah...",
+        "options": {
+            "A": {"text": "Venus", "description": "Planet kedua dari matahari"},
+            "B": {"text": "Bumi", "description": "Planet ketiga dari matahari"},
+            "C": {"text": "Mars", "description": "Planet keempat dari matahari"},
+            "D": {"text": "Merkurius", "description": "Planet terkecil di tata surya"}
+        },
+        "correctAnswer": "D",
+        "difficulty": "sedang",
+        "explanation": "Merkurius adalah planet terkecil dan terdekat dengan matahari dalam tata surya kita."
+    }
+]
