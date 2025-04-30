@@ -1,1 +1,15 @@
-
+[
+    {
+        "id": "lagu-1",
+        "question": "Lanjutkan lirik lagu: 'Tanah airku tidak kulupakan...'",
+        "options": {
+            "A": {"text": "'Kan terkenang selama hidupku", "description": "Lirik dari lagu Tanah Airku"},
+            "B": {"text": "Selalu di hati sanubariku", "description": "Lirik yang mirip tapi salah"},
+            "C": {"text": "Hingga akhir hayat nantiku", "description": "Lirik yang dibuat-buat"},
+            "D": {"text": "Tempat lahir dan tumbuhku", "description": "Bukan lirik asli"}
+        },
+        "correctAnswer": "A",
+        "difficulty": "mudah",
+        "explanation": "Lirik lengkapnya: 'Tanah airku tidak kulupakan, 'kan terkenang selama hidupku' dari lagu Tanah Airku ciptaan Ibu Sud."
+    }
+]
