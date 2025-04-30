@@ -1,0 +1,31 @@
+[
+  {
+    "id": "inggris-sd-001",
+    "category": "Bahasa Inggris",
+    "type": "bahasa_inggris",
+    "level": "sd",
+    "difficulty": "mudah",
+    "question": "English for 'meja' is...",
+    "options": [
+      {
+        "text": "Table",
+        "description": "Correct translation"
+      },
+      {
+        "text": "Chair",
+        "description": "Means 'kursi'"
+      },
+      {
+        "text": "Book",
+        "description": "Means 'buku'"
+      },
+      {
+        "text": "Door",
+        "description": "Means 'pintu'"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Table is the correct English word for 'meja'",
+    "lastUpdated": "2023-06-15T09:20:00Z"
+  }
+]
