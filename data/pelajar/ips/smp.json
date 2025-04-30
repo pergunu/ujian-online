@@ -1,0 +1,31 @@
+[
+  {
+    "id": "ips-smp-001",
+    "category": "IPS",
+    "type": "ips",
+    "level": "smp",
+    "difficulty": "sedang",
+    "question": "Pasar dimana penjual dan pembeli berada di berbagai negara disebut...",
+    "options": [
+      {
+        "text": "Pasar internasional",
+        "description": "Transaksi melintasi batas negara"
+      },
+      {
+        "text": "Pasar tradisional",
+        "description": "Biasanya lokal dengan penjual tetap"
+      },
+      {
+        "text": "Pasar monopoli",
+        "description": "Dikuasai satu penjual"
+      },
+      {
+        "text": "Pasar oligopoli",
+        "description": "Dikuasai beberapa penjual"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Pasar internasional memfasilitasi perdagangan antar negara seperti ekspor-impor barang dan jasa.",
+    "lastUpdated": "2023-06-02T10:15:00Z"
+  }
+]
