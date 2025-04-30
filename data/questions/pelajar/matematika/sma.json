@@ -1,0 +1,15 @@
+[
+    {
+        "id": "mat-sma-1",
+        "question": "Turunan pertama dari f(x) = 3x² + 5x - 2 adalah...",
+        "options": {
+            "A": {"text": "6x + 5", "description": "Turunan masing-masing suku"},
+            "B": {"text": "3x + 5", "description": "Hanya turunan suku pertama dan kedua"},
+            "C": {"text": "6x", "description": "Hanya turunan suku pertama"},
+            "D": {"text": "5", "description": "Hanya turunan suku kedua"}
+        },
+        "correctAnswer": "A",
+        "difficulty": "sedang",
+        "explanation": "f'(x) = d/dx(3x²) + d/dx(5x) - d/dx(2) = 6x + 5 - 0 = 6x + 5"
+    }
+]
