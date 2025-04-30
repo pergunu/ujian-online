@@ -1,153 +1,80 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Toggle form sekolah/profesi berdasarkan kategori
+    const umumRadio = document.querySelector('input[value="umum"]');
+    const pelajarRadio = document.querySelector('input[value="pelajar"]');
+    const professionField = document.getElementById('profession-field');
+    const schoolField = document.getElementById('school-field');
 
-import { CONFIG } from './config.js';
-import { QuizEngine } from './quiz-engine.js';
-import { UIManager } from './ui-manager.js';
-import { Auth } from './auth.js';
-
-class QuizApp {
-  constructor() {
-    this.quizEngine = new QuizEngine();
-    this.uiManager = new UIManager();
-    this.timerInterval = null;
-    this.timeLeft = CONFIG.TIME_LIMIT;
-    
-    this.init();
-  }
-
-  init() {
-    // Cek apakah di halaman admin
-    if (window.location.pathname.includes('admin')) {
-      Auth.checkAuth();
-      return;
+    function toggleFields() {
+        if (umumRadio.checked) {
+            professionField.style.display = 'block';
+            schoolField.style.display = 'none';
+        } else {
+            professionField.style.display = 'none';
+            schoolField.style.display = 'block';
+        }
     }
-    
-    // Setup event listeners
-    document.addEventListener('quizStarted', (e) => this.startQuiz(e.detail));
-    document.addEventListener('pauseQuiz', this.pauseQuiz);
-    
-    // Cek waktu sholat setiap 5 menit
-    setInterval(() => this.uiManager.checkPrayerTime(), 300000);
-    
-    // Shortcut untuk admin (Ctrl+Alt+A)
-    document.addEventListener('keydown', (e) => {
-      if (e.ctrlKey && e.altKey && e.key === 'a') {
-        window.location.href = '/admin';
-      }
+
+    umumRadio.addEventListener('change', toggleFields);
+    pelajarRadio.addEventListener('change', toggleFields);
+
+    // Form submission
+    const participantForm = document.getElementById('participant-form');
+    participantForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validasi form
+        const name = document.getElementById('name').value.trim();
+        const age = document.getElementById('age').value;
+        const phone = document.getElementById('phone').value.trim();
+        const agreeTerms = document.getElementById('agree-terms').checked;
+        
+        if (!name || !age || !phone || !agreeTerms) {
+            alert('Harap isi semua field yang wajib dan setujui syarat dan ketentuan');
+            return;
+        }
+        
+        // Kumpulkan data peserta
+        const participantData = {
+            name: name,
+            category: document.querySelector('input[name="category"]:checked').value,
+            age: age,
+            phone: phone,
+            profession: document.getElementById('profession').value.trim(),
+            school: document.getElementById('school').value.trim()
+        };
+        
+        // Simpan data ke localStorage
+        localStorage.setItem('quizParticipant', JSON.stringify(participantData));
+        
+        // Sembunyikan form registrasi
+        document.getElementById('registration-form').classList.remove('active');
+        
+        // Tampilkan quiz container
+        const quizContainer = document.getElementById('quiz-container');
+        quizContainer.style.display = 'block';
+        quizContainer.classList.add('active');
+        
+        // Inisialisasi quiz
+        initializeQuiz(participantData);
     });
-  }
 
-  async startQuiz(quizParams) {
-    // Inisialisasi quiz
-    const success = await this.quizEngine.initializeQuiz(quizParams);
-    
-    if (!success) {
-      alert('Gagal memuat soal. Silakan coba lagi.');
-      return;
+    // Fungsi inisialisasi quiz
+    function initializeQuiz(participantData) {
+        // Implementasi quiz engine akan ditambahkan di sini
+        console.log('Quiz dimulai untuk:', participantData);
+        
+        // Contoh sederhana:
+        quizContainer.innerHTML = `
+            <div class="quiz-header">
+                <h2>Quiz PERGUNU</h2>
+                <p>Selamat mengerjakan, ${participantData.name}!</p>
+            </div>
+            <div class="quiz-content">
+                <div class="question-container">
+                    <p>Fitur quiz akan segera tersedia. Silakan cek kembali nanti.</p>
+                </div>
+            </div>
+        `;
     }
-    
-    // Mulai timer
-    this.startTimer();
-    
-    // Tampilkan soal pertama
-    this.showCurrentQuestion();
-  }
-
-  showCurrentQuestion() {
-    const question = this.quizEngine.getCurrentQuestion();
-    this.uiManager.displayQuestion(question);
-  }
-
-  startTimer() {
-    this.updateTimerDisplay();
-    
-    this.timerInterval = setInterval(() => {
-      this.timeLeft--;
-      this.updateTimerDisplay();
-      
-      if (this.timeLeft <= 0) {
-        this.endQuiz();
-      }
-    }, 1000);
-  }
-
-  updateTimerDisplay() {
-    const minutes = Math.floor(this.timeLeft / 60);
-    const seconds = this.timeLeft % 60;
-    document.getElementById('timer').textContent = 
-      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    
-    if (this.timeLeft < 300) { // 5 menit tersisa
-      document.getElementById('timer').classList.add('text-danger');
-    }
-  }
-
-  submitAnswer() {
-    const selectedOption = document.querySelector('.option.selected');
-    
-    if (!selectedOption) {
-      alert('Pilih jawaban terlebih dahulu!');
-      return;
-    }
-    
-    const answer = selectedOption.dataset.option;
-    const result = this.quizEngine.submitAnswer(answer);
-    
-    // Tampilkan feedback
-    this.uiManager.showFeedback(
-      result.isCorrect,
-      result.correctAnswer,
-      result.explanation
-    );
-    
-    // Jika masih ada soal, lanjut ke berikutnya
-    if (this.quizEngine.nextQuestion()) {
-      setTimeout(() => this.showCurrentQuestion(), 2000);
-    } else {
-      this.endQuiz();
-    }
-  }
-
-  skipQuestion() {
-    if (!confirm("Lewati soal ini? Soal yang dilewati dihitung sebagai salah.")) {
-      return;
-    }
-    
-    // Submit jawaban kosong (salah)
-    this.quizEngine.submitAnswer(null);
-    
-    // Lanjut ke soal berikutnya
-    if (this.quizEngine.nextQuestion()) {
-      this.showCurrentQuestion();
-    } else {
-      this.endQuiz();
-    }
-  }
-
-  pauseQuiz() {
-    clearInterval(this.timerInterval);
-    this.uiManager.showPauseScreen();
-  }
-
-  resumeQuiz() {
-    this.startTimer();
-    this.uiManager.hidePauseScreen();
-  }
-
-  endQuiz() {
-    clearInterval(this.timerInterval);
-    const finalScore = this.quizEngine.getFinalScore();
-    this.uiManager.showFinalResults(finalScore);
-  }
-
-  restartQuiz() {
-    this.timeLeft = CONFIG.TIME_LIMIT;
-    document.getElementById('timer').classList.remove('text-danger');
-    this.uiManager.resetUI();
-    this.uiManager.showRegistrationForm();
-  }
-}
-
-// Jalankan aplikasi saat DOM siap
-document.addEventListener('DOMContentLoaded', () => {
-  new QuizApp();
 });
