@@ -1,0 +1,31 @@
+[
+  {
+    "id": "pribahasa-001",
+    "category": "Pribahasa",
+    "type": "pribahasa",
+    "level": "umum",
+    "difficulty": "sedang",
+    "question": "Lanjutkan pribahasa: 'Air tenang...'",
+    "options": [
+      {
+        "text": "menghanyutkan",
+        "description": "Arti: Orang yang kelihatannya tenang bisa berbahaya"
+      },
+      {
+        "text": "jernih selalu",
+        "description": "Bukan kelanjutan pribahasa yang tepat"
+      },
+      {
+        "text": "dalam isinya",
+        "description": "Maknanya berbeda dengan pribahasa asli"
+      },
+      {
+        "text": "menyejukkan hati",
+        "description": "Bukan makna pribahasa tersebut"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Pribahasa lengkapnya 'Air tenang menghanyutkan' bermakna orang yang terlihat tenang bisa menyimpan bahaya yang besar.",
+    "lastUpdated": "2023-05-21T15:10:00Z"
+  }
+]
