@@ -1,0 +1,15 @@
+[
+    {
+        "id": "ppkn-smp-1",
+        "question": "Lembaga negara yang berwenang mengubah UUD 1945 adalah...",
+        "options": {
+            "A": {"text": "Presiden", "description": "Kepala pemerintahan"},
+            "B": {"text": "DPR", "description": "Dewan Perwakilan Rakyat"},
+            "C": {"text": "MPR", "description": "Majelis Permusyawaratan Rakyat"},
+            "D": {"text": "Mahkamah Konstitusi", "description": "Pengawal konstitusi"}
+        },
+        "correctAnswer": "C",
+        "difficulty": "sedang",
+        "explanation": "Menurut Pasal 3 UUD 1945, MPR berwenang mengubah dan menetapkan UUD."
+    }
+]
