@@ -1,251 +1,274 @@
-import { CONFIG } from './config.js';
-import { PrayerTimes } from './prayer-times.js';
-
-export class UIManager {
-  constructor() {
-    this.prayerTimes = new PrayerTimes();
-    this.registerForm = document.getElementById('registerForm');
-    this.quizContainer = document.getElementById('quizContainer');
-    this.resultContainer = document.getElementById('resultContainer');
-    this.initEventListeners();
-  }
-
-  initEventListeners() {
-    // Pilihan kategori peserta
-    document.getElementById('participantType').addEventListener('change', (e) => {
-      this.toggleAdditionalFields(e.target.value);
-    });
+const UIManager = {
+    init: function() {
+        // Inisialisasi event listener untuk jawaban
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.answer-option')) {
+                const answerOption = e.target.closest('.answer-option');
+                if (!answerOption.classList.contains('selected')) {
+                    QuizEngine.checkAnswer(answerOption);
+                }
+            }
+        });
+    },
     
-    // Tombol mulai quiz
-    this.registerForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      this.startQuiz();
-    });
+    displayUserInfo: function(userData) {
+        document.getElementById('userNameDisplay').textContent = userData.name;
+        
+        // Set icon kategori
+        const categoryIcon = document.getElementById('categoryIcon');
+        let iconSrc = 'assets/images/icons/';
+        
+        if (userData.category === 'pelajar') {
+            iconSrc += 'pelajar.png';
+            document.getElementById('quizCategoryDisplay').textContent = 'Pelajar';
+        } else {
+            iconSrc += 'umum.png';
+            document.getElementById('quizCategoryDisplay').textContent = 'Umum';
+        }
+        
+        categoryIcon.src = iconSrc;
+    },
     
-    // Tombol-tombol quiz
-    document.getElementById('skipBtn').addEventListener('click', this.skipQuestion);
-    document.getElementById('submitBtn').addEventListener('click', this.submitAnswer);
-    document.getElementById('restartBtn').addEventListener('click', this.restartQuiz);
-  }
-
-  toggleAdditionalFields(participantType) {
-    const additionalFields = document.getElementById('additionalFields');
+    displayQuestion: function(question) {
+        // Tampilkan teks pertanyaan
+        document.getElementById('questionText').textContent = question.question;
+        document.getElementById('currentQuestionNum').textContent = this.currentQuestionIndex + 1;
+        
+        // Tampilkan pilihan jawaban
+        const answerOptions = document.getElementById('answerOptions');
+        answerOptions.innerHTML = '';
+        
+        question.options.forEach((option, index) => {
+            const optionElement = document.createElement('div');
+            optionElement.className = 'answer-option';
+            optionElement.dataset.index = index;
+            
+            optionElement.innerHTML = `
+                <div class="option-letter">${String.fromCharCode(65 + index)}</div>
+                <div class="option-content">
+                    <div class="option-text">${option.text}</div>
+                    <div class="option-description">${option.description}</div>
+                </div>
+            `;
+            
+            answerOptions.appendChild(optionElement);
+        });
+        
+        // Reset feedback
+        this.hideAnswerFeedback();
+    },
     
-    if (participantType === 'umum') {
-      additionalFields.innerHTML = this.getUmumFieldsHTML();
-    } else if (participantType === 'pelajar') {
-      additionalFields.innerHTML = this.getPelajarFieldsHTML();
-    } else {
-      additionalFields.innerHTML = '';
+    updateQuestionCounter: function(current, total) {
+        document.getElementById('questionCounter').textContent = `${current}/${total}`;
+        
+        // Update progress bar
+        const progressPercentage = (current / total) * 100;
+        document.getElementById('progressFill').style.width = `${progressPercentage}%`;
+    },
+    
+    updateTimer: function(remainingTime) {
+        const minutes = Math.floor(remainingTime / (1000 * 60));
+        const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+        
+        document.getElementById('timeRemaining').textContent = 
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        // Tambahkan class warning jika waktu hampir habis
+        if (remainingTime <= 5 * 60 * 1000) {
+            document.getElementById('timeRemaining').classList.add('timer-warning');
+        }
+    },
+    
+    showTimeWarning: function() {
+        // Mainkan suara peringatan
+        const timerSound = document.getElementById('timerSound');
+        timerSound.play();
+        
+        // Tampilkan animasi peringatan
+        const timerElement = document.getElementById('timeRemaining');
+        timerElement.classList.add('timer-warning');
+    },
+    
+    showAnswerFeedback: function(isCorrect, explanation) {
+        const responseMessage = document.getElementById('responseMessage');
+        responseMessage.className = 'response-message ' + (isCorrect ? 'correct' : 'wrong');
+        
+        if (isCorrect) {
+            const correctMessages = [
+                "Wow, kamu cerdas sekali!",
+                "Luar biasa! Saya iri sama kamu!",
+                "Benar sekali! Pengetahuanmu luas!",
+                "Mantap! Jawaban yang tepat!",
+                "Keren! Kamu benar-benar ahli!"
+            ];
+            responseMessage.textContent = correctMessages[Math.floor(Math.random() * correctMessages.length)];
+        } else {
+            const wrongMessages = [
+                "Wah, kamu salah… tapi jangan menyerah ya!",
+                "Hampir benar kok, coba lagi yuk!",
+                "Jawaban kurang tepat, tapi terus belajar ya!",
+                "Salah, tapi jangan khawatir! Ini kesempatan untuk belajar.",
+                "Oops! Jawaban yang benar adalah..."
+            ];
+            responseMessage.textContent = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
+        }
+        
+        responseMessage.style.display = 'block';
+    },
+    
+    hideAnswerFeedback: function() {
+        document.getElementById('responseMessage').style.display = 'none';
+    },
+    
+    showAnswerExplanation: function(explanation) {
+        // Implementasi untuk menampilkan penjelasan jawaban
+        const explanationElement = document.createElement('div');
+        explanationElement.className = 'explanation show';
+        explanationElement.innerHTML = `
+            <h4>Penjelasan:</h4>
+            <p>${explanation}</p>
+        `;
+        
+        const responseMessage = document.getElementById('responseMessage');
+        responseMessage.insertAdjacentElement('afterend', explanationElement);
+    },
+    
+    showAlert: function(message) {
+        alert(message);
+    },
+    
+    showQuizResults: function(score, isTimeout = false) {
+        // Update elemen hasil
+        document.getElementById('scorePercentage').textContent = `${score.percentage}%`;
+        document.getElementById('correctAnswers').textContent = score.correctAnswers;
+        document.getElementById('wrongAnswers').textContent = score.wrongAnswers;
+        
+        // Format waktu yang digunakan
+        const minutes = Math.floor(score.timeTaken / (1000 * 60));
+        const seconds = Math.floor((score.timeTaken % (1000 * 60)) / 1000);
+        document.getElementById('timeTaken').textContent = 
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        // Set grade dan warna
+        const scoreCircle = document.getElementById('scoreCircle');
+        const scoreGrade = document.getElementById('scoreGrade');
+        const resultMessage = document.getElementById('resultMessage');
+        
+        scoreCircle.className = 'score-circle grade-' + score.grade.toLowerCase().replace('+', '');
+        scoreGrade.textContent = `Nilai ${score.grade}`;
+        scoreGrade.className = 'score-grade grade-' + score.grade.toLowerCase().replace('+', '');
+        
+        // Set pesan hasil berdasarkan skor
+        resultMessage.className = 'result-message grade-' + score.grade.toLowerCase().replace('+', '');
+        
+        if (isTimeout) {
+            resultMessage.textContent = 'Waktu quiz telah habis! Berikut adalah hasil Anda:';
+        } else {
+            if (score.percentage >= 75) {
+                resultMessage.textContent = 'Luar biasa! Kamu benar-benar ahli! Saya bangga pada kamu!';
+            } else if (score.percentage >= 50) {
+                resultMessage.textContent = 'Keren! Pemahaman kamu sudah sangat baik!';
+            } else if (score.percentage >= 25) {
+                resultMessage.textContent = 'Hasil yang bagus, tetap berusaha untuk lebih baik lagi!';
+            } else {
+                resultMessage.textContent = 'Tetap semangat, belajar dari kesalahan adalah kunci sukses!';
+            }
+        }
+        
+        // Update sertifikat
+        const userData = UserManager.getUserData();
+        document.getElementById('certificateName').textContent = userData.name;
+        document.getElementById('certificateCategory').textContent = 
+            userData.category === 'pelajar' ? `Pelajar di ${userData.school}` : userData.profession;
+        document.getElementById('certificateDate').textContent = new Date().toLocaleDateString('id-ID', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        
+        // Mainkan suara tepuk tangan jika nilai bagus
+        if (score.percentage >= 50) {
+            const applauseSound = document.getElementById('applauseSound');
+            applauseSound.play();
+        }
+    },
+    
+    showPrayerTimeNotification: function(prayerName, time) {
+        const notification = document.getElementById('prayerTimeNotification');
+        document.getElementById('prayerTimeText').textContent = 
+            `Waktu ${prayerName} telah tiba (${time}). Silakan berhenti sejenak untuk beribadah.`;
+        
+        notification.style.display = 'flex';
+        notification.classList.add('show');
+        
+        // Mainkan adzan
+        const adhanSound = document.getElementById('adhanSound');
+        adhanSound.play();
+        
+        // Sembunyikan notifikasi setelah 1 menit
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 500);
+        }, 60000);
+    },
+    
+    showConfetti: function() {
+        const canvas = document.getElementById('confettiCanvas');
+        canvas.style.display = 'block';
+        
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const confettiPieces = [];
+        const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
+        
+        // Buat 100 partikel confetti
+        for (let i = 0; i < 100; i++) {
+            confettiPieces.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                r: Math.random() * 4 + 1,
+                d: Math.random() * 7 + 3,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                tilt: Math.floor(Math.random() * 10) - 10,
+                tiltAngle: Math.random() * 0.1,
+                tiltAngleIncrement: Math.random() * 0.07
+            });
+        }
+        
+        let animationFrame;
+        const animateConfetti = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            confettiPieces.forEach((p, i) => {
+                ctx.beginPath();
+                ctx.lineWidth = p.r / 2;
+                ctx.strokeStyle = p.color;
+                ctx.moveTo(p.x + p.tilt, p.y);
+                ctx.lineTo(p.x + p.tilt + p.r * 2, p.y);
+                ctx.stroke();
+                
+                p.tiltAngle += p.tiltAngleIncrement;
+                p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+                p.tilt = Math.sin(p.tiltAngle) * 15;
+                
+                if (p.y > canvas.height) {
+                    confettiPieces.splice(i, 1);
+                }
+            });
+            
+            if (confettiPieces.length > 0) {
+                animationFrame = requestAnimationFrame(animateConfetti);
+            } else {
+                canvas.style.display = 'none';
+                cancelAnimationFrame(animationFrame);
+            }
+        };
+        
+        animateConfetti();
     }
-  }
-
-  getUmumFieldsHTML() {
-    return `
-      <div class="form-group">
-        <label>Profesi</label>
-        <input type="text" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label>Kategori Quiz</label>
-        <select class="form-control" required>
-          <option value="">Pilih Kategori</option>
-          <option value="umum">Pengetahuan Umum</option>
-          <option value="logika">Tebak Logika & Jenaka</option>
-          <option value="lagu">Sambung Lagu</option>
-          <option value="pribahasa">Sambung Pribahasa</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Tingkat Kesulitan</label>
-        <select class="form-control" required>
-          <option value="mudah">Mudah</option>
-          <option value="sedang">Sedang</option>
-          <option value="sulit">Sulit</option>
-        </select>
-      </div>
-    `;
-  }
-
-  getPelajarFieldsHTML() {
-    return `
-      <div class="form-group">
-        <label>Sekolah/Universitas</label>
-        <input type="text" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label>Jenjang Pendidikan</label>
-        <select class="form-control" required>
-          <option value="">Pilih Jenjang</option>
-          <option value="sd">SD</option>
-          <option value="smp">SMP</option>
-          <option value="sma">SMA</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Mata Pelajaran</label>
-        <select class="form-control" required>
-          <option value="">Pilih Pelajaran</option>
-          <option value="ipa">IPA</option>
-          <option value="ips">IPS</option>
-          <option value="matematika">Matematika</option>
-          <option value="bahasa_indonesia">Bahasa Indonesia</option>
-          <option value="bahasa_inggris">Bahasa Inggris</option>
-          <option value="sejarah">Sejarah</option>
-          <option value="ppkn">PPKN</option>
-          <option value="agama">Agama</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Tingkat Kesulitan</label>
-        <select class="form-control" required>
-          <option value="mudah">Mudah</option>
-          <option value="sedang">Sedang</option>
-          <option value="sulit">Sulit</option>
-        </select>
-      </div>
-    `;
-  }
-
-  startQuiz() {
-    // Ambil data dari form
-    const formData = new FormData(this.registerForm);
-    const quizParams = {
-      name: formData.get('name'),
-      type: formData.get('participantType'),
-      category: formData.get('category') || 'umum',
-      subject: formData.get('subject') || 'pengetahuan_umum',
-      level: formData.get('level') || 'umum',
-      difficulty: formData.get('difficulty')
-    };
-    
-    // Simpan data user
-    this.currentUser = quizParams;
-    
-    // Sembunyikan form, tampilkan quiz
-    this.registerForm.closest('.card').classList.add('hidden');
-    this.quizContainer.classList.remove('hidden');
-    
-    // Trigger event untuk memulai quiz
-    document.dispatchEvent(new CustomEvent('quizStarted', { detail: quizParams }));
-  }
-
-  displayQuestion(question) {
-    const questionElement = document.getElementById('questionText');
-    const optionsContainer = document.getElementById('optionsContainer');
-    
-    // Tampilkan pertanyaan
-    questionElement.textContent = question.question;
-    
-    // Kosongkan opsi sebelumnya
-    optionsContainer.innerHTML = '';
-    
-    // Tambahkan opsi jawaban
-    for (const [key, option] of Object.entries(question.options)) {
-      const optionElement = document.createElement('div');
-      optionElement.className = 'option btn-hover-effect';
-      optionElement.dataset.option = key;
-      optionElement.innerHTML = `
-        <strong>${key}.</strong> ${option.text}
-        <small class="option-desc">${option.description}</small>
-      `;
-      optionElement.addEventListener('click', this.selectOption);
-      optionsContainer.appendChild(optionElement);
-    }
-    
-    // Update progress
-    this.updateProgress();
-  }
-
-  selectOption(e) {
-    // Hapus seleksi sebelumnya
-    document.querySelectorAll('.option').forEach(opt => {
-      opt.classList.remove('selected');
-    });
-    
-    // Tandai opsi yang dipilih
-    e.currentTarget.classList.add('selected');
-  }
-
-  updateProgress() {
-    const progress = quizEngine.getProgress();
-    document.getElementById('progressBar').style.width = `${progress.percentage}%`;
-    document.getElementById('progressText').textContent = 
-      `Soal ${progress.current}/${progress.total}`;
-  }
-
-  showFeedback(isCorrect, correctAnswer, explanation) {
-    const feedback = document.createElement('div');
-    feedback.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
-    feedback.innerHTML = `
-      <h4>${isCorrect ? 'Benar!' : 'Salah!'}</h4>
-      ${!isCorrect ? `<p>Jawaban benar: ${correctAnswer}</p>` : ''}
-      <p>${explanation}</p>
-    `;
-    
-    document.getElementById('feedbackContainer').appendChild(feedback);
-    setTimeout(() => feedback.remove(), 3000);
-  }
-
-  showFinalResults(score) {
-    this.quizContainer.classList.add('hidden');
-    this.resultContainer.classList.remove('hidden');
-    
-    document.getElementById('scoreValue').textContent = `${score.percentage}%`;
-    document.getElementById('scoreText').textContent = 
-      `Anda menjawab benar ${score.score} dari ${score.totalPossible} poin`;
-    
-    // Tampilkan pesan berdasarkan skor
-    let message = '';
-    let messageClass = '';
-    
-    if (score.percentage >= 75) {
-      message = 'Luar biasa! Anda benar-benar ahli!';
-      messageClass = 'text-success';
-    } else if (score.percentage >= 50) {
-      message = 'Kerja bagus! Tingkatkan lagi!';
-      messageClass = 'text-info';
-    } else if (score.percentage >= 25) {
-      message = 'Tetap semangat! Belajar lagi ya!';
-      messageClass = 'text-warning';
-    } else {
-      message = 'Jangan menyerah! Pelajari materinya lagi!';
-      messageClass = 'text-danger';
-    }
-    
-    document.getElementById('resultMessage').className = messageClass;
-    document.getElementById('resultMessage').textContent = message;
-  }
-
-  checkPrayerTime() {
-    const currentPrayer = this.prayerTimes.checkCurrentTime();
-    if (currentPrayer) {
-      const notification = this.prayerTimes.notifyPrayerTime(currentPrayer);
-      this.showPrayerNotification(notification);
-    }
-  }
-
-  showPrayerNotification(notification) {
-    const notificationElement = document.createElement('div');
-    notificationElement.className = 'prayer-notification';
-    notificationElement.innerHTML = `
-      <h3>${notification.title}</h3>
-      <p>${notification.message}</p>
-      <div class="notification-actions">
-        <button id="pauseQuiz">Pause Quiz</button>
-        <button id="continueQuiz">Lanjutkan</button>
-      </div>
-    `;
-    
-    document.body.appendChild(notificationElement);
-    
-    document.getElementById('pauseQuiz').addEventListener('click', () => {
-      document.dispatchEvent(new Event('pauseQuiz'));
-      notificationElement.remove();
-    });
-    
-    document.getElementById('continueQuiz').addEventListener('click', () => {
-      notificationElement.remove();
-    });
-  }
-}
+};
