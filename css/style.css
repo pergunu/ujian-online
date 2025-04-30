@@ -1,17 +1,87 @@
-/* GANTI INI */
+:root {
+    --primary: #4361ee;
+    --secondary: #3a0ca3;
+    --success: #4cc9f0;
+    --danger: #f72585;
+    --light: #f8f9fa;
+    --dark: #212529;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
+    font-family: 'Poppins', sans-serif;
     background: url('../assets/images/background.jpg') no-repeat center center fixed;
     background-size: cover;
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    color: var(--dark);
 }
 
 .container {
-    background-color: rgba(255, 255, 255, 0.85); /* Ubah opacity jadi 0.85 */
     max-width: 1000px;
     margin: 0 auto;
-    min-height: 100vh;
     padding: 20px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    border-radius: 10px 10px 0 0;
+    background-color: rgba(255, 255, 255, 0.92);
+    min-height: 100vh;
+    box-shadow: 0 0 30px rgba(0,0,0,0.1);
 }
+
+.header {
+    text-align: center;
+    padding: 30px 0;
+    margin-bottom: 30px;
+}
+
+.logo {
+    height: 120px;
+    width: auto;
+    margin-bottom: 15px;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: white;
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.hidden {
+    display: none;
+}
+
+/* Animasi khusus akan ada di animations.css */
