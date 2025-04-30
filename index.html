@@ -1,73 +1,59 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QUIZ PERGUNU - Sistem Kuis Interaktif</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
-</head>
-<body>
-    <div class="container">
-        <header class="header">
-            <img src="assets/images/logo.png" alt="Logo PERGUNU" class="logo">
-            <h1>QUIZ PERGUNU</h1>
-            <p class="tagline">Uji pengetahuanmu dengan kuis interaktif</p>
-        </header>
-
-        <main id="quizApp">
-            <!-- Form Registrasi -->
-            <div id="registration" class="card">
-                <h2>Registrasi Peserta</h2>
-                <form id="registerForm">
-                    <div class="form-group">
-                        <label for="name">Nama Lengkap</label>
-                        <input type="text" id="name" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Mulai Kuis</button>
-                </form>
-            </div>
-
-            <!-- Area Kuis (Awalnya tersembunyi) -->
-            <div id="quizArea" class="hidden">
-                <div class="quiz-header">
-                    <div class="quiz-info">
-                        <span id="quizCategory" class="badge">Umum</span>
-                        <span id="quizDifficulty" class="badge">Mudah</span>
-                    </div>
-                    <div class="quiz-timer">
-                        <span id="timer">60:00</span>
-                    </div>
-                </div>
-
-                <div class="question-container">
-                    <h3 id="questionText">Pertanyaan akan muncul di sini</h3>
-                    <div id="optionsContainer" class="options-container"></div>
-                </div>
-
-                <div class="quiz-controls">
-                    <button id="skipBtn" class="btn btn-secondary">Lewati</button>
-                    <button id="submitBtn" class="btn btn-primary">Submit</button>
-                </div>
-            </div>
-
-            <!-- Hasil Kuis (Awalnya tersembunyi) -->
-            <div id="resultArea" class="card hidden">
-                <h2>Hasil Kuis</h2>
-                <div class="score-display">
-                    <div id="scoreCircle" class="score-circle">
-                        <span id="scoreValue">0%</span>
-                    </div>
-                    <p id="resultMessage"></p>
-                </div>
-                <div class="result-actions">
-                    <button id="restartBtn" class="btn btn-primary">Main Lagi</button>
-                </div>
-            </div>
-        </main>
+<div id="registration-form" class="form-container">
+  <h2>Form Registrasi Peserta Quiz</h2>
+  <form id="participant-form">
+    <div class="form-group">
+      <label for="name">Nama Lengkap:</label>
+      <input type="text" id="name" name="name" required>
     </div>
-
-    <script src="js/main.js" type="module"></script>
-</body>
-</html>
+    
+    <div class="form-group">
+      <label>Kategori Peserta:</label>
+      <div class="radio-group">
+        <input type="radio" id="general" name="category" value="umum" checked>
+        <label for="general">Umum</label>
+        <input type="radio" id="student" name="category" value="pelajar">
+        <label for="student">Pelajar</label>
+      </div>
+    </div>
+    
+    <div class="form-group" id="profession-field" style="display:block;">
+      <label for="profession">Profesi:</label>
+      <input type="text" id="profession" name="profession">
+    </div>
+    
+    <div class="form-group" id="school-field" style="display:none;">
+      <label for="school">Nama Sekolah/Universitas:</label>
+      <input type="text" id="school" name="school">
+    </div>
+    
+    <div class="form-group">
+      <label for="age">Usia:</label>
+      <input type="number" id="age" name="age" min="10" max="100" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="phone">Nomor HP:</label>
+      <input type="tel" id="phone" name="phone" required>
+    </div>
+    
+    <div class="terms-box">
+      <h3>Persyaratan dan Kebijakan Quiz</h3>
+      <div class="terms-content">
+        <p>Dengan mengisi form ini, Anda menyetujui:</p>
+        <ol>
+          <li>Data yang dimasukkan akan digunakan untuk keperluan sistem quiz</li>
+          <li>Skor quiz akan disimpan selama 30 hari sejak partisipasi terakhir</li>
+          <li>Anda setuju untuk mengikuti semua aturan quiz yang berlaku</li>
+          <li>Quiz ini dikembangkan oleh Tim Kreatif PERGUNU Situbondo</li>
+        </ol>
+        <p><strong>Kebijakan Privasi:</strong> Kami tidak akan menyebarkan data pribadi Anda kepada pihak ketiga tanpa izin.</p>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="agree-terms" name="agree-terms" required>
+        <label for="agree-terms">Saya setuju dengan persyaratan dan kebijakan di atas</label>
+      </div>
+    </div>
+    
+    <button type="submit" class="btn-start">Mulai Quiz</button>
+  </form>
+</div>
