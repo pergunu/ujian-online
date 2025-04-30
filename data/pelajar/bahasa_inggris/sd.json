@@ -1,1 +1,15 @@
-
+[
+    {
+        "id": "bing-sd-1",
+        "question": "What is the color of banana?",
+        "options": {
+            "A": {"text": "Red", "description": "Warna apel"},
+            "B": {"text": "Yellow", "description": "Warna pisang matang"},
+            "C": {"text": "Blue", "description": "Warna langit"},
+            "D": {"text": "Green", "description": "Warna pisang mentah"}
+        },
+        "correctAnswer": "B",
+        "difficulty": "mudah",
+        "explanation": "Banana is yellow when it's ripe (Pisang berwarna kuning saat matang)."
+    }
+]
