@@ -1,108 +1,144 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Debug awal
-    console.log("Script loaded successfully!");
-    
-    // 1. Fix: Toggle field sekolah/profesi
-    const umumRadio = document.getElementById('umum-radio');
-    const pelajarRadio = document.getElementById('pelajar-radio');
-    const professionField = document.getElementById('profession-field');
-    const schoolField = document.getElementById('school-field');
+    // Inisialisasi modul
+    Auth.init();
+    PrayerTimes.init();
+    QuizEngine.init();
+    UIManager.init();
+    UserManager.init();
+    ScoreManager.init();
 
-    function toggleFields() {
-        professionField.style.display = umumRadio.checked ? 'block' : 'none';
-        schoolField.style.display = pelajarRadio.checked ? 'block' : 'none';
-    }
+    // Sembunyikan loading screen setelah semua siap
+    setTimeout(() => {
+        document.getElementById('loadingScreen').style.display = 'none';
+    }, 1500);
 
-    umumRadio.addEventListener('change', toggleFields);
-    pelajarRadio.addEventListener('change', toggleFields);
-    toggleFields(); // Init pertama kali
-
-    // 2. Fix: Form submission
-    const participantForm = document.getElementById('participant-form');
-    
-    participantForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        console.log("Form submitted!"); // Debug
-        
-        if (!validateForm()) {
-            alert("Harap isi semua field wajib!");
-            return;
-        }
-
-        startQuiz();
+    // Event listener untuk kategori peserta
+    document.querySelectorAll('input[name="category"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'pelajar') {
+                document.getElementById('profesiGroup').style.display = 'none';
+                document.getElementById('schoolGroup').style.display = 'block';
+                document.getElementById('profession').required = false;
+                document.getElementById('school').required = true;
+            } else {
+                document.getElementById('profesiGroup').style.display = 'block';
+                document.getElementById('schoolGroup').style.display = 'none';
+                document.getElementById('profession').required = true;
+                document.getElementById('school').required = false;
+            }
+        });
     });
 
-    // 3. Fix: Validasi terintegrasi
-    function validateForm() {
-        const requiredFields = [
-            { id: 'name-input', name: 'Nama Lengkap' },
-            { id: 'age-input', name: 'Usia' },
-            { id: 'phone-input', name: 'Nomor HP' }
-        ];
+    // Event listener untuk modal syarat dan ketentuan
+    document.getElementById('termsLink').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('termsModal').style.display = 'block';
+    });
 
-        for (const field of requiredFields) {
-            const element = document.getElementById(field.id);
-            if (!element.value.trim()) {
-                alert(`${field.name} harus diisi!`);
-                element.focus();
-                return false;
-            }
+    document.getElementById('privacyLink').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('privacyModal').style.display = 'block';
+    });
+
+    // Tutup modal
+    document.querySelectorAll('.close-modal').forEach(closeBtn => {
+        closeBtn.addEventListener('click', function() {
+            this.closest('.modal').style.display = 'none';
+        });
+    });
+
+    // Klik di luar modal untuk menutup
+    window.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal')) {
+            e.target.style.display = 'none';
         }
+    });
 
-        // Validasi khusus pelajar
-        if (pelajarRadio.checked && !document.getElementById('school-input').value.trim()) {
-            alert("Nama sekolah harus diisi untuk kategori pelajar!");
-            return false;
-        }
-
-        // Validasi checkbox
-        if (!document.getElementById('agree-terms-checkbox').checked) {
-            alert("Anda harus menyetujui syarat dan ketentuan!");
-            return false;
-        }
-
-        return true;
-    }
-
-    // 4. Fix: Mulai quiz dengan animasi
-    function startQuiz() {
-        const participantData = {
-            name: document.getElementById('name-input').value.trim(),
+    // Form registrasi
+    document.getElementById('userRegistration').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const userData = {
+            name: document.getElementById('name').value,
             category: document.querySelector('input[name="category"]:checked').value,
-            age: document.getElementById('age-input').value,
-            phone: document.getElementById('phone-input').value.trim(),
-            profession: document.getElementById('profession-input').value.trim(),
-            school: document.getElementById('school-input').value.trim()
+            profession: document.getElementById('profession').value,
+            school: document.getElementById('school').value,
+            age: document.getElementById('age').value,
+            phone: document.getElementById('phone').value,
+            timestamp: new Date().toISOString()
         };
 
-        // Simpan data
-        localStorage.setItem('quizParticipant', JSON.stringify(participantData));
-
-        // Animasi transisi
-        const registrationForm = document.getElementById('registration-form');
-        registrationForm.style.opacity = '0';
+        // Simpan data user
+        UserManager.saveUserData(userData);
         
+        // Tampilkan data user di UI
+        UIManager.displayUserInfo(userData);
+        
+        // Sembunyikan form registrasi
+        document.getElementById('registrationForm').style.display = 'none';
+        
+        // Tampilkan quiz container
+        document.getElementById('quizContainer').style.display = 'block';
+        
+        // Mulai quiz
+        QuizEngine.startQuiz(userData.category);
+    });
+
+    // Event listener untuk tombol quiz
+    document.getElementById('btnNext').addEventListener('click', QuizEngine.nextQuestion);
+    document.getElementById('btnReset').addEventListener('click', QuizEngine.resetQuestion);
+    document.getElementById('btnFinish').addEventListener('click', QuizEngine.finishQuiz);
+    
+    // Event listener untuk hasil quiz
+    document.getElementById('btnRestart').addEventListener('click', restartQuiz);
+    document.getElementById('btnLike').addEventListener('click', likeQuiz);
+    document.getElementById('btnShare').addEventListener('click', shareResults);
+
+    function restartQuiz() {
+        document.getElementById('resultContainer').style.display = 'none';
+        document.getElementById('quizContainer').style.display = 'block';
+        QuizEngine.restartQuiz();
+    }
+
+    function likeQuiz() {
+        const btnLike = document.getElementById('btnLike');
+        btnLike.classList.add('clicked');
+        
+        // Mainkan suara tepuk tangan
+        const applauseSound = document.getElementById('applauseSound');
+        applauseSound.play();
+        
+        // Tampilkan efek confetti
+        UIManager.showConfetti();
+        
+        // Reset animasi setelah selesai
         setTimeout(() => {
-            registrationForm.style.display = 'none';
-            
-            // Tampilkan quiz
-            const quizContainer = document.getElementById('quiz-container');
-            quizContainer.innerHTML = `
-                <div class="quiz-start-animation">
-                    <h2>Quiz Siap Dimulai!</h2>
-                    <p>Halo, ${participantData.name}!</p>
-                    <button id="start-quiz-btn" class="btn-primary">Mulai Sekarang</button>
-                </div>
-            `;
-            
-            quizContainer.style.display = 'block';
-            
-            // Event listener untuk tombol mulai
-            document.getElementById('start-quiz-btn').addEventListener('click', function() {
-                // Implementasi quiz engine di sini
-                console.log("Quiz dimulai untuk:", participantData);
-                alert("Quiz akan segera dimulai!"); // Placeholder
-            });
+            btnLike.classList.remove('clicked');
         }, 500);
+    }
+
+    function shareResults() {
+        // Implementasi berbagi hasil
+        const score = ScoreManager.getCurrentScore();
+        const shareText = `Saya baru saja menyelesaikan Quiz PERGUNU dengan skor ${score.percentage}%! Coba kamu juga di ${window.location.href}`;
+        
+        if (navigator.share) {
+            navigator.share({
+                title: 'Hasil Quiz PERGUNU',
+                text: shareText,
+                url: window.location.href
+            }).catch(err => {
+                console.log('Error sharing:', err);
+                fallbackShare(shareText);
+            });
+        } else {
+            fallbackShare(shareText);
+        }
+    }
+
+    function fallbackShare(text) {
+        // Fallback untuk browser yang tidak mendukung Web Share API
+        const shareUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        window.open(shareUrl, '_blank');
     }
 });
