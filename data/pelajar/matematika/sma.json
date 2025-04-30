@@ -1,0 +1,31 @@
+[
+  {
+    "id": "mat-sma-001",
+    "category": "Matematika",
+    "type": "matematika",
+    "level": "sma",
+    "difficulty": "sulit",
+    "question": "Turunan pertama dari f(x) = 3x² - 4x + 2 adalah...",
+    "options": [
+      {
+        "text": "6x - 4",
+        "description": "Turunan dari masing-masing term"
+      },
+      {
+        "text": "3x - 4",
+        "description": "Hanya turunan sebagian"
+      },
+      {
+        "text": "6x + 2",
+        "description": "Salah menghitung konstanta"
+      },
+      {
+        "text": "3x² - 4",
+        "description": "Bukan bentuk turunan"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Gunakan aturan pangkat: turunan x^n adalah n*x^(n-1). Jadi 3x² → 6x, -4x → -4, dan konstanta hilang.",
+    "lastUpdated": "2023-06-06T14:35:00Z"
+  }
+]
