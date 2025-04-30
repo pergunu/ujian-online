@@ -1,0 +1,60 @@
+[
+  {
+    "id": "umum-smp-001",
+    "category": "Umum",
+    "type": "umum",
+    "level": "smp",
+    "difficulty": "sedang",
+    "question": "Tokoh yang dikenal sebagai Bapak Proklamator Indonesia adalah...",
+    "options": [
+      {
+        "text": "Soekarno dan Hatta",
+        "description": "Benar, keduanya memproklamasikan kemerdekaan Indonesia"
+      },
+      {
+        "text": "Soeharto dan Habibie",
+        "description": "Mereka adalah presiden setelah era kemerdekaan"
+      },
+      {
+        "text": "Tan Malaka dan Sjahrir",
+        "description": "Mereka adalah pejuang revolusi tapi bukan proklamator"
+      },
+      {
+        "text": "Gatot Subroto dan Sudirman",
+        "description": "Mereka adalah pahlawan militer"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Soekarno membacakan teks proklamasi sementara Hatta mendampingi sebagai wakil, sehingga disebut sebagai dwitunggal proklamator.",
+    "lastUpdated": "2023-05-15T08:30:00Z"
+  },
+  {
+    "id": "umum-smp-002",
+    "category": "Umum",
+    "type": "umum",
+    "level": "smp",
+    "difficulty": "mudah",
+    "question": "Lagu kebangsaan Indonesia adalah...",
+    "options": [
+      {
+        "text": "Indonesia Raya",
+        "description": "Benar, dikomposeri oleh Wage Rudolf Supratman"
+      },
+      {
+        "text": "Bagimu Negeri",
+        "description": "Lagu perjuangan tapi bukan lagu kebangsaan"
+      },
+      {
+        "text": "Halo-Halo Bandung",
+        "description": "Lagu tentang Bandung pasca kemerdekaan"
+      },
+      {
+        "text": "Gugur Bunga",
+        "description": "Lagu untuk mengenang pahlawan"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Indonesia Raya pertama kali dikumandangkan pada 28 Oktober 1928 dalam Kongres Pemuda II.",
+    "lastUpdated": "2023-05-16T10:15:00Z"
+  }
+]
