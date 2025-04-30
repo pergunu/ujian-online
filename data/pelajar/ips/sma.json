@@ -1,0 +1,31 @@
+[
+  {
+    "id": "ips-sma-001",
+    "category": "IPS",
+    "type": "ips",
+    "level": "sma",
+    "difficulty": "sulit",
+    "question": "Kebijakan moneter dimana bank sentral menambah jumlah uang beredar disebut...",
+    "options": [
+      {
+        "text": "Ekspansif",
+        "description": "Mendorong pertumbuhan ekonomi"
+      },
+      {
+        "text": "Kontraktif",
+        "description": "Kebalikan dari ekspansif"
+      },
+      {
+        "text": "Diskonto",
+        "description": "Salah satu instrumen kebijakan"
+      },
+      {
+        "text": "Giro wajib",
+        "description": "Alat kontrol uang beredar"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Kebijakan moneter ekspansif dilakukan dengan menurunkan suku bunga, membeli surat berharga, atau menurunkan cadangan wajib.",
+    "lastUpdated": "2023-06-03T14:20:00Z"
+  }
+]
