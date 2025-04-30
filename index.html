@@ -3,19 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QUIZ PERGUNU</title>
+    <title>QUIZ PERGUNU - Sistem Kuis Interaktif</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
     <div class="container">
         <header class="header">
             <img src="assets/images/logo.png" alt="Logo PERGUNU" class="logo">
             <h1>QUIZ PERGUNU</h1>
+            <p class="tagline">Uji pengetahuanmu dengan kuis interaktif</p>
         </header>
-        
-        <!-- Konten aplikasi -->
+
+        <main id="quizApp">
+            <!-- Form Registrasi -->
+            <div id="registration" class="card">
+                <h2>Registrasi Peserta</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="name">Nama Lengkap</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Mulai Kuis</button>
+                </form>
+            </div>
+
+            <!-- Area Kuis (Awalnya tersembunyi) -->
+            <div id="quizArea" class="hidden">
+                <div class="quiz-header">
+                    <div class="quiz-info">
+                        <span id="quizCategory" class="badge">Umum</span>
+                        <span id="quizDifficulty" class="badge">Mudah</span>
+                    </div>
+                    <div class="quiz-timer">
+                        <span id="timer">60:00</span>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <h3 id="questionText">Pertanyaan akan muncul di sini</h3>
+                    <div id="optionsContainer" class="options-container"></div>
+                </div>
+
+                <div class="quiz-controls">
+                    <button id="skipBtn" class="btn btn-secondary">Lewati</button>
+                    <button id="submitBtn" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+
+            <!-- Hasil Kuis (Awalnya tersembunyi) -->
+            <div id="resultArea" class="card hidden">
+                <h2>Hasil Kuis</h2>
+                <div class="score-display">
+                    <div id="scoreCircle" class="score-circle">
+                        <span id="scoreValue">0%</span>
+                    </div>
+                    <p id="resultMessage"></p>
+                </div>
+                <div class="result-actions">
+                    <button id="restartBtn" class="btn btn-primary">Main Lagi</button>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <script src="js/main.js"></script>
+    <script src="js/main.js" type="module"></script>
 </body>
 </html>
