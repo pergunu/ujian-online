@@ -1,1 +1,27 @@
-
+[
+    {
+        "id": 1,
+        "question": "Apa warna daun yang sehat?",
+        "options": {
+            "A": {
+                "text": "Merah",
+                "description": "Daun biasanya tidak berwarna merah kecuali musim gugur"
+            },
+            "B": {
+                "text": "Hijau",
+                "description": "Daun yang sehat mengandung klorofil yang berwarna hijau"
+            },
+            "C": {
+                "text": "Kuning",
+                "description": "Daun kuning biasanya tanda kurang sehat"
+            },
+            "D": {
+                "text": "Biru",
+                "description": "Daun sangat jarang berwarna biru"
+            }
+        },
+        "correctAnswer": "B",
+        "difficulty": "mudah",
+        "explanation": "Daun yang sehat berwarna hijau karena mengandung klorofil yang digunakan untuk fotosintesis."
+    }
+]
