@@ -1,0 +1,31 @@
+[
+  {
+    "id": "ppkn-sma-001",
+    "category": "PPKN",
+    "type": "ppkn",
+    "level": "sma",
+    "difficulty": "sulit",
+    "question": "Menurut UUD 1945 Pasal 24C, wewenang MK adalah...",
+    "options": [
+      {
+        "text": "Menguji undang-undang terhadap UUD",
+        "description": "Wewenang utama Mahkamah Konstitusi"
+      },
+      {
+        "text": "Memutus sengketa kewenangan lembaga negara",
+        "description": "Juga wewenang MK tapi bukan pilihan utama"
+      },
+      {
+        "text": "Mengadili kasus pidana",
+        "description": "Wewenang pengadilan umum"
+      },
+      {
+        "text": "Memeriksa keuangan negara",
+        "description": "Wewenang BPK"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Pasal 24C ayat (1) menyebut MK berwenang menguji UU terhadap UUD, memutus sengketa kewenangan lembaga negara, memutus pembubaran partai politik, dan memutus perselisihan hasil pemilu",
+    "lastUpdated": "2023-06-19T11:00:00Z"
+  }
+]
