@@ -1,1 +1,28 @@
 
+[
+    {
+        "id": 201,
+        "question": "Apa yang selalu datang tetapi tidak pernah sampai?",
+        "options": {
+            "A": {
+                "text": "Besok",
+                "description": "Ketika besok tiba, namanya menjadi hari ini"
+            },
+            "B": {
+                "text": "Hujan",
+                "description": "Hujan memang sering diharapkan tapi bisa datang"
+            },
+            "C": {
+                "text": "Masa depan",
+                "description": "Masa depan adalah konsep yang terus bergerak"
+            },
+            "D": {
+                "text": "Angin",
+                "description": "Angin bisa dirasakan ketika datang"
+            }
+        },
+        "correctAnswer": "A",
+        "difficulty": "sedang",
+        "explanation": "Ini adalah teka-teki klasik tentang waktu. 'Besok' selalu akan menjadi hari yang akan datang."
+    }
+]
