@@ -1,0 +1,31 @@
+[
+  {
+    "id": "sej-sma-001",
+    "category": "Sejarah",
+    "type": "sejarah",
+    "level": "sma",
+    "difficulty": "sulit",
+    "question": "Peristiwa Rengasdengklok terjadi karena...",
+    "options": [
+      {
+        "text": "Perbedaan pendapat tentang waktu proklamasi",
+        "description": "Pemuda mendesak segera, golongan tua menunggu Jepang"
+      },
+      {
+        "text": "Perselisihan antara Soekarno dan Hatta",
+        "description": "Mereka justru bersatu dalam peristiwa ini"
+      },
+      {
+        "text": "Pemberontakan terhadap Jepang",
+        "description": "Bukan tujuan utama peristiwa ini"
+      },
+      {
+        "text": "Persiapan pembentukan BPUPKI",
+        "description": "Terjadi sebelum peristiwa Rengasdengklok"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Pada 16 Agustus 1945, para pemuda membawa Soekarno-Hatta ke Rengasdengklok untuk mendesak proklamasi tanpa menunggu Jepang.",
+    "lastUpdated": "2023-05-27T13:45:00Z"
+  }
+]
