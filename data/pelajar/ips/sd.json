@@ -1,0 +1,31 @@
+[
+  {
+    "id": "ips-sd-001",
+    "category": "IPS",
+    "type": "ips",
+    "level": "sd",
+    "difficulty": "mudah",
+    "question": "Kegiatan ekonomi yang menghasilkan barang langsung dari alam adalah...",
+    "options": [
+      {
+        "text": "Pertanian",
+        "description": "Menghasilkan bahan pangan dari pengolahan tanah"
+      },
+      {
+        "text": "Perdagangan",
+        "description": "Kegiatan jual beli, bukan produksi langsung"
+      },
+      {
+        "text": "Perbankan",
+        "description": "Bidang jasa keuangan"
+      },
+      {
+        "text": "Transportasi",
+        "description": "Bidang pengangkutan"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Pertanian termasuk kegiatan produksi primer yang mengambil langsung dari alam seperti tanaman pangan dan perkebunan.",
+    "lastUpdated": "2023-06-01T08:30:00Z"
+  }
+]
