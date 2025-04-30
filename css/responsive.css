@@ -1,0 +1,76 @@
+/* Tablet Devices */
+@media (max-width: 992px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .quiz-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .quiz-info {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .quiz-progress {
+        width: 100%;
+    }
+    
+    .question-text, .answer-option {
+        font-size: 16px;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .registration-form, .quiz-container, .result-container {
+        padding: 20px;
+    }
+    
+    .quiz-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .answer-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .result-stats, .result-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .score-circle {
+        width: 120px;
+        height: 120px;
+        font-size: 30px;
+    }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+    .question-text {
+        font-size: 15px;
+    }
+    
+    .answer-option {
+        padding: 10px;
+    }
+    
+    .btn-nav, .btn-action {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    
+    .modal-content {
+        padding: 20px;
+        margin: 20px auto;
+    }
+}
