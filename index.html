@@ -1,213 +1,990 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QUIZ PERGUNU - Modern</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #2c3e50;
-      --secondary: #f1c40f;
-      --correct: #2ecc71;
-      --wrong: #e74c3c;
-    }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #1a2a3a, #2c3e50);
-      min-height: 100vh;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-    }
-    .quiz-container {
-      width: 90%;
-      max-width: 800px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .quiz-title {
-      color: var(--secondary);
-      text-align: center;
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-    .question {
-      font-size: 1.3rem;
-      margin-bottom: 25px;
-      line-height: 1.5;
-    }
-    .options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-    .option {
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      padding: 15px;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-align: center;
-    }
-    .option:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-3px);
-    }
-    .option.correct {
-      background: rgba(46, 204, 113, 0.2);
-      border-color: var(--correct);
-    }
-    .option.wrong {
-      background: rgba(231, 76, 60, 0.2);
-      border-color: var(--wrong);
-    }
-    .btn {
-      background: var(--secondary);
-      color: #2c3e50;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      display: block;
-      width: 200px;
-      margin: 0 auto;
-      transition: all 0.3s;
-    }
-    .btn:hover {
-      background: #e67e22;
-      box-shadow: 0 5px 15px rgba(230, 126, 34, 0.4);
-    }
-    .music-controls {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      display: flex;
-      gap: 10px;
-      background: rgba(0,0,0,0.7);
-      padding: 10px;
-      border-radius: 50px;
-    }
-    @media (max-width: 768px) {
-      .options { grid-template-columns: 1fr; }
-      .quiz-container { width: 95%; padding: 20px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz PERGUNU - Kuis Interaktif</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .quiz-card {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .correct {
+            animation: pulseCorrect 1s;
+        }
+        .wrong {
+            animation: pulseWrong 1s;
+        }
+        @keyframes pulseCorrect {
+            0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+        }
+        @keyframes pulseWrong {
+            0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+        }
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+    </style>
 </head>
-<body>
-  <div class="quiz-container">
-    <h1 class="quiz-title">QUIZ PERGUNU</h1>
-    <div id="quiz-container">
-      <div class="question" id="question"></div>
-      <div class="options" id="options"></div>
-      <button class="btn" id="next-btn" style="display:none;">LANJUT</button>
+<body class="py-8">
+    <!-- Aplikasi Utama -->
+    <div id="app" class="container mx-auto px-4 max-w-4xl">
+        <!-- Form Registrasi -->
+        <div id="registration" class="quiz-card bg-white p-8 mb-8">
+            <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">QUIZ PERGUNU</h1>
+            <form id="registerForm" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-2">Nama Lengkap</label>
+                    <input type="text" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2">Kategori Peserta</label>
+                    <select id="participantType" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Pilih Kategori</option>
+                        <option value="umum">Umum</option>
+                        <option value="pelajar">Pelajar</option>
+                    </select>
+                </div>
+                
+                <div id="professionField" class="hidden">
+                    <label class="block text-gray-700 mb-2">Profesi</label>
+                    <input type="text" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div id="schoolField" class="hidden">
+                    <label class="block text-gray-700 mb-2">Sekolah/Universitas</label>
+                    <input type="text" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Usia</label>
+                        <input type="number" min="10" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Nomor HP</label>
+                        <input type="tel" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                        Mulai Quiz
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Area Quiz (Awalnya Tersembunyi) -->
+        <div id="quizArea" class="hidden">
+            <!-- Header Quiz -->
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 id="quizCategory" class="text-xl font-semibold text-gray-800"></h2>
+                    <p id="quizDifficulty" class="text-sm text-gray-600"></p>
+                </div>
+                <div class="text-right">
+                    <div class="text-2xl font-bold text-blue-600" id="timer">60:00</div>
+                    <div class="text-sm text-gray-600">Soal <span id="currentQuestion">1</span>/<span id="totalQuestions">100</span></div>
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progressBar" class="bg-blue-600 h-2.5 rounded-full progress-bar" style="width: 0%"></div>
+            </div>
+            
+            <!-- Kartu Soal -->
+            <div class="quiz-card bg-white p-8 mb-6">
+                <div class="mb-6">
+                    <h3 id="questionText" class="text-lg font-medium text-gray-800"></h3>
+                </div>
+                
+                <div id="optionsContainer" class="space-y-3">
+                    <!-- Opsi jawaban akan diisi oleh JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Kontrol Navigasi -->
+            <div class="flex justify-between">
+                <button id="resetBtn" class="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition duration-300">
+                    Lewati Soal
+                </button>
+                <button id="submitBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+                    Kirim Jawaban
+                </button>
+            </div>
+        </div>
+
+        <!-- Hasil Quiz (Awalnya Tersembunyi) -->
+        <div id="resultArea" class="hidden quiz-card bg-white p-8 text-center">
+            <h2 class="text-2xl font-bold mb-4">Hasil Quiz Anda</h2>
+            <div id="scoreCircle" class="w-40 h-40 rounded-full border-8 flex items-center justify-center mx-auto mb-6">
+                <span id="scoreValue" class="text-4xl font-bold"></span>
+            </div>
+            <p id="resultMessage" class="text-lg mb-6"></p>
+            <div id="answerFeedback" class="mb-6 text-left"></div>
+            <button id="restartBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 mr-3">
+                Main Lagi
+            </button>
+            <button id="likeBtn" class="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition duration-300">
+                Saya Suka Quiz PERGUNU!
+            </button>
+        </div>
     </div>
-    <div id="result-container" style="display:none; text-align:center;">
-      <h2 style="color: var(--secondary);">SELESAI!</h2>
-      <p>Skor Anda: <span id="score">0</span></p>
-      <button class="btn" onclick="resetQuiz()">ULANGI</button>
+
+    <!-- Notifikasi Waktu Sholat -->
+    <div id="prayerTimeModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 class="text-xl font-bold mb-2">Waktu Sholat Telah Tiba</h3>
+            <p class="mb-4">Saatnya beristirahat sejenak untuk melaksanakan sholat.</p>
+            <audio id="adhanAudio" src="https://voca.ro/191XmlGPAXQ2"></audio>
+            <div class="flex justify-end space-x-3">
+                <button id="pauseQuizBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg">
+                    Istirahat
+                </button>
+                <button id="continueQuizBtn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg">
+                    Lanjutkan
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Kontrol Musik -->
-  <div class="music-controls">
-    <button id="musicToggle">🔊 ON</button>
-    <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="0.3">
-  </div>
+    <!-- Modal Admin -->
+    <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg p-6 max-w-2xl w-full max-h-screen overflow-y-auto">
+            <h3 class="text-xl font-bold mb-4">Panel Admin - Tambah Soal Baru</h3>
+            <form id="adminForm" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-2">Kode Admin</label>
+                    <input type="password" id="adminCode" required class="w-full px-4 py-2 border rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Kategori Soal</label>
+                    <select id="questionCategory" required class="w-full px-4 py-2 border rounded-lg">
+                        <option value="">Pilih Kategori</option>
+                        <option value="umum">Umum</option>
+                        <option value="pelajar">Pelajar</option>
+                        <option value="logika">Tebak Logika & Jenaka</option>
+                        <option value="lagu">Sambung Lagu</option>
+                        <option value="pribahasa">Sambung Pribahasa</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Subjek (Untuk Pelajar)</label>
+                    <select id="questionSubject" class="w-full px-4 py-2 border rounded-lg">
+                        <option value="">Pilih Subjek</option>
+                        <option value="ipa">IPA</option>
+                        <option value="ips">IPS</option>
+                        <option value="matematika">Matematika</option>
+                        <option value="bahasa">Bahasa Indonesia</option>
+                        <option value="inggris">Bahasa Inggris</option>
+                        <option value="sejarah">Sejarah</option>
+                        <option value="ppkn">PPKN</option>
+                        <option value="agama">Agama</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Tingkat Kesulitan</label>
+                    <select id="questionDifficulty" required class="w-full px-4 py-2 border rounded-lg">
+                        <option value="mudah">Mudah</option>
+                        <option value="sedang">Sedang</option>
+                        <option value="sulit">Sulit</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Pertanyaan</label>
+                    <textarea id="questionText" required class="w-full px-4 py-2 border rounded-lg" rows="3"></textarea>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Opsi A</label>
+                        <input type="text" id="optionA" required class="w-full px-4 py-2 border rounded-lg">
+                        <textarea id="descA" placeholder="Deskripsi Opsi A" class="w-full px-4 py-2 border rounded-lg mt-2" rows="2"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Opsi B</label>
+                        <input type="text" id="optionB" required class="w-full px-4 py-2 border rounded-lg">
+                        <textarea id="descB" placeholder="Deskripsi Opsi B" class="w-full px-4 py-2 border rounded-lg mt-2" rows="2"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Opsi C</label>
+                        <input type="text" id="optionC" required class="w-full px-4 py-2 border rounded-lg">
+                        <textarea id="descC" placeholder="Deskripsi Opsi C" class="w-full px-4 py-2 border rounded-lg mt-2" rows="2"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Opsi D</label>
+                        <input type="text" id="optionD" required class="w-full px-4 py-2 border rounded-lg">
+                        <textarea id="descD" placeholder="Deskripsi Opsi D" class="w-full px-4 py-2 border rounded-lg mt-2" rows="2"></textarea>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Jawaban Benar</label>
+                    <select id="correctAnswer" required class="w-full px-4 py-2 border rounded-lg">
+                        <option value="">Pilih Jawaban Benar</option>
+                        <option value="A">Opsi A</option>
+                        <option value="B">Opsi B</option>
+                        <option value="C">Opsi C</option>
+                        <option value="D">Opsi D</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-3 pt-4">
+                    <button type="button" id="closeAdminBtn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg">
+                        Simpan Soal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-  <audio id="bgMusic" loop>
-    <source src="https://voca.ro/16acQgHF74ic" type="audio/mpeg">
-  </audio>
+    <script>
+        // Data Soal (Contoh - bisa diganti dengan API/database)
+        const questionsDatabase = {
+            umum: [
+                {
+                    id: 1,
+                    question: "Apa ibukota Indonesia?",
+                    options: {
+                        A: { text: "Jakarta", description: "Jakarta adalah ibukota dan kota terbesar di Indonesia" },
+                        B: { text: "Bandung", description: "Bandung adalah ibu kota Jawa Barat" },
+                        C: { text: "Surabaya", description: "Surabaya adalah kota terbesar kedua di Indonesia" },
+                        D: { text: "Medan", description: "Medan adalah ibu kota Sumatera Utara" }
+                    },
+                    correctAnswer: "A",
+                    difficulty: "mudah",
+                    explanation: "Jakarta ditetapkan sebagai ibukota Indonesia sejak kemerdekaan tahun 1945."
+                },
+                // Soal lainnya...
+            ],
+            pelajar: {
+                ipa: [
+                    {
+                        id: 101,
+                        question: "Proses fotosintesis pada tumbuhan menghasilkan...",
+                        options: {
+                            A: { text: "Oksigen dan air", description: "Oksigen adalah produk sampingan fotosintesis" },
+                            B: { text: "Karbon dioksida dan glukosa", description: "Karbon dioksida adalah bahan baku fotosintesis" },
+                            C: { text: "Oksigen dan glukosa", description: "Keduanya adalah produk utama fotosintesis" },
+                            D: { text: "Air dan karbon dioksida", description: "Keduanya adalah bahan baku fotosintesis" }
+                        },
+                        correctAnswer: "C",
+                        difficulty: "sedang",
+                        explanation: "Fotosintesis mengubah CO2 dan H2O menjadi glukosa (C6H12O6) dan O2 dengan bantuan cahaya matahari."
+                    }
+                    // Soal lainnya...
+                ],
+                // Subjek lainnya...
+            },
+            logika: [
+                {
+                    id: 201,
+                    question: "Apa yang selalu datang tetapi tidak pernah sampai?",
+                    options: {
+                        A: { text: "Besok", description: "Ketika besok tiba, namanya menjadi hari ini" },
+                        B: { text: "Hujan", description: "Hujan memang sering diharapkan tapi bisa datang" },
+                        C: { text: "Masa depan", description: "Masa depan adalah konsep yang terus bergerak" },
+                        D: { text: "Angin", description: "Angin bisa dirasakan ketika datang" }
+                    },
+                    correctAnswer: "A",
+                    difficulty: "mudah",
+                    explanation: "Ini adalah teka-teki klasik tentang waktu. 'Besok' selalu akan menjadi hari yang akan datang."
+                }
+                // Soal lainnya...
+            ],
+            lagu: [
+                {
+                    id: 301,
+                    question: "Lanjutkan lirik: 'Rayuan Pulau Kelapa...'",
+                    options: {
+                        A: { text: "Tanah airku yang permai", description: "Lirik dari lagu Rayuan Pulau Kelapa" },
+                        B: { text: "Indonesia tanah airku", description: "Lirik dari lagu Indonesia Raya" },
+                        C: { text: "Di sanalah aku berdiri", description: "Lirik dari lagu Bagimu Negeri" },
+                        D: { text: "Nyiur melambai-lambai", description: "Lirik dari lagu Tanah Air" }
+                    },
+                    correctAnswer: "A",
+                    difficulty: "mudah",
+                    explanation: "Lagu 'Rayuan Pulau Kelapa' diciptakan oleh Ismail Marzuki dengan lirik lengkap: 'Rayuan Pulau Kelapa, tanah airku yang permai'"
+                }
+                // Soal lainnya...
+            ],
+            pribahasa: [
+                {
+                    id: 401,
+                    question: "Lanjutkan pribahasa: 'Air tenang...'",
+                    options: {
+                        A: { text: "Menghanyutkan", description: "Menggambarkan sesuatu yang tampak tenang tapi berbahaya" },
+                        B: { text: "Jernih sekali", description: "Menggambarkan kejernihan air" },
+                        C: { text: "Dalamnya kolam", description: "Bagian dari pribahasa lain" },
+                        D: { text: "Membawa berkah", description: "Tidak terkait dengan pribahasa ini" }
+                    },
+                    correctAnswer: "A",
+                    difficulty: "mudah",
+                    explanation: "Pribahasa lengkapnya adalah 'Air tenang menghanyutkan' yang berarti orang yang kelihatannya pendiam bisa jadi berbahaya."
+                }
+                // Soal lainnya...
+            ]
+        };
 
-  <script>
-    // Variabel
-    let currentQuestion = 0;
-    let score = 0;
-    const questions = [
-      {
-        question: "Siapa pendiri NU?",
-        options: ["A. KH. Hasyim Asy'ari", "B. KH. Ahmad Dahlan", "C. Buya Hamka", "D. KH. Wahab Hasbullah", "E. KH. Ali Maksum"],
-        answer: 0
-      },
-      {
-        question: "Tahun berapa NU didirikan?",
-        options: ["A. 1926", "B. 1945", "C. 1938", "D. 1912", "E. 1954"],
-        answer: 0
-      }
-    ];
+        // Variabel Aplikasi
+        let currentUser = null;
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timer;
+        let timeLeft = 3600; // 60 menit dalam detik
+        let answeredQuestions = 0;
+        let quizStartTime;
+        let userAnswers = [];
 
-    // Fungsi
-    function loadQuestion() {
-      const q = questions[currentQuestion];
-      document.getElementById("question").innerHTML = `${currentQuestion + 1}. ${q.question}`;
-      
-      let optionsHTML = '';
-      q.options.forEach((opt, i) => {
-        optionsHTML += `<div class="option" onclick="selectAnswer(${i})">${opt}</div>`;
-      });
-      document.getElementById("options").innerHTML = optionsHTML;
-    }
+        // Elemen DOM
+        const registrationSection = document.getElementById('registration');
+        const quizArea = document.getElementById('quizArea');
+        const resultArea = document.getElementById('resultArea');
+        const registerForm = document.getElementById('registerForm');
+        const participantType = document.getElementById('participantType');
+        const professionField = document.getElementById('professionField');
+        const schoolField = document.getElementById('schoolField');
+        const quizCategory = document.getElementById('quizCategory');
+        const quizDifficulty = document.getElementById('quizDifficulty');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const currentQuestionDisplay = document.getElementById('currentQuestion');
+        const progressBar = document.getElementById('progressBar');
+        const timerDisplay = document.getElementById('timer');
+        const resetBtn = document.getElementById('resetBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const scoreValue = document.getElementById('scoreValue');
+        const scoreCircle = document.getElementById('scoreCircle');
+        const resultMessage = document.getElementById('resultMessage');
+        const answerFeedback = document.getElementById('answerFeedback');
+        const restartBtn = document.getElementById('restartBtn');
+        const likeBtn = document.getElementById('likeBtn');
+        const prayerTimeModal = document.getElementById('prayerTimeModal');
+        const adhanAudio = document.getElementById('adhanAudio');
+        const pauseQuizBtn = document.getElementById('pauseQuizBtn');
+        const continueQuizBtn = document.getElementById('continueQuizBtn');
+        const adminModal = document.getElementById('adminModal');
+        const adminForm = document.getElementById('adminForm');
+        const closeAdminBtn = document.getElementById('closeAdminBtn');
 
-    function selectAnswer(selectedIdx) {
-      const q = questions[currentQuestion];
-      const options = document.querySelectorAll('.option');
-      
-      options.forEach((opt, i) => {
-        opt.style.pointerEvents = 'none';
-        if (i === q.answer) opt.classList.add('correct');
-        else if (i === selectedIdx) opt.classList.add('wrong');
-      });
+        // Event Listeners
+        participantType.addEventListener('change', toggleAdditionalFields);
+        registerForm.addEventListener('submit', startQuiz);
+        resetBtn.addEventListener('click', skipQuestion);
+        submitBtn.addEventListener('click', checkAnswer);
+        restartBtn.addEventListener('click', restartQuiz);
+        likeBtn.addEventListener('click', showLikeEffect);
+        pauseQuizBtn.addEventListener('click', pauseQuiz);
+        continueQuizBtn.addEventListener('click', continueQuiz);
+        closeAdminBtn.addEventListener('click', () => adminModal.classList.add('hidden'));
 
-      // Mainkan suara
-      new Audio(`assets/sounds/${selectedIdx === q.answer ? 'correct' : 'wrong'}.mp3`).play();
+        // Tampilkan modal admin dengan kombinasi keyboard (Ctrl+Alt+A)
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.altKey && e.key === 'a') {
+                adminModal.classList.remove('hidden');
+            }
+        });
 
-      if (selectedIdx === q.answer) score++;
-      document.getElementById("next-btn").style.display = 'block';
-    }
+        // Fungsi untuk menampilkan/menyembunyikan field tambahan
+        function toggleAdditionalFields() {
+            if (participantType.value === 'umum') {
+                professionField.classList.remove('hidden');
+                schoolField.classList.add('hidden');
+            } else if (participantType.value === 'pelajar') {
+                professionField.classList.add('hidden');
+                schoolField.classList.remove('hidden');
+            } else {
+                professionField.classList.add('hidden');
+                schoolField.classList.add('hidden');
+            }
+        }
 
-    function nextQuestion() {
-      currentQuestion++;
-      if (currentQuestion < questions.length) loadQuestion();
-      else showResult();
-    }
+        // Fungsi untuk memulai quiz
+        function startQuiz(e) {
+            e.preventDefault();
+            
+            // Simpan data user
+            currentUser = {
+                name: registerForm.elements[0].value,
+                type: participantType.value,
+                profession: participantType.value === 'umum' ? registerForm.elements[2].value : null,
+                school: participantType.value === 'pelajar' ? registerForm.elements[3].value : null,
+                age: registerForm.elements[4].value,
+                phone: registerForm.elements[5].value,
+                startTime: new Date().toISOString()
+            };
+            
+            // Sembunyikan form registrasi, tampilkan quiz
+            registrationSection.classList.add('hidden');
+            quizArea.classList.remove('hidden');
+            
+            // Pilih soal berdasarkan kategori user
+            selectQuestions();
+            
+            // Mulai timer
+            startTimer();
+            
+            // Tampilkan soal pertama
+            showQuestion();
+            
+            // Catat waktu mulai
+            quizStartTime = new Date();
+            
+            // Cek waktu sholat setiap 5 menit
+            setInterval(checkPrayerTime, 300000);
+        }
 
-    function showResult() {
-      document.getElementById("quiz-container").style.display = 'none';
-      document.getElementById("result-container").style.display = 'block';
-      document.getElementById("score").textContent = score;
-    }
+        // Fungsi untuk memilih soal secara acak
+        function selectQuestions() {
+            // Reset
+            currentQuestions = [];
+            currentQuestionIndex = 0;
+            score = 0;
+            answeredQuestions = 0;
+            userAnswers = [];
+            
+            // Pilih 100 soal acak berdasarkan kategori user
+            if (currentUser.type === 'pelajar') {
+                // Untuk pelajar, ambil dari berbagai subjek
+                const subjects = ['ipa', 'ips', 'matematika', 'bahasa', 'inggris', 'sejarah', 'ppkn', 'agama'];
+                const questionsPerSubject = Math.floor(100 / subjects.length);
+                
+                subjects.forEach(subject => {
+                    const subjectQuestions = questionsDatabase.pelajar[subject];
+                    const shuffled = [...subjectQuestions].sort(() => 0.5 - Math.random());
+                    currentQuestions.push(...shuffled.slice(0, questionsPerSubject));
+                });
+                
+                // Tambahkan soal umum jika kurang dari 100
+                const remaining = 100 - currentQuestions.length;
+                if (remaining > 0) {
+                    const shuffledGeneral = [...questionsDatabase.umum].sort(() => 0.5 - Math.random());
+                    currentQuestions.push(...shuffledGeneral.slice(0, remaining));
+                }
+            } else {
+                // Untuk umum, ambil dari berbagai kategori
+                const categories = ['umum', 'logika', 'lagu', 'pribahasa'];
+                const questionsPerCategory = Math.floor(100 / categories.length);
+                
+                categories.forEach(category => {
+                    const categoryQuestions = questionsDatabase[category];
+                    const shuffled = [...categoryQuestions].sort(() => 0.5 - Math.random());
+                    currentQuestions.push(...shuffled.slice(0, questionsPerCategory));
+                });
+                
+                // Tambahkan soal lainnya jika kurang dari 100
+                const remaining = 100 - currentQuestions.length;
+                if (remaining > 0) {
+                    const shuffledExtra = [...questionsDatabase.umum].sort(() => 0.5 - Math.random());
+                    currentQuestions.push(...shuffledExtra.slice(0, remaining));
+                }
+            }
+            
+            // Acak urutan soal
+            currentQuestions = currentQuestions.sort(() => 0.5 - Math.random());
+        }
 
-    function resetQuiz() {
-      currentQuestion = 0;
-      score = 0;
-      document.getElementById("quiz-container").style.display = 'block';
-      document.getElementById("result-container").style.display = 'none';
-      loadQuestion();
-    }
+        // Fungsi untuk menampilkan soal
+        function showQuestion() {
+            if (currentQuestionIndex >= currentQuestions.length) {
+                endQuiz();
+                return;
+            }
+            
+            const question = currentQuestions[currentQuestionIndex];
+            
+            // Update tampilan
+            currentQuestionDisplay.textContent = currentQuestionIndex + 1;
+            
+            // Tentukan kategori soal untuk ditampilkan
+            let categoryText = "";
+            if (question.category) {
+                categoryText = question.category;
+            } else if (currentUser.type === 'pelajar') {
+                // Cari subjek untuk soal pelajar
+                for (const subject in questionsDatabase.pelajar) {
+                    if (questionsDatabase.pelajar[subject].some(q => q.id === question.id)) {
+                        categoryText = subject.toUpperCase();
+                        break;
+                    }
+                }
+            } else {
+                // Cari kategori untuk soal umum
+                for (const category in questionsDatabase) {
+                    if (category !== 'pelajar' && questionsDatabase[category].some(q => q.id === question.id)) {
+                        categoryText = category === 'umum' ? 'UMUM' : 
+                                      category === 'logika' ? 'TEBAK LOGIKA' : 
+                                      category === 'lagu' ? 'SAMBNG LAGU' : 
+                                      'SAMBUNG PRIBHASA';
+                        break;
+                    }
+                }
+            }
+            
+            quizCategory.textContent = categoryText;
+            quizDifficulty.textContent = `Tingkat: ${question.difficulty.toUpperCase()}`;
+            questionText.textContent = question.question;
+            
+            // Kosongkan container opsi
+            optionsContainer.innerHTML = '';
+            
+            // Tambahkan opsi jawaban
+            for (const [key, option] of Object.entries(question.options)) {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option p-4 border rounded-lg cursor-pointer transition duration-300 hover:bg-blue-50';
+                optionElement.dataset.option = key;
+                optionElement.innerHTML = `
+                    <strong class="text-blue-600">${key}.</strong> ${option.text}
+                    <small class="block text-gray-600 mt-1 text-sm">${option.description}</small>
+                `;
+                optionElement.addEventListener('click', selectOption);
+                optionsContainer.appendChild(optionElement);
+            }
+            
+            // Update progress bar
+            updateProgressBar();
+        }
 
-    // Kontrol Musik
-    const bgMusic = document.getElementById('bgMusic');
-    document.getElementById('musicToggle').addEventListener('click', () => {
-      bgMusic.paused ? bgMusic.play() : bgMusic.pause();
-    });
-    document.getElementById('volumeControl').addEventListener('input', (e) => {
-      bgMusic.volume = e.target.value;
-    });
+        // Fungsi untuk memilih opsi jawaban
+        function selectOption(e) {
+            // Hapus seleksi sebelumnya
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('bg-blue-100', 'border-blue-400');
+            });
+            
+            // Tandai opsi yang dipilih
+            e.currentTarget.classList.add('bg-blue-100', 'border-blue-400');
+            e.currentTarget.dataset.selected = 'true';
+        }
 
-    // Init
-    loadQuestion();
-    document.getElementById('next-btn').addEventListener('click', nextQuestion);
-    bgMusic.volume = 0.3;
-  </script>
+        // Fungsi untuk memeriksa jawaban
+        function checkAnswer() {
+            const selectedOption = document.querySelector('.option[data-selected="true"]');
+            
+            if (!selectedOption) {
+                alert('Pilih jawaban terlebih dahulu!');
+                return;
+            }
+            
+            const question = currentQuestions[currentQuestionIndex];
+            const selectedAnswer = selectedOption.dataset.option;
+            const isCorrect = selectedAnswer === question.correctAnswer;
+            
+            // Simpan jawaban user
+            userAnswers.push({
+                questionId: question.id,
+                question: question.question,
+                userAnswer: selectedAnswer,
+                correctAnswer: question.correctAnswer,
+                isCorrect: isCorrect,
+                explanation: question.explanation
+            });
+            
+            // Tampilkan feedback
+            if (isCorrect) {
+                selectedOption.classList.add('correct', 'bg-green-100', 'border-green-400');
+                score++;
+                
+                // Tampilkan pesan acak untuk jawaban benar
+                const correctMessages = [
+                    "Wow, kamu cerdas sekali! 💡",
+                    "Luar biasa! Jawaban tepat! 🎯",
+                    "Benar! Kamu memang hebat! 👏",
+                    "Mantap! Pengetahuanmu luas! 🌟"
+                ];
+                showFeedback(correctMessages[Math.floor(Math.random() * correctMessages.length)], 'green');
+            } else {
+                selectedOption.classList.add('wrong', 'bg-red-100', 'border-red-400');
+                
+                // Tandai jawaban yang benar
+                document.querySelector(`.option[data-option="${question.correctAnswer}"]`)
+                    .classList.add('bg-green-100', 'border-green-400');
+                
+                // Tampilkan pesan acak untuk jawaban salah
+                const wrongMessages = [
+                    `Wah, kurang tepat! Jawaban benar: ${question.correctAnswer}`,
+                    `Hampir benar! Jawabannya: ${question.correctAnswer}`,
+                    `Salah dikit! Yang benar: ${question.correctAnswer}`
+                ];
+                showFeedback(wrongMessages[Math.floor(Math.random() * wrongMessages.length)], 'red');
+            }
+            
+            // Nonaktifkan tombol submit
+            submitBtn.disabled = true;
+            
+            // Hitung soal yang dijawab
+            answeredQuestions++;
+            
+            // Lanjut ke soal berikutnya setelah 2 detik
+            setTimeout(() => {
+                currentQuestionIndex++;
+                showQuestion();
+                submitBtn.disabled = false;
+            }, 2000);
+        }
+
+        // Fungsi untuk melewati soal
+        function skipQuestion() {
+            if (!confirm("Lewati soal ini? Soal yang dilewati dihitung sebagai salah.")) {
+                return;
+            }
+            
+            const question = currentQuestions[currentQuestionIndex];
+            
+            // Simpan sebagai jawaban salah
+            userAnswers.push({
+                questionId: question.id,
+                question: question.question,
+                userAnswer: null,
+                correctAnswer: question.correctAnswer,
+                isCorrect: false,
+                explanation: question.explanation
+            });
+            
+            // Tampilkan feedback
+            showFeedback(`Soal dilewati! Jawaban benar: ${question.correctAnswer}`, 'orange');
+            
+            // Lanjut ke soal berikutnya
+            currentQuestionIndex++;
+            answeredQuestions++;
+            
+            // Update progress
+            updateProgressBar();
+            
+            // Tampilkan soal berikutnya
+            setTimeout(() => showQuestion(), 1000);
+        }
+
+        // Fungsi untuk menampilkan feedback
+        function showFeedback(message, color) {
+            const feedback = document.createElement('div');
+            feedback.className = `p-3 mb-4 rounded-lg bg-${color}-100 text-${color}-800 border border-${color}-300`;
+            feedback.textContent = message;
+            
+            // Sisipkan sebelum tombol
+            const navButtons = document.querySelector('.flex.justify-between');
+            navButtons.parentNode.insertBefore(feedback, navButtons);
+            
+            // Hapus setelah 2 detik
+            setTimeout(() => feedback.remove(), 2000);
+        }
+
+        // Fungsi untuk mengupdate progress bar
+        function updateProgressBar() {
+            const progress = (answeredQuestions / currentQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Fungsi untuk memulai timer
+        function startTimer() {
+            // Update tampilan timer
+            updateTimerDisplay();
+            
+            // Jalankan timer setiap detik
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                // Jika waktu habis
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    endQuiz();
+                }
+            }, 1000);
+        }
+
+        // Fungsi untuk mengupdate tampilan timer
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Ubah warna jika waktu hampir habis
+            if (timeLeft < 300) { // 5 menit
+                timerDisplay.classList.add('text-red-600');
+            }
+        }
+
+        // Fungsi untuk mengakhiri quiz
+        function endQuiz() {
+            clearInterval(timer);
+            
+            // Hitung skor
+            const percentage = Math.round((score / currentQuestions.length) * 100);
+            
+            // Tampilkan hasil
+            quizArea.classList.add('hidden');
+            resultArea.classList.remove('hidden');
+            
+            // Set nilai skor
+            scoreValue.textContent = `${percentage}%`;
+            
+            // Set warna lingkaran skor berdasarkan persentase
+            if (percentage < 25) {
+                scoreCircle.className = 'w-40 h-40 rounded-full border-8 flex items-center justify-center mx-auto mb-6 border-red-500';
+                resultMessage.textContent = "Tetap semangat! Belajar dari kesalahan adalah kunci sukses!";
+                resultMessage.className = "text-lg mb-6 text-red-600 font-medium";
+            } else if (percentage < 50) {
+                scoreCircle.className = 'w-40 h-40 rounded-full border-8 flex items-center justify-center mx-auto mb-6 border-orange-500';
+                resultMessage.textContent = "Lumayan! Tingkatkan terus belajarmu!";
+                resultMessage.className = "text-lg mb-6 text-orange-600 font-medium";
+            } else if (percentage < 75) {
+                scoreCircle.className = 'w-40 h-40 rounded-full border-8 flex items-center justify-center mx-auto mb-6 border-blue-500';
+                resultMessage.textContent = "Keren! Pemahaman kamu sudah sangat baik!";
+                resultMessage.className = "text-lg mb-6 text-blue-600 font-medium";
+            } else {
+                scoreCircle.className = 'w-40 h-40 rounded-full border-8 flex items-center justify-center mx-auto mb-6 border-green-500';
+                resultMessage.textContent = "Luar biasa! Kamu benar-benar ahli!";
+                resultMessage.className = "text-lg mb-6 text-green-600 font-medium";
+            }
+            
+            // Tampilkan review jawaban
+            answerFeedback.innerHTML = '<h4 class="font-bold mb-3">Review Jawaban:</h4>';
+            userAnswers.slice(0, 5).forEach((answer, index) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'mb-3 p-3 rounded-lg ' + 
+                    (answer.isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200');
+                answerDiv.innerHTML = `
+                    <p class="font-medium">${index + 1}. ${answer.question}</p>
+                    <p>Jawaban Anda: ${answer.userAnswer || 'Tidak dijawab'} ${answer.isCorrect ? '✅' : '❌'}</p>
+                    <p>Jawaban benar: ${answer.correctAnswer}</p>
+                    ${answer.explanation ? `<p class="text-sm text-gray-600 mt-1">Penjelasan: ${answer.explanation}</p>` : ''}
+                `;
+                answerFeedback.appendChild(answerDiv);
+            });
+            
+            // Jika ada lebih dari 5 jawaban, tampilkan tombol lihat semua
+            if (userAnswers.length > 5) {
+                const showAllBtn = document.createElement('button');
+                showAllBtn.className = 'px-3 py-1 bg-gray-200 text-gray-800 rounded text-sm mt-2';
+                showAllBtn.textContent = 'Lihat Semua Jawaban';
+                showAllBtn.addEventListener('click', () => {
+                    answerFeedback.innerHTML = '<h4 class="font-bold mb-3">Semua Jawaban:</h4>';
+                    userAnswers.forEach((answer, index) => {
+                        const answerDiv = document.createElement('div');
+                        answerDiv.className = 'mb-3 p-3 rounded-lg ' + 
+                            (answer.isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200');
+                        answerDiv.innerHTML = `
+                            <p class="font-medium">${index + 1}. ${answer.question}</p>
+                            <p>Jawaban Anda: ${answer.userAnswer || 'Tidak dijawab'} ${answer.isCorrect ? '✅' : '❌'}</p>
+                            <p>Jawaban benar: ${answer.correctAnswer}</p>
+                            ${answer.explanation ? `<p class="text-sm text-gray-600 mt-1">Penjelasan: ${answer.explanation}</p>` : ''}
+                        `;
+                        answerFeedback.appendChild(answerDiv);
+                    });
+                    showAllBtn.remove();
+                });
+                answerFeedback.appendChild(showAllBtn);
+            }
+        }
+
+        // Fungsi untuk memulai quiz lagi
+        function restartQuiz() {
+            // Reset semua variabel
+            currentQuestionIndex = 0;
+            score = 0;
+            answeredQuestions = 0;
+            userAnswers = [];
+            timeLeft = 3600;
+            
+            // Reset tampilan
+            timerDisplay.className = 'text-2xl font-bold text-blue-600';
+            submitBtn.disabled = false;
+            
+            // Pilih soal baru
+            selectQuestions();
+            
+            // Tampilkan quiz area, sembunyikan hasil
+            resultArea.classList.add('hidden');
+            quizArea.classList.remove('hidden');
+            
+            // Mulai timer lagi
+            startTimer();
+            
+            // Tampilkan soal pertama
+            showQuestion();
+        }
+
+        // Fungsi untuk efek "Saya Suka Quiz PERGUNU"
+        function showLikeEffect() {
+            // Animasi ledakan
+            const effect = document.createElement('div');
+            effect.className = 'fixed inset-0 flex items-center justify-center pointer-events-none z-50';
+            effect.innerHTML = `
+                <div class="confetti"></div>
+                <div class="text-4xl font-bold text-yellow-500 animate-bounce">TERIMA KASIH!</div>
+            `;
+            document.body.appendChild(effect);
+            
+            // Mainkan suara
+            const audio = new Audio('https://www.soundjay.com/human/sounds/applause-01.mp3');
+            audio.play();
+            
+            // Hapus setelah 3 detik
+            setTimeout(() => effect.remove(), 3000);
+        }
+
+        // Fungsi untuk memeriksa waktu sholat
+        function checkPrayerTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            
+            // Contoh: Asumsikan waktu sholat
+            const prayerTimes = {
+                subuh: 4,
+                dzuhur: 12,
+                ashar: 15,
+                maghrib: 18,
+                isya: 19
+            };
+            
+            // Cek apakah sekarang waktu sholat
+            for (const [prayer, time] of Object.entries(prayerTimes)) {
+                if (hours === time && now.getMinutes() < 30) {
+                    showPrayerTimeNotification(prayer);
+                    break;
+                }
+            }
+        }
+
+        // Fungsi untuk menampilkan notifikasi waktu sholat
+        function showPrayerTimeNotification(prayer) {
+            const prayerNames = {
+                subuh: "Subuh",
+                dzuhur: "Dzuhur",
+                ashar: "Ashar",
+                maghrib: "Maghrib",
+                isya: "Isya"
+            };
+            
+            // Update teks modal
+            document.querySelector('#prayerTimeModal h3').textContent = `Waktu Sholat ${prayerNames[prayer]} Telah Tiba`;
+            
+            // Tampilkan modal
+            prayerTimeModal.classList.remove('hidden');
+            
+            // Mainkan adzan
+            adhanAudio.currentTime = 0;
+            adhanAudio.play();
+        }
+
+        // Fungsi untuk menjeda quiz
+        function pauseQuiz() {
+            clearInterval(timer);
+            prayerTimeModal.classList.add('hidden');
+            quizArea.classList.add('hidden');
+            
+            // Tampilkan pesan istirahat
+            const pauseScreen = document.createElement('div');
+            pauseScreen.id = 'pauseScreen';
+            pauseScreen.className = 'fixed inset-0 bg-blue-50 flex items-center justify-center z-40';
+            pauseScreen.innerHTML = `
+                <div class="text-center p-8 bg-white rounded-lg shadow-xl">
+                    <h3 class="text-2xl font-bold text-blue-600 mb-4">Quiz Dijeda</h3>
+                    <p class="mb-6">Silakan melaksanakan sholat. Quiz akan dilanjutkan ketika Anda siap.</p>
+                    <button id="resumeQuizBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Lanjutkan Quiz
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(pauseScreen);
+            
+            // Tambahkan event listener untuk tombol lanjutkan
+            document.getElementById('resumeQuizBtn').addEventListener('click', () => {
+                pauseScreen.remove();
+                quizArea.classList.remove('hidden');
+                startTimer();
+            });
+        }
+
+        // Fungsi untuk melanjutkan quiz setelah notifikasi sholat
+        function continueQuiz() {
+            prayerTimeModal.classList.add('hidden');
+            adhanAudio.pause();
+        }
+
+        // Fungsi untuk panel admin (simpan soal baru)
+        adminForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validasi kode admin
+            if (document.getElementById('adminCode').value !== 'PERGUNU123') {
+                alert('Kode admin salah!');
+                return;
+            }
+            
+            // Buat objek soal baru
+            const newQuestion = {
+                id: Date.now(), // ID unik
+                question: document.getElementById('questionText').value,
+                options: {
+                    A: {
+                        text: document.getElementById('optionA').value,
+                        description: document.getElementById('descA').value
+                    },
+                    B: {
+                        text: document.getElementById('optionB').value,
+                        description: document.getElementById('descB').value
+                    },
+                    C: {
+                        text: document.getElementById('optionC').value,
+                        description: document.getElementById('descC').value
+                    },
+                    D: {
+                        text: document.getElementById('optionD').value,
+                        description: document.getElementById('descD').value
+                    }
+                },
+                correctAnswer: document.getElementById('correctAnswer').value,
+                difficulty: document.getElementById('questionDifficulty').value,
+                explanation: "Penjelasan tambahan bisa ditambahkan di sini"
+            };
+            
+            // Tentukan kategori soal
+            const category = document.getElementById('questionCategory').value;
+            
+            // Tambahkan ke database
+            if (category === 'pelajar') {
+                const subject = document.getElementById('questionSubject').value;
+                if (!questionsDatabase.pelajar[subject]) {
+                    questionsDatabase.pelajar[subject] = [];
+                }
+                questionsDatabase.pelajar[subject].push(newQuestion);
+            } else {
+                if (!questionsDatabase[category]) {
+                    questionsDatabase[category] = [];
+                }
+                questionsDatabase[category].push(newQuestion);
+            }
+            
+            // Reset form
+            adminForm.reset();
+            alert('Soal berhasil ditambahkan!');
+            adminModal.classList.add('hidden');
+        });
+
+        // Inisialisasi
+        toggleAdditionalFields();
+    </script>
 </body>
 </html>
