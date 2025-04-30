@@ -1,0 +1,15 @@
+[
+    {
+        "id": "agama-sd-1",
+        "question": "Kitab suci umat Islam adalah...",
+        "options": {
+            "A": {"text": "Al-Quran", "description": "Kitab suci agama Islam"},
+            "B": {"text": "Alkitab", "description": "Kitab suci Kristen"},
+            "C": {"text": "Wedha", "description": "Kitab suci Hindu"},
+            "D": {"text": "Tripitaka", "description": "Kitab suci Buddha"}
+        },
+        "correctAnswer": "A",
+        "difficulty": "mudah",
+        "explanation": "Al-Quran adalah kitab suci umat Islam yang diturunkan kepada Nabi Muhammad SAW."
+    }
+]
