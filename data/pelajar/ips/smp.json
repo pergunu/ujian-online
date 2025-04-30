@@ -1,1 +1,16 @@
 
+[
+    {
+        "id": "ips-smp-1",
+        "question": "Peristiwa Rengasdengklok terjadi karena...",
+        "options": {
+            "A": {"text": "Perebutan kekuasaan", "description": "Terjadi setelah proklamasi"},
+            "B": {"text": "Perbedaan pendapat tentang proklamasi", "description": "Antara golongan muda dan tua"},
+            "C": {"text": "Serangan Belanda", "description": "Pada masa revolusi"},
+            "D": {"text": "Pemberontakan PKI", "description": "Tahun 1948"}
+        },
+        "correctAnswer": "B",
+        "difficulty": "sedang",
+        "explanation": "Peristiwa Rengasdengklok terjadi karena golongan muda mendesak Soekarno-Hatta segera memproklamasikan kemerdekaan."
+    }
+]
