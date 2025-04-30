@@ -1,0 +1,15 @@
+[
+    {
+        "id": "bind-sma-1",
+        "question": "Kalimat yang mengandung majas metafora adalah...",
+        "options": {
+            "A": {"text": "Dia dingin sekali menyambutku", "description": "Majas metafora (dingin = tidak ramah)"},
+            "B": {"text": "Bunga-bunga bergoyang tertiup angin", "description": "Deskripsi biasa"},
+            "C": {"text": "Rumah itu besar seperti istana", "description": "Majas simile (perbandingan langsung)"},
+            "D": {"text": "Air matanya mengalir deras", "description": "Hiperbola"}
+        },
+        "correctAnswer": "A",
+        "difficulty": "sedang",
+        "explanation": "Majas metafora adalah kiasan yang menyamakan sesuatu dengan hal lain ('dingin' untuk sifat tidak ramah)."
+    }
+]
