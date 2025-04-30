@@ -3,128 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz PERGUNU - Sistem Kuis Interaktif</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>QUIZ PERGUNU - Sistem Kuis Interaktif</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Header Aplikasi -->
-        <header class="app-header">
-            <img src="assets/images/logo.png" alt="Quiz PERGUNU" class="logo">
-            <h1>Quiz PERGUNU</h1>
-            <p class="tagline">Uji pengetahuanmu dengan kuis interaktif!</p>
-        </header>
-
-        <!-- Form Registrasi -->
-        <div id="registration" class="card">
-            <h2>Registrasi Peserta</h2>
-            <form id="registerForm">
-                <div class="form-group">
-                    <label for="name">Nama Lengkap</label>
-                    <input type="text" id="name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="participantType">Kategori Peserta</label>
-                    <select id="participantType" required>
-                        <option value="">Pilih Kategori</option>
-                        <option value="umum">Umum</option>
-                        <option value="pelajar">Pelajar</option>
-                    </select>
-                </div>
-                
-                <div id="additionalFields" class="additional-fields"></div>
-                
-                <div class="form-group">
-                    <label for="age">Usia</label>
-                    <input type="number" id="age" min="10" max="100" required>
-                </div>
-                
-                <button type="submit" class="btn btn-primary">Mulai Quiz</button>
-            </form>
-        </div>
-
-        <!-- Area Quiz (Awalnya Tersembunyi) -->
-        <div id="quizArea" class="hidden">
-            <div class="quiz-header">
-                <div class="quiz-info">
-                    <span id="quizCategory" class="badge"></span>
-                    <span id="quizDifficulty" class="badge"></span>
-                </div>
-                <div class="quiz-timer">
-                    <span id="timer">60:00</span>
-                    <span id="progressText">Soal 1/100</span>
-                </div>
-            </div>
-            
-            <div class="progress-container">
-                <div id="progressBar" class="progress-bar"></div>
-            </div>
-            
-            <div class="quiz-card">
-                <div class="question-container">
-                    <h3 id="questionText"></h3>
-                </div>
-                
-                <div id="optionsContainer" class="options-container"></div>
-                
-                <div id="feedbackContainer" class="feedback-container"></div>
-            </div>
-            
-            <div class="quiz-controls">
-                <button id="skipBtn" class="btn btn-secondary">Lewati Soal</button>
-                <button id="submitBtn" class="btn btn-primary">Kirim Jawaban</button>
-            </div>
-        </div>
-
-        <!-- Hasil Quiz (Awalnya Tersembunyi) -->
-        <div id="resultArea" class="hidden card">
-            <div class="result-header">
-                <h2>Hasil Quiz Anda</h2>
-            </div>
-            
-            <div class="score-display">
-                <div id="scoreCircle" class="score-circle">
-                    <span id="scoreValue">0%</span>
-                </div>
-                <p id="scoreText"></p>
-            </div>
-            
-            <div class="result-message">
-                <p id="resultMessage"></p>
-            </div>
-            
-            <div id="answerReview" class="answer-review"></div>
-            
-            <div class="result-actions">
-                <button id="restartBtn" class="btn btn-primary">Main Lagi</button>
-                <button id="likeBtn" class="btn btn-success">Saya Suka Quiz PERGUNU!</button>
-            </div>
-        </div>
+    <div id="app">
+        <!-- Konten akan diisi oleh JavaScript -->
     </div>
 
-    <!-- Modal Waktu Sholat -->
-    <div id="prayerTimeModal" class="modal hidden">
-        <div class="modal-content">
-            <h3 id="prayerTitle"></h3>
-            <p id="prayerMessage"></p>
-            <div class="modal-actions">
-                <button id="pauseQuizBtn" class="btn btn-secondary">Pause Quiz</button>
-                <button id="continueQuizBtn" class="btn btn-primary">Lanjutkan</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Script Utama -->
-    <script src="js/config.js"></script>
-    <script src="js/database.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/prayer-times.js"></script>
-    <script src="js/quiz-engine.js"></script>
-    <script src="js/ui-manager.js"></script>
-    <script src="js/admin-panel.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/main.js" type="module"></script>
 </body>
 </html>
