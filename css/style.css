@@ -1,123 +1,33 @@
-/* Animasi Form */
-.fade-out {
-    animation: fadeOut 0.5s ease-out forwards;
-}
-
-.fade-in {
-    animation: fadeIn 0.5s ease-out forwards;
-}
-
-@keyframes fadeOut {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-20px); }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Quiz Container Styles */
-.quiz-container {
-    display: none;
-    max-width: 800px;
-    margin: 0 auto;
-    background: white;
-    padding: 25px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-}
-
-.quiz-header {
+/* Tambahkan ini di akhir file */
+.quiz-start-animation {
+    animation: fadeInUp 0.8s ease-out;
     text-align: center;
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
+    padding: 40px 20px;
 }
 
-.participant-info {
-    background: #f8f9fa;
-    padding: 10px;
-    border-radius: var(--border-radius);
-    margin: 15px 0;
-    font-size: 0.9rem;
-}
-
-.participant-info p {
-    margin: 5px 0;
-}
-
-.quiz-meta {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-    font-weight: 500;
-    color: var(--primary-color);
-}
-
-/* Question Card */
-.question-card {
-    background: white;
-    padding: 20px;
-    border-radius: var(--border-radius);
-    margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.question-card h3 {
-    color: var(--primary-color);
-    margin-bottom: 15px;
-}
-
-/* Options */
-.options-container {
-    margin-top: 20px;
-}
-
-.option {
-    display: flex;
-    align-items: center;
-    padding: 12px 15px;
-    margin-bottom: 10px;
-    background: #f8f9fa;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.option:hover {
-    background: #e9ecef;
-}
-
-.option.selected {
-    background: var(--primary-color);
+.btn-primary {
+    background-color: #4361ee;
     color: white;
-}
-
-.option-letter {
-    font-weight: bold;
-    margin-right: 15px;
-    width: 20px;
-}
-
-/* Controls */
-.quiz-controls {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.btn-next {
-    padding: 10px 25px;
-    background: var(--primary-color);
-    color: white;
+    padding: 12px 30px;
     border: none;
-    border-radius: var(--border-radius);
+    border-radius: 8px;
+    font-size: 16px;
     cursor: pointer;
-    font-weight: 500;
     transition: all 0.3s;
 }
 
-.btn-next:hover {
-    background: var(--secondary-color);
-    transform: translateY(-2px);
+.btn-primary:hover {
+    background-color: #3a56d4;
+    transform: translateY(-3px);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
