@@ -1,0 +1,15 @@
+[
+    {
+        "id": "bind-sd-1",
+        "question": "Kalimat yang menggunakan huruf kapital dengan benar adalah...",
+        "options": {
+            "A": {"text": "saya pergi ke bandung", "description": "Tanpa huruf kapital di awal dan nama kota"},
+            "B": {"text": "Saya pergi ke Bandung", "description": "Huruf kapital di awal dan nama kota"},
+            "C": {"text": "Saya Pergi Ke bandung", "description": "Huruf kapital berlebihan"},
+            "D": {"text": "saya Pergi ke Bandung", "description": "Huruf kapital tidak konsisten"}
+        },
+        "correctAnswer": "B",
+        "difficulty": "mudah",
+        "explanation": "Huruf kapital digunakan di awal kalimat dan untuk nama kota (Bandung)."
+    }
+]
