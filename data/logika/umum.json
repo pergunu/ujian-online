@@ -1,0 +1,31 @@
+[
+  {
+    "id": "logika-001",
+    "category": "Logika",
+    "type": "logika",
+    "level": "umum",
+    "difficulty": "sulit",
+    "question": "Jika semua A adalah B, dan beberapa B adalah C, maka...",
+    "options": [
+      {
+        "text": "Beberapa A mungkin C",
+        "description": "Kesimpulan yang tepat berdasarkan premis"
+      },
+      {
+        "text": "Semua A adalah C",
+        "description": "Tidak bisa disimpulkan dari premis"
+      },
+      {
+        "text": "Tidak ada A yang C",
+        "description": "Kesimpulan yang salah"
+      },
+      {
+        "text": "Semua C adalah A",
+        "description": "Tidak relevan dengan premis"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Dalam logika silogisme, hubungan 'beberapa A mungkin C' adalah kesimpulan valid dari premis tersebut.",
+    "lastUpdated": "2023-05-19T09:30:00Z"
+  }
+]
