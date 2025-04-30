@@ -1,28 +1,28 @@
-
 [
     {
-        "id": 201,
-        "question": "Apa yang selalu datang tetapi tidak pernah sampai?",
+        "id": "logika-1",
+        "question": "Apa yang semakin dibagi semakin berkurang?",
         "options": {
-            "A": {
-                "text": "Besok",
-                "description": "Ketika besok tiba, namanya menjadi hari ini"
-            },
-            "B": {
-                "text": "Hujan",
-                "description": "Hujan memang sering diharapkan tapi bisa datang"
-            },
-            "C": {
-                "text": "Masa depan",
-                "description": "Masa depan adalah konsep yang terus bergerak"
-            },
-            "D": {
-                "text": "Angin",
-                "description": "Angin bisa dirasakan ketika datang"
-            }
+            "A": {"text": "Cinta", "description": "Cinta justru semakin bertambah ketika dibagi"},
+            "B": {"text": "Waktu", "description": "Waktu memang terbagi-bagi tapi tidak berkurang"},
+            "C": {"text": "Kekayaan", "description": "Bisa berkurang tapi bukan jawaban terbaik"},
+            "D": {"text": "Kebahagiaan", "description": "Kebahagiaan bertambah ketika dibagi"}
+        },
+        "correctAnswer": "B",
+        "difficulty": "sedang",
+        "explanation": "Waktu adalah jawaban terbaik karena ketika dibagi untuk banyak aktivitas, waktu yang tersisa untuk masing-masing aktivitas menjadi berkurang."
+    },
+    {
+        "id": "logika-2",
+        "question": "Apa yang selalu naik tapi tidak pernah turun?",
+        "options": {
+            "A": {"text": "Usia", "description": "Usia selalu bertambah dan tidak pernah berkurang"},
+            "B": {"text": "Tangga", "description": "Bisa naik dan turun tangga"},
+            "C": {"text": "Harga", "description": "Harga bisa naik dan turun"},
+            "D": {"text": "Balon", "description": "Balon bisa naik dan pecah"}
         },
         "correctAnswer": "A",
-        "difficulty": "sedang",
-        "explanation": "Ini adalah teka-teki klasik tentang waktu. 'Besok' selalu akan menjadi hari yang akan datang."
+        "difficulty": "mudah",
+        "explanation": "Usia manusia selalu bertambah (naik) dan tidak pernah berkurang (turun)."
     }
 ]
