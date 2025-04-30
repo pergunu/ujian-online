@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Quiz PERGUNU</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body>
+  <div class="admin-container">
+    <header class="admin-header">
+      <h1>Admin Panel Quiz PERGUNU</h1>
+      <button id="logoutBtn">Logout</button>
+    </header>
+    
+    <div class="admin-content">
+      <aside class="admin-sidebar">
+        <nav>
+          <ul>
+            <li><a href="#" class="active" data-section="dashboard">Dashboard</a></li>
+            <li><a href="#" data-section="add-question">Tambah Soal</a></li>
+            <li><a href="#" data-section="question-bank">Bank Soal</a></li>
+            <li><a href="#" data-section="user-scores">Skor Pengguna</a></li>
+          </ul>
+        </nav>
+      </aside>
+      
+      <main class="admin-main">
+        <section id="dashboardSection" class="admin-section">
+          <h2>Dashboard</h2>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <h3>Total Soal</h3>
+              <p id="totalQuestions">0</p>
+            </div>
+            <div class="stat-card">
+              <h3>Total Pengguna</h3>
+              <p id="totalUsers">0</p>
+            </div>
+          </div>
+        </section>
+        
+        <section id="addQuestionSection" class="admin-section hidden">
+          <h2>Tambah Soal Baru</h2>
+          <form id="addQuestionForm">
+            <!-- Form akan diisi oleh JavaScript -->
+          </form>
+        </section>
+        
+        <section id="questionBankSection" class="admin-section hidden">
+          <h2>Bank Soal</h2>
+          <div class="filter-controls">
+            <select id="filterCategory">
+              <option value="">Semua Kategori</option>
+              <option value="umum">Umum</option>
+              <option value="pelajar">Pelajar</option>
+              <option value="logika">Logika & Jenaka</option>
+              <option value="lagu">Sambung Lagu</option>
+              <option value="pribahasa">Sambung Pribahasa</option>
+            </select>
+            <button id="applyFilter">Filter</button>
+          </div>
+          <div id="questionTableContainer"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/database.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>
