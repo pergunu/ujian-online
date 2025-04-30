@@ -5,27 +5,27 @@
     "type": "matematika",
     "level": "sd",
     "difficulty": "mudah",
-    "question": "Hasil dari 125 + 375 adalah...",
+    "question": "Hasil dari 15 × 4 adalah...",
     "options": [
       {
-        "text": "500",
-        "description": "125 + 375 = 500"
+        "text": "60",
+        "description": "15 dikali 4 sama dengan 60"
       },
       {
-        "text": "400",
-        "description": "Hasil penjumlahan terlalu kecil"
+        "text": "45",
+        "description": "Hasil perkalian terlalu kecil"
       },
       {
-        "text": "600",
-        "description": "Hasil penjumlahan terlalu besar"
+        "text": "75",
+        "description": "Hasil perkalian terlalu besar"
       },
       {
-        "text": "450",
+        "text": "50",
         "description": "Bukan hasil yang tepat"
       }
     ],
     "correctAnswer": 0,
-    "explanation": "Penjumlahan dapat dipecah: (100+300) + (25+75) = 400 + 100 = 500",
-    "lastUpdated": "2023-05-25T09:20:00Z"
+    "explanation": "Perkalian dapat dipecah: (10×4) + (5×4) = 40 + 20 = 60",
+    "lastUpdated": "2023-06-04T09:25:00Z"
   }
 ]
