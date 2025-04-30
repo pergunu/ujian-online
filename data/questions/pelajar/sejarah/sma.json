@@ -1,0 +1,15 @@
+[
+    {
+        "id": "sej-sma-1",
+        "question": "Latar belakang utama Perang Dunia II adalah...",
+        "options": {
+            "A": {"text": "Kegagalan Liga Bangsa-Bangsa", "description": "Faktor pendukung"},
+            "B": {"text": "Kebijakan ekspansi Jerman", "description": "Salah satu penyebab"},
+            "C": {"text": "Serangan ke Pearl Harbor", "description": "Awal keterlibatan AS"},
+            "D": {"text": "Perjanjian Versailles yang merugikan Jerman", "description": "Akar masalah utama"}
+        },
+        "correctAnswer": "D",
+        "difficulty": "sulit",
+        "explanation": "Perjanjian Versailles 1919 yang sangat merugikan Jerman menciptakan kekecewaan dan menjadi salah satu akar penyebab PD II."
+    }
+]
