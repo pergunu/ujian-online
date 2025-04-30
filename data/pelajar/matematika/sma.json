@@ -5,27 +5,27 @@
     "type": "matematika",
     "level": "sma",
     "difficulty": "sulit",
-    "question": "Turunan pertama dari f(x) = 3x² - 4x + 2 adalah...",
+    "question": "Turunan pertama dari f(x) = (3x² + 2x)⁵ adalah...",
     "options": [
       {
-        "text": "6x - 4",
-        "description": "Turunan dari masing-masing term"
+        "text": "5(3x² + 2x)⁴(6x + 2)",
+        "description": "Menggunakan aturan rantai"
       },
       {
-        "text": "3x - 4",
-        "description": "Hanya turunan sebagian"
+        "text": "(3x² + 2x)⁴(6x + 2)",
+        "description": "Kurang dikali 5"
       },
       {
-        "text": "6x + 2",
-        "description": "Salah menghitung konstanta"
+        "text": "5(6x + 2)⁴",
+        "description": "Salah menerapkan aturan rantai"
       },
       {
-        "text": "3x² - 4",
-        "description": "Bukan bentuk turunan"
+        "text": "(15x² + 10x)⁴",
+        "description": "Perhitungan salah"
       }
     ],
     "correctAnswer": 0,
-    "explanation": "Gunakan aturan pangkat: turunan x^n adalah n*x^(n-1). Jadi 3x² → 6x, -4x → -4, dan konstanta hilang.",
-    "lastUpdated": "2023-06-06T14:35:00Z"
+    "explanation": "Aturan rantai: d/dx[uⁿ] = n·uⁿ⁻¹·u'. Di sini u = 3x²+2x dan u' = 6x+2",
+    "lastUpdated": "2023-06-14T14:45:00Z"
   }
 ]
