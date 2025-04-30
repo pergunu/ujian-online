@@ -1,1 +1,27 @@
-
+[
+    {
+        "id": 101,
+        "question": "Proses fotosintesis menghasilkan...",
+        "options": {
+            "A": {
+                "text": "Oksigen dan air",
+                "description": "Oksigen adalah produk sampingan fotosintesis"
+            },
+            "B": {
+                "text": "Karbon dioksida dan glukosa",
+                "description": "Karbon dioksida adalah bahan baku fotosintesis"
+            },
+            "C": {
+                "text": "Oksigen dan glukosa",
+                "description": "Keduanya adalah produk utama fotosintesis"
+            },
+            "D": {
+                "text": "Air dan karbon dioksida",
+                "description": "Keduanya adalah bahan baku fotosintesis"
+            }
+        },
+        "correctAnswer": "C",
+        "difficulty": "sedang",
+        "explanation": "Fotosintesis mengubah CO2 dan H2O menjadi glukosa (C6H12O6) dan O2 dengan bantuan cahaya matahari."
+    }
+]
