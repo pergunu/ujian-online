@@ -1,0 +1,15 @@
+[
+    {
+        "id": "pribahasa-1",
+        "question": "Lanjutkan pribahasa: 'Air tenang...'",
+        "options": {
+            "A": {"text": "jernih sekali", "description": "Bukan lanjutan pribahasa"},
+            "B": {"text": "menghanyutkan", "description": "Lanjutan pribahasa yang benar"},
+            "C": {"text": "dalamnya kolam", "description": "Bagian dari pribahasa lain"},
+            "D": {"text": "sumber kehidupan", "description": "Bukan bagian pribahasa"}
+        },
+        "correctAnswer": "B",
+        "difficulty": "mudah",
+        "explanation": "Pribahasa lengkapnya: 'Air tenang menghanyutkan' yang berarti orang yang kelihatannya pendiam bisa jadi berbahaya."
+    }
+]
