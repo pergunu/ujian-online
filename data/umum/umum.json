@@ -1,0 +1,31 @@
+[
+  {
+    "id": "umum-umum-001",
+    "category": "Umum",
+    "type": "umum",
+    "level": "umum",
+    "difficulty": "sedang",
+    "question": "Organisasi perdagangan dunia yang Indonesia menjadi anggotanya adalah...",
+    "options": [
+      {
+        "text": "WTO",
+        "description": "Benar, World Trade Organization"
+      },
+      {
+        "text": "IMF",
+        "description": "Lembaga keuangan internasional"
+      },
+      {
+        "text": "WHO",
+        "description": "Organisasi kesehatan dunia"
+      },
+      {
+        "text": "UNESCO",
+        "description": "Organisasi pendidikan dan kebudayaan PBB"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Indonesia resmi menjadi anggota WTO sejak 1 Januari 1995 setelah ratifikasi hasil Uruguay Round.",
+    "lastUpdated": "2023-05-18T11:45:00Z"
+  }
+]
