@@ -1,1 +1,16 @@
 
+[
+    {
+        "id": "agama-smp-1",
+        "question": "Rukun Islam yang pertama adalah...",
+        "options": {
+            "A": {"text": "Shalat", "description": "Rukun Islam kedua"},
+            "B": {"text": "Zakat", "description": "Rukun Islam ketiga"},
+            "C": {"text": "Syahadat", "description": "Pernyataan keimanan"},
+            "D": {"text": "Puasa", "description": "Rukun Islam keempat"}
+        },
+        "correctAnswer": "C",
+        "difficulty": "mudah",
+        "explanation": "Rukun Islam pertama adalah mengucapkan dua kalimat syahadat sebagai dasar keislaman seseorang."
+    }
+]
