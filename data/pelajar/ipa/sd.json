@@ -1,1 +1,15 @@
-
+[
+    {
+        "id": "ipa-sd-1",
+        "question": "Bagian tumbuhan yang berfungsi menyerap air dan mineral dari tanah adalah...",
+        "options": {
+            "A": {"text": "Daun", "description": "Tempat fotosintesis"},
+            "B": {"text": "Batang", "description": "Penyangga tumbuhan"},
+            "C": {"text": "Akar", "description": "Bagian bawah tumbuhan"},
+            "D": {"text": "Bunga", "description": "Alat reproduksi"}
+        },
+        "correctAnswer": "C",
+        "difficulty": "mudah",
+        "explanation": "Akar berfungsi menyerap air dan mineral dari tanah serta menopang tumbuhan."
+    }
+]
