@@ -1,0 +1,31 @@
+[
+  {
+    "id": "bindo-sd-001",
+    "category": "Bahasa Indonesia",
+    "type": "bahasa_indonesia",
+    "level": "sd",
+    "difficulty": "mudah",
+    "question": "Kalimat yang menggunakan tanda baca titik dengan benar adalah...",
+    "options": [
+      {
+        "text": "Ayah pergi ke pasar.",
+        "description": "Tanda titik di akhir kalimat deklaratif"
+      },
+      {
+        "text": "Ayah pergi ke pasar",
+        "description": "Tanpa tanda titik"
+      },
+      {
+        "text": "Ayah. pergi ke pasar",
+        "description": "Titik di tengah kalimat"
+      },
+      {
+        "text": "Ayah, pergi ke pasar.",
+        "description": "Koma tidak diperlukan"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Tanda titik digunakan di akhir kalimat berita/perpnyataan untuk menunjukkan kalimat selesai.",
+    "lastUpdated": "2023-06-07T08:40:00Z"
+  }
+]
