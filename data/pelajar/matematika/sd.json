@@ -5,27 +5,56 @@
     "type": "matematika",
     "level": "sd",
     "difficulty": "mudah",
-    "question": "Hasil dari 15 × 4 adalah...",
+    "question": "Hasil dari 8 × 7 adalah...",
     "options": [
       {
-        "text": "60",
-        "description": "15 dikali 4 sama dengan 60"
+        "text": "56",
+        "description": "8 dikali 7 sama dengan 56"
       },
       {
-        "text": "45",
+        "text": "42",
         "description": "Hasil perkalian terlalu kecil"
       },
       {
-        "text": "75",
+        "text": "64",
         "description": "Hasil perkalian terlalu besar"
       },
       {
-        "text": "50",
+        "text": "49",
         "description": "Bukan hasil yang tepat"
       }
     ],
     "correctAnswer": 0,
-    "explanation": "Perkalian dapat dipecah: (10×4) + (5×4) = 40 + 20 = 60",
-    "lastUpdated": "2023-06-04T09:25:00Z"
+    "explanation": "Perkalian dapat dipecah: (5×7) + (3×7) = 35 + 21 = 56",
+    "lastUpdated": "2023-06-12T08:30:00Z"
+  },
+  {
+    "id": "mat-sd-002",
+    "category": "Matematika",
+    "type": "matematika",
+    "level": "sd",
+    "difficulty": "sedang",
+    "question": "Jika sebuah segitiga memiliki alas 10 cm dan tinggi 8 cm, maka luasnya adalah...",
+    "options": [
+      {
+        "text": "40 cm²",
+        "description": "Rumus luas segitiga: ½ × alas × tinggi"
+      },
+      {
+        "text": "80 cm²",
+        "description": "Tidak dikalikan ½"
+      },
+      {
+        "text": "18 cm²",
+        "description": "Ditambahkan bukan dikali"
+      },
+      {
+        "text": "36 cm²",
+        "description": "Perhitungan salah"
+      }
+    ],
+    "correctAnswer": 0,
+    "explanation": "Luas segitiga = ½ × 10 cm × 8 cm = 40 cm²",
+    "lastUpdated": "2023-06-12T09:45:00Z"
   }
 ]
