@@ -1,0 +1,15 @@
+[
+    {
+        "id": "ipa-smp-1",
+        "question": "Proses perubahan wujud dari cair menjadi gas disebut...",
+        "options": {
+            "A": {"text": "Membeku", "description": "Perubahan dari cair ke padat"},
+            "B": {"text": "Mencair", "description": "Perubahan dari padat ke cair"},
+            "C": {"text": "Mengembun", "description": "Perubahan dari gas ke cair"},
+            "D": {"text": "Menguap", "description": "Perubahan dari cair ke gas"}
+        },
+        "correctAnswer": "D",
+        "difficulty": "mudah",
+        "explanation": "Menguap adalah proses perubahan wujud dari cair menjadi gas, biasanya karena pemanasan."
+    }
+]
