@@ -1,0 +1,28 @@
+[
+    {
+        "id": "umum-sma-1",
+        "question": "Siapa penemu teori relativitas yang terkenal?",
+        "options": {
+            "A": {"text": "Isaac Newton", "description": "Penemu hukum gravitasi"},
+            "B": {"text": "Albert Einstein", "description": "Fisikawan teori abad 20"},
+            "C": {"text": "Thomas Edison", "description": "Penemu bola lampu"},
+            "D": {"text": "Galileo Galilei", "description": "Astronom Italia"}
+        },
+        "correctAnswer": "B",
+        "difficulty": "mudah",
+        "explanation": "Albert Einstein mengemukakan teori relativitas khusus dan umum yang revolusioner dalam fisika."
+    },
+    {
+        "id": "umum-sma-2",
+        "question": "Mata uang resmi Jepang adalah...",
+        "options": {
+            "A": {"text": "Yuan", "description": "Mata uang China"},
+            "B": {"text": "Dollar", "description": "Digunakan di Amerika Serikat"},
+            "C": {"text": "Yen", "description": "Mata uang Jepang"},
+            "D": {"text": "Won", "description": "Mata uang Korea"}
+        },
+        "correctAnswer": "C",
+        "difficulty": "mudah",
+        "explanation": "Yen adalah mata uang resmi Jepang sejak 1871."
+    }
+]
