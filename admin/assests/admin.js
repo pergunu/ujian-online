@@ -1,332 +1,245 @@
-// File: quiz-pergunu/admin/assets/admin.js
-
-class AdminPanel {
+class QuestionBankManager {
   constructor() {
-    this.authenticated = false;
-    this.currentFile = null;
-    this.questionsData = [];
-    this.initAuth();
-    this.initEventListeners();
-    this.setupFileSelector();
+    this.currentCategory = null;
+    this.currentLevel = null;
+    this.questions = [];
+    this.init();
   }
 
-  initAuth() {
-    document.getElementById('admin-login-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const password = document.getElementById('admin-password').value;
-      
-      // Password default (harus diganti di production)
-      if (password === 'PERGUNU2025') {
-        this.authenticated = true;
-        this.showAdminPanel();
-        this.showNotification('Login berhasil!', 'success');
-      } else {
-        this.showNotification('Password salah!', 'error');
-      }
-    });
+  async init() {
+    await this.verifyAdmin();
+    this.setupEventListeners();
+    this.loadQuestionBankUI();
+    this.setupFileHandlers();
   }
 
-  showAdminPanel() {
-    document.getElementById('login-container').style.display = 'none';
-    document.getElementById('admin-panel').style.display = 'block';
-    this.loadCategoryOptions();
-  }
-
-  loadCategoryOptions() {
-    const categories = {
-      'Umum': ['SD', 'SMP', 'SMA', 'Umum'],
-      'Pelajar': {
-        'IPA': ['SD', 'SMP', 'SMA'],
-        'IPS': ['SD', 'SMP', 'SMA'],
-        'Matematika': ['SD', 'SMP', 'SMA'],
-        'Bahasa Indonesia': ['SD', 'SMP', 'SMA'],
-        'Bahasa Inggris': ['SD', 'SMP', 'SMA'],
-        'Sejarah': ['SMP', 'SMA'],
-        'PPKN': ['SD', 'SMP', 'SMA'],
-        'Agama': ['SD', 'SMP', 'SMA']
-      },
-      'Khusus': {
-        'Tebak Logika & Jenaka': ['Umum'],
-        'Sambung Lagu': ['Umum'],
-        'Sambung Pribahasa': ['Umum']
-      }
-    };
-
-    const categorySelect = document.getElementById('question-category');
-    categorySelect.innerHTML = '';
-
-    // Add option groups
-    for (const [groupName, subCategories] of Object.entries(categories)) {
-      const group = document.createElement('optgroup');
-      group.label = groupName;
-
-      if (Array.isArray(subCategories)) {
-        // Umum category
-        subCategories.forEach(level => {
-          const option = document.createElement('option');
-          option.value = `umum_${level.toLowerCase()}`;
-          option.textContent = `Umum - ${level}`;
-          group.appendChild(option);
-        });
-      } else {
-        // Other categories
-        for (const [category, levels] of Object.entries(subCategories)) {
-          levels.forEach(level => {
-            const option = document.createElement('option');
-            option.value = `${category.toLowerCase().replace(' ', '_')}_${level.toLowerCase()}`;
-            option.textContent = `${category} - ${level}`;
-            group.appendChild(option);
-          });
-        }
-      }
-
-      categorySelect.appendChild(group);
+  async verifyAdmin() {
+    const password = prompt("Masukkan Kode Admin:");
+    if (password !== "PERGUNU2025") {
+      window.location.href = "../index.html";
+      throw new Error("Akses ditolak");
     }
-
-    // Add event listener for file selection
-    categorySelect.addEventListener('change', (e) => {
-      const [category, level] = e.target.value.split('_');
-      this.loadQuestionsFile(category, level);
-    });
   }
 
-  async loadQuestionsFile(category, level) {
-    let filePath;
+  setupEventListeners() {
+    // Category and level selection
+    document.getElementById('category-select').addEventListener('change', (e) => {
+      this.currentCategory = e.target.value;
+      this.updateLevelOptions();
+      this.loadQuestions();
+    });
+
+    // Question form submission
+    document.getElementById('question-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.saveQuestion();
+    });
+
+    // Bulk operations
+    document.getElementById('bulk-import').addEventListener('click', () => this.bulkImport());
+    document.getElementById('bulk-export').addEventListener('click', () => this.bulkExport());
+  }
+
+  updateLevelOptions() {
+    const levelSelect = document.getElementById('level-select');
+    levelSelect.innerHTML = '';
     
-    if (['tebak_logika_&_jenaka', 'sambung_lagu', 'sambung_pribahasa'].includes(category)) {
-      filePath = `../../data/questions/${category.replace('&', 'dan').replace(' ', '_')}/umum.json`;
-    } else if (category === 'umum') {
-      filePath = `../../data/questions/umum/${level}.json`;
+    if (['logika', 'lagu', 'pribahasa'].includes(this.currentCategory)) {
+      levelSelect.innerHTML = '<option value="umum">Umum</option>';
     } else {
-      filePath = `../../data/questions/pelajar/${category}/${level}.json`;
+      const levels = ['SD', 'SMP', 'SMA', 'Umum'];
+      levels.forEach(level => {
+        levelSelect.innerHTML += `<option value="${level.toLowerCase()}">${level}</option>`;
+      });
     }
+    
+    this.currentLevel = levelSelect.value;
+    this.loadQuestions();
+  }
 
+  async loadQuestions() {
     try {
-      const response = await fetch(filePath);
-      this.questionsData = await response.json();
-      this.currentFile = filePath;
-      this.displayQuestionsList();
-      this.showNotification(`Memuat ${this.questionsData.length} pertanyaan dari ${category} ${level}`, 'success');
+      const response = await fetch(`../../data/${this.getDataPath()}`);
+      this.questions = await response.json();
+      this.renderQuestionTable();
     } catch (error) {
-      console.error('Error loading questions:', error);
-      this.showNotification('Gagal memuat pertanyaan. File mungkin belum ada.', 'error');
-      this.questionsData = [];
-      this.currentFile = filePath;
-      this.displayQuestionsList();
+      console.error("Gagal memuat soal:", error);
+      this.questions = [];
+      this.renderQuestionTable();
     }
   }
 
-  displayQuestionsList() {
-    const listContainer = document.getElementById('questions-list');
-    listContainer.innerHTML = '';
-
-    if (this.questionsData.length === 0) {
-      listContainer.innerHTML = '<p class="no-questions">Belum ada pertanyaan untuk kategori ini.</p>';
-      return;
+  getDataPath() {
+    if (this.currentCategory === 'umum' || 
+        this.currentCategory === 'logika' || 
+        this.currentCategory === 'lagu' || 
+        this.currentCategory === 'pribahasa') {
+      return `${this.currentCategory}/${this.currentLevel}.json`;
+    } else {
+      return `pelajar/${this.currentCategory}/${this.currentLevel}.json`;
     }
+  }
 
-    this.questionsData.forEach((question, index) => {
-      const questionElement = document.createElement('div');
-      questionElement.className = 'question-item';
-      questionElement.innerHTML = `
-        <div class="question-header">
-          <span class="question-number">#${index + 1}</span>
-          <span class="question-difficulty ${question.difficulty || 'medium'}">${question.difficulty || 'Sedang'}</span>
-          <button class="btn-delete" data-index="${index}">Hapus</button>
-        </div>
-        <div class="question-text">${question.question}</div>
-        <div class="question-answer">Jawaban: ${String.fromCharCode(65 + question.correctAnswer)}</div>
+  renderQuestionTable() {
+    const tableBody = document.querySelector('#question-table tbody');
+    tableBody.innerHTML = '';
+
+    this.questions.forEach((question, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${question.question.substring(0, 50)}${question.question.length > 50 ? '...' : ''}</td>
+        <td>${question.category}</td>
+        <td>${question.level.toUpperCase()}</td>
+        <td>${question.difficulty}</td>
+        <td class="actions">
+          <button class="edit-btn" data-id="${question.id}">Edit</button>
+          <button class="delete-btn" data-id="${question.id}">Hapus</button>
+        </td>
       `;
-      
-      questionElement.querySelector('.btn-delete').addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.deleteQuestion(index);
-      });
+      tableBody.appendChild(row);
+    });
 
-      questionElement.addEventListener('click', () => {
-        this.editQuestion(index);
-      });
+    // Add event listeners to buttons
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => this.editQuestion(e.target.dataset.id));
+    });
 
-      listContainer.appendChild(questionElement);
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => this.deleteQuestion(e.target.dataset.id));
     });
   }
 
-  initEventListeners() {
-    // Add question form
-    document.getElementById('add-question-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      this.addNewQuestion();
-    });
-
-    // Save changes button
-    document.getElementById('btn-save-changes').addEventListener('click', () => {
-      this.saveChanges();
-    });
-
-    // Search functionality
-    document.getElementById('search-questions').addEventListener('input', (e) => {
-      this.filterQuestions(e.target.value);
-    });
-  }
-
-  addNewQuestion() {
-    if (!this.authenticated || !this.currentFile) {
-      this.showNotification('Silakan pilih kategori terlebih dahulu', 'error');
-      return;
-    }
-
-    const form = document.getElementById('add-question-form');
-    const formData = new FormData(form);
-
-    const newQuestion = {
-      id: `q_${Date.now()}`,
+  async saveQuestion() {
+    const formData = new FormData(document.getElementById('question-form'));
+    const questionData = {
+      id: formData.get('question-id') || `q-${Date.now()}`,
+      category: formData.get('category'),
+      type: formData.get('category'),
+      level: formData.get('level'),
+      difficulty: formData.get('difficulty'),
       question: formData.get('question-text'),
-      context: formData.get('question-context'),
       options: [
-        { text: formData.get('option-a'), explanation: formData.get('explanation-a') },
-        { text: formData.get('option-b'), explanation: formData.get('explanation-b') },
-        { text: formData.get('option-c'), explanation: formData.get('explanation-c') },
-        { text: formData.get('option-d'), explanation: formData.get('explanation-d') }
+        { text: formData.get('option-1'), description: formData.get('description-1') },
+        { text: formData.get('option-2'), description: formData.get('description-2') },
+        { text: formData.get('option-3'), description: formData.get('description-3') },
+        { text: formData.get('option-4'), description: formData.get('description-4') }
       ],
       correctAnswer: parseInt(formData.get('correct-answer')),
-      difficulty: formData.get('question-difficulty'),
-      category: formData.get('question-category').split('_')[0],
-      level: formData.get('question-category').split('_')[1]
+      explanation: formData.get('explanation'),
+      lastUpdated: new Date().toISOString()
     };
 
-    this.questionsData.push(newQuestion);
-    this.displayQuestionsList();
-    form.reset();
-    
-    this.showNotification('Pertanyaan berhasil ditambahkan!', 'success');
-  }
-
-  editQuestion(index) {
-    const question = this.questionsData[index];
-    const form = document.getElementById('add-question-form');
-
-    // Fill form with question data
-    form.querySelector('#question-text').value = question.question;
-    form.querySelector('#question-context').value = question.context || '';
-    form.querySelector('#option-a').value = question.options[0].text;
-    form.querySelector('#explanation-a').value = question.options[0].explanation || '';
-    form.querySelector('#option-b').value = question.options[1].text;
-    form.querySelector('#explanation-b').value = question.options[1].explanation || '';
-    form.querySelector('#option-c').value = question.options[2].text;
-    form.querySelector('#explanation-c').value = question.options[2].explanation || '';
-    form.querySelector('#option-d').value = question.options[3].text;
-    form.querySelector('#explanation-d').value = question.options[3].explanation || '';
-    form.querySelector('#correct-answer').value = question.correctAnswer;
-    form.querySelector('#question-difficulty').value = question.difficulty || 'medium';
-
-    // Change button text
-    form.querySelector('button[type="submit"]').textContent = 'Update Pertanyaan';
-
-    // Store current editing index
-    form.dataset.editingIndex = index;
-
-    // Scroll to form
-    form.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  deleteQuestion(index) {
-    if (confirm('Apakah Anda yakin ingin menghapus pertanyaan ini?')) {
-      this.questionsData.splice(index, 1);
-      this.displayQuestionsList();
-      this.showNotification('Pertanyaan berhasil dihapus', 'success');
+    // Update or add question
+    const existingIndex = this.questions.findIndex(q => q.id === questionData.id);
+    if (existingIndex >= 0) {
+      this.questions[existingIndex] = questionData;
+    } else {
+      this.questions.push(questionData);
     }
+
+    await this.saveToFile();
+    this.renderQuestionTable();
+    this.resetForm();
   }
 
-  filterQuestions(searchTerm) {
-    const filteredQuestions = this.questionsData.filter(q => 
-      q.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      q.options.some(opt => opt.text.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
+  async saveToFile() {
+    // In a real app, this would save to the server
+    console.log("Simpan perubahan ke file:", this.getDataPath());
+    // Simulate save
+    return new Promise(resolve => setTimeout(resolve, 500));
+  }
 
-    const listContainer = document.getElementById('questions-list');
-    listContainer.innerHTML = '';
+  editQuestion(questionId) {
+    const question = this.questions.find(q => q.id === questionId);
+    if (!question) return;
 
-    filteredQuestions.forEach((question, index) => {
-      const originalIndex = this.questionsData.findIndex(q => q.id === question.id);
-      const questionElement = document.createElement('div');
-      questionElement.className = 'question-item';
-      questionElement.innerHTML = `
-        <div class="question-header">
-          <span class="question-number">#${originalIndex + 1}</span>
-          <span class="question-difficulty ${question.difficulty || 'medium'}">${question.difficulty || 'Sedang'}</span>
-          <button class="btn-delete" data-index="${originalIndex}">Hapus</button>
-        </div>
-        <div class="question-text">${question.question}</div>
-        <div class="question-answer">Jawaban: ${String.fromCharCode(65 + question.correctAnswer)}</div>
-      `;
-      
-      questionElement.querySelector('.btn-delete').addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.deleteQuestion(originalIndex);
-      });
+    const form = document.getElementById('question-form');
+    form['question-id'].value = question.id;
+    form['question-text'].value = question.question;
+    form['difficulty'].value = question.difficulty;
+    form['correct-answer'].value = question.correctAnswer;
+    form['explanation'].value = question.explanation;
 
-      questionElement.addEventListener('click', () => {
-        this.editQuestion(originalIndex);
-      });
-
-      listContainer.appendChild(questionElement);
+    question.options.forEach((option, index) => {
+      form[`option-${index + 1}`].value = option.text;
+      form[`description-${index + 1}`].value = option.description;
     });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  async saveChanges() {
-    if (!this.currentFile) {
-      this.showNotification('Tidak ada file yang dipilih', 'error');
-      return;
-    }
-
-    // In a real implementation, this would save to your backend
-    // For GitHub Pages, you would need to use GitHub API or another backend service
+  async deleteQuestion(questionId) {
+    if (!confirm("Apakah Anda yakin ingin menghapus soal ini?")) return;
     
-    try {
-      // Simulate saving
-      console.log('Data yang akan disimpan:', {
-        filePath: this.currentFile,
-        questions: this.questionsData
-      });
+    this.questions = this.questions.filter(q => q.id !== questionId);
+    await this.saveToFile();
+    this.renderQuestionTable();
+  }
+
+  async bulkImport() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+    
+    fileInput.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
       
-      // In a real app, you would do something like:
-      // await fetch('/api/save-questions', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     filePath: this.currentFile,
-      //     questions: this.questionsData
-      //   })
-      // });
-      
-      this.showNotification('Perubahan berhasil disimpan (simulasi)', 'success');
-    } catch (error) {
-      console.error('Error saving questions:', error);
-      this.showNotification('Gagal menyimpan perubahan', 'error');
-    }
+      try {
+        const content = await file.text();
+        const importedQuestions = JSON.parse(content);
+        
+        if (Array.isArray(importedQuestions)) {
+          this.questions = [...this.questions, ...importedQuestions];
+          await this.saveToFile();
+          this.renderQuestionTable();
+          alert(`Berhasil mengimpor ${importedQuestions.length} soal!`);
+        } else {
+          throw new Error("Format file tidak valid");
+        }
+      } catch (error) {
+        alert("Gagal mengimpor soal: " + error.message);
+      }
+    };
+    
+    fileInput.click();
   }
 
-  showNotification(message, type) {
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.textContent = message;
+  async bulkExport() {
+    const blob = new Blob([JSON.stringify(this.questions, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
     
-    document.body.appendChild(notification);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `quiz-${this.currentCategory}-${this.currentLevel}-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
     
-    setTimeout(() => {
-      notification.classList.add('fade-out');
-      setTimeout(() => notification.remove(), 500);
-    }, 3000);
+    URL.revokeObjectURL(url);
   }
 
-  setupFileSelector() {
-    // This would be more complex in a real implementation
-    // For GitHub Pages, you might need a different approach
-    console.log('File selector setup complete');
+  resetForm() {
+    document.getElementById('question-form').reset();
+    document.getElementById('question-id').value = '';
+  }
+
+  setupFileHandlers() {
+    // Auto-save every 5 minutes
+    setInterval(() => {
+      if (this.questions.length > 0) {
+        this.saveToFile();
+      }
+    }, 5 * 60 * 1000);
+  }
+
+  loadQuestionBankUI() {
+    // Initialize UI components
+    document.getElementById('app-title').textContent = `Bank Soal PERGUNU - ${new Date().getFullYear()}`;
+    this.updateLevelOptions();
   }
 }
 
-// Initialize when DOM is loaded
+// Initialize the manager when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  new AdminPanel();
+  new QuestionBankManager();
 });
