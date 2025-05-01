@@ -8,24 +8,39 @@
     <link rel="icon" href="assets/images/logo-pergunu.png" type="image/png" onerror="this.src='https://via.placeholder.com/64?text=LOGO'">
     
     <!-- Font & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Library untuk screenshot -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     
     <style>
         :root {
             --primary: #2563eb;
+            --primary-light: #3b82f6;
             --primary-dark: #1e40af;
             --secondary: #dc2626;
+            --secondary-light: #ef4444;
+            --secondary-dark: #b91c1c;
             --success: #16a34a;
+            --success-light: #22c55e;
             --success-dark: #15803d;
             --warning: #d97706;
             --danger: #b91c1c;
             --light: #f8fafc;
+            --lighter: #f1f5f9;
             --dark: #1e293b;
+            --darker: #0f172a;
             --gray: #64748b;
-            --radius: 8px;
+            --light-gray: #e2e8f0;
+            --radius: 12px;
+            --radius-sm: 8px;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --logo-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
+            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            --gradient-success: linear-gradient(135deg, var(--success), var(--success-dark));
         }
         
         * {
@@ -36,15 +51,17 @@
         }
         
         body {
-            background: var(--light);
+            background: var(--lighter);
             color: var(--dark);
             line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
         }
         
-        /* Header Revisi - Lebih Profesional */
+        /* Header Profesional di Tengah */
         .header {
             background: white;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
             padding: 1.5rem 0;
             position: sticky;
             top: 0;
@@ -55,7 +72,7 @@
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -66,80 +83,1177 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: var(--transition);
         }
         
         .logo:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
         
         .logo-img {
-            height: 4rem;
+            height: 5rem;
             width: auto;
             object-fit: contain;
-            filter: drop-shadow(var(--logo-shadow));
+            filter: drop-shadow(0 4px 12px rgba(37, 99, 235, 0.2));
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 4px var(--primary-light);
         }
         
         .logo-text {
-            font-size: 2.25rem;
-            font-weight: 800;
-            color: var(--success);
-            background: linear-gradient(to right, var(--success), var(--success-dark));
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-family: 'Playfair Display', serif;
             letter-spacing: 0.5px;
             text-shadow: 0 2px 4px rgba(22, 163, 74, 0.1);
+            position: relative;
+        }
+        
+        .logo-text::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
         }
         
         .logo-subtext {
-            font-size: 0.875rem;
+            font-size: 1rem;
             color: var(--gray);
             font-weight: 500;
-            margin-top: -0.25rem;
             font-style: italic;
             max-width: 600px;
-        }
-
-        /* Tambahan untuk sub-kategori */
-        .subcategory-tabs {
-            display: none;
-            gap: 0.5rem;
-            margin-bottom: 1.25rem;
-            flex-wrap: wrap;
-            justify-content: center;
+            margin-top: 0.5rem;
         }
         
-        .subcategory-tab {
-            padding: 0.5rem 1rem;
+        .participant-name {
+            font-weight: 600;
+            color: var(--dark);
+            background: var(--light-gray);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .participant-name i {
+            color: var(--primary);
+        }
+        
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            min-height: calc(100vh - 180px);
+        }
+        
+        /* Form Peserta */
+        .participant-form {
+            background: white;
             border-radius: var(--radius);
-            background: #e2e8f0;
+            box-shadow: var(--shadow-lg);
+            padding: 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .participant-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gradient-primary);
+        }
+        
+        .form-title {
+            font-size: 1.75rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 0.75rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--darker);
+            font-size: 0.95rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.85rem 1.25rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--lighter);
+            color: var(--dark);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background: white;
+        }
+        
+        /* Kategori Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .category-tab {
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            background: var(--lighter);
             cursor: pointer;
             font-weight: 500;
-            transition: all 0.3s;
+            transition: var(--transition);
             text-align: center;
-            font-size: 0.875rem;
+            flex: 1;
+            border: 1px solid var(--light-gray);
+            color: var(--gray);
         }
         
-        .subcategory-tab.active {
+        .category-tab:hover {
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+        
+        .category-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+        }
+        
+        /* Subkategori Container */
+        .subcategory-container {
+            margin-top: 1rem;
+            padding: 1.5rem;
+            background: var(--lighter);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--light-gray);
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .subcategory-title {
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.05rem;
+        }
+        
+        .subcategory-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .subcategory-option {
+            display: inline-block;
+        }
+        
+        .subcategory-radio {
+            display: none;
+        }
+        
+        .subcategory-label {
+            display: inline-block;
+            padding: 0.6rem 1rem;
+            background: white;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .subcategory-radio:checked + .subcategory-label {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
+        }
+        
+        .subcategory-label:hover {
+            background: var(--light-gray);
+        }
+        
+        /* Profesi Field (khusus umum) */
+        .profesi-field {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gradient-primary);
+        }
+        
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .quiz-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .quiz-info {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        
+        .quiz-info-item {
+            background: var(--lighter);
+            padding: 0.5rem 1rem;
+            border-radius: 1.5rem;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .quiz-info-item i {
+            color: var(--primary);
+        }
+        
+        /* Question */
+        .question-container {
+            margin-bottom: 2rem;
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: var(--lighter);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .question-text {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: var(--darker);
+        }
+        
+        /* Options */
+        .options-container {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .option {
+            padding: 1.25rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+        }
+        
+        .option:hover {
+            background: var(--lighter);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .option.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+        }
+        
+        .option.selected .option-prefix {
+            color: white;
+        }
+        
+        .option.correct {
+            background: var(--success);
+            color: white;
+            border-color: var(--success-dark);
+            box-shadow: 0 4px 8px rgba(22, 163, 74, 0.2);
+        }
+        
+        .option.incorrect {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+            box-shadow: 0 4px 8px rgba(220, 38, 38, 0.2);
+        }
+        
+        .option-prefix {
+            font-weight: 700;
+            width: 1.75rem;
+            height: 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--lighter);
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .option.selected .option-prefix {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Explanation */
+        .explanation {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--lighter);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--primary);
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .explanation-title {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        .explanation-text {
+            color: var(--dark);
+            line-height: 1.7;
+        }
+        
+        /* Navigation Buttons */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.85rem 1.75rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.25);
+        }
+        
+        .btn-secondary {
+            background: var(--lighter);
+            color: var(--dark);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--light-gray);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+            box-shadow: 0 4px 8px rgba(22, 163, 74, 0.2);
+        }
+        
+        .btn-success:hover {
+            background: var(--success-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(22, 163, 74, 0.25);
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+            box-shadow: 0 4px 8px rgba(217, 119, 6, 0.2);
+        }
+        
+        .btn-warning:hover {
+            background: #b45309;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(217, 119, 6, 0.25);
+        }
+        
+        /* Results */
+        .results-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 3rem 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .results-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gradient-primary);
+        }
+        
+        .results-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .score {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 2rem 0;
+            position: relative;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .score::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 6px;
+            background: var(--gradient-primary);
+            opacity: 0.3;
+            border-radius: 3px;
+        }
+        
+        .results-message {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            line-height: 1.7;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .thank-you-message {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            font-style: italic;
+            padding: 1.5rem;
+            background: var(--lighter);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .results-details {
+            background: var(--lighter);
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-top: 2rem;
+            text-align: left;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .results-details h3 {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--light-gray);
+            transition: var(--transition);
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        /* Share Buttons */
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            text-decoration: none;
+        }
+        
+        .share-btn.facebook {
+            background: #1877f2;
+            color: white;
+        }
+        
+        .share-btn.twitter {
+            background: #1da1f2;
+            color: white;
+        }
+        
+        .share-btn.whatsapp {
+            background: #25d366;
+            color: white;
+        }
+        
+        .share-btn.print {
+            background: var(--gray);
+            color: white;
+        }
+        
+        .share-btn.screenshot {
             background: var(--primary);
             color: white;
         }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Call Center Button */
+        .call-center-btn {
+            position: fixed;
+            bottom: 7rem;
+            right: 2rem;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            background: #25d366;
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 100;
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+        
+        .call-center-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            background: #128c7e;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+            animation: none;
+        }
+        
+        .call-center-tooltip {
+            position: absolute;
+            right: 5rem;
+            background: white;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            font-size: 0.9rem;
+            width: 200px;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+        
+        .call-center-btn:hover .call-center-tooltip {
+            opacity: 1;
+            right: 5.5rem;
+        }
+        
+        /* Admin Panel */
+        .admin-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(220, 38, 38, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 100;
+            transition: var(--transition);
+        }
+        
+        .admin-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            background: var(--secondary-dark);
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
+        }
+        
+        .admin-btn img {
+            width: 1.75rem;
+            height: 1.75rem;
+            object-fit: contain;
+        }
+        
+        .admin-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .admin-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+            padding: 2.5rem;
+            z-index: 1001;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .admin-title {
+            font-size: 1.75rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .admin-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .admin-close:hover {
+            color: var(--secondary);
+            transform: rotate(90deg);
+            background: var(--lighter);
+        }
+        
+        /* Question List */
+        .question-list {
+            margin-bottom: 3rem;
+        }
+        
+        .question-item {
+            background: var(--lighter);
+            padding: 1.5rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1.25rem;
+            position: relative;
+            border: 1px solid var(--light-gray);
+            transition: var(--transition);
+        }
+        
+        .question-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        .question-meta {
+            display: flex;
+            gap: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+            flex-wrap: wrap;
+        }
+        
+        .question-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .question-meta i {
+            color: var(--primary);
+        }
+        
+        .question-content {
+            font-size: 1.1rem;
+            color: var(--dark);
+            line-height: 1.7;
+            margin-right: 4rem;
+        }
+        
+        .question-actions {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .action-btn {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid var(--light-gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: var(--gray);
+        }
+        
+        .action-btn:hover {
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+        
+        .action-btn.edit-question:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .action-btn.delete-question:hover {
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .edit-form {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--light-gray);
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        /* AI Prompt Section */
+        .ai-prompt-section {
+            background: #f0fdf4;
+            border-radius: var(--radius-sm);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--success);
+        }
 
-        /* ... (style lainnya tetap sama) ... */
+        .ai-prompt-title {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .ai-prompt-input {
+            width: 100%;
+            padding: 0.85rem 1.25rem;
+            border: 1px solid #bbf7d0;
+            border-radius: var(--radius-sm);
+            margin-bottom: 0.75rem;
+            background: white;
+            font-size: 1rem;
+        }
+
+        .ai-prompt-input:focus {
+            outline: none;
+            border-color: var(--success);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+        }
+
+        .ai-generate-btn {
+            margin-top: 0.5rem;
+            width: 100%;
+            padding: 0.85rem;
+            font-size: 1rem;
+        }
+
+        .ai-loading {
+            display: none;
+            text-align: center;
+            padding: 0.75rem;
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+            
+            .logo-img {
+                height: 4rem;
+            }
+            
+            .logo-text {
+                font-size: 2rem;
+            }
+            
+            .participant-name {
+                margin-top: 0.5rem;
+                padding: 0.5rem 1rem;
+            }
+            
+            .participant-form, .quiz-container, .results-container {
+                padding: 1.5rem;
+            }
+            
+            .quiz-header {
+                flex-direction: column;
+                gap: 1.25rem;
+                align-items: flex-start;
+            }
+            
+            .quiz-info {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            
+            .question-text {
+                font-size: 1.1rem;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-panel {
+                padding: 1.5rem;
+            }
+            
+            .question-content {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .question-actions {
+                position: static;
+                justify-content: flex-end;
+                margin-top: 1rem;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .call-center-btn {
+                bottom: 6rem;
+                right: 1.5rem;
+            }
+            
+            .admin-btn {
+                right: 1.5rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Confetti Effect */
+        .confetti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: var(--secondary);
+            top: 100%;
+            left: 50%;
+            z-index: 1000;
+            animation: confetti 3s ease-out forwards;
+        }
+        
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Music Player */
+        .music-control {
+            position: fixed;
+            bottom: 11rem;
+            right: 2rem;
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 0.75rem;
+            box-shadow: var(--shadow-lg);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .music-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .music-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        
+        .music-tooltip {
+            position: absolute;
+            right: 3.5rem;
+            background: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow);
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+        
+        .music-btn:hover .music-tooltip {
+            opacity: 1;
+            right: 4rem;
+        }
     </style>
 </head>
 <body>
-    <!-- Header Revisi -->
+    <!-- Header Profesional di Tengah -->
     <header class="header">
         <div class="header-container">
             <a href="#" class="logo" id="homeBtn">
-                <img src="assets/images/logo-pergunu.png" alt="Pergunu Logo" class="logo-img">
-                <span class="logo-text">QUIZ PERGUNU</span>
-                <span class="logo-subtext">Sistem Ujian Lengkap untuk Menguji Pengetahuan dan Keterampilan</span>
+                <img src="assets/images/logo-pergunu.png" alt="Pergunu Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/150?text=Pergunu'">
+                <span class="logo-text">Quiz Pergunu</span>
+                <span class="logo-subtext">Uji pengetahuanmu dan raih prestasi terbaik bersama Pergunu</span>
             </a>
-            <div id="participantName" style="font-weight: 600; font-size: 1.125rem;"></div>
+            <div class="participant-name" id="participantName" style="display: none;">
+                <i class="fas fa-user"></i>
+                <span id="nameDisplay"></span>
+            </div>
         </div>
     </header>
     
@@ -150,33 +1264,92 @@
             <h2 class="form-title">Form Peserta Quiz</h2>
             <div class="form-group">
                 <label for="name" class="form-label">Nama Lengkap</label>
-                <input type="text" id="name" class="form-control" required>
+                <input type="text" id="name" class="form-control" required placeholder="Masukkan nama lengkap Anda">
             </div>
+            
+            <div class="form-group">
+                <label for="phone" class="form-label">Nomor HP/WhatsApp</label>
+                <input type="tel" id="phone" class="form-control" required placeholder="Masukkan nomor yang bisa dihubungi">
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" placeholder="Masukkan email Anda (opsional)">
+            </div>
+            
             <div class="form-group">
                 <label class="form-label">Kategori Quiz</label>
                 <div class="category-tabs">
                     <div class="category-tab active" data-category="pelajar">Pelajar</div>
                     <div class="category-tab" data-category="umum">Umum</div>
                 </div>
-            </div>
-            
-            <!-- Tambahan Sub Kategori -->
-            <div class="form-group" id="subcategoryGroup">
-                <label class="form-label">Jenis Soal Ujian</label>
-                <div class="subcategory-tabs" id="pelajarSubcategories">
-                    <div class="subcategory-tab active" data-subcategory="agama">Agama</div>
-                    <div class="subcategory-tab" data-subcategory="ipa">IPA</div>
-                    <div class="subcategory-tab" data-subcategory="ips">IPS</div>
-                    <div class="subcategory-tab" data-subcategory="sejarah">Sejarah</div>
-                    <div class="subcategory-tab" data-subcategory="ppkn">PPKn</div>
-                    <div class="subcategory-tab" data-subcategory="matematika">Matematika</div>
-                    <div class="subcategory-tab" data-subcategory="bahasa_indonesia">Bahasa Indonesia</div>
-                    <div class="subcategory-tab" data-subcategory="bahasa_inggris">Bahasa Inggris</div>
+                
+                <!-- Subkategori untuk Pelajar -->
+                <div class="subcategory-container" id="pelajarSubcategories">
+                    <div class="subcategory-title">
+                        <i class="fas fa-book"></i> Pilih Mata Pelajaran:
+                    </div>
+                    <div class="subcategory-options">
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="ipa" checked>
+                            <span class="subcategory-label">IPA</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="ips">
+                            <span class="subcategory-label">IPS</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="matematika">
+                            <span class="subcategory-label">Matematika</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="agama">
+                            <span class="subcategory-label">Agama</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="ppkn">
+                            <span class="subcategory-label">PPKN</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="sejarah">
+                            <span class="subcategory-label">Sejarah</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="bahasa_indonesia">
+                            <span class="subcategory-label">Bahasa Indonesia</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="bahasa_inggris">
+                            <span class="subcategory-label">Bahasa Inggris</span>
+                        </label>
+                    </div>
                 </div>
-                <div class="subcategory-tabs" id="umumSubcategories">
-                    <div class="subcategory-tab active" data-subcategory="logika">Logika</div>
-                    <div class="subcategory-tab" data-subcategory="sambung_lagu">Sambung Lagu</div>
-                    <div class="subcategory-tab" data-subcategory="peribahasa">Peribahasa</div>
+                
+                <!-- Subkategori untuk Umum -->
+                <div class="subcategory-container" id="umumSubcategories" style="display: none;">
+                    <div class="subcategory-title">
+                        <i class="fas fa-star"></i> Pilih Jenis Ujian:
+                    </div>
+                    <div class="subcategory-options">
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="logika">
+                            <span class="subcategory-label">Ujian Logika</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="sambung_lagu">
+                            <span class="subcategory-label">Sambung Lagu</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="peribahasa">
+                            <span class="subcategory-label">Tebak Peribahasa</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Field Profesi (hanya untuk umum) -->
+                <div class="form-group profesi-field" id="profesiField">
+                    <label for="profesi" class="form-label">Profesi</label>
+                    <input type="text" id="profesi" class="form-control" placeholder="Masukkan profesi Anda">
                 </div>
             </div>
             
@@ -188,71 +1361,519 @@
                     <option value="sulit">Sulit</option>
                 </select>
             </div>
+            
             <button type="submit" class="btn btn-primary" id="startQuiz">
                 <i class="fas fa-play"></i> Mulai Quiz
             </button>
         </form>
         
-        <!-- ... (bagian lainnya tetap sama) ... -->
+        <!-- Quiz Container -->
+        <div id="quizContainer" class="quiz-container">
+            <div class="quiz-header">
+                <h1 class="quiz-title"><i class="fas fa-question-circle"></i> Quiz Pergunu</h1>
+                <div class="quiz-info">
+                    <div class="quiz-info-item" id="quizCategory">
+                        <i class="fas fa-tag"></i> Kategori: <span id="categoryDisplay">Pelajar</span>
+                    </div>
+                    <div class="quiz-info-item" id="quizSubcategory">
+                        <i class="fas fa-book"></i> Subkategori: <span id="subcategoryDisplay">IPA</span>
+                    </div>
+                    <div class="quiz-info-item" id="quizLevel">
+                        <i class="fas fa-signal"></i> Level: <span id="levelDisplay">Mudah</span>
+                    </div>
+                    <div class="quiz-info-item" id="quizTimer">
+                        <i class="fas fa-clock"></i> <span id="timeDisplay">10:00</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <span class="question-number" id="questionNumber">Pertanyaan 1 dari 10</span>
+                <p class="question-text" id="questionText">Memuat pertanyaan...</p>
+            </div>
+            
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be loaded here -->
+            </div>
+            
+            <div class="explanation" id="explanation">
+                <div class="explanation-title">
+                    <i class="fas fa-lightbulb"></i> Penjelasan Jawaban:
+                </div>
+                <p class="explanation-text" id="explanationText">Memuat penjelasan...</p>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button class="btn btn-secondary" id="resetBtn">
+                    <i class="fas fa-redo"></i> Reset Quiz
+                </button>
+                <button class="btn btn-primary" id="nextBtn">
+                    <i class="fas fa-arrow-right"></i> Selanjutnya
+                </button>
+            </div>
+        </div>
+        
+        <!-- Results Container -->
+        <div id="resultsContainer" class="results-container">
+            <h2 class="results-title">Hasil Quiz</h2>
+            <div class="score" id="scoreDisplay">0%</div>
+            <p class="results-message" id="resultsMessage">Memuat hasil...</p>
+            
+            <div class="thank-you-message">
+                <p>Terima kasih telah mengikuti Quiz Pergunu. Hasil yang Anda capai merupakan cerminan dari usaha dan pengetahuan Anda saat ini.</p>
+                <p>Jangan berhenti belajar dan terus tingkatkan kemampuan Anda. Setiap langkah kecil dalam belajar akan membawa Anda menuju kesuksesan yang lebih besar.</p>
+                <p>Semangat belajar dan sampai jumpa di quiz berikutnya!</p>
+            </div>
+            
+            <div class="results-details">
+                <h3><i class="fas fa-chart-bar"></i> Statistik Hasil</h3>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalQuestions">0</div>
+                        <div class="stat-label">Total Pertanyaan</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="correctAnswers">0</div>
+                        <div class="stat-label">Jawaban Benar</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="wrongAnswers">0</div>
+                        <div class="stat-label">Jawaban Salah</div>
+                    </div>
+                </div>
+                
+                <h3><i class="fas fa-clock"></i> Waktu Penyelesaian</h3>
+                <p id="completionTime">-</p>
+            </div>
+            
+            <div class="share-buttons">
+                <a href="#" class="share-btn facebook" id="shareFacebook">
+                    <i class="fab fa-facebook-f"></i> Share ke Facebook
+                </a>
+                <a href="#" class="share-btn twitter" id="shareTwitter">
+                    <i class="fab fa-twitter"></i> Share ke Twitter
+                </a>
+                <a href="#" class="share-btn whatsapp" id="shareWhatsapp">
+                    <i class="fab fa-whatsapp"></i> Share ke WhatsApp
+                </a>
+                <button class="share-btn print" id="printBtn">
+                    <i class="fas fa-print"></i> Cetak Hasil
+                </button>
+                <button class="share-btn screenshot" id="screenshotBtn">
+                    <i class="fas fa-camera"></i> Ambil Screenshot
+                </button>
+            </div>
+            
+            <button class="btn btn-primary" id="restartBtn" style="margin-top: 2rem;">
+                <i class="fas fa-redo"></i> Ulangi Quiz
+            </button>
+        </div>
     </main>
-
+    
+    <!-- Music Control -->
+    <div class="music-control" id="musicControl">
+        <button class="music-btn" id="musicToggle">
+            <i class="fas fa-music"></i>
+            <span class="music-tooltip">Toggle Background Music</span>
+        </button>
+        <button class="music-btn" id="soundToggle">
+            <i class="fas fa-volume-up"></i>
+            <span class="music-tooltip">Toggle Sound Effects</span>
+        </button>
+    </div>
+    
+    <!-- Call Center Button -->
+    <a href="https://wa.me/6285647709114" class="call-center-btn" target="_blank" id="callCenterBtn">
+        <i class="fab fa-whatsapp"></i>
+        <span class="call-center-tooltip">Butuh bantuan? Hubungi Developer via WhatsApp</span>
+    </a>
+    
+    <!-- Admin Button -->
+    <button class="admin-btn" id="adminBtn">
+        <i class="fas fa-cog"></i>
+    </button>
+    
+    <!-- Admin Overlay -->
+    <div class="admin-overlay" id="adminOverlay"></div>
+    
+    <!-- Admin Login -->
+    <div class="admin-panel" id="adminLogin">
+        <div class="admin-header">
+            <h2 class="admin-title"><i class="fas fa-lock"></i> Admin Login</h2>
+            <button class="admin-close" id="adminClose">&times;</button>
+        </div>
+        
+        <div class="form-group">
+            <label for="adminPassword" class="form-label">Password Admin</label>
+            <input type="password" id="adminPassword" class="form-control" placeholder="Masukkan password admin">
+        </div>
+        <button class="btn btn-primary" id="adminLoginBtn">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+    </div>
+    
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2 class="admin-title"><i class="fas fa-cog"></i> Panel Admin</h2>
+            <button class="admin-close" id="adminPanelClose">&times;</button>
+        </div>
+        
+        <div class="admin-content" id="adminContent" style="display: none;">
+            <div class="form-group">
+                <label for="adminCategoryFilter" class="form-label">Filter Kategori</label>
+                <select id="adminCategoryFilter" class="form-control">
+                    <option value="">Semua Kategori</option>
+                    <option value="pelajar">Pelajar</option>
+                    <option value="umum">Umum</option>
+                </select>
+            </div>
+            
+            <div class="question-list" id="questionList">
+                <!-- Questions will be loaded here -->
+            </div>
+            
+            <h3 class="admin-title"><i class="fas fa-plus-circle"></i> Tambah Soal Baru</h3>
+            
+            <!-- AI Prompt Section -->
+            <div class="ai-prompt-section">
+                <div class="ai-prompt-title">
+                    <i class="fas fa-robot"></i> Generator Soal AI
+                </div>
+                <p style="margin-bottom: 0.75rem; font-size: 0.95rem;">Masukkan topik untuk menghasilkan soal secara otomatis:</p>
+                <input type="text" id="aiPromptInput" class="ai-prompt-input" placeholder="Contoh: Soal matematika dasar tentang aljabar untuk pelajar SMP">
+                <div class="ai-loading" id="aiLoading">
+                    <i class="fas fa-spinner fa-spin"></i> Membuat soal, harap tunggu...
+                </div>
+                <button class="btn btn-success ai-generate-btn" id="generateQuestionBtn">
+                    <i class="fas fa-magic"></i> Generate Soal dengan AI
+                </button>
+            </div>
+            
+            <form id="addQuestionForm">
+                <div class="form-group">
+                    <label for="newCategory" class="form-label">Kategori</label>
+                    <select id="newCategory" class="form-control" required>
+                        <option value="">Pilih Kategori</option>
+                        <option value="pelajar">Pelajar</option>
+                        <option value="umum">Umum</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="newSubcategoryGroup" style="display: none;">
+                    <label for="newSubcategory" class="form-label">Subkategori</label>
+                    <select id="newSubcategory" class="form-control">
+                        <option value="ipa">IPA</option>
+                        <option value="ips">IPS</option>
+                        <option value="matematika">Matematika</option>
+                        <option value="agama">Agama</option>
+                        <option value="ppkn">PPKN</option>
+                        <option value="sejarah">Sejarah</option>
+                        <option value="bahasa_indonesia">Bahasa Indonesia</option>
+                        <option value="bahasa_inggris">Bahasa Inggris</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="newUmumSubcategoryGroup" style="display: none;">
+                    <label for="newUmumSubcategory" class="form-label">Jenis Ujian</label>
+                    <select id="newUmumSubcategory" class="form-control">
+                        <option value="logika">Ujian Logika</option>
+                        <option value="sambung_lagu">Sambung Lagu</option>
+                        <option value="peribahasa">Tebak Peribahasa</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newLevel" class="form-label">Tingkat Kesulitan</label>
+                    <select id="newLevel" class="form-control" required>
+                        <option value="">Pilih Tingkat</option>
+                        <option value="mudah">Mudah</option>
+                        <option value="sedang">Sedang</option>
+                        <option value="sulit">Sulit</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="newQuestion" class="form-label">Pertanyaan</label>
+                    <textarea id="newQuestion" class="form-control" rows="3" required placeholder="Masukkan pertanyaan"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Pilihan Jawaban</label>
+                    <div class="options-grid">
+                        <div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                            <span class="option-prefix">A.</span>
+                            <input type="text" id="optionA" class="form-control" placeholder="Pilihan A" required>
+                        </div>
+                        <div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                            <span class="option-prefix">B.</span>
+                            <input type="text" id="optionB" class="form-control" placeholder="Pilihan B" required>
+                        </div>
+                        <div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                            <span class="option-prefix">C.</span>
+                            <input type="text" id="optionC" class="form-control" placeholder="Pilihan C" required>
+                        </div>
+                        <div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                            <span class="option-prefix">D.</span>
+                            <input type="text" id="optionD" class="form-control" placeholder="Pilihan D" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="correctAnswer" class="form-label">Jawaban Benar</label>
+                    <select id="correctAnswer" class="form-control" required>
+                        <option value="">Pilih Jawaban Benar</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="newExplanation" class="form-label">Penjelasan Jawaban</label>
+                    <textarea id="newExplanation" class="form-control" rows="3" required placeholder="Masukkan penjelasan jawaban"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelAddQuestion">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Simpan Soal
+                    </button>
+                </div>
+            </form>
+            
+            <div class="password-form" style="margin-top: 3rem;">
+                <h3 class="admin-title"><i class="fas fa-key"></i> Ganti Password</h3>
+                <form id="changePasswordForm">
+                    <div class="form-group">
+                        <label for="currentPassword" class="form-label">Password Lama</label>
+                        <input type="password" id="currentPassword" class="form-control" required placeholder="Masukkan password lama">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword" class="form-label">Password Baru</label>
+                        <input type="password" id="newPassword" class="form-control" required placeholder="Masukkan password baru (minimal 8 karakter)">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">Konfirmasi Password</label>
+                        <input type="password" id="confirmPassword" class="form-control" required placeholder="Konfirmasi password baru">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-sync-alt"></i> Ganti Password
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Audio Elements -->
+    <audio id="applauseSound" preload="auto">
+        <source src="assets/audio/applause.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="correctSound" preload="auto">
+        <source src="assets/audio/correct.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrongSound" preload="auto">
+        <source src="assets/audio/wrong.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="backgroundMusic" loop preload="auto">
+        <source src="assets/audio/music.mp3" type="audio/mpeg">
+    </audio>
+    
     <script>
-        // Data Soal yang Diperbarui dengan Sub Kategori
+        // Data Soal yang Diperluas
         let questions = {
             pelajar: {
-                agama: {
+                ipa: {
                     mudah: [
                         {
                             id: 1,
-                            question: "Apa ibukota Indonesia?",
-                            options: ["Jakarta", "Bandung", "Surabaya", "Medan"],
+                            question: "Organ apa yang bertanggung jawab untuk memompa darah ke seluruh tubuh?",
+                            options: ["Jantung", "Paru-paru", "Hati", "Ginjal"],
                             answer: 0,
-                            explanation: "Jakarta adalah ibukota Indonesia sejak tahun 1945."
+                            explanation: "Jantung adalah organ yang bertugas memompa darah ke seluruh tubuh melalui sistem peredaran darah."
+                        },
+                        {
+                            id: 2,
+                            question: "Zat apa yang diperlukan tanaman untuk fotosintesis?",
+                            options: ["Karbon dioksida", "Oksigen", "Nitrogen", "Hidrogen"],
+                            answer: 0,
+                            explanation: "Tanaman menggunakan karbon dioksida, air, dan cahaya matahari untuk menghasilkan glukosa dan oksigen melalui proses fotosintesis."
+                        }
+                    ],
+                    sedang: [
+                        {
+                            id: 3,
+                            question: "Apa nama proses perubahan wujud dari padat langsung ke gas?",
+                            options: ["Sublimasi", "Kondensasi", "Evaporasi", "Deposisi"],
+                            answer: 0,
+                            explanation: "Sublimasi adalah proses perubahan wujud dari padat langsung ke gas tanpa melalui fase cair, contohnya pada kapur barus."
+                        }
+                    ],
+                    sulit: [
+                        {
+                            id: 4,
+                            question: "Berapa jumlah kromosom pada sel tubuh manusia normal?",
+                            options: ["46", "23", "64", "32"],
+                            answer: 0,
+                            explanation: "Sel tubuh manusia normal (somatis) memiliki 46 kromosom atau 23 pasang kromosom."
+                        }
+                    ]
+                },
+                ips: {
+                    mudah: [
+                        {
+                            id: 5,
+                            question: "Apa ibukota provinsi Jawa Barat?",
+                            options: ["Bandung", "Jakarta", "Surabaya", "Semarang"],
+                            answer: 0,
+                            explanation: "Ibukota provinsi Jawa Barat adalah Bandung."
                         }
                     ],
                     sedang: [],
                     sulit: []
                 },
-                ipa: {
-                    mudah: [],
+                matematika: {
+                    mudah: [
+                        {
+                            id: 6,
+                            question: "Berapakah hasil dari 7 × 8?",
+                            options: ["56", "64", "42", "49"],
+                            answer: 0,
+                            explanation: "Hasil dari 7 dikali 8 adalah 56."
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 },
-                // ... subkategori pelajar lainnya
+                agama: {
+                    mudah: [
+                        {
+                            id: 7,
+                            question: "Berapa jumlah rakaat shalat Subuh?",
+                            options: ["2", "3", "4", "1"],
+                            answer: 0,
+                            explanation: "Shalat Subuh terdiri dari 2 rakaat."
+                        }
+                    ],
+                    sedang: [],
+                    sulit: []
+                },
+                ppkn: {
+                    mudah: [
+                        {
+                            id: 8,
+                            question: "Siapa presiden pertama Indonesia?",
+                            options: ["Soekarno", "Soeharto", "BJ Habibie", "Gus Dur"],
+                            answer: 0,
+                            explanation: "Presiden pertama Indonesia adalah Ir. Soekarno."
+                        }
+                    ],
+                    sedang: [],
+                    sulit: []
+                },
+                sejarah: {
+                    mudah: [
+                        {
+                            id: 9,
+                            question: "Kapan Indonesia merdeka?",
+                            options: ["17 Agustus 1945", "27 Desember 1949", "1 Juni 1945", "28 Oktober 1928"],
+                            answer: 0,
+                            explanation: "Indonesia merdeka pada tanggal 17 Agustus 1945."
+                        }
+                    ],
+                    sedang: [],
+                    sulit: []
+                },
+                bahasa_indonesia: {
+                    mudah: [
+                        {
+                            id: 10,
+                            question: "Apa sinonim dari kata 'bahagia'?",
+                            options: ["Senang", "Sedih", "Marah", "Kecewa"],
+                            answer: 0,
+                            explanation: "Sinonim dari bahagia adalah senang."
+                        }
+                    ],
+                    sedang: [],
+                    sulit: []
+                },
+                bahasa_inggris: {
+                    mudah: [
+                        {
+                            id: 11,
+                            question: "Apa bahasa Inggrisnya 'buku'?",
+                            options: ["Book", "Pen", "Table", "Chair"],
+                            answer: 0,
+                            explanation: "Bahasa Inggris dari buku adalah book."
+                        }
+                    ],
+                    sedang: [],
+                    sulit: []
+                }
             },
             umum: {
                 logika: {
-                    mudah: [],
+                    mudah: [
+                        {
+                            id: 12,
+                            question: "Jika semua manusia adalah makhluk hidup, dan Budi adalah manusia, maka:",
+                            options: ["Budi adalah makhluk hidup", "Budi bukan makhluk hidup", "Budi mungkin makhluk hidup", "Tidak bisa disimpulkan"],
+                            answer: 0,
+                            explanation: "Karena semua manusia adalah makhluk hidup dan Budi adalah manusia, maka Budi pasti makhluk hidup."
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 },
                 sambung_lagu: {
-                    mudah: [],
+                    mudah: [
+                        {
+                            id: 13,
+                            question: "Lanjutkan lirik: 'Tanah airku tidak kulupakan...'",
+                            options: ["'Kan terkenang selama hidupku", "Selamanya akan kukenang", "Di hatiku selalu terpatri", "Takkan pernah kulupakan"],
+                            answer: 0,
+                            explanation: "Lirik lengkapnya: 'Tanah airku tidak kulupakan, 'kan terkenang selama hidupku'"
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 },
                 peribahasa: {
-                    mudah: [],
+                    mudah: [
+                        {
+                            id: 14,
+                            question: "Lanjutkan peribahasa: 'Air tenang...'",
+                            options: ["menghanyutkan", "jernih selalu", "tak berombak", "dingin sekali"],
+                            answer: 0,
+                            explanation: "Peribahasa lengkapnya: 'Air tenang menghanyutkan' yang berarti orang yang kelihatannya pendiam bisa jadi berbahaya."
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 }
             }
         };
 
-        // Variabel tambahan untuk subkategori
-        let currentSubcategory = 'agama';
+        // Variabel Quiz
+        let currentCategory = 'pelajar';
+        let currentSubcategory = 'ipa';
+        let currentLevel = 'mudah';
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timer;
+        let quizStartTime;
+        let adminPassword = "65614222";
+        let musicEnabled = true;
+        let soundEffectsEnabled = true;
 
-        // Inisialisasi dengan event listener baru
+        // Inisialisasi
         document.addEventListener('DOMContentLoaded', function() {
             initEventListeners();
-            
-            // Tampilkan subkategori pelajar secara default
-            document.getElementById('pelajarSubcategories').style.display = 'flex';
+            loadAudio();
         });
 
         function initEventListeners() {
-            // ... event listener lainnya tetap sama ...
-            
             // Pilih kategori utama
             document.querySelectorAll('.category-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
@@ -260,77 +1881,824 @@
                     this.classList.add('active');
                     currentCategory = this.dataset.category;
                     
-                    // Sembunyikan semua subkategori
-                    document.querySelectorAll('.subcategory-tabs').forEach(sub => {
-                        sub.style.display = 'none';
-                    });
-                    
                     // Tampilkan subkategori yang sesuai
                     if (currentCategory === 'pelajar') {
-                        document.getElementById('pelajarSubcategories').style.display = 'flex';
-                        currentSubcategory = 'agama'; // Reset ke default
+                        document.getElementById('pelajarSubcategories').style.display = 'block';
+                        document.getElementById('umumSubcategories').style.display = 'none';
+                        document.getElementById('profesiField').style.display = 'none';
+                        document.querySelector('input[name="subcategory"][value="ipa"]').checked = true;
+                        currentSubcategory = 'ipa';
                     } else {
-                        document.getElementById('umumSubcategories').style.display = 'flex';
-                        currentSubcategory = 'logika'; // Reset ke default
+                        document.getElementById('pelajarSubcategories').style.display = 'none';
+                        document.getElementById('umumSubcategories').style.display = 'block';
+                        document.getElementById('profesiField').style.display = 'block';
+                        document.querySelector('input[name="subcategory"][value="logika"]').checked = true;
+                        currentSubcategory = 'logika';
                     }
-                    
-                    // Reset active tab pada subkategori
-                    document.querySelectorAll('.subcategory-tab').forEach(subTab => {
-                        subTab.classList.remove('active');
-                    });
-                    
-                    // Set active tab pertama
-                    document.querySelector(`.subcategory-tabs[style*="display: flex"] .subcategory-tab:first-child`).classList.add('active');
                 });
             });
             
             // Pilih subkategori
-            document.querySelectorAll('.subcategory-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const parentTabs = this.closest('.subcategory-tabs');
-                    parentTabs.querySelector('.subcategory-tab.active').classList.remove('active');
-                    this.classList.add('active');
-                    currentSubcategory = this.dataset.subcategory;
+            document.querySelectorAll('input[name="subcategory"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.checked) {
+                        currentSubcategory = this.value;
+                    }
                 });
             });
+
+            // Mulai quiz
+            document.getElementById('startQuiz').addEventListener('click', startQuiz);
+
+            // Admin toggle
+            document.getElementById('adminBtn').addEventListener('click', toggleAdminPanel);
+            document.getElementById('adminOverlay').addEventListener('click', closeAdminPanels);
+            document.getElementById('adminClose').addEventListener('click', closeAdminPanels);
+            document.getElementById('adminPanelClose').addEventListener('click', closeAdminPanels);
+
+            // Admin login
+            document.getElementById('adminLoginBtn').addEventListener('click', adminLogin);
+
+            // Navigation buttons
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+            document.getElementById('resetBtn').addEventListener('click', resetQuiz);
+            document.getElementById('restartBtn').addEventListener('click', resetQuiz);
+            document.getElementById('homeBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                resetQuiz();
+            });
+
+            // Admin functions
+            document.getElementById('adminCategoryFilter').addEventListener('change', filterQuestions);
+            document.getElementById('addQuestionForm').addEventListener('submit', addQuestion);
+            document.getElementById('cancelAddQuestion').addEventListener('click', function() {
+                document.getElementById('addQuestionForm').reset();
+            });
+            document.getElementById('changePasswordForm').addEventListener('submit', changePassword);
+            
+            // Admin form category change
+            document.getElementById('newCategory').addEventListener('change', function() {
+                const category = this.value;
+                document.getElementById('newSubcategoryGroup').style.display = category === 'pelajar' ? 'block' : 'none';
+                document.getElementById('newUmumSubcategoryGroup').style.display = category === 'umum' ? 'block' : 'none';
+            });
+            
+            // AI Question Generator
+            document.getElementById('generateQuestionBtn').addEventListener('click', generateQuestionWithAI);
+            
+            // Share buttons
+            document.getElementById('shareFacebook').addEventListener('click', shareFacebook);
+            document.getElementById('shareTwitter').addEventListener('click', shareTwitter);
+            document.getElementById('shareWhatsapp').addEventListener('click', shareWhatsapp);
+            document.getElementById('printBtn').addEventListener('click', printResults);
+            document.getElementById('screenshotBtn').addEventListener('click', takeScreenshot);
+            
+            // Music controls
+            document.getElementById('musicToggle').addEventListener('click', toggleMusic);
+            document.getElementById('soundToggle').addEventListener('click', toggleSoundEffects);
         }
 
-        // ... fungsi lainnya perlu disesuaikan untuk menggunakan currentSubcategory ...
-        // Contoh pada fungsi startQuiz:
+        function loadAudio() {
+            // Set audio sources
+            document.getElementById('applauseSound').src = 'assets/audio/applause.mp3';
+            document.getElementById('correctSound').src = 'assets/audio/correct.mp3';
+            document.getElementById('wrongSound').src = 'assets/audio/wrong.mp3';
+            document.getElementById('backgroundMusic').src = 'assets/audio/music.mp3';
+            
+            // Try to play background music
+            if (musicEnabled) {
+                const promise = document.getElementById('backgroundMusic').play();
+                if (promise !== undefined) {
+                    promise.catch(error => {
+                        console.log("Autoplay prevented:", error);
+                    });
+                }
+            }
+        }
+
+        function toggleMusic() {
+            musicEnabled = !musicEnabled;
+            const musicBtn = document.getElementById('musicToggle');
+            
+            if (musicEnabled) {
+                document.getElementById('backgroundMusic').play();
+                musicBtn.innerHTML = '<i class="fas fa-music"></i><span class="music-tooltip">Matikan Musik</span>';
+            } else {
+                document.getElementById('backgroundMusic').pause();
+                musicBtn.innerHTML = '<i class="fas fa-music"></i><span class="music-tooltip">Nyalakan Musik</span>';
+            }
+        }
+
+        function toggleSoundEffects() {
+            soundEffectsEnabled = !soundEffectsEnabled;
+            const soundBtn = document.getElementById('soundToggle');
+            
+            if (soundEffectsEnabled) {
+                soundBtn.innerHTML = '<i class="fas fa-volume-up"></i><span class="music-tooltip">Matikan Efek Suara</span>';
+            } else {
+                soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i><span class="music-tooltip">Nyalakan Efek Suara</span>';
+            }
+        }
+
+        function playSound(soundId) {
+            if (!soundEffectsEnabled) return;
+            
+            const sound = document.getElementById(soundId);
+            const promise = sound.play();
+            
+            if (promise !== undefined) {
+                promise.catch(error => {
+                    console.log("Autoplay prevented:", error);
+                });
+            }
+        }
+
         function startQuiz(e) {
             e.preventDefault();
             
+            // Get participant data
             const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const profesi = currentCategory === 'umum' ? document.getElementById('profesi').value : '';
             currentLevel = document.getElementById('level').value;
             
-            if (!name) {
-                alert('Silakan isi nama lengkap');
+            if (!name || !phone) {
+                alert('Silakan isi nama lengkap dan nomor HP terlebih dahulu');
                 return;
             }
             
-            // Periksa apakah ada soal untuk kategori, subkategori, dan level yang dipilih
-            if (!questions[currentCategory][currentSubcategory] || 
-                !questions[currentCategory][currentSubcategory][currentLevel] || 
-                questions[currentCategory][currentSubcategory][currentLevel].length === 0) {
-                alert(`Maaf, belum ada soal untuk ${currentSubcategory.replace('_', ' ')} tingkat ${currentLevel}.`);
+            // Check if there are questions for selected category/subcategory/level
+            const availableQuestions = questions[currentCategory][currentSubcategory][currentLevel];
+            if (!availableQuestions || availableQuestions.length === 0) {
+                alert('Belum ada soal untuk kategori, subkategori, dan level yang dipilih!');
                 return;
             }
             
-            // ... lanjutan fungsi startQuiz ...
+            // Set participant name
+            document.getElementById('participantName').style.display = 'flex';
+            document.getElementById('nameDisplay').textContent = name;
+            
+            // Update quiz info
+            document.getElementById('categoryDisplay').textContent = currentCategory === 'pelajar' ? 'Pelajar' : 'Umum';
+            
+            // Set subcategory display text
+            let subcategoryText = '';
+            if (currentCategory === 'pelajar') {
+                const subcategoryMap = {
+                    'ipa': 'IPA',
+                    'ips': 'IPS',
+                    'matematika': 'Matematika',
+                    'agama': 'Agama',
+                    'ppkn': 'PPKN',
+                    'sejarah': 'Sejarah',
+                    'bahasa_indonesia': 'Bahasa Indonesia',
+                    'bahasa_inggris': 'Bahasa Inggris'
+                };
+                subcategoryText = subcategoryMap[currentSubcategory];
+            } else {
+                const subcategoryMap = {
+                    'logika': 'Logika',
+                    'sambung_lagu': 'Sambung Lagu',
+                    'peribahasa': 'Peribahasa'
+                };
+                subcategoryText = subcategoryMap[currentSubcategory];
+            }
+            document.getElementById('subcategoryDisplay').textContent = subcategoryText;
+            
+            document.getElementById('levelDisplay').textContent = 
+                currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1);
+            
+            // Hide form and show quiz
+            document.getElementById('participantForm').style.display = 'none';
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('resultsContainer').style.display = 'none';
+            
+            // Reset variables
+            currentQuestionIndex = 0;
+            score = 0;
+            quizStartTime = new Date();
+            
+            // Start timer
+            startTimer();
+            
+            // Load first question
+            loadQuestion();
         }
 
-        /* #########################################################
-           # BAGIAN PENTING UNTUK API KEY - TEMPATKAN DI SINI      #
-           #########################################################
-           
-           Untuk integrasi dengan AI Question Generator, Anda perlu 
-           menempatkan API Key Anda di sini:
-           
-           const API_KEY = 'MASUKKAN_API_KEY_ANDA_DI_SINI';
-           
-           Jangan lupa untuk mengganti dengan API Key asli Anda dan
-           jangan commit file ini ke repository publik.
-        */
+        function loadQuestion() {
+            const question = questions[currentCategory][currentSubcategory][currentLevel][currentQuestionIndex];
+            
+            // Update question number
+            document.getElementById('questionNumber').textContent = 
+                `Pertanyaan ${currentQuestionIndex + 1} dari ${questions[currentCategory][currentSubcategory][currentLevel].length}`;
+            
+            // Set question text
+            document.getElementById('questionText').textContent = question.question;
+            
+            // Clear and set options
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.dataset.option = index;
+                
+                const prefix = document.createElement('span');
+                prefix.className = 'option-prefix';
+                prefix.textContent = String.fromCharCode(65 + index);
+                
+                const text = document.createElement('span');
+                text.textContent = option;
+                
+                optionElement.appendChild(prefix);
+                optionElement.appendChild(text);
+                
+                optionElement.addEventListener('click', function() {
+                    selectAnswer(index);
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Hide explanation
+            document.getElementById('explanation').style.display = 'none';
+            
+            // Update next button text if last question
+            if (currentQuestionIndex === questions[currentCategory][currentSubcategory][currentLevel].length - 1) {
+                document.getElementById('nextBtn').innerHTML = '<i class="fas fa-check"></i> Selesai';
+            } else {
+                document.getElementById('nextBtn').innerHTML = '<i class="fas fa-arrow-right"></i> Selanjutnya';
+            }
+        }
+
+        function selectAnswer(selectedIndex) {
+            const question = questions[currentCategory][currentSubcategory][currentLevel][currentQuestionIndex];
+            const options = document.querySelectorAll('.option');
+            
+            // Remove selected class from all options
+            options.forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // Add selected class to clicked option
+            options[selectedIndex].classList.add('selected');
+            
+            // Check if answer is correct
+            const isCorrect = selectedIndex === question.answer;
+            
+            // Store user answer
+            question.userAnswer = selectedIndex;
+            question.isCorrect = isCorrect;
+            
+            // Play sound effect
+            if (isCorrect) {
+                playSound('correctSound');
+            } else {
+                playSound('wrongSound');
+            }
+            
+            // Show explanation
+            document.getElementById('explanationText').textContent = question.explanation;
+            document.getElementById('explanation').style.display = 'block';
+            
+            // Highlight correct and incorrect answers
+            options[question.answer].classList.add('correct');
+            if (!isCorrect) {
+                options[selectedIndex].classList.add('incorrect');
+            }
+        }
+
+        function nextQuestion() {
+            const question = questions[currentCategory][currentSubcategory][currentLevel][currentQuestionIndex];
+            
+            // Check if answer is selected
+            if (typeof question.userAnswer === 'undefined') {
+                alert('Silakan pilih jawaban terlebih dahulu');
+                return;
+            }
+            
+            // Increment score if correct
+            if (question.isCorrect) {
+                score++;
+            }
+            
+            // Move to next question or finish quiz
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions[currentCategory][currentSubcategory][currentLevel].length) {
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            clearInterval(timer);
+            
+            // Calculate results
+            const totalQuestions = questions[currentCategory][currentSubcategory][currentLevel].length;
+            const percentage = Math.round((score / totalQuestions) * 100);
+            const endTime = new Date();
+            const timeDiff = (endTime - quizStartTime) / 1000; // in seconds
+            const minutes = Math.floor(timeDiff / 60);
+            const seconds = Math.floor(timeDiff % 60);
+            
+            // Display results
+            document.getElementById('scoreDisplay').textContent = `${percentage}%`;
+            document.getElementById('totalQuestions').textContent = totalQuestions;
+            document.getElementById('correctAnswers').textContent = score;
+            document.getElementById('wrongAnswers').textContent = totalQuestions - score;
+            document.getElementById('completionTime').textContent = `${minutes} menit ${seconds} detik`;
+            
+            // Set result message
+            let message = "";
+            if (percentage >= 80) {
+                message = "Sempurna! Anda sangat menguasai materi ini.";
+                playSound('applauseSound');
+                createConfetti();
+            } else if (percentage >= 60) {
+                message = "Bagus! Anda memiliki pemahaman yang baik.";
+                playSound('applauseSound');
+                createConfetti();
+            } else if (percentage >= 40) {
+                message = "Cukup baik. Tingkatkan lagi belajarnya!";
+            } else {
+                message = "Anda perlu belajar lebih giat lagi.";
+            }
+            document.getElementById('resultsMessage').textContent = message;
+            
+            // Show results
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'block';
+        }
+
+        function startTimer() {
+            let timeLeft = 600; // 10 minutes in seconds
+            
+            // Update immediately
+            updateTimerDisplay(timeLeft);
+            
+            // Start interval
+            timer = setInterval(function() {
+                timeLeft--;
+                updateTimerDisplay(timeLeft);
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay(timeLeft) {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timeDisplay').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Change color when time is running out
+            const timerElement = document.getElementById('quizTimer');
+            if (timeLeft <= 60) {
+                timerElement.style.background = '#fee2e2';
+                timerElement.style.color = '#b91c1c';
+                timerElement.style.borderColor = '#fca5a5';
+            } else {
+                timerElement.style.background = '';
+                timerElement.style.color = '';
+                timerElement.style.borderColor = '';
+            }
+        }
+
+        function resetQuiz() {
+            clearInterval(timer);
+            
+            // Reset UI
+            document.getElementById('participantForm').style.display = 'block';
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('participantName').style.display = 'none';
+            
+            // Reset form
+            document.getElementById('participantForm').reset();
+            document.querySelector('.category-tab[data-category="pelajar"]').classList.add('active');
+            document.querySelectorAll('.category-tab[data-category="umum"]').forEach(tab => tab.classList.remove('active'));
+            currentCategory = 'pelajar';
+            
+            // Show pelajar subcategories by default
+            document.getElementById('pelajarSubcategories').style.display = 'block';
+            document.getElementById('umumSubcategories').style.display = 'none';
+            document.getElementById('profesiField').style.display = 'none';
+            document.querySelector('input[name="subcategory"][value="ipa"]').checked = true;
+            currentSubcategory = 'ipa';
+            
+            // Remove confetti
+            document.querySelectorAll('.confetti').forEach(el => el.remove());
+        }
+
+        function createConfetti() {
+            const colors = ['#2563eb', '#1d4ed8', '#dc2626', '#16a34a', '#d97706'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        /* Admin Functions */
+        function toggleAdminPanel() {
+            document.getElementById('adminOverlay').style.display = 'block';
+            document.getElementById('adminLogin').style.display = 'block';
+            document.getElementById('adminPassword').focus();
+        }
+
+        function closeAdminPanels() {
+            document.getElementById('adminOverlay').style.display = 'none';
+            document.getElementById('adminLogin').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('adminPassword').value = '';
+        }
+
+        function adminLogin() {
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === adminPassword) {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadQuestionsForAdmin();
+            } else {
+                alert('Password salah!');
+            }
+        }
+
+        function loadQuestionsForAdmin() {
+            const questionsList = document.getElementById('questionList');
+            questionsList.innerHTML = '';
+            
+            // Loop through all questions
+            for (const category in questions) {
+                if (category === 'pelajar') {
+                    for (const subcategory in questions[category]) {
+                        for (const level in questions[category][subcategory]) {
+                            questions[category][subcategory][level].forEach(question => {
+                                addQuestionToAdminList(question, category, subcategory, level);
+                            });
+                        }
+                    }
+                } else {
+                    for (const subcategory in questions[category]) {
+                        for (const level in questions[category][subcategory]) {
+                            questions[category][subcategory][level].forEach(question => {
+                                addQuestionToAdminList(question, category, subcategory, level);
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+        function addQuestionToAdminList(question, category, subcategory, level) {
+            const questionsList = document.getElementById('questionList');
+            
+            const questionItem = document.createElement('div');
+            questionItem.className = 'question-item';
+            
+            // Map subcategory to display text
+            let subcategoryText = '';
+            if (category === 'pelajar') {
+                const subcategoryMap = {
+                    'ipa': 'IPA',
+                    'ips': 'IPS',
+                    'matematika': 'Matematika',
+                    'agama': 'Agama',
+                    'ppkn': 'PPKN',
+                    'sejarah': 'Sejarah',
+                    'bahasa_indonesia': 'Bahasa Indonesia',
+                    'bahasa_inggris': 'Bahasa Inggris'
+                };
+                subcategoryText = subcategoryMap[subcategory];
+            } else {
+                const subcategoryMap = {
+                    'logika': 'Logika',
+                    'sambung_lagu': 'Sambung Lagu',
+                    'peribahasa': 'Peribahasa'
+                };
+                subcategoryText = subcategoryMap[subcategory];
+            }
+            
+            questionItem.innerHTML = `
+                <div class="question-meta">
+                    <span><i class="fas fa-tag"></i> ${category === 'pelajar' ? 'Pelajar' : 'Umum'}</span>
+                    <span><i class="fas fa-book"></i> ${subcategoryText}</span>
+                    <span><i class="fas fa-signal"></i> ${level.charAt(0).toUpperCase() + level.slice(1)}</span>
+                    <span><i class="fas fa-check-circle"></i> Jawaban: ${String.fromCharCode(65 + question.answer)}</span>
+                </div>
+                <div class="question-content">${question.question}</div>
+                <div class="question-actions">
+                    <button class="action-btn edit-question" data-id="${question.id}" title="Edit">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="action-btn delete-question" data-id="${question.id}" title="Hapus">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="edit-form" id="editForm-${question.id}"></div>
+            `;
+            
+            questionsList.appendChild(questionItem);
+            
+            // Add event listeners
+            questionItem.querySelector('.edit-question').addEventListener('click', function() {
+                showEditForm(question, category, subcategory, level);
+            });
+            
+            questionItem.querySelector('.delete-question').addEventListener('click', function() {
+                if (confirm('Apakah Anda yakin ingin menghapus soal ini?')) {
+                    deleteQuestion(question.id, category, subcategory, level);
+                }
+            });
+        }
+
+        function showEditForm(question, category, subcategory, level) {
+            const editForm = document.getElementById(`editForm-${question.id}`);
+            
+            if (editForm.style.display === 'block') {
+                editForm.style.display = 'none';
+                return;
+            }
+            
+            // Hide all other edit forms
+            document.querySelectorAll('.edit-form').forEach(form => {
+                form.style.display = 'none';
+            });
+            
+            editForm.innerHTML = `
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select class="form-control edit-category">
+                        <option value="pelajar" ${category === 'pelajar' ? 'selected' : ''}>Pelajar</option>
+                        <option value="umum" ${category === 'umum' ? 'selected' : ''}>Umum</option>
+                    </select>
+                </div>
+                
+                ${category === 'pelajar' ? `
+                <div class="form-group">
+                    <label>Subkategori</label>
+                    <select class="form-control edit-subcategory">
+                        <option value="ipa" ${subcategory === 'ipa' ? 'selected' : ''}>IPA</option>
+                        <option value="ips" ${subcategory === 'ips' ? 'selected' : ''}>IPS</option>
+                        <option value="matematika" ${subcategory === 'matematika' ? 'selected' : ''}>Matematika</option>
+                        <option value="agama" ${subcategory === 'agama' ? 'selected' : ''}>Agama</option>
+                        <option value="ppkn" ${subcategory === 'ppkn' ? 'selected' : ''}>PPKN</option>
+                        <option value="sejarah" ${subcategory === 'sejarah' ? 'selected' : ''}>Sejarah</option>
+                        <option value="bahasa_indonesia" ${subcategory === 'bahasa_indonesia' ? 'selected' : ''}>Bahasa Indonesia</option>
+                        <option value="bahasa_inggris" ${subcategory === 'bahasa_inggris' ? 'selected' : ''}>Bahasa Inggris</option>
+                    </select>
+                </div>
+                ` : `
+                <div class="form-group">
+                    <label>Jenis Ujian</label>
+                    <select class="form-control edit-subcategory">
+                        <option value="logika" ${subcategory === 'logika' ? 'selected' : ''}>Logika</option>
+                        <option value="sambung_lagu" ${subcategory === 'sambung_lagu' ? 'selected' : ''}>Sambung Lagu</option>
+                        <option value="peribahasa" ${subcategory === 'peribahasa' ? 'selected' : ''}>Peribahasa</option>
+                    </select>
+                </div>
+                `}
+                
+                <div class="form-group">
+                    <label>Tingkat</label>
+                    <select class="form-control edit-level">
+                        <option value="mudah" ${level === 'mudah' ? 'selected' : ''}>Mudah</option>
+                        <option value="sedang" ${level === 'sedang' ? 'selected' : ''}>Sedang</option>
+                        <option value="sulit" ${level === 'sulit' ? 'selected' : ''}>Sulit</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Pertanyaan</label>
+                    <textarea class="form-control edit-question" rows="3">${question.question}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Pilihan Jawaban</label>
+                    ${question.options.map((option, index) => `
+                    <div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="option-prefix">${String.fromCharCode(65 + index)}.</span>
+                        <input type="text" class="form-control edit-option" value="${option}" data-index="${index}">
+                    </div>
+                    `).join('')}
+                </div>
+                <div class="form-group">
+                    <label>Jawaban Benar</label>
+                    <select class="form-control edit-answer">
+                        ${question.options.map((option, index) => `
+                        <option value="${index}" ${question.answer === index ? 'selected' : ''}>
+                            ${String.fromCharCode(65 + index)}
+                        </option>
+                        `).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Penjelasan</label>
+                    <textarea class="form-control edit-explanation" rows="3">${question.explanation}</textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary cancel-edit">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="button" class="btn btn-primary save-edit">
+                        <i class="fas fa-save"></i> Simpan
+                    </button>
+                </div>
+            `;
+            
+            editForm.style.display = 'block';
+            
+            // Add event listeners
+            editForm.querySelector('.cancel-edit').addEventListener('click', function() {
+                editForm.style.display = 'none';
+            });
+            
+            editForm.querySelector('.save-edit').addEventListener('click', function() {
+                saveQuestionChanges(question, category, subcategory, level);
+            });
+        }
+
+        function saveQuestionChanges(question, oldCategory, oldSubcategory, oldLevel) {
+            const editForm = document.getElementById(`editForm-${question.id}`);
+            
+            // Get new values
+            const newCategory = editForm.querySelector('.edit-category').value;
+            const newSubcategory = editForm.querySelector('.edit-subcategory').value;
+            const newLevel = editForm.querySelector('.edit-level').value;
+            const newQuestionText = editForm.querySelector('.edit-question').value;
+            const newOptions = Array.from(editForm.querySelectorAll('.edit-option')).map(input => input.value);
+            const newAnswer = parseInt(editForm.querySelector('.edit-answer').value);
+            const newExplanation = editForm.querySelector('.edit-explanation').value;
+            
+            // Validate
+            if (!newQuestionText || newOptions.some(opt => !opt) || !newExplanation) {
+                alert('Semua field harus diisi!');
+                return;
+            }
+            
+            // Update question
+            question.question = newQuestionText;
+            question.options = newOptions;
+            question.answer = newAnswer;
+            question.explanation = newExplanation;
+            
+            // If category or subcategory or level changed
+            if (newCategory !== oldCategory || newSubcategory !== oldSubcategory || newLevel !== oldLevel) {
+                // Remove from old location
+                const oldQuestions = questions[oldCategory][oldSubcategory][oldLevel];
+                const index = oldQuestions.findIndex(q => q.id === question.id);
+                if (index !== -1) oldQuestions.splice(index, 1);
+                
+                // Add to new location
+                if (!questions[newCategory][newSubcategory]) {
+                    questions[newCategory][newSubcategory] = {
+                        mudah: [],
+                        sedang: [],
+                        sulit: []
+                    };
+                }
+                questions[newCategory][newSubcategory][newLevel].push(question);
+            }
+            
+            // Reload questions list
+            loadQuestionsForAdmin();
+            editForm.style.display = 'none';
+            
+            alert('Perubahan berhasil disimpan!');
+        }
+
+        function deleteQuestion(id, category, subcategory, level) {
+            const questionList = questions[category][subcategory][level];
+            const index = questionList.findIndex(q => q.id === id);
+            if (index !== -1) questionList.splice(index, 1);
+            
+            // Reload questions list
+            loadQuestionsForAdmin();
+            alert('Soal berhasil dihapus!');
+        }
+
+        function addQuestion(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const category = document.getElementById('newCategory').value;
+            const subcategory = category === 'pelajar' 
+                ? document.getElementById('newSubcategory').value 
+                : document.getElementById('newUmumSubcategory').value;
+            const level = document.getElementById('newLevel').value;
+            const questionText = document.getElementById('newQuestion').value;
+            const options = [
+                document.getElementById('optionA').value,
+                document.getElementById('optionB').value,
+                document.getElementById('optionC').value,
+                document.getElementById('optionD').value
+            ];
+            const answer = document.getElementById('correctAnswer').value;
+            const explanation = document.getElementById('newExplanation').value;
+            
+            // Validate
+            if (!category || !level || !questionText || options.some(opt => !opt) || !answer || !explanation) {
+                alert('Semua field harus diisi!');
+                return;
+            }
+            
+            // Create new question
+            const newQuestion = {
+                id: Date.now(), // Simple unique ID
+                question: questionText,
+                options: options,
+                answer: answer.charCodeAt(0) - 65, // Convert A,B,C,D to 0,1,2,3
+                explanation: explanation
+            };
+            
+            // Initialize subcategory if not exists
+            if (!questions[category][subcategory]) {
+                questions[category][subcategory] = {
+                    mudah: [],
+                    sedang: [],
+                    sulit: []
+                };
+            }
+            
+            // Add to questions
+            questions[category][subcategory][level].push(newQuestion);
+            
+            // Reset form and reload list
+            document.getElementById('addQuestionForm').reset();
+            document.getElementById('newSubcategoryGroup').style.display = 'none';
+            document.getElementById('newUmumSubcategoryGroup').style.display = 'none';
+            loadQuestionsForAdmin();
+            
+            alert('Soal baru berhasil ditambahkan!');
+        }
+
+        function changePassword(e) {
+            e.preventDefault();
+            
+            const currentPass = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+            
+            // Validate
+            if (currentPass !== adminPassword) {
+                alert('Password lama salah!');
+                return;
+            }
+            
+            if (newPass !== confirmPass) {
+                alert('Password baru dan konfirmasi tidak cocok!');
+                return;
+            }
+            
+            if (newPass.length < 8) {
+                alert('Password baru harus minimal 8 karakter!');
+                return;
+            }
+            
+            // Change password
+            adminPassword = newPass;
+            document.getElementById('changePasswordForm').reset();
+            
+            alert('Password berhasil diubah!');
+        }
+
+        function filterQuestions() {
+            const filter = document.getElementById('adminCategoryFilter').value;
+            const questionsList = document.getElementById('questionList');
+            
+            // Show all if no filter
+            if (!filter) {
+                questionsList.querySelectorAll('.question-item').forEach(item => {
+                    item.style.display = 'block';
+                });
+                return;
+            }
+            
+            // Apply filter
+            questionsList.querySelectorAll('.question-item').forEach(item => {
+                const category = item.querySelector('.question-meta span:first-child').textContent.includes('Pelajar') ? 'pelajar' : 'umum';
+                item.style.display = category === filter ? 'block' : 'none';
+            });
+        }
 
         /* AI Question Generator */
         async function generateQuestionWithAI() {
@@ -371,7 +2739,7 @@
                 document.getElementById('optionC').value = generatedQuestion.options[2];
                 document.getElementById('optionD').value = generatedQuestion.options[3];
                 document.getElementById('correctAnswer').value = generatedQuestion.correctAnswer;
-                document.getElementById('explanationText').value = generatedQuestion.explanation;
+                document.getElementById('newExplanation').value = generatedQuestion.explanation;
                 
                 alert('Soal berhasil digenerate! Silakan review dan simpan jika sudah sesuai.');
             } catch (error) {
@@ -384,7 +2752,116 @@
             }
         }
 
-        // ... (kode lainnya tetap sama) ...
+        // Mock AI function - replace with your actual API call
+        function mockAIGenerateQuestion(prompt, category, level) {
+            return new Promise((resolve) => {
+                // Simulate API delay
+                setTimeout(() => {
+                    // This is just a mock response - replace with actual API call
+                    const mockResponses = [
+                        {
+                            question: `Apa yang dimaksud dengan ${prompt.split(' ').slice(0, 2).join(' ')}?`,
+                            options: [
+                                "Pilihan pertama yang benar",
+                                "Pilihan kedua yang salah",
+                                "Pilihan ketiga yang salah",
+                                "Pilihan keempat yang salah"
+                            ],
+                            correctAnswer: "A",
+                            explanation: `Penjelasan untuk jawaban yang benar tentang ${prompt.split(' ').slice(0, 2).join(' ')}.`
+                        },
+                        {
+                            question: `Siapa penemu ${prompt.split(' ').slice(0, 2).join(' ')}?`,
+                            options: [
+                                "Nama penemu yang salah",
+                                "Nama penemu yang benar",
+                                "Nama penemu yang salah",
+                                "Nama penemu yang salah"
+                            ],
+                            correctAnswer: "B",
+                            explanation: `Penjelasan tentang penemu ${prompt.split(' ').slice(0, 2).join(' ')}.`
+                        }
+                    ];
+                    
+                    resolve(mockResponses[Math.floor(Math.random() * mockResponses.length)]);
+                }, 2000);
+            });
+        }
+
+        // Actual API integration would look something like this (uncomment and implement with your API key)
+        /*
+        async function callAIGenerateQuestion(prompt, category, level, API_KEY) {
+            const endpoint = 'https://api.your-ai-service.com/generate-question';
+            
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        prompt: prompt,
+                        category: category,
+                        difficulty: level,
+                        type: "multiple_choice",
+                        options_count: 4
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+                
+                const data = await response.json();
+                return {
+                    question: data.question,
+                    options: data.options,
+                    correctAnswer: data.correct_answer,
+                    explanation: data.explanation
+                };
+            } catch (error) {
+                console.error('API Error:', error);
+                throw error;
+            }
+        }
+        */
+
+        /* Share Functions */
+        function shareFacebook() {
+            const score = document.getElementById('scoreDisplay').textContent;
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(`Saya baru saja menyelesaikan Quiz Pergunu dengan skor ${score}! Coba kamu juga!`);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+        }
+
+        function shareTwitter() {
+            const score = document.getElementById('scoreDisplay').textContent;
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(`Saya baru saja menyelesaikan Quiz Pergunu dengan skor ${score}! Coba kamu juga!`);
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        }
+
+        function shareWhatsapp() {
+            const score = document.getElementById('scoreDisplay').textContent;
+            const text = encodeURIComponent(`Saya baru saja menyelesaikan Quiz Pergunu dengan skor ${score}! Coba kamu juga: ${window.location.href}`);
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+
+        function printResults() {
+            window.print();
+        }
+
+        function takeScreenshot() {
+            const resultsContainer = document.getElementById('resultsContainer');
+            
+            html2canvas(resultsContainer).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'hasil-quiz-pergunu.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
     </script>
 </body>
 </html>
