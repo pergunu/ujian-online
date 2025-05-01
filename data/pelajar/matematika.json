@@ -1,0 +1,36 @@
+{
+    "mudah": [
+        {
+            "id": 1,
+            "question": "Berapakah hasil dari 7 × 8?",
+            "options": ["56", "64", "42", "49"],
+            "answer": 0,
+            "explanation": "Hasil dari 7 dikali 8 adalah 56."
+        },
+        {
+            "id": 2,
+            "question": "Jika x + 5 = 12, maka nilai x adalah:",
+            "options": ["7", "5", "12", "17"],
+            "answer": 0,
+            "explanation": "x = 12 - 5, jadi x = 7"
+        }
+    ],
+    "sedang": [
+        {
+            "id": 3,
+            "question": "Luas segitiga dengan alas 10 cm dan tinggi 8 cm adalah:",
+            "options": ["40 cm²", "80 cm²", "20 cm²", "18 cm²"],
+            "answer": 0,
+            "explanation": "Rumus luas segitiga: 1/2 × alas × tinggi = 1/2 × 10 × 8 = 40 cm²"
+        }
+    ],
+    "sulit": [
+        {
+            "id": 4,
+            "question": "Nilai dari 2³ + 3² adalah:",
+            "options": ["17", "13", "11", "15"],
+            "answer": 0,
+            "explanation": "2³ = 8 dan 3² = 9, jadi 8 + 9 = 17"
+        }
+    ]
+}
