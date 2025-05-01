@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Pergunu - Sistem Ujian Lengkap</title>
     <!-- Favicon -->
-    <link rel="icon" href="assets/images/logo-pergunu.png" type="image/png" onerror="this.src='https://via.placeholder.com/64?text=LOGO'">
+    <link rel="icon" href="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" type="image/png" onerror="this.src='https://via.placeholder.com/64?text=LOGO'">
     
     <!-- Font & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -40,14 +40,15 @@
             line-height: 1.6;
         }
         
-        /* Header */
+        /* Header Baru yang Lebih Profesional */
         .header {
-            background: white;
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
             box-shadow: var(--shadow);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
+            color: white;
         }
         
         .header-container {
@@ -61,43 +62,90 @@
         
         .logo {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 0.25rem;
+            gap: 1rem;
             text-decoration: none;
-            text-align: center;
         }
         
         .logo-img {
-            height: 2.5rem;
+            height: 3rem;
             width: auto;
+            border-radius: 50%;
+            border: 2px solid white;
+            padding: 2px;
+            background: white;
         }
         
         .logo-text {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: var(--success);
-            background: linear-gradient(to right, var(--success), var(--success-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 0.5px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
         }
         
         .logo-subtext {
-            font-size: 0.75rem;
-            color: var(--gray);
-            font-weight: 500;
-            margin-top: -0.5rem;
-            font-style: italic;
-        }
-
-        /* Main Content */
-        .main-container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.8);
+            font-weight: 400;
         }
         
+        .participant-display {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+        }
+
+        /* Welcome Container Baru */
+        .welcome-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+            display: none;
+        }
+        
+        .welcome-content h1 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .welcome-content p {
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        
+        .welcome-features {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius);
+        }
+        
+        .feature i {
+            color: var(--primary);
+        }
+        
+        .developer-info {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-top: 2rem;
+        }
+
         /* Form Peserta */
         .participant-form {
             background: white;
@@ -106,6 +154,7 @@
             padding: 2rem;
             max-width: 800px;
             margin: 0 auto;
+            display: none;
         }
         
         .form-title {
@@ -154,6 +203,24 @@
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
             background: white;
+        }
+
+        /* Checkbox Persetujuan Baru */
+        .agreement-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .agreement-checkbox input {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+        
+        .agreement-checkbox label {
+            font-size: 0.875rem;
+            color: var(--dark);
         }
         
         /* Kategori Tabs */
@@ -418,35 +485,37 @@
             color: var(--gray);
         }
         
-        /* Admin Panel */
+        /* Tombol Admin Baru yang Lebih Baik */
         .admin-btn {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            width: 3.5rem;
-            height: 3.5rem;
+            width: 4rem;
+            height: 4rem;
             border-radius: 50%;
-            background: var(--secondary);
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
             color: white;
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             z-index: 100;
             transition: all 0.3s;
         }
         
         .admin-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
         }
         
         .admin-btn img {
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 2rem;
+            height: 2rem;
             object-fit: contain;
+            filter: brightness(0) invert(1);
         }
         
         .admin-overlay {
@@ -657,6 +726,11 @@
             .options-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .welcome-features {
+                flex-direction: column;
+                align-items: center;
+            }
         }
         
         /* Animations */
@@ -690,21 +764,55 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- Header Baru -->
     <header class="header">
         <div class="header-container">
             <a href="#" class="logo" id="homeBtn">
-                <img src="assets/images/logo-pergunu.png" alt="Pergunu Logo" class="logo-img">
-                <span class="logo-text">QUIZ PERGUNU</span>
-                <span class="logo-subtext">Uji pengetahuanmu dan raih prestasi terbaik!</span>
+                <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/64?text=LOGO'">
+                <div>
+                    <div class="logo-text">QUIZ PERGUNU</div>
+                    <div class="logo-subtext">Uji pengetahuanmu dan raih prestasi terbaik!</div>
+                </div>
             </a>
-            <div id="participantName"></div>
+            <div class="participant-display" id="participantName"></div>
         </div>
     </header>
     
     <!-- Main Content -->
     <main class="main-container">
-        <!-- Participant Form -->
+        <!-- Welcome Container Baru -->
+        <div class="welcome-container" id="welcomeContainer">
+            <div class="welcome-content">
+                <h1>Selamat Datang di Quiz Pergunu</h1>
+                <p>Platform ujian online lengkap untuk menguji pengetahuan Anda dalam berbagai bidang ilmu pengetahuan.</p>
+                
+                <div class="welcome-features">
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Soal-soal berkualitas</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-clock"></i>
+                        <span>Sistem timer otomatis</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Penjelasan jawaban</span>
+                    </div>
+                </div>
+                
+                <p class="developer-info">
+                    Game quiz ini dikembangkan oleh:<br>
+                    <strong>Tim Pengembangan Pergunu</strong>
+                </p>
+                
+                <button class="btn btn-primary" id="startWelcomeBtn">
+                    <i class="fas fa-play"></i> Mulai Quiz
+                </button>
+            </div>
+        </div>
+        
+        <!-- Participant Form dengan Persetujuan -->
         <form id="participantForm" class="participant-form">
             <h2 class="form-title">Form Peserta Quiz</h2>
             <div class="form-group">
@@ -725,6 +833,12 @@
                     <option value="sedang">Sedang</option>
                     <option value="sulit">Sulit</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <div class="agreement-checkbox">
+                    <input type="checkbox" id="agreement" required>
+                    <label for="agreement">Saya menyetujui untuk mengikuti quiz ini dengan jujur dan mandiri</label>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary" id="startQuiz">
                 <i class="fas fa-play"></i> Mulai Quiz
@@ -807,9 +921,9 @@
         </div>
     </main>
     
-    <!-- Admin Button -->
+    <!-- Tombol Admin Baru -->
     <button class="admin-btn" id="adminBtn">
-        <img src="assets/images/logo-setting-panel.png" alt="Admin Panel">
+        <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo-setting-panel.png" alt="Admin Panel">
     </button>
     
     <!-- Admin Overlay -->
@@ -1018,9 +1132,21 @@
         // Inisialisasi
         document.addEventListener('DOMContentLoaded', function() {
             initEventListeners();
+            
+            // Tampilkan welcome screen pertama kali
+            document.getElementById('welcomeContainer').style.display = 'block';
+            document.getElementById('participantForm').style.display = 'none';
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'none';
         });
 
         function initEventListeners() {
+            // Tombol mulai dari welcome screen
+            document.getElementById('startWelcomeBtn').addEventListener('click', function() {
+                document.getElementById('welcomeContainer').style.display = 'none';
+                document.getElementById('participantForm').style.display = 'block';
+            });
+            
             // Pilih kategori
             document.querySelectorAll('.category-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
@@ -1072,6 +1198,12 @@
             
             if (!name) {
                 alert('Silakan isi nama lengkap');
+                return;
+            }
+            
+            // Check agreement
+            if (!document.getElementById('agreement').checked) {
+                alert('Anda harus menyetujui persyaratan quiz');
                 return;
             }
             
@@ -1271,6 +1403,7 @@
             clearInterval(timer);
             
             // Reset UI
+            document.getElementById('welcomeContainer').style.display = 'none';
             document.getElementById('participantForm').style.display = 'block';
             document.getElementById('quizContainer').style.display = 'none';
             document.getElementById('resultsContainer').style.display = 'none';
@@ -1491,7 +1624,7 @@
             });
             
             editForm.querySelector('.save-edit').addEventListener('click', function() {
-                saveQuestionChanges(question, oldCategory, oldLevel);
+                saveQuestionChanges(question, category, level);
             });
         }
 
@@ -1742,46 +1875,6 @@
                 }, 2000);
             });
         }
-
-        // Actual API integration would look something like this (uncomment and implement with your API key)
-        /*
-        async function callAIGenerateQuestion(prompt, category, level) {
-            const API_KEY = 'sk-8837b24327bd4db99e36688951ceaea8';
-            const endpoint = 'https://api.your-ai-service.com/generate-question';
-            
-            try {
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        prompt: prompt,
-                        category: category,
-                        difficulty: level,
-                        type: "multiple_choice",
-                        options_count: 4
-                    })
-                });
-                
-                if (!response.ok) {
-                    throw new Error('API request failed');
-                }
-                
-                const data = await response.json();
-                return {
-                    question: data.question,
-                    options: data.options,
-                    correctAnswer: data.correct_answer,
-                    explanation: data.explanation
-                };
-            } catch (error) {
-                console.error('API Error:', error);
-                throw error;
-            }
-        }
-        */
     </script>
 </body>
 </html>
