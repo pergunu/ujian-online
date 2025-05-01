@@ -1,0 +1,26 @@
+{
+    "mudah": [
+        {
+            "id": 1,
+            "question": "Tanggal berapa Indonesia merdeka?",
+            "options": ["17 Agustus 1945", "27 Desember 1949", "1 Juni 1945", "28 Oktober 1928"],
+            "answer": 0,
+            "explanation": "Indonesia merdeka pada tanggal 17 Agustus 1945."
+        }
+    ],
+    "sedang": [
+        {
+            "id": 2,
+            "question": "Peristiwa Rengasdengklok terjadi karena:",
+            "options": [
+                "Perbedaan pendapat tentang proklamasi",
+                "Pertempuran melawan Jepang",
+                "Persiapan pembentukan BPUPKI",
+                "Penandatanganan Piagam Jakarta"
+            ],
+            "answer": 0,
+            "explanation": "Peristiwa Rengasdengklok terjadi karena perbedaan pendapat antara golongan muda dan tua tentang waktu proklamasi."
+        }
+    ],
+    "sulit": []
+}
