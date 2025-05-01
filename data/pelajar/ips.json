@@ -1,0 +1,28 @@
+{
+    "mudah": [
+        {
+            "id": 1,
+            "question": "Ibukota provinsi Jawa Barat adalah:",
+            "options": ["Bandung", "Jakarta", "Surabaya", "Semarang"],
+            "answer": 0,
+            "explanation": "Ibukota provinsi Jawa Barat adalah Bandung."
+        },
+        {
+            "id": 2,
+            "question": "Mata uang resmi Jepang adalah:",
+            "options": ["Yen", "Dollar", "Euro", "Won"],
+            "answer": 0,
+            "explanation": "Mata uang resmi Jepang adalah Yen."
+        }
+    ],
+    "sedang": [
+        {
+            "id": 3,
+            "question": "Tokoh proklamator Indonesia adalah:",
+            "options": ["Soekarno-Hatta", "Soeharto-Sjahrir", "Habibie-Gus Dur", "Yamin-Kartini"],
+            "answer": 0,
+            "explanation": "Tokoh proklamator Indonesia adalah Soekarno dan Hatta."
+        }
+    ],
+    "sulit": []
+}
