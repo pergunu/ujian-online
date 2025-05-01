@@ -1,0 +1,18 @@
+{
+    "mudah": [
+        {
+            "id": 1,
+            "question": "Jika semua manusia adalah makhluk hidup, dan Budi adalah manusia, maka:",
+            "options": [
+                "Budi adalah makhluk hidup",
+                "Budi bukan makhluk hidup",
+                "Budi mungkin makhluk hidup",
+                "Tidak bisa disimpulkan"
+            ],
+            "answer": 0,
+            "explanation": "Karena semua manusia adalah makhluk hidup dan Budi adalah manusia, maka Budi pasti makhluk hidup."
+        }
+    ],
+    "sedang": [],
+    "sulit": []
+}
