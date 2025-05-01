@@ -1,76 +1,111 @@
-/* Tablet Devices */
-@media (max-width: 992px) {
-    .container {
-        padding: 15px;
+/* Responsive styles */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 1rem;
+    }
+    
+    .logo-img {
+        height: 4rem;
+    }
+    
+    .logo-text {
+        font-size: 2rem;
+    }
+    
+    .participant-name {
+        margin-top: 0.5rem;
+        padding: 0.5rem 1rem;
+    }
+    
+    .participant-form, .quiz-container, .results-container {
+        padding: 1.5rem;
     }
     
     .quiz-header {
         flex-direction: column;
-        gap: 15px;
+        gap: 1.25rem;
+        align-items: flex-start;
     }
     
     .quiz-info {
         width: 100%;
-        justify-content: space-between;
+        flex-wrap: wrap;
     }
     
-    .quiz-progress {
-        width: 100%;
+    .question-text {
+        font-size: 1.1rem;
     }
     
-    .question-text, .answer-option {
-        font-size: 16px;
-    }
-}
-
-/* Mobile Devices */
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-    
-    .registration-form, .quiz-container, .result-container {
-        padding: 20px;
-    }
-    
-    .quiz-info {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .answer-options {
+    .stats-container {
         grid-template-columns: 1fr;
     }
     
-    .result-stats, .result-actions {
-        flex-direction: column;
-        gap: 10px;
+    .admin-panel {
+        padding: 1.5rem;
     }
     
-    .score-circle {
-        width: 120px;
-        height: 120px;
-        font-size: 30px;
+    .question-content {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    
+    .question-actions {
+        position: static;
+        justify-content: flex-end;
+        margin-top: 1rem;
+    }
+    
+    .share-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .share-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .call-center-btn {
+        bottom: 6rem;
+        right: 1.5rem;
+    }
+    
+    .admin-btn {
+        right: 1.5rem;
     }
 }
 
-/* Small Mobile Devices */
 @media (max-width: 480px) {
-    .question-text {
-        font-size: 15px;
+    .logo-text {
+        font-size: 1.75rem;
     }
     
-    .answer-option {
-        padding: 10px;
+    .form-title, .quiz-title {
+        font-size: 1.5rem;
     }
     
-    .btn-nav, .btn-action {
-        padding: 10px 15px;
-        font-size: 14px;
+    .btn {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
     }
     
-    .modal-content {
-        padding: 20px;
-        margin: 20px auto;
+    .music-control {
+        bottom: 9rem;
+        right: 1rem;
+    }
+    
+    .call-center-btn {
+        bottom: 5rem;
+        right: 1rem;
+        width: 3.5rem;
+        height: 3.5rem;
+        font-size: 1.25rem;
+    }
+    
+    .admin-btn {
+        right: 1rem;
+        width: 3.5rem;
+        height: 3.5rem;
+        font-size: 1.25rem;
     }
 }
