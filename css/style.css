@@ -1,220 +1,42 @@
-/* Main styles that were in index.html */
-:root {
-    --primary: #2563eb;
-    --primary-light: #3b82f6;
-    --primary-dark: #1e40af;
-    --secondary: #dc2626;
-    --secondary-light: #ef4444;
-    --secondary-dark: #b91c1c;
-    --success: #16a34a;
-    --success-light: #22c55e;
-    --success-dark: #15803d;
-    --warning: #d97706;
-    --danger: #b91c1c;
-    --light: #f8fafc;
-    --lighter: #f1f5f9;
-    --dark: #1e293b;
-    --darker: #0f172a;
-    --gray: #64748b;
-    --light-gray: #e2e8f0;
-    --radius: 12px;
-    --radius-sm: 8px;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
-    --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    --gradient-success: linear-gradient(135deg, var(--success), var(--success-dark));
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-body {
-    background: var(--lighter);
-    color: var(--dark);
-    line-height: 1.6;
-    min-height: 100vh;
-    position: relative;
-}
-
-/* Header styles */
+/* Ganti style header yang ada dengan ini */
 .header {
     background: white;
     box-shadow: var(--shadow-lg);
-    padding: 1.5rem 0;
+    padding: 1rem 0;
     position: sticky;
     top: 0;
     z-index: 100;
     text-align: center;
+    transition: all 0.3s ease-out;
+    will-change: transform;
 }
 
-.header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
+/* Animasi logo yang lebih smooth */
 .logo {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
     text-decoration: none;
-    transition: var(--transition);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .logo:hover {
-    transform: translateY(-3px);
+    transform: translateY(-3px) scale(1.02);
 }
 
 .logo-img {
-    height: 5rem;
+    height: 4.5rem;
     width: auto;
     object-fit: contain;
-    filter: drop-shadow(0 4px 12px rgba(37, 99, 235, 0.2));
+    filter: drop-shadow(0 2px 8px rgba(37, 99, 235, 0.15));
     border-radius: 50%;
-    border: 3px solid white;
-    box-shadow: 0 0 0 4px var(--primary-light);
+    border: 2px solid white;
+    box-shadow: 0 0 0 3px var(--primary-light);
+    transition: all 0.3s ease;
 }
 
-.logo-text {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--primary);
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-family: 'Playfair Display', serif;
-    letter-spacing: 0.5px;
-    text-shadow: 0 2px 4px rgba(22, 163, 74, 0.1));
-    position: relative;
+.logo:hover .logo-img {
+    transform: rotate(5deg) scale(1.05);
+    filter: drop-shadow(0 4px 12px rgba(37, 99, 235, 0.25));
 }
-
-.logo-text::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 4px;
-    background: var(--gradient-primary);
-    border-radius: 2px;
-}
-
-.logo-subtext {
-    font-size: 1rem;
-    color: var(--gray);
-    font-weight: 500;
-    font-style: italic;
-    max-width: 600px;
-    margin-top: 0.5rem;
-}
-
-/* Main content styles */
-.main-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-    min-height: calc(100vh - 180px);
-}
-
-/* Form styles */
-.participant-form {
-    background: white;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-lg);
-    padding: 2.5rem;
-    max-width: 800px;
-    margin: 0 auto;
-    animation: fadeIn 0.5s ease-out;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Quiz container styles */
-.quiz-container {
-    background: white;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-lg);
-    padding: 2.5rem;
-    max-width: 800px;
-    margin: 0 auto;
-    display: none;
-    animation: fadeIn 0.5s ease-out;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Results container styles */
-.results-container {
-    background: white;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-lg);
-    padding: 3rem 2.5rem;
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-    display: none;
-    animation: fadeIn 0.5s ease-out;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Button styles */
-.btn {
-    padding: 0.85rem 1.75rem;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 1rem;
-}
-
-.btn-primary {
-    background: var(--primary);
-    color: white;
-    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2));
-}
-
-.btn-primary:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(37, 99, 235, 0.25));
-}
-
-/* Add other button styles as needed */
-
-/* Admin panel styles */
-.admin-panel {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    border-radius: var(--radius);
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
-    padding: 2.5rem;
-    z-index: 1001;
-    width: 90%;
-    max-width: 900px;
-    max-height: 90vh;
-    overflow-y: auto;
-    display: none;
-    animation: fadeIn 0.3s ease-out;
-}
-
-/* Add other styles from index.html as needed */
