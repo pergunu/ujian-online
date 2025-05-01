@@ -15,6 +15,7 @@
             --light-text: #6c757d;
             --border-radius: 12px;
             --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
         
         * {
@@ -30,13 +31,69 @@
             line-height: 1.6;
         }
         
-        .quiz-container {
-            max-width: 800px;
-            margin: 40px auto;
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Participant Form Styles */
+        .participant-form {
+            background: white;
             padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+            display: block;
+        }
+        
+        .form-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+        }
+        
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 1em;
+        }
+        
+        /* Quiz Styles */
+        .quiz-container {
             background: white;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
+            padding: 30px;
+            display: none;
         }
         
         .quiz-header {
@@ -54,12 +111,16 @@
             color: var(--primary-color);
         }
         
-        .quiz-timer {
-            background: var(--primary-color);
-            color: white;
+        .quiz-info {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .quiz-info-item {
+            background: #e9ecef;
             padding: 8px 15px;
             border-radius: 20px;
-            font-weight: 500;
+            font-size: 14px;
         }
         
         .question-container {
@@ -94,7 +155,7 @@
             border: 1px solid #ddd;
             border-radius: var(--border-radius);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
         
         .option:hover {
@@ -108,6 +169,20 @@
             border-color: var(--primary-color);
         }
         
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+        
+        .explanation-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
         .navigation-buttons {
             display: flex;
             justify-content: space-between;
@@ -119,7 +194,8 @@
             border-radius: var(--border-radius);
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            font-size: 16px;
         }
         
         .btn-reset {
@@ -142,115 +218,679 @@
             box-shadow: 0 4px 10px rgba(74, 107, 255, 0.3);
         }
         
-        .explanation {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f8f9fa;
+        .btn-start {
+            background: var(--primary-color);
+            color: white;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn-start:hover {
+            background: #3a5bef;
+        }
+        
+        /* Admin Panel Styles */
+        .admin-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .admin-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+            transition: var(--transition);
+        }
+        
+        .admin-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .admin-login {
+            background: white;
+            padding: 20px;
             border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1001;
+            display: none;
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        .admin-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .admin-container {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1001;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
             display: none;
         }
         
-        .explanation-title {
-            font-weight: 600;
-            margin-bottom: 10px;
+        .admin-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            text-align: center;
+        }
+        
+        .question-list {
+            margin-bottom: 30px;
+        }
+        
+        .question-item {
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .question-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--light-text);
+            transition: var(--transition);
+        }
+        
+        .action-btn:hover {
             color: var(--primary-color);
         }
         
+        .edit-form {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        /* Responsive Styles */
         @media (max-width: 768px) {
-            .quiz-container {
-                margin: 20px;
-                padding: 20px;
-            }
-            
             .quiz-header {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 15px;
             }
             
-            .quiz-timer {
-                margin-top: 10px;
+            .quiz-info {
+                width: 100%;
+                flex-wrap: wrap;
             }
         }
     </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <div class="quiz-header">
-            <h1 class="quiz-title">Quiz Perguru</h1>
-            <div class="quiz-timer">58:04</div>
-        </div>
+    <!-- Participant Form -->
+    <div class="container">
+        <form id="participantForm" class="participant-form">
+            <h2 class="form-title">Form Peserta Quiz</h2>
+            <div class="form-group">
+                <label for="name" class="form-label">Nama Lengkap</label>
+                <input type="text" id="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="institution" class="form-label">Institusi/Sekolah</label>
+                <input type="text" id="institution" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="category" class="form-label">Kategori Quiz</label>
+                <select id="category" class="form-control form-select" required>
+                    <option value="">Pilih Kategori</option>
+                    <option value="umum">Umum</option>
+                    <option value="matematika">Matematika</option>
+                    <option value="sains">Sains</option>
+                    <option value="sejarah">Sejarah</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="level" class="form-label">Tingkat Kesulitan</label>
+                <select id="level" class="form-control form-select" required>
+                    <option value="">Pilih Tingkat</option>
+                    <option value="mudah">Mudah</option>
+                    <option value="sedang">Sedang</option>
+                    <option value="sulit">Sulit</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-start">Mulai Quiz</button>
+        </form>
         
-        <div class="question-container">
-            <span class="question-category">Kategori Umum</span>
-            <p class="question-text">Ini adalah contoh pertanyaan untuk kategori Umum tingkat Umum. Pertanyaan ini dirancang untuk menguji pengetahuan Anda dalam bidang ini.</p>
-        </div>
-        
-        <div class="options-container">
-            <div class="option" data-option="A">A. Pilihan A</div>
-            <div class="option" data-option="B">B. Pilihan B</div>
-            <div class="option" data-option="C">C. Pilihan C</div>
-            <div class="option" data-option="D">D. Pilihan D</div>
-        </div>
-        
-        <div class="explanation">
-            <div class="explanation-title">Penjelasan Jawaban:</div>
-            <p>Ini adalah penjelasan untuk jawaban yang benar. Penjelasan ini akan membantu Anda memahami konsep di balik pertanyaan ini.</p>
-        </div>
-        
-        <div class="navigation-buttons">
-            <button class="btn btn-reset">Reset Quiz</button>
-            <button class="btn btn-next">Selanjutnya</button>
+        <!-- Quiz Container -->
+        <div id="quizContainer" class="quiz-container">
+            <div class="quiz-header">
+                <h1 class="quiz-title">Quiz Perguru</h1>
+                <div class="quiz-info">
+                    <div class="quiz-info-item" id="quizCategory">Kategori: Umum</div>
+                    <div class="quiz-info-item" id="quizLevel">Level: Sedang</div>
+                    <div class="quiz-info-item" id="quizTimer">58:04</div>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <span class="question-category">Pertanyaan 1 dari 10</span>
+                <p class="question-text" id="questionText">Ini adalah contoh pertanyaan untuk kategori Umum tingkat Umum. Pertanyaan ini dirancang untuk menguji pengetahuan Anda dalam bidang ini.</p>
+            </div>
+            
+            <div class="options-container" id="optionsContainer">
+                <div class="option" data-option="A">A. Pilihan A</div>
+                <div class="option" data-option="B">B. Pilihan B</div>
+                <div class="option" data-option="C">C. Pilihan C</div>
+                <div class="option" data-option="D">D. Pilihan D</div>
+            </div>
+            
+            <div class="explanation" id="explanation">
+                <div class="explanation-title">Penjelasan Jawaban:</div>
+                <p id="explanationText">Ini adalah penjelasan untuk jawaban yang benar. Penjelasan ini akan membantu Anda memahami konsep di balik pertanyaan ini.</p>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button class="btn btn-reset" id="resetBtn">Reset Quiz</button>
+                <button class="btn btn-next" id="nextBtn">Selanjutnya</button>
+            </div>
         </div>
     </div>
-
+    
+    <!-- Admin Panel Button -->
+    <div class="admin-panel">
+        <button class="admin-btn" id="adminBtn">A</button>
+    </div>
+    
+    <!-- Admin Login Form -->
+    <div class="admin-login" id="adminLogin">
+        <button class="admin-close" id="adminClose">&times;</button>
+        <h2 class="admin-title">Admin Login</h2>
+        <div class="form-group">
+            <label for="adminPassword" class="form-label">Password Admin</label>
+            <input type="password" id="adminPassword" class="form-control" placeholder="Masukkan password admin">
+        </div>
+        <button class="btn btn-start" id="adminLoginBtn">Login</button>
+    </div>
+    
+    <!-- Admin Panel -->
+    <div class="admin-container" id="adminPanel">
+        <h2 class="admin-title">Panel Admin - Kelola Soal</h2>
+        
+        <div class="form-group">
+            <label for="adminCategory" class="form-label">Filter Kategori</label>
+            <select id="adminCategory" class="form-control form-select">
+                <option value="">Semua Kategori</option>
+                <option value="umum">Umum</option>
+                <option value="matematika">Matematika</option>
+                <option value="sains">Sains</option>
+                <option value="sejarah">Sejarah</option>
+            </select>
+        </div>
+        
+        <div class="question-list" id="questionList">
+            <!-- Questions will be loaded here -->
+        </div>
+        
+        <h3 class="admin-title">Tambah Soal Baru</h3>
+        <form id="addQuestionForm">
+            <div class="form-group">
+                <label for="newCategory" class="form-label">Kategori</label>
+                <select id="newCategory" class="form-control form-select" required>
+                    <option value="">Pilih Kategori</option>
+                    <option value="umum">Umum</option>
+                    <option value="matematika">Matematika</option>
+                    <option value="sains">Sains</option>
+                    <option value="sejarah">Sejarah</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="newLevel" class="form-label">Tingkat Kesulitan</label>
+                <select id="newLevel" class="form-control form-select" required>
+                    <option value="">Pilih Tingkat</option>
+                    <option value="mudah">Mudah</option>
+                    <option value="sedang">Sedang</option>
+                    <option value="sulit">Sulit</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="newQuestion" class="form-label">Pertanyaan</label>
+                <textarea id="newQuestion" class="form-control" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Pilihan Jawaban</label>
+                <input type="text" id="optionA" class="form-control mb-2" placeholder="Pilihan A" required>
+                <input type="text" id="optionB" class="form-control mb-2" placeholder="Pilihan B" required>
+                <input type="text" id="optionC" class="form-control mb-2" placeholder="Pilihan C" required>
+                <input type="text" id="optionD" class="form-control mb-2" placeholder="Pilihan D" required>
+            </div>
+            <div class="form-group">
+                <label for="correctAnswer" class="form-label">Jawaban Benar</label>
+                <select id="correctAnswer" class="form-control form-select" required>
+                    <option value="">Pilih Jawaban Benar</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="explanation" class="form-label">Penjelasan Jawaban</label>
+                <textarea id="newExplanation" class="form-control" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-start">Simpan Soal</button>
+        </form>
+    </div>
+    
     <script>
+        // Sample questions data
+        const questions = [
+            {
+                id: 1,
+                category: "umum",
+                level: "sedang",
+                question: "Ini adalah contoh pertanyaan untuk kategori Umum tingkat Umum. Pertanyaan ini dirancang untuk menguji pengetahuan Anda dalam bidang ini.",
+                options: {
+                    A: "Pilihan A",
+                    B: "Pilihan B",
+                    C: "Pilihan C",
+                    D: "Pilihan D"
+                },
+                correctAnswer: "B",
+                explanation: "Ini adalah penjelasan untuk jawaban yang benar. Penjelasan ini akan membantu Anda memahami konsep di balik pertanyaan ini."
+            }
+        ];
+        
+        // DOM Elements
+        const participantForm = document.getElementById('participantForm');
+        const quizContainer = document.getElementById('quizContainer');
+        const quizCategory = document.getElementById('quizCategory');
+        const quizLevel = document.getElementById('quizLevel');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const explanation = document.getElementById('explanation');
+        const explanationText = document.getElementById('explanationText');
+        const nextBtn = document.getElementById('nextBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        
+        // Admin Elements
+        const adminBtn = document.getElementById('adminBtn');
+        const adminLogin = document.getElementById('adminLogin');
+        const adminClose = document.getElementById('adminClose');
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const adminPanel = document.getElementById('adminPanel');
+        const adminPassword = document.getElementById('adminPassword');
+        const questionList = document.getElementById('questionList');
+        const addQuestionForm = document.getElementById('addQuestionForm');
+        const adminCategoryFilter = document.getElementById('adminCategory');
+        
+        // Quiz Variables
+        let currentQuestionIndex = 0;
+        let selectedOption = null;
+        let participantData = {};
+        
+        // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
-            const options = document.querySelectorAll('.option');
-            const nextBtn = document.querySelector('.btn-next');
-            const resetBtn = document.querySelector('.btn-reset');
-            const explanation = document.querySelector('.explanation');
+            // Load sample questions (in a real app, you would load from a database)
+            renderQuestionsList();
             
-            let selectedOption = null;
-            
-            // Handle option selection
-            options.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remove selected class from all options
-                    options.forEach(opt => opt.classList.remove('selected'));
-                    
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
-                    selectedOption = this.getAttribute('data-option');
-                    
-                    // Show explanation (in a real app, you'd show this after answer submission)
-                    explanation.style.display = 'block';
-                });
+            // Participant form submission
+            participantForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get participant data
+                participantData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    institution: document.getElementById('institution').value,
+                    category: document.getElementById('category').value,
+                    level: document.getElementById('level').value
+                };
+                
+                // Update quiz info
+                quizCategory.textContent = `Kategori: ${getCategoryName(participantData.category)}`;
+                quizLevel.textContent = `Level: ${getLevelName(participantData.level)}`;
+                
+                // Hide form and show quiz
+                participantForm.style.display = 'none';
+                quizContainer.style.display = 'block';
+                
+                // Load first question
+                loadQuestion(currentQuestionIndex);
             });
             
-            // Next button functionality
+            // Option selection
+            optionsContainer.addEventListener('click', function(e) {
+                const option = e.target.closest('.option');
+                if (!option) return;
+                
+                // Remove selected class from all options
+                document.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                option.classList.add('selected');
+                selectedOption = option.getAttribute('data-option');
+                
+                // Show explanation
+                explanation.style.display = 'block';
+            });
+            
+            // Next button
             nextBtn.addEventListener('click', function() {
                 if (!selectedOption) {
                     alert('Silakan pilih jawaban terlebih dahulu');
                     return;
                 }
                 
-                // In a real app, you would load the next question here
-                alert('Pindah ke pertanyaan berikutnya...');
-                // For demo, reset selection
-                options.forEach(opt => opt.classList.remove('selected'));
-                selectedOption = null;
-                explanation.style.display = 'none';
-            });
-            
-            // Reset button functionality
-            resetBtn.addEventListener('click', function() {
-                if (confirm('Apakah Anda yakin ingin mereset quiz?')) {
-                    options.forEach(opt => opt.classList.remove('selected'));
-                    selectedOption = null;
+                // Check if answer is correct (for demonstration)
+                const isCorrect = selectedOption === questions[currentQuestionIndex].correctAnswer;
+                alert(`Jawaban Anda ${isCorrect ? 'Benar' : 'Salah'}`);
+                
+                // Move to next question or finish quiz
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    loadQuestion(currentQuestionIndex);
                     explanation.style.display = 'none';
+                    selectedOption = null;
+                } else {
+                    alert('Quiz selesai! Terima kasih telah berpartisipasi.');
+                    // Reset quiz
+                    currentQuestionIndex = 0;
+                    participantForm.style.display = 'block';
+                    quizContainer.style.display = 'none';
+                    participantForm.reset();
                 }
             });
+            
+            // Reset button
+            resetBtn.addEventListener('click', function() {
+                if (confirm('Apakah Anda yakin ingin mereset quiz?')) {
+                    currentQuestionIndex = 0;
+                    participantForm.style.display = 'block';
+                    quizContainer.style.display = 'none';
+                    participantForm.reset();
+                }
+            });
+            
+            // Admin button
+            adminBtn.addEventListener('click', function() {
+                adminLogin.style.display = 'block';
+            });
+            
+            // Admin close button
+            adminClose.addEventListener('click', function() {
+                adminLogin.style.display = 'none';
+            });
+            
+            // Admin login
+            adminLoginBtn.addEventListener('click', function() {
+                if (adminPassword.value === '65614222') {
+                    adminLogin.style.display = 'none';
+                    adminPanel.style.display = 'block';
+                } else {
+                    alert('Password salah!');
+                }
+            });
+            
+            // Filter questions by category
+            adminCategoryFilter.addEventListener('change', function() {
+                renderQuestionsList(this.value);
+            });
+            
+            // Add new question
+            addQuestionForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const newQuestion = {
+                    id: questions.length + 1,
+                    category: document.getElementById('newCategory').value,
+                    level: document.getElementById('newLevel').value,
+                    question: document.getElementById('newQuestion').value,
+                    options: {
+                        A: document.getElementById('optionA').value,
+                        B: document.getElementById('optionB').value,
+                        C: document.getElementById('optionC').value,
+                        D: document.getElementById('optionD').value
+                    },
+                    correctAnswer: document.getElementById('correctAnswer').value,
+                    explanation: document.getElementById('newExplanation').value
+                };
+                
+                questions.push(newQuestion);
+                renderQuestionsList();
+                addQuestionForm.reset();
+                alert('Soal berhasil ditambahkan!');
+            });
         });
+        
+        // Load question
+        function loadQuestion(index) {
+            const q = questions[index];
+            questionText.textContent = q.question;
+            
+            // Update options
+            optionsContainer.innerHTML = '';
+            for (const [key, value] of Object.entries(q.options)) {
+                const option = document.createElement('div');
+                option.className = 'option';
+                option.setAttribute('data-option', key);
+                option.textContent = `${key}. ${value}`;
+                optionsContainer.appendChild(option);
+            }
+            
+            // Update explanation
+            explanationText.textContent = q.explanation;
+        }
+        
+        // Render questions list for admin
+        function renderQuestionsList(filterCategory = '') {
+            questionList.innerHTML = '';
+            
+            const filteredQuestions = filterCategory 
+                ? questions.filter(q => q.category === filterCategory)
+                : questions;
+            
+            if (filteredQuestions.length === 0) {
+                questionList.innerHTML = '<p>Tidak ada soal yang ditemukan.</p>';
+                return;
+            }
+            
+            filteredQuestions.forEach(q => {
+                const questionItem = document.createElement('div');
+                questionItem.className = 'question-item';
+                
+                questionItem.innerHTML = `
+                    <h4>${q.question}</h4>
+                    <p><strong>Kategori:</strong> ${getCategoryName(q.category)} | 
+                    <strong>Level:</strong> ${getLevelName(q.level)}</p>
+                    <p><strong>Jawaban benar:</strong> ${q.correctAnswer}</p>
+                    <div class="question-actions">
+                        <button class="action-btn edit-btn" data-id="${q.id}">✏️ Edit</button>
+                        <button class="action-btn delete-btn" data-id="${q.id}">🗑️ Hapus</button>
+                    </div>
+                    <div class="edit-form" id="editForm-${q.id}">
+                        <!-- Edit form will be inserted here -->
+                    </div>
+                `;
+                
+                questionList.appendChild(questionItem);
+            });
+            
+            // Add event listeners for edit and delete buttons
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    showEditForm(id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    if (confirm('Apakah Anda yakin ingin menghapus soal ini?')) {
+                        deleteQuestion(id);
+                    }
+                });
+            });
+        }
+        
+        // Show edit form
+        function showEditForm(id) {
+            const question = questions.find(q => q.id === id);
+            if (!question) return;
+            
+            const editForm = document.getElementById(`editForm-${id}`);
+            
+            if (editForm.style.display === 'block') {
+                editForm.style.display = 'none';
+                return;
+            }
+            
+            // Hide all other edit forms
+            document.querySelectorAll('.edit-form').forEach(form => {
+                form.style.display = 'none';
+            });
+            
+            editForm.innerHTML = `
+                <div class="form-group">
+                    <label for="editCategory-${id}" class="form-label">Kategori</label>
+                    <select id="editCategory-${id}" class="form-control form-select">
+                        <option value="umum" ${question.category === 'umum' ? 'selected' : ''}>Umum</option>
+                        <option value="matematika" ${question.category === 'matematika' ? 'selected' : ''}>Matematika</option>
+                        <option value="sains" ${question.category === 'sains' ? 'selected' : ''}>Sains</option>
+                        <option value="sejarah" ${question.category === 'sejarah' ? 'selected' : ''}>Sejarah</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editLevel-${id}" class="form-label">Tingkat Kesulitan</label>
+                    <select id="editLevel-${id}" class="form-control form-select">
+                        <option value="mudah" ${question.level === 'mudah' ? 'selected' : ''}>Mudah</option>
+                        <option value="sedang" ${question.level === 'sedang' ? 'selected' : ''}>Sedang</option>
+                        <option value="sulit" ${question.level === 'sulit' ? 'selected' : ''}>Sulit</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editQuestion-${id}" class="form-label">Pertanyaan</label>
+                    <textarea id="editQuestion-${id}" class="form-control" rows="3">${question.question}</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Pilihan Jawaban</label>
+                    <input type="text" id="editOptionA-${id}" class="form-control mb-2" value="${question.options.A}">
+                    <input type="text" id="editOptionB-${id}" class="form-control mb-2" value="${question.options.B}">
+                    <input type="text" id="editOptionC-${id}" class="form-control mb-2" value="${question.options.C}">
+                    <input type="text" id="editOptionD-${id}" class="form-control mb-2" value="${question.options.D}">
+                </div>
+                <div class="form-group">
+                    <label for="editCorrectAnswer-${id}" class="form-label">Jawaban Benar</label>
+                    <select id="editCorrectAnswer-${id}" class="form-control form-select">
+                        <option value="A" ${question.correctAnswer === 'A' ? 'selected' : ''}>A</option>
+                        <option value="B" ${question.correctAnswer === 'B' ? 'selected' : ''}>B</option>
+                        <option value="C" ${question.correctAnswer === 'C' ? 'selected' : ''}>C</option>
+                        <option value="D" ${question.correctAnswer === 'D' ? 'selected' : ''}>D</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editExplanation-${id}" class="form-label">Penjelasan Jawaban</label>
+                    <textarea id="editExplanation-${id}" class="form-control" rows="3">${question.explanation}</textarea>
+                </div>
+                <button class="btn btn-start save-edit-btn" data-id="${id}">Simpan Perubahan</button>
+            `;
+            
+            editForm.style.display = 'block';
+            
+            // Add event listener for save button
+            document.querySelector(`.save-edit-btn[data-id="${id}"]`).addEventListener('click', function() {
+                saveQuestionChanges(id);
+            });
+        }
+        
+        // Save question changes
+        function saveQuestionChanges(id) {
+            const question = questions.find(q => q.id === id);
+            if (!question) return;
+            
+            question.category = document.getElementById(`editCategory-${id}`).value;
+            question.level = document.getElementById(`editLevel-${id}`).value;
+            question.question = document.getElementById(`editQuestion-${id}`).value;
+            question.options = {
+                A: document.getElementById(`editOptionA-${id}`).value,
+                B: document.getElementById(`editOptionB-${id}`).value,
+                C: document.getElementById(`editOptionC-${id}`).value,
+                D: document.getElementById(`editOptionD-${id}`).value
+            };
+            question.correctAnswer = document.getElementById(`editCorrectAnswer-${id}`).value;
+            question.explanation = document.getElementById(`editExplanation-${id}`).value;
+            
+            alert('Perubahan berhasil disimpan!');
+            renderQuestionsList(adminCategoryFilter.value);
+        }
+        
+        // Delete question
+        function deleteQuestion(id) {
+            const index = questions.findIndex(q => q.id === id);
+            if (index !== -1) {
+                questions.splice(index, 1);
+                renderQuestionsList(adminCategoryFilter.value);
+                alert('Soal berhasil dihapus!');
+            }
+        }
+        
+        // Helper functions
+        function getCategoryName(category) {
+            const categories = {
+                'umum': 'Umum',
+                'matematika': 'Matematika',
+                'sains': 'Sains',
+                'sejarah': 'Sejarah'
+            };
+            return categories[category] || category;
+        }
+        
+        function getLevelName(level) {
+            const levels = {
+                'mudah': 'Mudah',
+                'sedang': 'Sedang',
+                'sulit': 'Sulit'
+            };
+            return levels[level] || level;
+        }
     </script>
 </body>
 </html>
