@@ -219,21 +219,33 @@
             box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
         }
         
-        /* Subkategori Select */
-        .subcategory-select {
-            display: none;
-            margin-top: 0.5rem;
+        /* Subkategori Container */
+        .subcategory-container {
+            margin-top: 1rem;
+            padding: 1.25rem;
+            background: var(--lighter);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--light-gray);
+            animation: fadeIn 0.3s ease-out;
         }
         
-        .subcategory-select.active {
-            display: block;
-            animation: fadeIn 0.3s ease-out;
+        .subcategory-title {
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .subcategory-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
         
         .subcategory-option {
             display: inline-block;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
         }
         
         .subcategory-radio {
@@ -242,8 +254,8 @@
         
         .subcategory-label {
             display: inline-block;
-            padding: 0.5rem 1rem;
-            background: var(--lighter);
+            padding: 0.6rem 1rem;
+            background: white;
             border-radius: var(--radius-sm);
             cursor: pointer;
             font-size: 0.9rem;
@@ -259,6 +271,12 @@
         
         .subcategory-label:hover {
             background: var(--light-gray);
+        }
+        
+        /* Profesi Field (khusus umum) */
+        .profesi-field {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
         }
         
         /* Quiz Container */
@@ -897,6 +915,17 @@
                 <label for="name" class="form-label">Nama Lengkap</label>
                 <input type="text" id="name" class="form-control" required placeholder="Masukkan nama lengkap Anda">
             </div>
+            
+            <div class="form-group">
+                <label for="phone" class="form-label">Nomor HP/WhatsApp</label>
+                <input type="tel" id="phone" class="form-control" required placeholder="Masukkan nomor yang bisa dihubungi">
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" placeholder="Masukkan email Anda (opsional)">
+            </div>
+            
             <div class="form-group">
                 <label class="form-label">Kategori Quiz</label>
                 <div class="category-tabs">
@@ -905,63 +934,74 @@
                 </div>
                 
                 <!-- Subkategori untuk Pelajar -->
-                <div class="subcategory-select" id="pelajarSubcategories">
-                    <div class="form-label">Pilih Mata Pelajaran:</div>
+                <div class="subcategory-container" id="pelajarSubcategories">
+                    <div class="subcategory-title">
+                        <i class="fas fa-book"></i> Pilih Mata Pelajaran:
+                    </div>
                     <div class="subcategory-options">
                         <label class="subcategory-option">
-                            <input type="radio" name="pelajarSubcategory" class="subcategory-radio" value="ipa" checked>
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="ipa" checked>
                             <span class="subcategory-label">IPA</span>
                         </label>
                         <label class="subcategory-option">
-                            <input type="radio" name="pelajarSubcategory" class="subcategory-radio" value="ips">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="ips">
                             <span class="subcategory-label">IPS</span>
                         </label>
                         <label class="subcategory-option">
-                            <input type="radio" name="pelajarSubcategory" class="subcategory-radio" value="matematika">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="matematika">
                             <span class="subcategory-label">Matematika</span>
                         </label>
                         <label class="subcategory-option">
-                            <input type="radio" name="pelajarSubcategory" class="subcategory-radio" value="agama">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="agama">
                             <span class="subcategory-label">Agama</span>
                         </label>
                         <label class="subcategory-option">
-                            <input type="radio" name="pelajarSubcategory" class="subcategory-radio" value="ppkn">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="ppkn">
                             <span class="subcategory-label">PPKN</span>
                         </label>
                         <label class="subcategory-option">
-                            <input type="radio" name="pelajarSubcategory" class="subcategory-radio" value="sejarah">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="sejarah">
                             <span class="subcategory-label">Sejarah</span>
                         </label>
                         <label class="subcategory-option">
-                            <input type="radio" name="pelajarSubcategory" class="subcategory-radio" value="bahasa_indonesia">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="bahasa_indonesia">
                             <span class="subcategory-label">Bahasa Indonesia</span>
                         </label>
                         <label class="subcategory-option">
-                            <input type="radio" name="pelajarSubcategory" class="subcategory-radio" value="bahasa_inggris">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="bahasa_inggris">
                             <span class="subcategory-label">Bahasa Inggris</span>
                         </label>
                     </div>
                 </div>
                 
                 <!-- Subkategori untuk Umum -->
-                <div class="subcategory-select" id="umumSubcategories">
-                    <div class="form-label">Pilih Jenis Ujian:</div>
+                <div class="subcategory-container" id="umumSubcategories" style="display: none;">
+                    <div class="subcategory-title">
+                        <i class="fas fa-star"></i> Pilih Jenis Ujian:
+                    </div>
                     <div class="subcategory-options">
                         <label class="subcategory-option">
-                            <input type="radio" name="umumSubcategory" class="subcategory-radio" value="logika" checked>
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="logika">
                             <span class="subcategory-label">Ujian Logika</span>
                         </label>
                         <label class="subcategory-option">
-                            <input type="radio" name="umumSubcategory" class="subcategory-radio" value="sambung_lagu">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="sambung_lagu">
                             <span class="subcategory-label">Sambung Lagu</span>
                         </label>
                         <label class="subcategory-option">
-                            <input type="radio" name="umumSubcategory" class="subcategory-radio" value="peribahasa">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="peribahasa">
                             <span class="subcategory-label">Tebak Peribahasa</span>
                         </label>
                     </div>
                 </div>
+                
+                <!-- Field Profesi (hanya untuk umum) -->
+                <div class="form-group profesi-field" id="profesiField">
+                    <label for="profesi" class="form-label">Profesi</label>
+                    <input type="text" id="profesi" class="form-control" placeholder="Masukkan profesi Anda">
+                </div>
             </div>
+            
             <div class="form-group">
                 <label for="level" class="form-label">Tingkat Kesulitan</label>
                 <select id="level" class="form-control" required>
@@ -970,6 +1010,7 @@
                     <option value="sulit">Sulit</option>
                 </select>
             </div>
+            
             <button type="submit" class="btn btn-primary" id="startQuiz">
                 <i class="fas fa-play"></i> Mulai Quiz
             </button>
@@ -1260,54 +1301,134 @@
                     ]
                 },
                 ips: {
-                    mudah: [],
+                    mudah: [
+                        {
+                            id: 5,
+                            question: "Apa ibukota provinsi Jawa Barat?",
+                            options: ["Bandung", "Jakarta", "Surabaya", "Semarang"],
+                            answer: 0,
+                            explanation: "Ibukota provinsi Jawa Barat adalah Bandung."
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 },
                 matematika: {
-                    mudah: [],
+                    mudah: [
+                        {
+                            id: 6,
+                            question: "Berapakah hasil dari 7 × 8?",
+                            options: ["56", "64", "42", "49"],
+                            answer: 0,
+                            explanation: "Hasil dari 7 dikali 8 adalah 56."
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 },
                 agama: {
-                    mudah: [],
+                    mudah: [
+                        {
+                            id: 7,
+                            question: "Berapa jumlah rakaat shalat Subuh?",
+                            options: ["2", "3", "4", "1"],
+                            answer: 0,
+                            explanation: "Shalat Subuh terdiri dari 2 rakaat."
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 },
                 ppkn: {
-                    mudah: [],
+                    mudah: [
+                        {
+                            id: 8,
+                            question: "Siapa presiden pertama Indonesia?",
+                            options: ["Soekarno", "Soeharto", "BJ Habibie", "Gus Dur"],
+                            answer: 0,
+                            explanation: "Presiden pertama Indonesia adalah Ir. Soekarno."
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 },
                 sejarah: {
-                    mudah: [],
+                    mudah: [
+                        {
+                            id: 9,
+                            question: "Kapan Indonesia merdeka?",
+                            options: ["17 Agustus 1945", "27 Desember 1949", "1 Juni 1945", "28 Oktober 1928"],
+                            answer: 0,
+                            explanation: "Indonesia merdeka pada tanggal 17 Agustus 1945."
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 },
                 bahasa_indonesia: {
-                    mudah: [],
+                    mudah: [
+                        {
+                            id: 10,
+                            question: "Apa sinonim dari kata 'bahagia'?",
+                            options: ["Senang", "Sedih", "Marah", "Kecewa"],
+                            answer: 0,
+                            explanation: "Sinonim dari bahagia adalah senang."
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 },
                 bahasa_inggris: {
-                    mudah: [],
+                    mudah: [
+                        {
+                            id: 11,
+                            question: "Apa bahasa Inggrisnya 'buku'?",
+                            options: ["Book", "Pen", "Table", "Chair"],
+                            answer: 0,
+                            explanation: "Bahasa Inggris dari buku adalah book."
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 }
             },
             umum: {
                 logika: {
-                    mudah: [],
+                    mudah: [
+                        {
+                            id: 12,
+                            question: "Jika semua manusia adalah makhluk hidup, dan Budi adalah manusia, maka:",
+                            options: ["Budi adalah makhluk hidup", "Budi bukan makhluk hidup", "Budi mungkin makhluk hidup", "Tidak bisa disimpulkan"],
+                            answer: 0,
+                            explanation: "Karena semua manusia adalah makhluk hidup dan Budi adalah manusia, maka Budi pasti makhluk hidup."
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 },
                 sambung_lagu: {
-                    mudah: [],
+                    mudah: [
+                        {
+                            id: 13,
+                            question: "Lanjutkan lirik: 'Tanah airku tidak kulupakan...'",
+                            options: ["'Kan terkenang selama hidupku", "Selamanya akan kukenang", "Di hatiku selalu terpatri", "Takkan pernah kulupakan"],
+                            answer: 0,
+                            explanation: "Lirik lengkapnya: 'Tanah airku tidak kulupakan, 'kan terkenang selama hidupku'"
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 },
                 peribahasa: {
-                    mudah: [],
+                    mudah: [
+                        {
+                            id: 14,
+                            question: "Lanjutkan peribahasa: 'Air tenang...'",
+                            options: ["menghanyutkan", "jernih selalu", "tak berombak", "dingin sekali"],
+                            answer: 0,
+                            explanation: "Peribahasa lengkapnya: 'Air tenang menghanyutkan' yang berarti orang yang kelihatannya pendiam bisa jadi berbahaya."
+                        }
+                    ],
                     sedang: [],
                     sulit: []
                 }
@@ -1338,31 +1459,24 @@
                     currentCategory = this.dataset.category;
                     
                     // Tampilkan subkategori yang sesuai
-                    document.querySelectorAll('.subcategory-select').forEach(el => {
-                        el.classList.remove('active');
-                    });
-                    
                     if (currentCategory === 'pelajar') {
-                        document.getElementById('pelajarSubcategories').classList.add('active');
-                        currentSubcategory = document.querySelector('input[name="pelajarSubcategory"]:checked').value;
+                        document.getElementById('pelajarSubcategories').style.display = 'block';
+                        document.getElementById('umumSubcategories').style.display = 'none';
+                        document.getElementById('profesiField').style.display = 'none';
+                        document.querySelector('input[name="subcategory"][value="ipa"]').checked = true;
+                        currentSubcategory = 'ipa';
                     } else {
-                        document.getElementById('umumSubcategories').classList.add('active');
-                        currentSubcategory = document.querySelector('input[name="umumSubcategory"]:checked').value;
+                        document.getElementById('pelajarSubcategories').style.display = 'none';
+                        document.getElementById('umumSubcategories').style.display = 'block';
+                        document.getElementById('profesiField').style.display = 'block';
+                        document.querySelector('input[name="subcategory"][value="logika"]').checked = true;
+                        currentSubcategory = 'logika';
                     }
                 });
             });
             
-            // Pilih subkategori pelajar
-            document.querySelectorAll('input[name="pelajarSubcategory"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (this.checked) {
-                        currentSubcategory = this.value;
-                    }
-                });
-            });
-            
-            // Pilih subkategori umum
-            document.querySelectorAll('input[name="umumSubcategory"]').forEach(radio => {
+            // Pilih subkategori
+            document.querySelectorAll('input[name="subcategory"]').forEach(radio => {
                 radio.addEventListener('change', function() {
                     if (this.checked) {
                         currentSubcategory = this.value;
@@ -1399,10 +1513,6 @@
             });
             document.getElementById('changePasswordForm').addEventListener('submit', changePassword);
             
-            // Tampilkan subkategori pelajar pertama kali
-            document.getElementById('pelajarSubcategories').classList.add('active');
-            currentSubcategory = document.querySelector('input[name="pelajarSubcategory"]:checked').value;
-            
             // Admin form category change
             document.getElementById('newCategory').addEventListener('change', function() {
                 const category = this.value;
@@ -1416,10 +1526,13 @@
             
             // Get participant data
             const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const profesi = currentCategory === 'umum' ? document.getElementById('profesi').value : '';
             currentLevel = document.getElementById('level').value;
             
-            if (!name) {
-                alert('Silakan isi nama lengkap');
+            if (!name || !phone) {
+                alert('Silakan isi nama lengkap dan nomor HP terlebih dahulu');
                 return;
             }
             
@@ -1667,15 +1780,14 @@
             // Reset form
             document.getElementById('participantForm').reset();
             document.querySelector('.category-tab[data-category="pelajar"]').classList.add('active');
-            document.querySelectorAll('.category-tab[data-category="umum"]').classList.remove('active');
+            document.querySelectorAll('.category-tab[data-category="umum"]').forEach(tab => tab.classList.remove('active'));
             currentCategory = 'pelajar';
             
             // Show pelajar subcategories by default
-            document.querySelectorAll('.subcategory-select').forEach(el => {
-                el.classList.remove('active');
-            });
-            document.getElementById('pelajarSubcategories').classList.add('active');
-            document.querySelector('input[name="pelajarSubcategory"][value="ipa"]').checked = true;
+            document.getElementById('pelajarSubcategories').style.display = 'block';
+            document.getElementById('umumSubcategories').style.display = 'none';
+            document.getElementById('profesiField').style.display = 'none';
+            document.querySelector('input[name="subcategory"][value="ipa"]').checked = true;
             currentSubcategory = 'ipa';
             
             // Remove confetti
