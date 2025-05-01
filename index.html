@@ -29,12 +29,42 @@
             background-color: #f5f7ff;
             color: var(--text-color);
             line-height: 1.6;
+            position: relative;
+            min-height: 100vh;
         }
         
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
+            padding-bottom: 60px; /* Space for footer */
+        }
+        
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary-color);
         }
         
         /* Participant Form Styles */
@@ -229,6 +259,34 @@
             background: #3a5bef;
         }
         
+        /* Results Styles */
+        .results-container {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: none;
+            text-align: center;
+        }
+        
+        .results-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .score {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 20px 0;
+        }
+        
+        .results-details {
+            margin-top: 30px;
+            text-align: left;
+        }
+        
         /* Admin Panel Styles */
         .admin-panel {
             position: fixed;
@@ -343,8 +401,25 @@
             border-top: 1px solid #eee;
         }
         
+        /* Footer Styles */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
         /* Responsive Styles */
         @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
             .quiz-header {
                 flex-direction: column;
                 align-items: flex-start;
@@ -355,12 +430,25 @@
                 width: 100%;
                 flex-wrap: wrap;
             }
+            
+            .admin-container {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Participant Form -->
+    <!-- Header -->
     <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="images/logo-perguru.png" alt="Perguru Logo" class="logo-img">
+                <span class="logo-text">Quiz Perguru</span>
+            </div>
+            <div id="participantNameDisplay"></div>
+        </div>
+        
+        <!-- Participant Form -->
         <form id="participantForm" class="participant-form">
             <h2 class="form-title">Form Peserta Quiz</h2>
             <div class="form-group">
@@ -404,25 +492,22 @@
                 <div class="quiz-info">
                     <div class="quiz-info-item" id="quizCategory">Kategori: Umum</div>
                     <div class="quiz-info-item" id="quizLevel">Level: Sedang</div>
-                    <div class="quiz-info-item" id="quizTimer">58:04</div>
+                    <div class="quiz-info-item" id="quizTimer">10:00</div>
                 </div>
             </div>
             
             <div class="question-container">
-                <span class="question-category">Pertanyaan 1 dari 10</span>
-                <p class="question-text" id="questionText">Ini adalah contoh pertanyaan untuk kategori Umum tingkat Umum. Pertanyaan ini dirancang untuk menguji pengetahuan Anda dalam bidang ini.</p>
+                <span class="question-category" id="questionNumber">Pertanyaan 1 dari 5</span>
+                <p class="question-text" id="questionText">Memuat pertanyaan...</p>
             </div>
             
             <div class="options-container" id="optionsContainer">
-                <div class="option" data-option="A">A. Pilihan A</div>
-                <div class="option" data-option="B">B. Pilihan B</div>
-                <div class="option" data-option="C">C. Pilihan C</div>
-                <div class="option" data-option="D">D. Pilihan D</div>
+                <!-- Options will be loaded here -->
             </div>
             
             <div class="explanation" id="explanation">
                 <div class="explanation-title">Penjelasan Jawaban:</div>
-                <p id="explanationText">Ini adalah penjelasan untuk jawaban yang benar. Penjelasan ini akan membantu Anda memahami konsep di balik pertanyaan ini.</p>
+                <p id="explanationText">Memuat penjelasan...</p>
             </div>
             
             <div class="navigation-buttons">
@@ -430,6 +515,24 @@
                 <button class="btn btn-next" id="nextBtn">Selanjutnya</button>
             </div>
         </div>
+        
+        <!-- Results Container -->
+        <div id="resultsContainer" class="results-container">
+            <h2 class="results-title">Hasil Quiz</h2>
+            <div class="score" id="scoreDisplay">0%</div>
+            <p id="resultsMessage">Memuat hasil...</p>
+            
+            <div class="results-details" id="resultsDetails">
+                <!-- Results details will be loaded here -->
+            </div>
+            
+            <button class="btn btn-start" id="restartBtn" style="margin-top: 30px;">Ulangi Quiz</button>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2023 Quiz Perguru. All rights reserved.
     </div>
     
     <!-- Admin Panel Button -->
@@ -519,34 +622,70 @@
     
     <script>
         // Sample questions data
-        const questions = [
+        let questions = [
             {
                 id: 1,
                 category: "umum",
                 level: "sedang",
-                question: "Ini adalah contoh pertanyaan untuk kategori Umum tingkat Umum. Pertanyaan ini dirancang untuk menguji pengetahuan Anda dalam bidang ini.",
+                question: "Apa ibukota Indonesia?",
                 options: {
-                    A: "Pilihan A",
-                    B: "Pilihan B",
-                    C: "Pilihan C",
-                    D: "Pilihan D"
+                    A: "Jakarta",
+                    B: "Bandung",
+                    C: "Surabaya",
+                    D: "Medan"
                 },
-                correctAnswer: "B",
-                explanation: "Ini adalah penjelasan untuk jawaban yang benar. Penjelasan ini akan membantu Anda memahami konsep di balik pertanyaan ini."
+                correctAnswer: "A",
+                explanation: "Jakarta adalah ibukota Indonesia sejak tahun 1945. Kota ini terletak di pulau Jawa dan merupakan pusat pemerintahan, bisnis, dan keuangan negara."
+            },
+            {
+                id: 2,
+                category: "umum",
+                level: "mudah",
+                question: "Berapa jumlah provinsi di Indonesia saat ini?",
+                options: {
+                    A: "34",
+                    B: "32",
+                    C: "36",
+                    D: "38"
+                },
+                correctAnswer: "A",
+                explanation: "Indonesia saat ini memiliki 34 provinsi. Provinsi termuda adalah Kalimantan Utara yang dibentuk pada tahun 2012."
+            },
+            {
+                id: 3,
+                category: "sains",
+                level: "sedang",
+                question: "Planet terdekat dengan matahari adalah?",
+                options: {
+                    A: "Venus",
+                    B: "Bumi",
+                    C: "Mars",
+                    D: "Merkurius"
+                },
+                correctAnswer: "D",
+                explanation: "Merkurius adalah planet terdekat dengan matahari dalam tata surya kita. Planet ini mengorbit matahari setiap 88 hari Bumi."
             }
         ];
         
         // DOM Elements
         const participantForm = document.getElementById('participantForm');
         const quizContainer = document.getElementById('quizContainer');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const participantNameDisplay = document.getElementById('participantNameDisplay');
         const quizCategory = document.getElementById('quizCategory');
         const quizLevel = document.getElementById('quizLevel');
+        const quizTimer = document.getElementById('quizTimer');
+        const questionNumber = document.getElementById('questionNumber');
         const questionText = document.getElementById('questionText');
         const optionsContainer = document.getElementById('optionsContainer');
         const explanation = document.getElementById('explanation');
         const explanationText = document.getElementById('explanationText');
         const nextBtn = document.getElementById('nextBtn');
         const resetBtn = document.getElementById('resetBtn');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const resultsMessage = document.getElementById('resultsMessage');
+        const resultsDetails = document.getElementById('resultsDetails');
+        const restartBtn = document.getElementById('restartBtn');
         
         // Admin Elements
         const adminBtn = document.getElementById('adminBtn');
@@ -563,10 +702,13 @@
         let currentQuestionIndex = 0;
         let selectedOption = null;
         let participantData = {};
+        let userAnswers = [];
+        let timerInterval;
+        let timeLeft = 600; // 10 minutes in seconds
         
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
-            // Load sample questions (in a real app, you would load from a database)
+            // Load questions
             renderQuestionsList();
             
             // Participant form submission
@@ -582,16 +724,36 @@
                     level: document.getElementById('level').value
                 };
                 
+                // Filter questions by selected category and level
+                const filteredQuestions = questions.filter(q => 
+                    q.category === participantData.category && 
+                    q.level === participantData.level
+                );
+                
+                if (filteredQuestions.length === 0) {
+                    alert('Tidak ada soal yang tersedia untuk kategori dan level yang dipilih.');
+                    return;
+                }
+                
                 // Update quiz info
+                participantNameDisplay.textContent = participantData.name;
                 quizCategory.textContent = `Kategori: ${getCategoryName(participantData.category)}`;
                 quizLevel.textContent = `Level: ${getLevelName(participantData.level)}`;
+                
+                // Reset quiz variables
+                currentQuestionIndex = 0;
+                userAnswers = [];
+                timeLeft = 600;
+                updateTimerDisplay();
+                startTimer();
                 
                 // Hide form and show quiz
                 participantForm.style.display = 'none';
                 quizContainer.style.display = 'block';
+                resultsContainer.style.display = 'none';
                 
                 // Load first question
-                loadQuestion(currentQuestionIndex);
+                loadQuestion(currentQuestionIndex, filteredQuestions);
             });
             
             // Option selection
@@ -608,45 +770,48 @@
                 option.classList.add('selected');
                 selectedOption = option.getAttribute('data-option');
                 
+                // Store user answer
+                const currentQuestion = getFilteredQuestions()[currentQuestionIndex];
+                userAnswers[currentQuestionIndex] = {
+                    questionId: currentQuestion.id,
+                    selectedAnswer: selectedOption,
+                    isCorrect: selectedOption === currentQuestion.correctAnswer
+                };
+                
                 // Show explanation
                 explanation.style.display = 'block';
             });
             
             // Next button
             nextBtn.addEventListener('click', function() {
-                if (!selectedOption) {
+                if (!selectedOption && userAnswers[currentQuestionIndex] === undefined) {
                     alert('Silakan pilih jawaban terlebih dahulu');
                     return;
                 }
                 
-                // Check if answer is correct (for demonstration)
-                const isCorrect = selectedOption === questions[currentQuestionIndex].correctAnswer;
-                alert(`Jawaban Anda ${isCorrect ? 'Benar' : 'Salah'}`);
+                const filteredQuestions = getFilteredQuestions();
                 
                 // Move to next question or finish quiz
                 currentQuestionIndex++;
-                if (currentQuestionIndex < questions.length) {
-                    loadQuestion(currentQuestionIndex);
+                if (currentQuestionIndex < filteredQuestions.length) {
+                    loadQuestion(currentQuestionIndex, filteredQuestions);
                     explanation.style.display = 'none';
                     selectedOption = null;
                 } else {
-                    alert('Quiz selesai! Terima kasih telah berpartisipasi.');
-                    // Reset quiz
-                    currentQuestionIndex = 0;
-                    participantForm.style.display = 'block';
-                    quizContainer.style.display = 'none';
-                    participantForm.reset();
+                    finishQuiz();
                 }
             });
             
             // Reset button
             resetBtn.addEventListener('click', function() {
                 if (confirm('Apakah Anda yakin ingin mereset quiz?')) {
-                    currentQuestionIndex = 0;
-                    participantForm.style.display = 'block';
-                    quizContainer.style.display = 'none';
-                    participantForm.reset();
+                    resetQuiz();
                 }
+            });
+            
+            // Restart button
+            restartBtn.addEventListener('click', function() {
+                resetQuiz();
             });
             
             // Admin button
@@ -657,6 +822,7 @@
             // Admin close button
             adminClose.addEventListener('click', function() {
                 adminLogin.style.display = 'none';
+                adminPassword.value = '';
             });
             
             // Admin login
@@ -664,8 +830,18 @@
                 if (adminPassword.value === '65614222') {
                     adminLogin.style.display = 'none';
                     adminPanel.style.display = 'block';
+                    adminPassword.value = '';
                 } else {
                     alert('Password salah!');
+                }
+            });
+            
+            // Close admin panel when clicking outside
+            document.addEventListener('click', function(e) {
+                if (adminPanel.style.display === 'block' && 
+                    !adminPanel.contains(e.target) && 
+                    e.target !== adminBtn) {
+                    adminPanel.style.display = 'none';
                 }
             });
             
@@ -679,7 +855,7 @@
                 e.preventDefault();
                 
                 const newQuestion = {
-                    id: questions.length + 1,
+                    id: questions.length > 0 ? Math.max(...questions.map(q => q.id)) + 1 : 1,
                     category: document.getElementById('newCategory').value,
                     level: document.getElementById('newLevel').value,
                     question: document.getElementById('newQuestion').value,
@@ -694,15 +870,26 @@
                 };
                 
                 questions.push(newQuestion);
-                renderQuestionsList();
+                renderQuestionsList(adminCategoryFilter.value);
                 addQuestionForm.reset();
                 alert('Soal berhasil ditambahkan!');
             });
         });
         
+        // Get filtered questions based on participant selection
+        function getFilteredQuestions() {
+            return questions.filter(q => 
+                q.category === participantData.category && 
+                q.level === participantData.level
+            );
+        }
+        
         // Load question
-        function loadQuestion(index) {
-            const q = questions[index];
+        function loadQuestion(index, questionsToLoad = null) {
+            const filteredQuestions = questionsToLoad || getFilteredQuestions();
+            const q = filteredQuestions[index];
+            
+            questionNumber.textContent = `Pertanyaan ${index + 1} dari ${filteredQuestions.length}`;
             questionText.textContent = q.question;
             
             // Update options
@@ -713,10 +900,101 @@
                 option.setAttribute('data-option', key);
                 option.textContent = `${key}. ${value}`;
                 optionsContainer.appendChild(option);
+                
+                // Check if this option was previously selected
+                if (userAnswers[index] && userAnswers[index].selectedAnswer === key) {
+                    option.classList.add('selected');
+                    selectedOption = key;
+                }
             }
             
             // Update explanation
             explanationText.textContent = q.explanation;
+            
+            // Show explanation if user already answered this question
+            if (userAnswers[index]) {
+                explanation.style.display = 'block';
+            } else {
+                explanation.style.display = 'none';
+            }
+            
+            // Update next button text if last question
+            if (index === filteredQuestions.length - 1) {
+                nextBtn.textContent = 'Selesai';
+            } else {
+                nextBtn.textContent = 'Selanjutnya';
+            }
+        }
+        
+        // Finish quiz
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            
+            const filteredQuestions = getFilteredQuestions();
+            const correctAnswers = userAnswers.filter(a => a.isCorrect).length;
+            const totalQuestions = filteredQuestions.length;
+            const score = Math.round((correctAnswers / totalQuestions) * 100);
+            
+            // Display results
+            scoreDisplay.textContent = `${score}%`;
+            
+            if (score >= 80) {
+                resultsMessage.textContent = "Selamat! Anda mendapatkan nilai yang sangat baik!";
+            } else if (score >= 60) {
+                resultsMessage.textContent = "Bagus! Anda mendapatkan nilai yang baik.";
+            } else if (score >= 40) {
+                resultsMessage.textContent = "Cukup baik. Anda bisa belajar lebih giat lagi.";
+            } else {
+                resultsMessage.textContent = "Anda perlu belajar lebih giat lagi.";
+            }
+            
+            // Display results details
+            resultsDetails.innerHTML = `
+                <h3>Detail Jawaban:</h3>
+                <p>Total pertanyaan: ${totalQuestions}</p>
+                <p>Jawaban benar: ${correctAnswers}</p>
+                <p>Jawaban salah: ${totalQuestions - correctAnswers}</p>
+            `;
+            
+            // Hide quiz and show results
+            quizContainer.style.display = 'none';
+            resultsContainer.style.display = 'block';
+        }
+        
+        // Reset quiz
+        function resetQuiz() {
+            clearInterval(timerInterval);
+            currentQuestionIndex = 0;
+            selectedOption = null;
+            userAnswers = [];
+            
+            participantForm.style.display = 'block';
+            quizContainer.style.display = 'none';
+            resultsContainer.style.display = 'none';
+            
+            participantForm.reset();
+            participantNameDisplay.textContent = '';
+        }
+        
+        // Start timer
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+        
+        // Update timer display
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            quizTimer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
         
         // Render questions list for admin
