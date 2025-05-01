@@ -1,0 +1,18 @@
+{
+    "mudah": [
+        {
+            "id": 1,
+            "question": "Lanjutkan peribahasa: 'Air tenang...'",
+            "options": [
+                "menghanyutkan",
+                "jernih selalu",
+                "tak berombak",
+                "dingin sekali"
+            ],
+            "answer": 0,
+            "explanation": "Peribahasa lengkapnya: 'Air tenang menghanyutkan' yang berarti orang yang kelihatannya pendiam bisa jadi berbahaya."
+        }
+    ],
+    "sedang": [],
+    "sulit": []
+}
