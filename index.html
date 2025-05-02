@@ -13,9 +13,6 @@
     
     <!-- Library untuk screenshot -->
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <!-- Library untuk efek partikel -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    
     <style>
         :root {
             --primary: #2563eb;
@@ -43,8 +40,6 @@
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-dark));
             --gradient-success: linear-gradient(135deg, var(--success), var(--success-dark));
-            --glass-bg: rgba(255, 255, 255, 0.15);
-            --glass-border: rgba(255, 255, 255, 0.2);
         }
         
         * {
@@ -62,10 +57,9 @@
             position: relative;
             padding-bottom: 120px;
             background-image: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, rgba(37, 99, 235, 0.05) 90%);
-            overflow-x: hidden;
         }
 
-        /* Opening Animation - Premium Enhanced */
+        /* Opening Animation */
         .opening-screen {
             position: fixed;
             top: 0;
@@ -80,20 +74,7 @@
             align-items: center;
             color: white;
             text-align: center;
-            animation: fadeOut 1.5s ease-in-out 12s forwards;
-            overflow: hidden;
-        }
-
-        .opening-screen::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: pulseOpening 10s infinite linear;
-            z-index: -1;
+            animation: fadeOut 1.5s ease-in-out 3s forwards;
         }
 
         .opening-logo {
@@ -103,13 +84,10 @@
             animation: pulse 2s infinite, float 3s ease-in-out infinite;
             border-radius: 50%;
             border: 4px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 0 15px rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             object-fit: contain;
             background: white;
             padding: 10px;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-            z-index: 1;
         }
 
         .opening-title {
@@ -118,25 +96,7 @@
             margin-bottom: 1rem;
             font-family: 'Playfair Display', serif;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            animation: slideUp 0.8s ease-out 0.5s forwards;
-            opacity: 0;
-            background: linear-gradient(to right, #fff, #e0e0e0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-        }
-
-        .opening-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: white;
-            border-radius: 3px;
-            opacity: 0.7;
+            animation: slideUp 0.8s ease-out;
         }
 
         .opening-subtitle {
@@ -144,11 +104,8 @@
             max-width: 600px;
             margin: 0 auto 2rem;
             opacity: 0.9;
-            animation: slideUp 0.8s ease-out 1s forwards;
+            animation: slideUp 0.8s ease-out 0.3s forwards;
             opacity: 0;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            font-weight: 300;
-            letter-spacing: 0.5px;
         }
 
         .opening-message {
@@ -157,175 +114,36 @@
             margin: 2rem auto 0;
             font-style: italic;
             opacity: 0.8;
-            animation: fadeIn 1s ease-out 2s forwards;
-            opacity: 0;
-            padding: 0.75rem 1.5rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 50px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .opening-footer {
-            position: absolute;
-            bottom: 2rem;
-            font-size: 0.85rem;
-            opacity: 0.7;
-            animation: fadeIn 1s ease-out 3s forwards;
+            animation: fadeIn 1s ease-out 1.5s forwards;
             opacity: 0;
         }
 
-        /* Terms and Conditions Modal */
-        .terms-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 9998;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
         }
 
-        .terms-modal.active {
-            opacity: 1;
-            visibility: visible;
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .terms-container {
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            padding: 2.5rem;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            animation: fadeInUp 0.5s ease-out;
-            transform: translateY(20px);
-            border: 1px solid rgba(37, 99, 235, 0.1);
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .terms-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: var(--gradient-primary);
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        .terms-header {
-            text-align: center;
-            margin-bottom: 2rem;
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
-
-        .terms-title {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-        }
-
-        .terms-content {
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-
-        .terms-content h3 {
-            color: var(--primary);
-            margin: 1.5rem 0 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        .terms-content p {
-            margin-bottom: 1rem;
-        }
-
-        .terms-content ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .terms-checkbox {
-            display: flex;
-            align-items: center;
-            margin: 1.5rem 0;
-        }
-
-        .terms-checkbox input {
-            margin-right: 1rem;
-            width: 20px;
-            height: 20px;
-        }
-
-        .terms-checkbox label {
-            font-weight: 500;
-        }
-
-        .terms-actions {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        /* Particle Background */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-        }
-
-        /* Floating Stars Animation */
-        .floating-stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
-            animation: floatStar linear infinite;
-            opacity: 0;
-        }
-
-        @keyframes floatStar {
-            0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) translateX(100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
+        
         /* Main Content */
         .main-container {
             max-width: 800px;
@@ -333,11 +151,9 @@
             padding: 2rem;
             min-height: calc(100vh - 180px);
             animation: fadeIn 1s ease-out;
-            position: relative;
-            z-index: 1;
         }
 
-        /* Participant Form - Premium Redesign */
+        /* Participant Form - Improved Design */
         .participant-form {
             background: white;
             border-radius: var(--radius);
@@ -348,145 +164,1054 @@
             overflow: hidden;
             border: 1px solid rgba(37, 99, 235, 0.1);
             animation: fadeInUp 0.8s ease-out;
-            background: linear-gradient(145deg, #ffffff, #f8fafc);
-            position: relative;
-            backdrop-filter: blur(5px);
         }
 
-        .participant-form::before {
+        .form-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .form-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 4px var(--primary-light), 0 10px 25px rgba(37, 99, 235, 0.2);
+            transition: var(--transition);
+            display: block;
+            background: white;
+            padding: 10px;
+        }
+
+        .form-logo:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 0 0 4px var(--primary-light), 0 15px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .form-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .form-subtitle {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.5s ease-out;
+            animation-fill-mode: backwards;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.2s; }
+        .form-group:nth-child(2) { animation-delay: 0.3s; }
+        .form-group:nth-child(3) { animation-delay: 0.4s; }
+        .form-group:nth-child(4) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form Controls */
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--darker);
+            font-size: 0.95rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.85rem 1.25rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--lighter);
+            color: var(--dark);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background: white;
+        }
+        
+        /* Kategori Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .category-tab {
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            background: var(--lighter);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            text-align: center;
+            flex: 1;
+            border: 1px solid var(--light-gray);
+            color: var(--gray);
+        }
+        
+        .category-tab:hover {
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+        
+        .category-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+        }
+        
+        /* Subkategori Container */
+        .subcategory-container {
+            margin-top: 1rem;
+            padding: 1.5rem;
+            background: var(--lighter);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--light-gray);
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .subcategory-title {
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.05rem;
+        }
+        
+        .subcategory-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.5rem;
+        }
+        
+        .subcategory-option {
+            display: inline-block;
+        }
+        
+        .subcategory-radio {
+            display: none;
+        }
+        
+        .subcategory-label {
+            display: inline-block;
+            padding: 0.6rem 1rem;
+            background: white;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+            text-align: center;
+        }
+        
+        .subcategory-radio:checked + .subcategory-label {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
+        }
+        
+        .subcategory-label:hover {
+            background: var(--light-gray);
+        }
+        
+        /* Profesi Field (khusus umum) */
+        .profesi-field {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Level Select */
+        #level {
+            width: 100%;
+            padding: 0.85rem 1.25rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--lighter);
+            color: var(--dark);
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+
+        #level:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background: white;
+        }
+
+        /* Start Quiz Button */
+        #startQuiz {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quiz-container::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 10px;
+            height: 6px;
             background: var(--gradient-primary);
         }
-
-        .participant-form::after {
-            content: '';
-            position: absolute;
-            bottom: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
-            opacity: 0.1;
-            z-index: 0;
-        }
-
-        /* ... (keep all other existing styles, just enhance them with more animations and effects) ... */
-
-        /* Enhanced Floating Action Buttons */
-        .fab-container {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
+        
+        .quiz-header {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            z-index: 100;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--light-gray);
         }
-
-        .fab {
-            width: 3.5rem;
-            height: 3.5rem;
-            border-radius: 50%;
-            background: white;
+        
+        .quiz-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .quiz-info {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        
+        .quiz-info-item {
+            background: var(--lighter);
+            padding: 0.5rem 1rem;
+            border-radius: 1.5rem;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
             color: var(--dark);
-            border: none;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .quiz-info-item i {
+            color: var(--primary);
+        }
+        
+        /* Question */
+        .question-container {
+            margin-bottom: 2rem;
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: var(--lighter);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .question-text {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: var(--darker);
+        }
+        
+        /* Options */
+        .options-container {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .option {
+            padding: 1.25rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+        }
+        
+        .option:hover {
+            background: var(--lighter);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .option.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+        }
+        
+        .option.selected .option-prefix {
+            color: white;
+        }
+        
+        .option.correct {
+            background: var(--success);
+            color: white;
+            border-color: var(--success-dark);
+            box-shadow: 0 4px 8px rgba(22, 163, 74, 0.2);
+        }
+        
+        .option.incorrect {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+            box-shadow: 0 4px 8px rgba(220, 38, 38, 0.2);
+        }
+        
+        .option-prefix {
+            font-weight: 700;
+            width: 1.75rem;
+            height: 1.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            border-radius: 50%;
+            background: var(--lighter);
+            color: var(--primary);
             transition: var(--transition);
+        }
+        
+        .option.selected .option-prefix {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Explanation */
+        .explanation {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--lighter);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--primary);
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .explanation-title {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        .explanation-text {
+            color: var(--dark);
+            line-height: 1.7;
+        }
+        
+        /* Navigation Buttons */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.85rem 1.75rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.25);
+        }
+        
+        .btn-secondary {
+            background: var(--lighter);
+            color: var(--dark);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--light-gray);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+            box-shadow: 0 4px 8px rgba(22, 163, 74, 0.2);
+        }
+        
+        .btn-success:hover {
+            background: var(--success-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(22, 163, 74, 0.25);
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+            box-shadow: 0 4px 8px rgba(217, 119, 6, 0.2);
+        }
+        
+        .btn-warning:hover {
+            background: #b45309;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(217, 119, 6, 0.25);
+        }
+        
+        /* Results */
+        .results-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 3rem 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
             position: relative;
             overflow: hidden;
         }
-
-        .fab::before {
+        
+        .results-container::before {
             content: '';
             position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gradient-primary);
+        }
+        
+        .results-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .score {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 2rem 0;
+            position: relative;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .score::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 6px;
+            background: var(--gradient-primary);
+            opacity: 0.3;
+            border-radius: 3px;
+        }
+        
+        .results-message {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            line-height: 1.7;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .thank-you-message {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            font-style: italic;
+            padding: 1.5rem;
+            background: var(--lighter);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .results-details {
+            background: var(--lighter);
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-top: 2rem;
+            text-align: left;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .results-details h3 {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--light-gray);
+            transition: var(--transition);
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        /* Share Buttons */
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            text-decoration: none;
+        }
+        
+        .share-btn.facebook {
+            background: #1877f2;
+            color: white;
+        }
+        
+        .share-btn.twitter {
+            background: #1da1f2;
+            color: white;
+        }
+        
+        .share-btn.whatsapp {
+            background: #25d366;
+            color: white;
+        }
+        
+        .share-btn.print {
+            background: var(--gray);
+            color: white;
+        }
+        
+        .share-btn.screenshot {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Call Center Button */
+        .call-center-btn {
+            position: fixed;
+            bottom: 7rem;
+            right: 2rem;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            background: #25d366;
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 100;
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+        
+        .call-center-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            background: #128c7e;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+            animation: none;
+        }
+        
+        .call-center-tooltip {
+            position: absolute;
+            right: 5rem;
+            background: white;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            font-size: 0.9rem;
+            width: 200px;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+        
+        .call-center-btn:hover .call-center-tooltip {
+            opacity: 1;
+            right: 5.5rem;
+        }
+        
+        /* Admin Panel */
+        .admin-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(220, 38, 38, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 100;
+            transition: var(--transition);
+        }
+        
+        .admin-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            background: var(--secondary-dark);
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
+        }
+        
+        .admin-btn img {
+            width: 1.75rem;
+            height: 1.75rem;
+            object-fit: contain;
+        }
+        
+        .admin-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: translateX(-100%);
-            transition: 0.6s;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
         }
-
-        .fab:hover::before {
-            transform: translateX(100%);
-        }
-
-        .fab-primary {
-            background: var(--gradient-primary);
-            color: white;
-        }
-
-        .fab-success {
-            background: linear-gradient(to right, #25d366, #128c7e);
-            color: white;
-        }
-
-        .fab-danger {
-            background: linear-gradient(to right, #ef4444, #b91c1c);
-            color: white;
-        }
-
-        .fab-info {
-            background: linear-gradient(to right, #0ea5e9, #0369a1);
-            color: white;
-        }
-
-        .fab:hover {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .fab-tooltip {
-            position: absolute;
-            right: 4.5rem;
+        
+        .admin-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             background: white;
-            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+            padding: 2.5rem;
+            z-index: 1001;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .admin-title {
+            font-size: 1.75rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .admin-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .admin-close:hover {
+            color: var(--secondary);
+            transform: rotate(90deg);
+            background: var(--lighter);
+        }
+        
+        /* Question List */
+        .question-list {
+            margin-bottom: 3rem;
+        }
+        
+        .question-item {
+            background: var(--lighter);
+            padding: 1.5rem;
             border-radius: var(--radius-sm);
+            margin-bottom: 1.25rem;
+            position: relative;
+            border: 1px solid var(--light-gray);
+            transition: var(--transition);
+        }
+        
+        .question-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        .question-meta {
+            display: flex;
+            gap: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+            flex-wrap: wrap;
+        }
+        
+        .question-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .question-meta i {
+            color: var(--primary);
+        }
+        
+        .question-content {
+            font-size: 1.1rem;
+            color: var(--dark);
+            line-height: 1.7;
+            margin-right: 4rem;
+        }
+        
+        .question-actions {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .action-btn {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid var(--light-gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: var(--gray);
+        }
+        
+        .action-btn:hover {
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+        
+        .action-btn.edit-question:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .action-btn.delete-question:hover {
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .edit-form {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--light-gray);
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        /* AI Prompt Section */
+        .ai-prompt-section {
+            background: #f0fdf4;
+            border-radius: var(--radius-sm);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--success);
+        }
+
+        .ai-prompt-title {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .ai-prompt-input {
+            width: 100%;
+            padding: 0.85rem 1.25rem;
+            border: 1px solid #bbf7d0;
+            border-radius: var(--radius-sm);
+            margin-bottom: 0.75rem;
+            background: white;
+            font-size: 1rem;
+        }
+
+        .ai-prompt-input:focus {
+            outline: none;
+            border-color: var(--success);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+        }
+
+        .ai-generate-btn {
+            margin-top: 0.5rem;
+            width: 100%;
+            padding: 0.85rem;
+            font-size: 1rem;
+        }
+
+        .ai-loading {
+            display: none;
+            text-align: center;
+            padding: 0.75rem;
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        /* Confetti Effect */
+        .confetti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: var(--secondary);
+            top: 100%;
+            left: 50%;
+            z-index: 1000;
+            animation: confetti 3s ease-out forwards;
+        }
+        
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Music Player */
+        .music-control {
+            position: fixed;
+            bottom: 11rem;
+            right: 2rem;
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 0.75rem;
             box-shadow: var(--shadow-lg);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .music-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .music-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        
+        .music-tooltip {
+            position: absolute;
+            right: 3.5rem;
+            background: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow);
             font-size: 0.85rem;
             white-space: nowrap;
             opacity: 0;
             pointer-events: none;
             transition: var(--transition);
         }
-
-        .fab:hover .fab-tooltip {
+        
+        .music-btn:hover .music-tooltip {
             opacity: 1;
-            right: 5rem;
-        }
-
-        /* Prayer Time Notification */
-        .prayer-notification {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--gradient-primary);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            animation: slideUp 0.5s ease-out;
-            display: none;
-        }
-
-        .prayer-notification i {
-            font-size: 1.5rem;
+            right: 4rem;
         }
 
         /* Responsive adjustments */
@@ -530,24 +1255,14 @@
                 grid-template-columns: 1fr;
             }
             
-            .fab-container {
-                bottom: 1rem;
-                right: 1rem;
+            .call-center-btn, .admin-btn {
+                width: 3.5rem;
+                height: 3.5rem;
+                font-size: 1.25rem;
             }
-
-            .fab {
-                width: 3rem;
-                height: 3rem;
-                font-size: 1.1rem;
-            }
-
-            .fab-tooltip {
-                display: none;
-            }
-
-            .terms-container {
-                padding: 1.5rem;
-                max-width: 90%;
+            
+            .call-center-btn {
+                bottom: 6rem;
             }
         }
 
@@ -561,7 +1276,7 @@
             }
             
             .subcategory-options {
-                grid-template-columns: 1fr;
+                flex-direction: column;
             }
             
             .share-buttons {
@@ -571,143 +1286,17 @@
             .share-btn {
                 justify-content: center;
             }
-
-            .opening-title {
-                font-size: 2rem;
-            }
-
-            .opening-subtitle {
-                font-size: 1rem;
-            }
-
-            .terms-actions {
-                flex-direction: column;
-            }
-        }
-
-        /* Animations */
-        @keyframes pulseOpening {
-            0% { transform: scale(0.8); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-            100% { transform: scale(0.8); opacity: 0.5; }
-        }
-
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255,255,255,0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0); }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        @keyframes gradientBackground {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes floatStar {
-            0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) translateX(100px) rotate(360deg);
-                opacity: 0;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Opening Animation - Enhanced -->
+    <!-- Opening Animation -->
     <div class="opening-screen">
         <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo" class="opening-logo">
         <h1 class="opening-title">Selamat Datang di Quiz Pergunu</h1>
-        <p class="opening-subtitle">Uji pengetahuan Anda dan raih prestasi terbaik bersama PERGUNU SITUBONDO</p>
-        <p class="opening-message">"Ilmu tanpa amal seperti pohon tanpa buah"</p>
-        <p class="opening-footer">Design Creat By Cendhanu</p>
-        <audio id="openingAudio" autoplay>
-            <source src="https://voca.ro/1a8eWbggFzfB" type="audio/mpeg">
-        </audio>
+        <p class="opening-subtitle">Uji pengetahuan Anda dan raih prestasi terbaik bersama Pergunu</p>
+        <p class="opening-message">"Ilmu tanpa amal seperti pohon tanpa buah" - Pepatah Arab</p>
     </div>
-
-    <!-- Terms and Conditions Modal -->
-    <div class="terms-modal" id="termsModal">
-        <div class="terms-container">
-            <div class="terms-header">
-                <h2 class="terms-title">Ketentuan Penggunaan Quiz Pergunu</h2>
-            </div>
-            <div class="terms-content">
-                <h3>1. Persetujuan Umum</h3>
-                <p>Dengan mengakses dan menggunakan aplikasi Quiz Pergunu, Anda menyetujui untuk terikat oleh ketentuan dan syarat penggunaan ini. Jika Anda tidak setuju dengan syarat-syarat ini, harap tidak menggunakan aplikasi ini.</p>
-                
-                <h3>2. Penggunaan Aplikasi</h3>
-                <p>Aplikasi Quiz Pergunu disediakan untuk tujuan pendidikan dan pengujian pengetahuan. Anda setuju untuk menggunakan aplikasi ini hanya untuk tujuan yang sah dan sesuai dengan ketentuan yang berlaku.</p>
-                
-                <h3>3. Kebijakan Privasi</h3>
-                <p>Data pribadi yang dikumpulkan melalui formulir pendaftaran akan digunakan hanya untuk keperluan administrasi Quiz Pergunu. Kami tidak akan membagikan informasi pribadi Anda kepada pihak ketiga tanpa persetujuan Anda, kecuali jika diwajibkan oleh hukum.</p>
-                
-                <h3>4. Hak Kekayaan Intelektual</h3>
-                <p>Seluruh konten, termasuk tetapi tidak terbatas pada teks, grafis, logo, dan kode yang terdapat dalam aplikasi ini adalah milik PERGUNU SITUBONDO atau pemberi lisensi dan dilindungi oleh undang-undang hak cipta.</p>
-                
-                <h3>5. Perilaku Pengguna</h3>
-                <p>Anda setuju untuk tidak:</p>
-                <ul>
-                    <li>Menggunakan aplikasi untuk tujuan yang melanggar hukum</li>
-                    <li>Mencoba mengganggu atau merusak sistem keamanan aplikasi</li>
-                    <li>Melakukan tindakan yang dapat mengganggu pengguna lain</li>
-                    <li>Menggunakan bot atau metode otomatis untuk mengakses aplikasi</li>
-                </ul>
-                
-                <h3>6. Perubahan Ketentuan</h3>
-                <p>PERGUNU SITUBONDO berhak mengubah ketentuan ini kapan saja tanpa pemberitahuan sebelumnya. Perubahan akan berlaku segera setelah diposting di aplikasi.</p>
-                
-                <h3>7. Pembatasan Tanggung Jawab</h3>
-                <p>PERGUNU SITUBONDO tidak bertanggung jawab atas kerugian atau kerusakan yang timbul dari penggunaan aplikasi ini, termasuk tetapi tidak terbatas pada kerugian langsung, tidak langsung, insidental, atau konsekuensial.</p>
-                
-                <div class="terms-checkbox">
-                    <input type="checkbox" id="agreeTerms" required>
-                    <label for="agreeTerms">Saya telah membaca dan menyetujui semua ketentuan penggunaan Quiz Pergunu</label>
-                </div>
-                
-                <div class="terms-actions">
-                    <button class="btn btn-primary" id="acceptTerms">
-                        <i class="fas fa-check-circle"></i> Saya Setuju
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Particle Background -->
-    <div id="particles-js"></div>
-    
-    <!-- Floating Stars -->
-    <div class="floating-stars" id="floatingStars"></div>
     
     <!-- Main Content -->
     <main class="main-container">
@@ -927,35 +1516,28 @@
         </div>
     </main>
     
-    <!-- Prayer Time Notification -->
-    <div class="prayer-notification" id="prayerNotification">
-        <i class="fas fa-mosque"></i>
-        <span id="prayerMessage">Waktu sholat telah tiba. Aplikasi akan memutar adzan.</span>
+    <!-- Music Control -->
+    <div class="music-control" id="musicControl">
+        <button class="music-btn" id="musicToggle">
+            <i class="fas fa-music"></i>
+            <span class="music-tooltip">Toggle Background Music</span>
+        </button>
+        <button class="music-btn" id="soundToggle">
+            <i class="fas fa-volume-up"></i>
+            <span class="music-tooltip">Toggle Sound Effects</span>
+        </button>
     </div>
     
-    <!-- Floating Action Buttons -->
-    <div class="fab-container">
-        <button class="fab fab-primary" id="musicToggle">
-            <i class="fas fa-music"></i>
-            <span class="fab-tooltip">Toggle Background Music</span>
-        </button>
-        <button class="fab fab-primary" id="soundToggle">
-            <i class="fas fa-volume-up"></i>
-            <span class="fab-tooltip">Toggle Sound Effects</span>
-        </button>
-        <button class="fab fab-info" id="pergunuLink">
-            <i class="fas fa-link"></i>
-            <span class="fab-tooltip">Go Link Pergunu</span>
-        </button>
-        <a href="https://wa.me/6285647709114" class="fab fab-success" target="_blank" id="callCenterBtn">
-            <i class="fab fa-whatsapp"></i>
-            <span class="fab-tooltip">Hubungi Developer</span>
-        </a>
-        <button class="fab fab-danger" id="adminBtn">
-            <i class="fas fa-cog"></i>
-            <span class="fab-tooltip">Admin Panel</span>
-        </button>
-    </div>
+    <!-- Call Center Button -->
+    <a href="https://wa.me/6285647709114" class="call-center-btn" target="_blank" id="callCenterBtn">
+        <i class="fab fa-whatsapp"></i>
+        <span class="call-center-tooltip">Butuh bantuan? Hubungi Developer via WhatsApp</span>
+    </a>
+    
+    <!-- Admin Button -->
+    <button class="admin-btn" id="adminBtn">
+        <i class="fas fa-cog"></i>
+    </button>
     
     <!-- Admin Overlay -->
     <div class="admin-overlay" id="adminOverlay"></div>
@@ -1131,21 +1713,6 @@
     </div>
     
     <!-- Audio Elements -->
-    <audio id="openingAudio" preload="auto">
-        <source src="https://voca.ro/1a8eWbggFzfB" type="audio/mpeg">
-    </audio>
-    <audio id="welcomeAudio" preload="auto">
-        <source src="https://voca.ro/1hlDz7uapOvO" type="audio/mpeg">
-    </audio>
-    <audio id="quizMusic" preload="auto" loop>
-        <source src="https://voca.ro/1ay85sqaUP0k" type="audio/mpeg">
-    </audio>
-    <audio id="adhanAudio" preload="auto">
-        <source src="https://voca.ro/16m9VCRDNVy1" type="audio/mpeg">
-    </audio>
-    <audio id="backgroundMusic" preload="auto" loop>
-        <source src="https://voca.ro/1ffQ6LhkdPKe" type="audio/mpeg">
-    </audio>
     <audio id="applauseSound" preload="auto">
         <source src="assets/audio/applause.mp3" type="audio/mpeg">
     </audio>
@@ -1154,6 +1721,9 @@
     </audio>
     <audio id="wrongSound" preload="auto">
         <source src="assets/audio/wrong.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="backgroundMusic" loop preload="auto">
+        <source src="assets/audio/music.mp3" type="audio/mpeg">
     </audio>
     
     <script>
@@ -1342,173 +1912,18 @@
         let adminPassword = "65614222";
         let musicEnabled = true;
         let soundEffectsEnabled = true;
-        let prayerTimeInterval;
-        let quizMusicPlaying = false;
 
         // Inisialisasi
         document.addEventListener('DOMContentLoaded', function() {
-            // Play opening audio
-            playSound('openingAudio');
-            
-            // Show terms modal after opening animation
             setTimeout(() => {
                 document.querySelector('.opening-screen').style.display = 'none';
-                document.getElementById('termsModal').classList.add('active');
-            }, 8000);
+            }, 3500);
             
             initEventListeners();
-            createFloatingStars();
-            initParticles();
-            checkPrayerTimes();
+            loadAudio();
         });
 
-        function initParticles() {
-            particlesJS('particles-js', {
-                "particles": {
-                    "number": {
-                        "value": 80,
-                        "density": {
-                            "enable": true,
-                            "value_area": 800
-                        }
-                    },
-                    "color": {
-                        "value": "#3b82f6"
-                    },
-                    "shape": {
-                        "type": "circle",
-                        "stroke": {
-                            "width": 0,
-                            "color": "#000000"
-                        },
-                        "polygon": {
-                            "nb_sides": 5
-                        }
-                    },
-                    "opacity": {
-                        "value": 0.3,
-                        "random": false,
-                        "anim": {
-                            "enable": false,
-                            "speed": 1,
-                            "opacity_min": 0.1,
-                            "sync": false
-                        }
-                    },
-                    "size": {
-                        "value": 3,
-                        "random": true,
-                        "anim": {
-                            "enable": false,
-                            "speed": 40,
-                            "size_min": 0.1,
-                            "sync": false
-                        }
-                    },
-                    "line_linked": {
-                        "enable": true,
-                        "distance": 150,
-                        "color": "#3b82f6",
-                        "opacity": 0.2,
-                        "width": 1
-                    },
-                    "move": {
-                        "enable": true,
-                        "speed": 2,
-                        "direction": "none",
-                        "random": false,
-                        "straight": false,
-                        "out_mode": "out",
-                        "bounce": false,
-                        "attract": {
-                            "enable": false,
-                            "rotateX": 600,
-                            "rotateY": 1200
-                        }
-                    }
-                },
-                "interactivity": {
-                    "detect_on": "canvas",
-                    "events": {
-                        "onhover": {
-                            "enable": true,
-                            "mode": "grab"
-                        },
-                        "onclick": {
-                            "enable": true,
-                            "mode": "push"
-                        },
-                        "resize": true
-                    },
-                    "modes": {
-                        "grab": {
-                            "distance": 140,
-                            "line_linked": {
-                                "opacity": 1
-                            }
-                        },
-                        "bubble": {
-                            "distance": 400,
-                            "size": 40,
-                            "duration": 2,
-                            "opacity": 8,
-                            "speed": 3
-                        },
-                        "repulse": {
-                            "distance": 200,
-                            "duration": 0.4
-                        },
-                        "push": {
-                            "particles_nb": 4
-                        },
-                        "remove": {
-                            "particles_nb": 2
-                        }
-                    }
-                },
-                "retina_detect": true
-            });
-        }
-
-        function createFloatingStars() {
-            const starsContainer = document.getElementById('floatingStars');
-            const starCount = 20;
-            
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                
-                // Random size between 2px and 5px
-                const size = Math.random() * 3 + 2;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                
-                // Random position
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                
-                // Random animation duration between 10s and 20s
-                const duration = Math.random() * 10 + 10;
-                star.style.animationDuration = `${duration}s`;
-                
-                // Random delay
-                star.style.animationDelay = `${Math.random() * 5}s`;
-                
-                starsContainer.appendChild(star);
-            }
-        }
-
         function initEventListeners() {
-            // Terms modal
-            document.getElementById('acceptTerms').addEventListener('click', function() {
-                if (document.getElementById('agreeTerms').checked) {
-                    document.getElementById('termsModal').classList.remove('active');
-                    playSound('welcomeAudio');
-                } else {
-                    alert('Anda harus menyetujui ketentuan penggunaan untuk melanjutkan');
-                }
-            });
-            
             // Pilih kategori utama
             document.querySelectorAll('.category-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
@@ -1543,12 +1958,7 @@
             });
 
             // Mulai quiz
-            document.getElementById('startQuiz').addEventListener('click', function(e) {
-                e.preventDefault();
-                playSound('quizMusic');
-                quizMusicPlaying = true;
-                startQuiz(e);
-            });
+            document.getElementById('startQuiz').addEventListener('click', startQuiz);
 
             // Admin toggle
             document.getElementById('adminBtn').addEventListener('click', toggleAdminPanel);
@@ -1596,11 +2006,24 @@
             // Music controls
             document.getElementById('musicToggle').addEventListener('click', toggleMusic);
             document.getElementById('soundToggle').addEventListener('click', toggleSoundEffects);
+        }
+
+        function loadAudio() {
+            // Set audio sources
+            document.getElementById('applauseSound').src = 'assets/audio/applause.mp3';
+            document.getElementById('correctSound').src = 'assets/audio/correct.mp3';
+            document.getElementById('wrongSound').src = 'assets/audio/wrong.mp3';
+            document.getElementById('backgroundMusic').src = 'assets/audio/music.mp3';
             
-            // Pergunu link
-            document.getElementById('pergunuLink').addEventListener('click', function() {
-                window.open('https://is.gd/pergunusitubondo', '_blank');
-            });
+            // Try to play background music
+            if (musicEnabled) {
+                const promise = document.getElementById('backgroundMusic').play();
+                if (promise !== undefined) {
+                    promise.catch(error => {
+                        console.log("Autoplay prevented:", error);
+                    });
+                }
+            }
         }
 
         function toggleMusic() {
@@ -1609,10 +2032,10 @@
             
             if (musicEnabled) {
                 document.getElementById('backgroundMusic').play();
-                musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+                musicBtn.innerHTML = '<i class="fas fa-music"></i><span class="music-tooltip">Matikan Musik</span>';
             } else {
                 document.getElementById('backgroundMusic').pause();
-                musicBtn.innerHTML = '<i class="fas fa-music-slash"></i>';
+                musicBtn.innerHTML = '<i class="fas fa-music"></i><span class="music-tooltip">Nyalakan Musik</span>';
             }
         }
 
@@ -1621,19 +2044,16 @@
             const soundBtn = document.getElementById('soundToggle');
             
             if (soundEffectsEnabled) {
-                soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                soundBtn.innerHTML = '<i class="fas fa-volume-up"></i><span class="music-tooltip">Matikan Efek Suara</span>';
             } else {
-                soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i><span class="music-tooltip">Nyalakan Efek Suara</span>';
             }
         }
 
         function playSound(soundId) {
-            if (soundId === 'quizMusic' && !quizMusicPlaying) return;
-            if (soundId === 'backgroundMusic' && !musicEnabled) return;
-            if (soundId !== 'backgroundMusic' && soundId !== 'quizMusic' && !soundEffectsEnabled) return;
+            if (!soundEffectsEnabled) return;
             
             const sound = document.getElementById(soundId);
-            sound.currentTime = 0; // Rewind to start
             const promise = sound.play();
             
             if (promise !== undefined) {
@@ -1641,62 +2061,6 @@
                     console.log("Autoplay prevented:", error);
                 });
             }
-        }
-
-        function stopSound(soundId) {
-            const sound = document.getElementById(soundId);
-            sound.pause();
-            sound.currentTime = 0;
-        }
-
-        function checkPrayerTimes() {
-            // This is a simplified version - in a real app you would use a prayer times API
-            prayerTimeInterval = setInterval(function() {
-                const now = new Date();
-                const hours = now.getHours();
-                const minutes = now.getMinutes();
-                
-                // Example prayer times (adjust according to actual prayer times)
-                const prayerTimes = [
-                    { name: "Subuh", hour: 4, minute: 30 },
-                    { name: "Dzuhur", hour: 12, minute: 0 },
-                    { name: "Ashar", hour: 15, minute: 30 },
-                    { name: "Maghrib", hour: 18, minute: 0 },
-                    { name: "Isya", hour: 19, minute: 30 }
-                ];
-                
-                // Check if current time matches any prayer time (within 5 minutes)
-                for (const prayer of prayerTimes) {
-                    if (hours === prayer.hour && minutes >= prayer.minute && minutes <= prayer.minute + 5) {
-                        showPrayerNotification(prayer.name);
-                        return;
-                    }
-                }
-            }, 60000); // Check every minute
-        }
-
-        function showPrayerNotification(prayerName) {
-            if (quizMusicPlaying) {
-                stopSound('quizMusic');
-                quizMusicPlaying = false;
-            }
-            
-            document.getElementById('prayerMessage').textContent = `Waktu sholat ${prayerName} telah tiba. Aplikasi akan memutar adzan.`;
-            document.getElementById('prayerNotification').style.display = 'flex';
-            
-            playSound('adhanAudio');
-            
-            setTimeout(function() {
-                document.getElementById('prayerNotification').style.display = 'none';
-                
-                // Resume quiz music after adhan finishes (approx 3 minutes)
-                setTimeout(function() {
-                    if (document.getElementById('quizContainer').style.display === 'block') {
-                        playSound('quizMusic');
-                        quizMusicPlaying = true;
-                    }
-                }, 180000);
-            }, 10000); // Hide notification after 10 seconds
         }
 
         function startQuiz(e) {
@@ -1768,14 +2132,192 @@
             loadQuestion();
         }
 
-        /* ... (keep all other existing quiz functions the same) ... */
+        function loadQuestion() {
+            const question = questions[currentCategory][currentSubcategory][currentLevel][currentQuestionIndex];
+            
+            // Update question number
+            document.getElementById('questionNumber').textContent = 
+                `Pertanyaan ${currentQuestionIndex + 1} dari ${questions[currentCategory][currentSubcategory][currentLevel].length}`;
+            
+            // Set question text
+            document.getElementById('questionText').textContent = question.question;
+            
+            // Clear and set options
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.dataset.option = index;
+                
+                const prefix = document.createElement('span');
+                prefix.className = 'option-prefix';
+                prefix.textContent = String.fromCharCode(65 + index);
+                
+                const text = document.createElement('span');
+                text.textContent = option;
+                
+                optionElement.appendChild(prefix);
+                optionElement.appendChild(text);
+                
+                optionElement.addEventListener('click', function() {
+                    selectAnswer(index);
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Hide explanation
+            document.getElementById('explanation').style.display = 'none';
+            
+            // Update next button text if last question
+            if (currentQuestionIndex === questions[currentCategory][currentSubcategory][currentLevel].length - 1) {
+                document.getElementById('nextBtn').innerHTML = '<i class="fas fa-check"></i> Selesai';
+            } else {
+                document.getElementById('nextBtn').innerHTML = '<i class="fas fa-arrow-right"></i> Selanjutnya';
+            }
+        }
+
+        function selectAnswer(selectedIndex) {
+            const question = questions[currentCategory][currentSubcategory][currentLevel][currentQuestionIndex];
+            const options = document.querySelectorAll('.option');
+            
+            // Remove selected class from all options
+            options.forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // Add selected class to clicked option
+            options[selectedIndex].classList.add('selected');
+            
+            // Check if answer is correct
+            const isCorrect = selectedIndex === question.answer;
+            
+            // Store user answer
+            question.userAnswer = selectedIndex;
+            question.isCorrect = isCorrect;
+            
+            // Play sound effect
+            if (isCorrect) {
+                playSound('correctSound');
+            } else {
+                playSound('wrongSound');
+            }
+            
+            // Show explanation
+            document.getElementById('explanationText').textContent = question.explanation;
+            document.getElementById('explanation').style.display = 'block';
+            
+            // Highlight correct and incorrect answers
+            options[question.answer].classList.add('correct');
+            if (!isCorrect) {
+                options[selectedIndex].classList.add('incorrect');
+            }
+        }
+
+        function nextQuestion() {
+            const question = questions[currentCategory][currentSubcategory][currentLevel][currentQuestionIndex];
+            
+            // Check if answer is selected
+            if (typeof question.userAnswer === 'undefined') {
+                alert('Silakan pilih jawaban terlebih dahulu');
+                return;
+            }
+            
+            // Increment score if correct
+            if (question.isCorrect) {
+                score++;
+            }
+            
+            // Move to next question or finish quiz
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions[currentCategory][currentSubcategory][currentLevel].length) {
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            clearInterval(timer);
+            
+            // Calculate results
+            const totalQuestions = questions[currentCategory][currentSubcategory][currentLevel].length;
+            const percentage = Math.round((score / totalQuestions) * 100);
+            const endTime = new Date();
+            const timeDiff = (endTime - quizStartTime) / 1000; // in seconds
+            const minutes = Math.floor(timeDiff / 60);
+            const seconds = Math.floor(timeDiff % 60);
+            
+            // Display results
+            document.getElementById('scoreDisplay').textContent = `${percentage}%`;
+            document.getElementById('totalQuestions').textContent = totalQuestions;
+            document.getElementById('correctAnswers').textContent = score;
+            document.getElementById('wrongAnswers').textContent = totalQuestions - score;
+            document.getElementById('completionTime').textContent = `${minutes} menit ${seconds} detik`;
+            
+            // Set result message
+            let message = "";
+            if (percentage >= 80) {
+                message = "Sempurna! Anda sangat menguasai materi ini.";
+                playSound('applauseSound');
+                createConfetti();
+            } else if (percentage >= 60) {
+                message = "Bagus! Anda memiliki pemahaman yang baik.";
+                playSound('applauseSound');
+                createConfetti();
+            } else if (percentage >= 40) {
+                message = "Cukup baik. Tingkatkan lagi belajarnya!";
+            } else {
+                message = "Anda perlu belajar lebih giat lagi.";
+            }
+            document.getElementById('resultsMessage').textContent = message;
+            
+            // Show results
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'block';
+        }
+
+        function startTimer() {
+            let timeLeft = 600; // 10 minutes in seconds
+            
+            // Update immediately
+            updateTimerDisplay(timeLeft);
+            
+            // Start interval
+            timer = setInterval(function() {
+                timeLeft--;
+                updateTimerDisplay(timeLeft);
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay(timeLeft) {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timeDisplay').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Change color when time is running out
+            const timerElement = document.getElementById('quizTimer');
+            if (timeLeft <= 60) {
+                timerElement.style.background = '#fee2e2';
+                timerElement.style.color = '#b91c1c';
+                timerElement.style.borderColor = '#fca5a5';
+            } else {
+                timerElement.style.background = '';
+                timerElement.style.color = '';
+                timerElement.style.borderColor = '';
+            }
+        }
 
         function resetQuiz() {
             clearInterval(timer);
-            
-            // Stop quiz music
-            stopSound('quizMusic');
-            quizMusicPlaying = false;
             
             // Reset UI
             document.getElementById('participantForm').style.display = 'block';
@@ -1820,7 +2362,512 @@
             }
         }
 
-        /* ... (keep all other existing functions the same) ... */
+        /* Admin Functions */
+        function toggleAdminPanel() {
+            document.getElementById('adminOverlay').style.display = 'block';
+            document.getElementById('adminLogin').style.display = 'block';
+            document.getElementById('adminPassword').focus();
+        }
+
+        function closeAdminPanels() {
+            document.getElementById('adminOverlay').style.display = 'none';
+            document.getElementById('adminLogin').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('adminPassword').value = '';
+        }
+
+        function adminLogin() {
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === adminPassword) {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadQuestionsForAdmin();
+            } else {
+                alert('Password salah!');
+            }
+        }
+
+        function loadQuestionsForAdmin() {
+            const questionsList = document.getElementById('questionList');
+            questionsList.innerHTML = '';
+            
+            // Loop through all questions
+            for (const category in questions) {
+                if (category === 'pelajar') {
+                    for (const subcategory in questions[category]) {
+                        for (const level in questions[category][subcategory]) {
+                            questions[category][subcategory][level].forEach(question => {
+                                addQuestionToAdminList(question, category, subcategory, level);
+                            });
+                        }
+                    }
+                } else {
+                    for (const subcategory in questions[category]) {
+                        for (const level in questions[category][subcategory]) {
+                            questions[category][subcategory][level].forEach(question => {
+                                addQuestionToAdminList(question, category, subcategory, level);
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+        function addQuestionToAdminList(question, category, subcategory, level) {
+            const questionsList = document.getElementById('questionList');
+            
+            const questionItem = document.createElement('div');
+            questionItem.className = 'question-item';
+            
+            // Map subcategory to display text
+            let subcategoryText = '';
+            if (category === 'pelajar') {
+                const subcategoryMap = {
+                    'ipa': 'IPA',
+                    'ips': 'IPS',
+                    'matematika': 'Matematika',
+                    'agama': 'Agama',
+                    'ppkn': 'PPKN',
+                    'sejarah': 'Sejarah',
+                    'bahasa_indonesia': 'Bahasa Indonesia',
+                    'bahasa_inggris': 'Bahasa Inggris'
+                };
+                subcategoryText = subcategoryMap[subcategory];
+            } else {
+                const subcategoryMap = {
+                    'logika': 'Logika',
+                    'sambung_lagu': 'Sambung Lagu',
+                    'peribahasa': 'Peribahasa'
+                };
+                subcategoryText = subcategoryMap[subcategory];
+            }
+            
+            questionItem.innerHTML = `
+                <div class="question-meta">
+                    <span><i class="fas fa-tag"></i> ${category === 'pelajar' ? 'Pelajar' : 'Umum'}</span>
+                    <span><i class="fas fa-book"></i> ${subcategoryText}</span>
+                    <span><i class="fas fa-signal"></i> ${level.charAt(0).toUpperCase() + level.slice(1)}</span>
+                    <span><i class="fas fa-check-circle"></i> Jawaban: ${String.fromCharCode(65 + question.answer)}</span>
+                </div>
+                <div class="question-content">${question.question}</div>
+                <div class="question-actions">
+                    <button class="action-btn edit-question" data-id="${question.id}" title="Edit">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="action-btn delete-question" data-id="${question.id}" title="Hapus">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="edit-form" id="editForm-${question.id}"></div>
+            `;
+            
+            questionsList.appendChild(questionItem);
+            
+            // Add event listeners
+            questionItem.querySelector('.edit-question').addEventListener('click', function() {
+                showEditForm(question, category, subcategory, level);
+            });
+            
+            questionItem.querySelector('.delete-question').addEventListener('click', function() {
+                if (confirm('Apakah Anda yakin ingin menghapus soal ini?')) {
+                    deleteQuestion(question.id, category, subcategory, level);
+                }
+            });
+        }
+
+        function showEditForm(question, category, subcategory, level) {
+            const editForm = document.getElementById(`editForm-${question.id}`);
+            
+            if (editForm.style.display === 'block') {
+                editForm.style.display = 'none';
+                return;
+            }
+            
+            // Hide all other edit forms
+            document.querySelectorAll('.edit-form').forEach(form => {
+                form.style.display = 'none';
+            });
+            
+            editForm.innerHTML = `
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select class="form-control edit-category">
+                        <option value="pelajar" ${category === 'pelajar' ? 'selected' : ''}>Pelajar</option>
+                        <option value="umum" ${category === 'umum' ? 'selected' : ''}>Umum</option>
+                    </select>
+                </div>
+                
+                ${category === 'pelajar' ? `
+                <div class="form-group">
+                    <label>Subkategori</label>
+                    <select class="form-control edit-subcategory">
+                        <option value="ipa" ${subcategory === 'ipa' ? 'selected' : ''}>IPA</option>
+                        <option value="ips" ${subcategory === 'ips' ? 'selected' : ''}>IPS</option>
+                        <option value="matematika" ${subcategory === 'matematika' ? 'selected' : ''}>Matematika</option>
+                        <option value="agama" ${subcategory === 'agama' ? 'selected' : ''}>Agama</option>
+                        <option value="ppkn" ${subcategory === 'ppkn' ? 'selected' : ''}>PPKN</option>
+                        <option value="sejarah" ${subcategory === 'sejarah' ? 'selected' : ''}>Sejarah</option>
+                        <option value="bahasa_indonesia" ${subcategory === 'bahasa_indonesia' ? 'selected' : ''}>Bahasa Indonesia</option>
+                        <option value="bahasa_inggris" ${subcategory === 'bahasa_inggris' ? 'selected' : ''}>Bahasa Inggris</option>
+                    </select>
+                </div>
+                ` : `
+                <div class="form-group">
+                    <label>Jenis Ujian</label>
+                    <select class="form-control edit-subcategory">
+                        <option value="logika" ${subcategory === 'logika' ? 'selected' : ''}>Logika</option>
+                        <option value="sambung_lagu" ${subcategory === 'sambung_lagu' ? 'selected' : ''}>Sambung Lagu</option>
+                        <option value="peribahasa" ${subcategory === 'peribahasa' ? 'selected' : ''}>Peribahasa</option>
+                    </select>
+                </div>
+                `}
+                
+                <div class="form-group">
+                    <label>Tingkat</label>
+                    <select class="form-control edit-level">
+                        <option value="mudah" ${level === 'mudah' ? 'selected' : ''}>Mudah</option>
+                        <option value="sedang" ${level === 'sedang' ? 'selected' : ''}>Sedang</option>
+                        <option value="sulit" ${level === 'sulit' ? 'selected' : ''}>Sulit</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Pertanyaan</label>
+                    <textarea class="form-control edit-question" rows="3">${question.question}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Pilihan Jawaban</label>
+                    ${question.options.map((option, index) => `
+                    <div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="option-prefix">${String.fromCharCode(65 + index)}.</span>
+                        <input type="text" class="form-control edit-option" value="${option}" data-index="${index}">
+                    </div>
+                    `).join('')}
+                </div>
+                <div class="form-group">
+                    <label>Jawaban Benar</label>
+                    <select class="form-control edit-answer">
+                        ${question.options.map((option, index) => `
+                        <option value="${index}" ${question.answer === index ? 'selected' : ''}>
+                            ${String.fromCharCode(65 + index)}
+                        </option>
+                        `).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Penjelasan</label>
+                    <textarea class="form-control edit-explanation" rows="3">${question.explanation}</textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary cancel-edit">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="button" class="btn btn-primary save-edit">
+                        <i class="fas fa-save"></i> Simpan
+                    </button>
+                </div>
+            `;
+            
+            editForm.style.display = 'block';
+            
+            // Add event listeners
+            editForm.querySelector('.cancel-edit').addEventListener('click', function() {
+                editForm.style.display = 'none';
+            });
+            
+            editForm.querySelector('.save-edit').addEventListener('click', function() {
+                saveQuestionChanges(question, category, subcategory, level);
+            });
+        }
+
+        function saveQuestionChanges(question, oldCategory, oldSubcategory, oldLevel) {
+            const editForm = document.getElementById(`editForm-${question.id}`);
+            
+            // Get new values
+            const newCategory = editForm.querySelector('.edit-category').value;
+            const newSubcategory = editForm.querySelector('.edit-subcategory').value;
+            const newLevel = editForm.querySelector('.edit-level').value;
+            const newQuestionText = editForm.querySelector('.edit-question').value;
+            const newOptions = Array.from(editForm.querySelectorAll('.edit-option')).map(input => input.value);
+            const newAnswer = parseInt(editForm.querySelector('.edit-answer').value);
+            const newExplanation = editForm.querySelector('.edit-explanation').value;
+            
+            // Validate
+            if (!newQuestionText || newOptions.some(opt => !opt) || !newExplanation) {
+                alert('Semua field harus diisi!');
+                return;
+            }
+            
+            // Update question
+            question.question = newQuestionText;
+            question.options = newOptions;
+            question.answer = newAnswer;
+            question.explanation = newExplanation;
+            
+            // If category or subcategory or level changed
+            if (newCategory !== oldCategory || newSubcategory !== oldSubcategory || newLevel !== oldLevel) {
+                // Remove from old location
+                const oldQuestions = questions[oldCategory][oldSubcategory][oldLevel];
+                const index = oldQuestions.findIndex(q => q.id === question.id);
+                if (index !== -1) oldQuestions.splice(index, 1);
+                
+                // Add to new location
+                if (!questions[newCategory][newSubcategory]) {
+                    questions[newCategory][newSubcategory] = {
+                        mudah: [],
+                        sedang: [],
+                        sulit: []
+                    };
+                }
+                questions[newCategory][newSubcategory][newLevel].push(question);
+            }
+            
+            // Reload questions list
+            loadQuestionsForAdmin();
+            editForm.style.display = 'none';
+            
+            alert('Perubahan berhasil disimpan!');
+        }
+
+        function deleteQuestion(id, category, subcategory, level) {
+            const questionList = questions[category][subcategory][level];
+            const index = questionList.findIndex(q => q.id === id);
+            if (index !== -1) questionList.splice(index, 1);
+            
+            // Reload questions list
+            loadQuestionsForAdmin();
+            alert('Soal berhasil dihapus!');
+        }
+
+        function addQuestion(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const category = document.getElementById('newCategory').value;
+            const subcategory = category === 'pelajar' 
+                ? document.getElementById('newSubcategory').value 
+                : document.getElementById('newUmumSubcategory').value;
+            const level = document.getElementById('newLevel').value;
+            const questionText = document.getElementById('newQuestion').value;
+            const options = [
+                document.getElementById('optionA').value,
+                document.getElementById('optionB').value,
+                document.getElementById('optionC').value,
+                document.getElementById('optionD').value
+            ];
+            const answer = document.getElementById('correctAnswer').value;
+            const explanation = document.getElementById('newExplanation').value;
+            
+            // Validate
+            if (!category || !level || !questionText || options.some(opt => !opt) || !answer || !explanation) {
+                alert('Semua field harus diisi!');
+                return;
+            }
+            
+            // Create new question
+            const newQuestion = {
+                id: Date.now(), // Simple unique ID
+                question: questionText,
+                options: options,
+                answer: answer.charCodeAt(0) - 65, // Convert A,B,C,D to 0,1,2,3
+                explanation: explanation
+            };
+            
+            // Initialize subcategory if not exists
+            if (!questions[category][subcategory]) {
+                questions[category][subcategory] = {
+                    mudah: [],
+                    sedang: [],
+                    sulit: []
+                };
+            }
+            
+            // Add to questions
+            questions[category][subcategory][level].push(newQuestion);
+            
+            // Reset form and reload list
+            document.getElementById('addQuestionForm').reset();
+            document.getElementById('newSubcategoryGroup').style.display = 'none';
+            document.getElementById('newUmumSubcategoryGroup').style.display = 'none';
+            loadQuestionsForAdmin();
+            
+            alert('Soal baru berhasil ditambahkan!');
+        }
+
+        function changePassword(e) {
+            e.preventDefault();
+            
+            const currentPass = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+            
+            // Validate
+            if (currentPass !== adminPassword) {
+                alert('Password lama salah!');
+                return;
+            }
+            
+            if (newPass !== confirmPass) {
+                alert('Password baru dan konfirmasi tidak cocok!');
+                return;
+            }
+            
+            if (newPass.length < 8) {
+                alert('Password baru harus minimal 8 karakter!');
+                return;
+            }
+            
+            // Change password
+            adminPassword = newPass;
+            document.getElementById('changePasswordForm').reset();
+            
+            alert('Password berhasil diubah!');
+        }
+
+        function filterQuestions() {
+            const filter = document.getElementById('adminCategoryFilter').value;
+            const questionsList = document.getElementById('questionList');
+            
+            // Show all if no filter
+            if (!filter) {
+                questionsList.querySelectorAll('.question-item').forEach(item => {
+                    item.style.display = 'block';
+                });
+                return;
+            }
+            
+            // Apply filter
+            questionsList.querySelectorAll('.question-item').forEach(item => {
+                const category = item.querySelector('.question-meta span:first-child').textContent.includes('Pelajar') ? 'pelajar' : 'umum';
+                item.style.display = category === filter ? 'block' : 'none';
+            });
+        }
+
+        /* AI Question Generator */
+        async function generateQuestionWithAI() {
+            const prompt = document.getElementById('aiPromptInput').value.trim();
+            const category = document.getElementById('newCategory').value;
+            const level = document.getElementById('newLevel').value;
+            
+            if (!prompt) {
+                alert('Silakan masukkan prompt untuk menghasilkan soal!');
+                return;
+            }
+            
+            if (!category || !level) {
+                alert('Silakan pilih kategori dan tingkat kesulitan terlebih dahulu!');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('aiLoading').style.display = 'block';
+            document.getElementById('generateQuestionBtn').disabled = true;
+            
+            try {
+                // ####################################################
+                // # UNCOMMENT DAN GUNAKAN INI UNTUK API ASLI        #
+                // ####################################################
+                /*
+                const API_KEY = 'NOMER KODE API KEY DISINI'; // <-- INI TEMPAT API KEY
+                const generatedQuestion = await callAIGenerateQuestion(prompt, category, level, API_KEY);
+                */
+                
+                // Untuk sementara gunakan mock (hapus ketika sudah pakai API asli)
+                const generatedQuestion = await mockAIGenerateQuestion(prompt, category, level);
+                
+                // Fill the form with generated question
+                document.getElementById('newQuestion').value = generatedQuestion.question;
+                document.getElementById('optionA').value = generatedQuestion.options[0];
+                document.getElementById('optionB').value = generatedQuestion.options[1];
+                document.getElementById('optionC').value = generatedQuestion.options[2];
+                document.getElementById('optionD').value = generatedQuestion.options[3];
+                document.getElementById('correctAnswer').value = generatedQuestion.correctAnswer;
+                document.getElementById('newExplanation').value = generatedQuestion.explanation;
+                
+                alert('Soal berhasil digenerate! Silakan review dan simpan jika sudah sesuai.');
+            } catch (error) {
+                console.error('Error generating question:', error);
+                alert('Gagal menghasilkan soal. Silakan coba lagi atau masukkan secara manual.');
+            } finally {
+                // Hide loading
+                document.getElementById('aiLoading').style.display = 'none';
+                document.getElementById('generateQuestionBtn').disabled = false;
+            }
+        }
+
+        // Mock AI function - replace with your actual API call
+        function mockAIGenerateQuestion(prompt, category, level) {
+            return new Promise((resolve) => {
+                // Simulate API delay
+                setTimeout(() => {
+                    // This is just a mock response - replace with actual API call
+                    const mockResponses = [
+                        {
+                            question: `Apa yang dimaksud dengan ${prompt.split(' ').slice(0, 2).join(' ')}?`,
+                            options: [
+                                "Pilihan pertama yang benar",
+                                "Pilihan kedua yang salah",
+                                "Pilihan ketiga yang salah",
+                                "Pilihan keempat yang salah"
+                            ],
+                            correctAnswer: "A",
+                            explanation: `Penjelasan untuk jawaban yang benar tentang ${prompt.split(' ').slice(0, 2).join(' ')}.`
+                        },
+                        {
+                            question: `Siapa penemu ${prompt.split(' ').slice(0, 2).join(' ')}?`,
+                            options: [
+                                "Nama penemu yang salah",
+                                "Nama penemu yang benar",
+                                "Nama penemu yang salah",
+                                "Nama penemu yang salah"
+                            ],
+                            correctAnswer: "B",
+                            explanation: `Penjelasan tentang penemu ${prompt.split(' ').slice(0, 2).join(' ')}.`
+                        }
+                    ];
+                    
+                    resolve(mockResponses[Math.floor(Math.random() * mockResponses.length)]);
+                }, 2000);
+            });
+        }
+
+        /* Share Functions */
+        function shareFacebook() {
+            const score = document.getElementById('scoreDisplay').textContent;
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(`Saya baru saja menyelesaikan Quiz Pergunu dengan skor ${score}! Coba kamu juga!`);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+        }
+
+        function shareTwitter() {
+            const score = document.getElementById('scoreDisplay').textContent;
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(`Saya baru saja menyelesaikan Quiz Pergunu dengan skor ${score}! Coba kamu juga!`);
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        }
+
+        function shareWhatsapp() {
+            const score = document.getElementById('scoreDisplay').textContent;
+            const text = encodeURIComponent(`Saya baru saja menyelesaikan Quiz Pergunu dengan skor ${score}! Coba kamu juga: ${window.location.href}`);
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+
+        function printResults() {
+            window.print();
+        }
+
+        function takeScreenshot() {
+            const resultsContainer = document.getElementById('resultsContainer');
+            
+            html2canvas(resultsContainer).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'hasil-quiz-pergunu.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
     </script>
 </body>
 </html>
