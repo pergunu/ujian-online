@@ -13,7 +13,6 @@
     
     <!-- Library untuk screenshot -->
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <link rel="stylesheet" href="css/animations.css">
     <style>
         :root {
             --primary: #2563eb;
@@ -57,226 +56,185 @@
             min-height: 100vh;
             position: relative;
             padding-bottom: 120px;
-        }
-        
-        /* Improved Header */
-        .header {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(8px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            padding: 0.8rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            text-align: center;
-            transition: var(--transition);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            transition: var(--transition);
-        }
-        
-        .logo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            transition: var(--transition);
-            padding: 0.5rem 0;
-        }
-        
-        .logo:hover {
-            transform: translateY(-2px);
-        }
-        
-        .logo-img {
-            height: 4rem;
-            width: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 2px 6px rgba(37, 99, 235, 0.15));
-            border-radius: 50%;
-            border: 2px solid white;
-            box-shadow: 0 0 0 3px var(--primary-light);
-            transition: var(--transition);
-        }
-        
-        .logo-text {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-family: 'Playfair Display', serif;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 4px rgba(22, 163, 74, 0.1);
-            position: relative;
-            transition: var(--transition);
-        }
-        
-        .logo-text::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 3px;
-            background: var(--gradient-primary);
-            border-radius: 2px;
-            transition: var(--transition);
-        }
-        
-        .logo-subtext {
-            font-size: 0.9rem;
-            color: var(--gray);
-            font-weight: 500;
-            font-style: italic;
-            max-width: 600px;
-            margin-top: 0.25rem;
-            transition: var(--transition);
-            line-height: 1.4;
-        }
-        
-        .participant-name {
-            font-weight: 600;
-            color: var(--dark);
-            background: var(--light-gray);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            margin-top: 0.5rem;
-            font-size: 0.95rem;
+            background-image: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, rgba(37, 99, 235, 0.05) 90%);
         }
 
-        /* Smooth animations */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
+        /* Opening Animation */
+        .opening-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            animation: fadeOut 1.5s ease-in-out 3s forwards;
+        }
+
+        .opening-logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite, float 3s ease-in-out infinite;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .opening-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .opening-subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            animation: slideUp 0.8s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+
+        .opening-message {
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 2rem auto 0;
+            font-style: italic;
+            opacity: 0.8;
+            animation: fadeIn 1s ease-out 1.5s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .logo:hover .logo-img {
-            animation: float 2.5s ease-in-out infinite;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        .logo:hover .logo-text::after {
-            width: 70px;
-            background: var(--primary);
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
-
+        
         /* Main Content */
         .main-container {
             max-width: 1200px;
-            margin: 1.5rem auto;
-            padding: 0 1.5rem;
+            margin: 0 auto;
+            padding: 2rem;
             min-height: calc(100vh - 180px);
+            animation: fadeIn 1s ease-out;
         }
 
-        /* Quiz Container */
-        .quiz-container {
-            margin-top: 1rem;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .header {
-                padding: 0.6rem 0;
-            }
-            
-            .logo-img {
-                height: 3.2rem;
-                box-shadow: 0 0 0 2px var(--primary-light);
-            }
-            
-            .logo-text {
-                font-size: 1.6rem;
-            }
-            
-            .logo-subtext {
-                font-size: 0.8rem;
-                padding: 0 1rem;
-            }
-            
-            .participant-name {
-                font-size: 0.85rem;
-                padding: 0.4rem 0.8rem;
-            }
-            
-            .main-container {
-                padding: 0 1rem;
-            }
-        }
-
-        /* Rest of your existing CSS remains unchanged */
+        /* Participant Form - Improved Design */
         .participant-form {
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow-lg);
-            padding: 2.5rem;
+            padding: 3rem;
             max-width: 800px;
             margin: 0 auto;
-            animation: fadeIn 0.5s ease-out;
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            animation: fadeInUp 0.8s ease-out;
         }
-        
-        .participant-form::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: var(--gradient-primary);
-        }
-        
-        .form-title {
-            font-size: 1.75rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
+
+        .form-header {
             text-align: center;
+            margin-bottom: 2.5rem;
             position: relative;
-            padding-bottom: 0.75rem;
+        }
+
+        .form-logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 1.5rem;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 4px var(--primary-light), 0 10px 25px rgba(37, 99, 235, 0.2);
+            transition: var(--transition);
+        }
+
+        .form-logo:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 0 0 4px var(--primary-light), 0 15px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .form-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
             font-family: 'Playfair Display', serif;
             font-weight: 600;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
         }
-        
+
         .form-title::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
+            width: 60px;
             height: 4px;
             background: var(--gradient-primary);
             border-radius: 2px;
         }
-        
+
+        .form-subtitle {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
+            animation: fadeIn 0.5s ease-out;
+            animation-fill-mode: backwards;
         }
-        
+
+        .form-group:nth-child(1) { animation-delay: 0.2s; }
+        .form-group:nth-child(2) { animation-delay: 0.3s; }
+        .form-group:nth-child(3) { animation-delay: 0.4s; }
+        .form-group:nth-child(4) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form Controls */
         .form-label {
             display: block;
             margin-bottom: 0.5rem;
@@ -396,7 +354,7 @@
             display: none;
             animation: fadeIn 0.3s ease-out;
         }
-        
+
         /* Quiz Container */
         .quiz-container {
             background: white;
@@ -1218,34 +1176,100 @@
             right: 4rem;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+            
+            .participant-form {
+                padding: 2rem 1.5rem;
+            }
+            
+            .form-logo {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .form-title {
+                font-size: 1.75rem;
+            }
+            
+            .category-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .category-tab {
+                flex: 1 0 45%;
+            }
+            
+            .quiz-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .quiz-info {
+                width: 100%;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .call-center-btn, .admin-btn {
+                width: 3.5rem;
+                height: 3.5rem;
+                font-size: 1.25rem;
+            }
+            
+            .call-center-btn {
+                bottom: 6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .participant-form {
+                padding: 1.5rem 1rem;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+            
+            .subcategory-options {
+                flex-direction: column;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+            }
+            
+            .share-btn {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header Profesional di Tengah -->
-    <header class="header">
-        <div class="header-container">
-            <a href="#" class="logo" id="homeBtn">
-                <img src="assets/images/logo-pergunu.png" alt="Pergunu Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/150?text=Pergunu'">
-                <span class="logo-text">Quiz Pergunu</span>
-                <span class="logo-subtext">Uji pengetahuanmu dan raih prestasi terbaik bersama Pergunu</span>
-            </a>
-            <div class="participant-name" id="participantName" style="display: none;">
-                <i class="fas fa-user"></i>
-                <span id="nameDisplay"></span>
-            </div>
-        </div>
-    </header>
+    <!-- Opening Animation -->
+    <div class="opening-screen">
+        <img src="assets/images/logo-pergunu.png" alt="Pergunu Logo" class="opening-logo" onerror="this.src='https://via.placeholder.com/150?text=Pergunu'">
+        <h1 class="opening-title">Selamat Datang di Quiz Pergunu</h1>
+        <p class="opening-subtitle">Uji pengetahuan Anda dan raih prestasi terbaik bersama Pergunu</p>
+        <p class="opening-message">"Ilmu tanpa amal seperti pohon tanpa buah" - Pepatah Arab</p>
+    </div>
     
     <!-- Main Content -->
     <main class="main-container">
-        <!-- Participant Form -->
+        <!-- Participant Form with integrated header -->
         <form id="participantForm" class="participant-form">
-            <h2 class="form-title">Form Peserta Quiz</h2>
+            <div class="form-header">
+                <img src="assets/images/logo-pergunu.png" alt="Pergunu Logo" class="form-logo" onerror="this.src='https://via.placeholder.com/150?text=Pergunu'">
+                <h2 class="form-title">Quiz Pergunu</h2>
+                <p class="form-subtitle">Silakan isi data diri Anda untuk memulai ujian pengetahuan</p>
+            </div>
+            
             <div class="form-group">
                 <label for="name" class="form-label">Nama Lengkap</label>
                 <input type="text" id="name" class="form-control" required placeholder="Masukkan nama lengkap Anda">
@@ -1853,6 +1877,10 @@
 
         // Inisialisasi
         document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.querySelector('.opening-screen').style.display = 'none';
+            }, 3500);
+            
             initEventListeners();
             loadAudio();
         });
@@ -2018,10 +2046,6 @@
                 alert('Belum ada soal untuk kategori, subkategori, dan level yang dipilih!');
                 return;
             }
-            
-            // Set participant name
-            document.getElementById('participantName').style.display = 'flex';
-            document.getElementById('nameDisplay').textContent = name;
             
             // Update quiz info
             document.getElementById('categoryDisplay').textContent = currentCategory === 'pelajar' ? 'Pelajar' : 'Umum';
@@ -2261,7 +2285,6 @@
             document.getElementById('participantForm').style.display = 'block';
             document.getElementById('quizContainer').style.display = 'none';
             document.getElementById('resultsContainer').style.display = 'none';
-            document.getElementById('participantName').style.display = 'none';
             
             // Reset form
             document.getElementById('participantForm').reset();
