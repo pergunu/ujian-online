@@ -1487,14 +1487,16 @@
     </style>
 </head>
 <body>
-   <!-- Opening Animation -->
+    <!-- Star Background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Opening Animation -->
     <div class="opening-screen">
         <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo" class="opening-logo">
         <h1 class="opening-title">Quiz Pergunu</h1>
         <p class="opening-subtitle">Uji pengetahuan Anda dan raih prestasi terbaik bersama Pergunu</p>
-        ss="opening-subtitle">Uji pengetahuan Anda dan raih prestasi terbaik bersama Pergunu</p>
         
-         <div class="terms-container">
+        <div class="terms-container">
             <h2 class="terms-title">Kebijakan & Persyaratan</h2>
             <div class="terms-content">
                 <p>Selamat datang di Quiz Pergunu, platform ujian pengetahuan berbasis web yang dikembangkan oleh Pergunu Situbondo. Dengan mengakses dan menggunakan aplikasi ini, Anda menyetujui untuk terikat oleh syarat dan ketentuan berikut:</p>
@@ -1523,7 +1525,7 @@
                 <p>Dengan melanjutkan, Anda menyatakan telah membaca, memahami, dan menyetujui seluruh ketentuan di atas.</p>
             </div>
             
-             <div class="terms-checkbox">
+            <div class="terms-checkbox">
                 <input type="checkbox" id="agreeTerms" required>
                 <label for="agreeTerms">Saya telah membaca dan menyetujui syarat & ketentuan di atas</label>
             </div>
@@ -1538,169 +1540,6 @@
             <span>(By Cendhanu)</span>
         </p>
     </div>
-
-    <!-- [Rest of your HTML content remains unchanged] -->
-    
-    <script>
-        // Enhanced createStars function
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const particlesContainer = document.getElementById('particles');
-            const starsCount = 150;
-            const particlesCount = 30;
-            
-            // Clear existing stars and particles
-            starsContainer.innerHTML = '';
-            particlesContainer.innerHTML = '';
-            
-            // Create stars
-            for (let i = 0; i < starsCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                
-                // Random position
-                const x = Math.random() * 100;
-                const y = Math.random() * 100;
-                
-                // Random size
-                const size = Math.random() * 3 + 1;
-                
-                // Random opacity and duration
-                const opacity = Math.random() * 0.7 + 0.3;
-                const duration = Math.random() * 5 + 3;
-                
-                // Random delay
-                const delay = Math.random() * 5;
-                
-                star.style.left = `${x}%`;
-                star.style.top = `${y}%`;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                star.style.setProperty('--opacity', opacity);
-                star.style.setProperty('--duration', `${duration}s`);
-                star.style.animationDelay = `${delay}s`;
-                
-                starsContainer.appendChild(star);
-            }
-            
-            // Create particles
-            for (let i = 0; i < particlesCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Random position
-                const x = Math.random() * 100;
-                const y = Math.random() * 100 + 100; // Start below viewport
-                
-                // Random size
-                const size = Math.random() * 5 + 1;
-                
-                // Random duration and delay
-                const duration = Math.random() * 15 + 10;
-                const delay = Math.random() * 10;
-                
-                particle.style.left = `${x}%`;
-                particle.style.top = `${y}%`;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.animationDuration = `${duration}s`;
-                particle.style.animationDelay = `${delay}s`;
-                particle.style.opacity = Math.random() * 0.5 + 0.1;
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // Audio functions
-        function playOpeningSound() {
-            const openingSound = document.getElementById('openingSound');
-            openingSound.volume = 0.7;
-            openingSound.play().catch(error => {
-                console.log("Autoplay prevented:", error);
-            });
-        }
-
-        function playWelcomeSound() {
-            const welcomeSound = document.getElementById('welcomeSound');
-            welcomeSound.volume = 0.7;
-            welcomeSound.play().catch(error => {
-                console.log("Autoplay prevented:", error);
-            });
-        }
-
-        function playQuizMusic() {
-            if (!quizMusicEnabled) return;
-            
-            const quizMusic = document.getElementById('quizMusic');
-            quizMusic.volume = 0.5;
-            quizMusic.loop = true;
-            quizMusic.play().catch(error => {
-                console.log("Autoplay prevented:", error);
-            });
-            
-            // Set waktu sholat (contoh: setiap 2 jam untuk demo)
-            clearTimeout(adhanTimeout);
-            adhanTimeout = setTimeout(playAdhan, 2 * 60 * 60 * 1000); // 2 jam untuk demo
-        }
-
-        function playAdhan() {
-            const quizMusic = document.getElementById('quizMusic');
-            quizMusic.pause();
-            
-            const adhanSound = document.getElementById('adhanSound');
-            adhanSound.volume = 0.7;
-            adhanSound.play().catch(error => {
-                console.log("Autoplay prevented:", error);
-            });
-            
-            // Setelah adhan selesai, lanjutkan musik quiz
-            adhanSound.onended = function() {
-                playQuizMusic();
-            };
-        }
-
-        // Initialize with enhanced effects
-        document.addEventListener('DOMContentLoaded', function() {
-            createStars();
-            playOpeningSound();
-            
-            // Set timeout for opening screen
-            setTimeout(() => {
-                document.querySelector('.opening-screen').style.display = 'none';
-                playWelcomeSound();
-            }, 15000);
-            
-            // [Rest of your initialization code...]
-        });
-
-        // [Rest of your JavaScript remains unchanged...]
-    </script>
-    
-    <!-- Audio Elements -->
-    <audio id="openingSound" preload="auto">
-        <source src="https://voca.ro/1a8eWbggFzfB" type="audio/mpeg">
-    </audio>
-    <audio id="welcomeSound" preload="auto">
-        <source src="https://voca.ro/1hlDz7uapOvO" type="audio/mpeg">
-    </audio>
-    <audio id="quizMusic" loop preload="auto">
-        <source src="https://voca.ro/1ay85sqaUP0k" type="audio/mpeg">
-    </audio>
-    <audio id="adhanSound" preload="auto">
-        <source src="https://voca.ro/16m9VCRDNVy1" type="audio/mpeg">
-    </audio>
-    <audio id="backgroundMusic" preload="auto">
-        <source src="https://voca.ro/1ffQ6LhkdPKe" type="audio/mpeg">
-    </audio>
-    <audio id="applauseSound" preload="auto">
-        <source src="assets/audio/applause.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="correctSound" preload="auto">
-        <source src="assets/audio/correct.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="wrongSound" preload="auto">
-        <source src="assets/audio/wrong.mp3" type="audio/mpeg">
-    </audio>
     
     <!-- Main Content -->
     <main class="main-container">
