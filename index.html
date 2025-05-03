@@ -1487,13 +1487,61 @@
     </style>
 
 <style>
-    body {
-      background: url('https://cdn.pixabay.com/photo/2016/11/29/05/15/space-1867616_1280.jpg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Segoe UI', sans-serif;
-      color: #fff;
-    }
-    .policy-box {
+  body {
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    color: #f1f1f1;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    padding: 50px 20px;
+    text-align: center;
+  }
+  h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: #ffdd57;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+  }
+  p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+  }
+  .btn {
+    font-size: 1.2em;
+    padding: 12px 24px;
+    margin: 10px;
+    border: none;
+    border-radius: 30px;
+    background: #ffdd57;
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 221, 87, 0.4);
+    transition: all 0.3s ease;
+  }
+  .btn:hover {
+    background: #ffd633;
+    transform: scale(1.05);
+  }
+  .stars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: transparent url('https://raw.githubusercontent.com/Kilian/input-moment/master/docs/images/bg-stars.png') repeat top center;
+    animation: starfield 200s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+  }
+  @keyframes starfield {
+    from { background-position: 0 0; }
+    to { background-position: 10000px 10000px; }
+  }
+</style>
+
+
+<style>
+ policy-box {
       background: rgba(255, 255, 255, 0.9);
       border: 2px solid #ffc107;
       border-radius: 15px;
@@ -1503,20 +1551,20 @@
       color: #000;
       font-size: 1.1em;
       box-shadow: 0 0 15px rgba(255, 193, 7, 0.5);
-    }
-    .policy-box h3 {
-      color: #e69500;
-    }
-    .policy-box label {
-      display: flex;
-      align-items: center;
-      margin-top: 15px;
-    }
-    .policy-box input[type="checkbox"] {
-      transform: scale(1.5);
-      margin-right: 10px;
-    }
-    #lanjutBtn {
+  }
+  .policy-box h3 {
+    color: #e69500;
+    margin-bottom: 10px;
+  }
+  .policy-box label {
+    display: block;
+    margin-top: 20px;
+  }
+  .policy-box input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-right: 10px;
+  }
+  #lanjutBtn {
       margin-top: 15px;
       padding: 12px 24px;
       font-size: 1.2em;
@@ -1526,88 +1574,14 @@
       color: #000;
       cursor: pointer;
       font-weight: bold;
-    }
-    #lanjutBtn:hover {
-      background-color: #ffdb4d;
-    }
-    #quizContainer, #formSection {
-      display: none;
-    }
-  </style>
+  }
+  #lanjutBtn:hover {
+    background: #ffdb4d;
+  }
+</style>
+
 </head>
 <body>
-  <div id="policyContainer" class="policy-box">
-    <h3>Kebijakan dan Persyaratan</h3>
-    <p>Dengan mengikuti kuis ini, Anda menyetujui untuk menggunakan platform ini dengan bijak dan bertanggung jawab.</p>
-    <label><input type="checkbox" id="agreeCheck"> Saya telah membaca dan menyetujui syarat & ketentuan di atas</label>
-    <button id="lanjutBtn">Lanjutkan Ke QUIZ</button>
-  </div>
-
-  <section id="formSection">
-    <h2>Form Peserta</h2>
-    <form>
-      <label>Nama: <input type="text" /></label><br />
-      <label>Kelas: <input type="text" /></label><br />
-      <button type="button" id="startQuizBtn">Mulai Quiz</button>
-    </form>
-  </section>
-
-  <section id="quizContainer">
-    <!-- Tempat sistem kuis: pertanyaan, opsi A-D, skor, hasil, dsb -->
-    <div id="questionBox"></div>
-    <div id="optionsBox"></div>
-    <div id="scoreBox"></div>
-    <div id="resultBox"></div>
-  </section>
-
-  <audio id="audioLanjut" src="https://voca.ro/1a8eWbggFzfB"></audio>
-  <audio id="audioForm" src="https://voca.ro/1hlDz7uapOvO"></audio>
-  <audio id="audioStart" src="https://voca.ro/1ay85sqaUP0k" loop></audio>
-  <audio id="audioAdzan" src="https://voca.ro/16m9VCRDNVy1"></audio>
-
-  <script>
-    const agreeCheckbox = document.getElementById("agreeCheck");
-    const lanjutBtn = document.getElementById("lanjutBtn");
-    const audioLanjut = document.getElementById("audioLanjut");
-    const audioForm = document.getElementById("audioForm");
-    const audioStart = document.getElementById("audioStart");
-    const audioAdzan = document.getElementById("audioAdzan");
-    const formSection = document.getElementById("formSection");
-    const quizContainer = document.getElementById("quizContainer");
-
-    lanjutBtn.addEventListener("click", function () {
-      if (!agreeCheckbox.checked) {
-        alert("Silakan setujui syarat & ketentuan terlebih dahulu.");
-        return;
-      }
-      audioLanjut.play();
-      setTimeout(() => {
-        audioForm.play();
-        document.getElementById("policyContainer").style.display = "none";
-        formSection.style.display = "block";
-      }, 2500);
-    });
-
-    document.getElementById("startQuizBtn").addEventListener("click", function () {
-      formSection.style.display = "none";
-      quizContainer.style.display = "block";
-      audioStart.play();
-    });
-
-    // Simulasi waktu sholat: stop musik dan mainkan adzan
-    function checkWaktuSholat() {
-      const now = new Date();
-      if (now.getHours() === 12 && now.getMinutes() === 0) {
-        audioStart.pause();
-        audioAdzan.play();
-        audioAdzan.onended = () => {
-          audioStart.play();
-        };
-      }
-    }
-    setInterval(checkWaktuSholat, 60000);
-  </script>
-</body>
     <!-- Star Background -->
     <div class="stars" id="stars"></div>
 
@@ -1615,7 +1589,7 @@
     <div class="opening-screen">
         <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo" class="opening-logo">
         <h1 class="opening-title">Quiz Pergunu</h1>
-        <p class="opening-subtitle">Uji pengetahuan Anda dan raih prestasi terbaik bersama Pergunu</p>
+        <p class="opening-subtitle">Uji Pengetahuan Anda & Raih Prestasi Terbaik Bersama PERGUNU</p>
         
         <div class="terms-container">
             <h2 class="terms-title">Kebijakan & Persyaratan</h2>
@@ -1656,9 +1630,8 @@
             </button>
         </div>
         
-        <p class="opening-message">
-            Ilmu Adalah Cahaya, Kecerdasan Adalah Masa Depan & Akhlak Adalah Jembatan Menuju Kesuksesan<br>
-            <span>(By Cendhanu)</span>
+        <p class="opening-message">Ilmu Adalah Cahaya, Kecerdasan Adalah Masa Depan & Akhlak Adalah Jembatan Menuju Kesuksesan<br>
+                        <span>(By Cendhanu)</span>
         </p>
     </div>
     
