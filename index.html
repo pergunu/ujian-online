@@ -56,7 +56,6 @@
             line-height: 1.6;
             min-height: 100vh;
             position: relative;
-            padding-bottom: 120px;
             background-image: radial-gradient(circle at 10% 20%, rgba(67, 97, 238, 0.05) 0%, rgba(67, 97, 238, 0.05) 90%);
             overflow-x: hidden;
         }
@@ -342,12 +341,15 @@
             100% { transform: translateY(0px); }
         }
         
-        /* Main Content */
+        /* Main Content - FULL SCREEN LAYOUT */
         .main-container {
-            max-width: 900px;
-            margin: 2rem auto;
+            width: 100%;
+            min-height: 100vh;
             padding: 2rem;
-            min-height: calc(100vh - 180px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             animation: fadeIn 1s ease-out;
             position: relative;
         }
@@ -358,6 +360,8 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow-lg);
             padding: 3rem;
+            width: 100%;
+            max-width: 900px;
             margin: 0 auto;
             position: relative;
             overflow: hidden;
@@ -677,12 +681,13 @@
             left: 100%;
         }
 
-        /* Quiz Container */
+        /* Quiz Container - FULL SCREEN LAYOUT */
         .quiz-container {
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow-lg);
             padding: 2.5rem;
+            width: 100%;
             max-width: 900px;
             margin: 0 auto;
             display: none;
@@ -690,6 +695,7 @@
             position: relative;
             overflow: hidden;
             background-image: linear-gradient(to bottom right, rgba(248, 249, 250, 0.8), rgba(233, 236, 239, 0.9));
+            min-height: 80vh;
         }
         
         .quiz-container::before {
@@ -948,12 +954,13 @@
             box-shadow: 0 10px 25px rgba(248, 150, 30, 0.4);
         }
         
-        /* Results */
+        /* Results Container - FULL SCREEN LAYOUT */
         .results-container {
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow-lg);
             padding: 3.5rem 3rem;
+            width: 100%;
             max-width: 900px;
             margin: 0 auto;
             text-align: center;
@@ -962,6 +969,7 @@
             position: relative;
             overflow: hidden;
             background-image: linear-gradient(to bottom right, rgba(248, 249, 250, 0.8), rgba(233, 236, 239, 0.9));
+            min-height: 80vh;
         }
         
         .results-container::before {
@@ -1470,7 +1478,7 @@
 
         /* Responsive adjustments */
         @media (max-width: 992px) {
-            .main-container, .participant-form, .quiz-container, .results-container {
+            .participant-form, .quiz-container, .results-container {
                 max-width: 95%;
             }
             
@@ -2082,19 +2090,19 @@
     
     <!-- Audio Elements -->
     <audio id="openingSound" preload="auto">
-        <source src="https://voca.ro/1a8eWbggFzfB" type="audio/mpeg">
+        <source src="assets/audio/opening.mp3" type="audio/mpeg">
     </audio>
     <audio id="welcomeSound" preload="auto">
-        <source src="https://voca.ro/1hlDz7uapOvO" type="audio/mpeg">
+        <source src="assets/audio/welcome.mp3" type="audio/mpeg">
     </audio>
     <audio id="quizMusic" loop preload="auto">
-        <source src="https://voca.ro/1ay85sqaUP0k" type="audio/mpeg">
+        <source src="assets/audio/quiz-music.mp3" type="audio/mpeg">
     </audio>
     <audio id="adhanSound" preload="auto">
-        <source src="https://voca.ro/16m9VCRDNVy1" type="audio/mpeg">
+        <source src="assets/audio/adhan.mp3" type="audio/mpeg">
     </audio>
     <audio id="backgroundMusic" preload="auto">
-        <source src="https://voca.ro/1ffQ6LhkdPKe" type="audio/mpeg">
+        <source src="assets/audio/background.mp3" type="audio/mpeg">
     </audio>
     <audio id="applauseSound" preload="auto">
         <source src="assets/audio/applause.mp3" type="audio/mpeg">
@@ -2298,7 +2306,9 @@
         // Inisialisasi
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
-            playOpeningSound();
+            
+            // Initialize audio elements
+            initAudio();
             
             // Set timeout untuk opening screen
             setTimeout(() => {
@@ -2308,6 +2318,24 @@
             
             initEventListeners();
         });
+
+        function initAudio() {
+            // Set volume for all audio elements
+            const audioElements = document.querySelectorAll('audio');
+            audioElements.forEach(audio => {
+                audio.volume = 0.5;
+            });
+            
+            // Enable audio after user interaction
+            document.body.addEventListener('click', function enableAudio() {
+                document.body.removeEventListener('click', enableAudio);
+                
+                // Play opening sound if music is enabled
+                if (musicEnabled) {
+                    playOpeningSound();
+                }
+            }, { once: true });
+        }
 
         function createStars() {
             const starsContainer = document.getElementById('stars');
@@ -2345,15 +2373,12 @@
 
         function playOpeningSound() {
             const openingSound = document.getElementById('openingSound');
-            openingSound.volume = 0.7;
             
             try {
                 const promise = openingSound.play();
                 if (promise !== undefined) {
                     promise.catch(error => {
                         console.log("Autoplay prevented:", error);
-                        // Show play button for user interaction
-                        document.getElementById('musicToggle').style.display = 'flex';
                     });
                 }
             } catch (error) {
@@ -2363,7 +2388,6 @@
 
         function playWelcomeSound() {
             const welcomeSound = document.getElementById('welcomeSound');
-            welcomeSound.volume = 0.7;
             
             try {
                 const promise = welcomeSound.play();
@@ -2381,7 +2405,6 @@
             if (!quizMusicEnabled) return;
             
             const quizMusic = document.getElementById('quizMusic');
-            quizMusic.volume = 0.5;
             
             try {
                 const promise = quizMusic.play();
@@ -2405,7 +2428,6 @@
             quizMusic.pause();
             
             const adhanSound = document.getElementById('adhanSound');
-            adhanSound.volume = 0.7;
             
             try {
                 const promise = adhanSound.play();
@@ -2442,7 +2464,6 @@
                 
                 // Play continue sound
                 const continueSound = document.getElementById('openingSound');
-                continueSound.volume = 0.7;
                 continueSound.play().catch(error => {
                     console.log("Autoplay prevented:", error);
                 });
@@ -2452,7 +2473,6 @@
                 // Play welcome sound when entering form
                 setTimeout(() => {
                     const welcomeSound = document.getElementById('welcomeSound');
-                    welcomeSound.volume = 0.7;
                     welcomeSound.play().catch(error => {
                         console.log("Autoplay prevented:", error);
                     });
@@ -2553,7 +2573,6 @@
                 backgroundMusic.pause();
                 document.getElementById('musicToggle').innerHTML = '<i class="fas fa-music"></i><span class="tooltip">Nyalakan Musik Latar</span>';
             } else {
-                backgroundMusic.volume = 0.5;
                 backgroundMusic.play().catch(error => {
                     console.log("Autoplay prevented:", error);
                 });
@@ -2567,7 +2586,6 @@
             if (!soundEffectsEnabled) return;
             
             const sound = document.getElementById(soundId);
-            sound.volume = 0.5;
             
             try {
                 const promise = sound.play();
