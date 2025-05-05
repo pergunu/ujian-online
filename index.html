@@ -85,22 +85,21 @@
         }
 
         /* Opening Animation */
-       .opening-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--gradient-primary);
-    z-index: 9999;
-    display: flex; /* Pastikan ini flex bukan none */
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-    animation: fadeOut 1.5s ease-in-out 15s forwards;
-}
+        .opening-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
 
         .opening-logo {
             width: 150px;
@@ -348,7 +347,7 @@
             width: 100%;
             min-height: 100vh;
             padding: 0;
-            display: flex;
+            display: none; /* Changed from flex to none */
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -457,6 +456,7 @@
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            width: 100%; /* Added to ensure full width */
         }
 
         .form-group:nth-child(1) { animation-delay: 0.2s; }
@@ -502,6 +502,7 @@
             background: white;
             color: var(--dark);
             box-shadow: var(--shadow);
+            margin-bottom: 0.5rem; /* Added for better spacing */
         }
         
         .form-control:focus {
@@ -1651,7 +1652,7 @@
     <div class="stars" id="stars"></div>
 
     <!-- Opening Animation -->
-    <div class="opening-screen">
+    <div class="opening-screen" id="openingScreen">
         <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo" class="opening-logo">
         <h1 class="opening-title">Quiz Pergunu</h1>
         <p class="opening-subtitle">Uji pengetahuan Anda dan raih prestasi terbaik bersama PERGUNU</p>
@@ -1696,7 +1697,6 @@
         </div>
         
         <p class="opening-message">Ilmu Adalah Cahaya, Kecerdasan & Akhlak Adalah Masa Depan Menuju Kesuksesan (By Cendhanu)</p>
-        
     </div>   
     
     <!-- Main Content -->
@@ -2340,17 +2340,15 @@
         let adhanTimeout;
 
         // Inisialisasi
-      document.addEventListener('DOMContentLoaded', function() {
-    createStars();
-    initAudio();
-    initEventListeners();
-    
-    // Pastikan opening screen visible
-    document.querySelector('.opening-screen').style.display = 'flex';
-    document.getElementById('participantForm').style.display = 'none';
-    document.getElementById('quizContainer').style.display = 'none';
-    document.getElementById('resultsContainer').style.display = 'none';
-});
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            initAudio();
+            initEventListeners();
+            
+            // Pastikan opening screen visible dan main container hidden
+            document.getElementById('openingScreen').style.display = 'flex';
+            document.querySelector('.main-container').style.display = 'none';
+        });
 
         function initAudio() {
             // Set volume for all audio elements
@@ -2479,60 +2477,39 @@
                 playQuizMusic();
             }
         }
-<script>
-    // Inisialisasi
-    document.addEventListener('DOMContentLoaded', function() {
-        createStars();
-        initAudio();
-        initEventListeners();
-        
-        // Pastikan opening screen visible dan form/quiz/results hidden
-        document.querySelector('.opening-screen').style.display = 'flex';
-        document.getElementById('participantForm').style.display = 'none';
-        document.getElementById('quizContainer').style.display = 'none';
-        document.getElementById('resultsContainer').style.display = 'none';
-    });
 
-    function initEventListeners() {
-        // Terms agreement - enforce mandatory checkbox
-        const agreeCheckbox = document.getElementById('agreeTerms');
-        const continueBtn = document.getElementById('continueBtn');
+        function initEventListeners() {
+            // Terms agreement - enforce mandatory checkbox
+            const agreeCheckbox = document.getElementById('agreeTerms');
+            const continueBtn = document.getElementById('continueBtn');
 
-        agreeCheckbox.addEventListener('change', function() {
-            continueBtn.disabled = !this.checked;
-        });
-        
-        // Hanya satu event listener untuk continueBtn
-        continueBtn.addEventListener('click', function() {
-            if (!agreeCheckbox.checked) {
-                alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
-                return;
-            }
-            
-            // Play continue sound
-            const continueSound = document.getElementById('openingSound');
-            continueSound.play().catch(error => {
-                console.log("Autoplay prevented:", error);
+            agreeCheckbox.addEventListener('change', function() {
+                continueBtn.disabled = !this.checked;
             });
             
-            document.querySelector('.opening-screen').style.display = 'none';
-            document.getElementById('participantForm').style.display = 'block';
-            
-            // Play welcome sound when entering form
-            setTimeout(() => {
-                const welcomeSound = document.getElementById('welcomeSound');
-                welcomeSound.play().catch(error => {
+            continueBtn.addEventListener('click', function() {
+                if (!agreeCheckbox.checked) {
+                    alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
+                    return;
+                }
+                
+                // Play continue sound
+                const continueSound = document.getElementById('openingSound');
+                continueSound.play().catch(error => {
                     console.log("Autoplay prevented:", error);
                 });
-            }, 500);
-        });
-
-        // ... (kode event listeners lainnya tetap di sini)
-    }
-</script>
-
-    // ... (kode event listeners lainnya tetap di sini)
-}
+                
+                document.getElementById('openingScreen').style.display = 'none';
+                document.querySelector('.main-container').style.display = 'flex';
+                
+                // Play welcome sound when entering form
+                setTimeout(() => {
+                    const welcomeSound = document.getElementById('welcomeSound');
+                    welcomeSound.play().catch(error => {
+                        console.log("Autoplay prevented:", error);
+                    });
+                }, 500);
+            });
 
             // Pilih kategori utama
             document.querySelectorAll('.category-tab').forEach(tab => {
