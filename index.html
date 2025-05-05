@@ -2479,49 +2479,43 @@
             }
         }
 
-        function initEventListeners() {
-            // Terms agreement - enforce mandatory checkbox
-            const agreeCheckbox = document.getElementById('agreeTerms');
-            const continueBtn = document.getElementById('continueBtn');
+       function initEventListeners() {
+    // Terms agreement - enforce mandatory checkbox
+    const agreeCheckbox = document.getElementById('agreeTerms');
+    const continueBtn = document.getElementById('continueBtn');
 
-            // CARI BARIS INI (biasanya di bagian Event Listeners):
-            continueBtn.addEventListener('click', function() {
-                if (!agreeCheckbox.checked) {
-                    alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
-                    return;
-                }
+    // Hapus duplikasi event listener yang ada di atas
+    // Hanya pertahankan satu event listener untuk continueBtn
     
-    // HAPUS playWelcomeSound() jika ada di sini
-    document.querySelector('.opening-screen').style.display = 'none';
-    playWelcomeSound(); // Biarkan ini jika tidak ada di tempat lain
-});
-            
-            agreeCheckbox.addEventListener('change', function() {
-                continueBtn.disabled = !this.checked;
+    agreeCheckbox.addEventListener('change', function() {
+        continueBtn.disabled = !this.checked;
+    });
+    
+    continueBtn.addEventListener('click', function() {
+        if (!agreeCheckbox.checked) {
+            alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
+            return;
+        }
+        
+        // Play continue sound
+        const continueSound = document.getElementById('openingSound');
+        continueSound.play().catch(error => {
+            console.log("Autoplay prevented:", error);
+        });
+        
+        document.querySelector('.opening-screen').style.display = 'none';
+        
+        // Play welcome sound when entering form
+        setTimeout(() => {
+            const welcomeSound = document.getElementById('welcomeSound');
+            welcomeSound.play().catch(error => {
+                console.log("Autoplay prevented:", error);
             });
-            
-            continueBtn.addEventListener('click', function() {
-                if (!agreeCheckbox.checked) {
-                    alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
-                    return;
-                }
-                
-                // Play continue sound
-                const continueSound = document.getElementById('openingSound');
-                continueSound.play().catch(error => {
-                    console.log("Autoplay prevented:", error);
-                });
-                
-                document.querySelector('.opening-screen').style.display = 'none';
-                
-                // Play welcome sound when entering form
-                setTimeout(() => {
-                    const welcomeSound = document.getElementById('welcomeSound');
-                    welcomeSound.play().catch(error => {
-                        console.log("Autoplay prevented:", error);
-                    });
-                }, 500);
-            });
+        }, 500);
+    });
+
+    // ... (kode event listeners lainnya tetap di sini)
+}
 
             // Pilih kategori utama
             document.querySelectorAll('.category-tab').forEach(tab => {
