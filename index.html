@@ -2347,11 +2347,7 @@
             initAudio();
             
             // Set timeout untuk opening screen
-            setTimeout(() => {
-                document.querySelector('.opening-screen').style.display = 'none';
-                playWelcomeSound();
-            }, 15000);
-            
+                    
             initEventListeners();
         });
 
@@ -2487,6 +2483,18 @@
             // Terms agreement - enforce mandatory checkbox
             const agreeCheckbox = document.getElementById('agreeTerms');
             const continueBtn = document.getElementById('continueBtn');
+
+            // CARI BARIS INI (biasanya di bagian Event Listeners):
+            continueBtn.addEventListener('click', function() {
+                if (!agreeCheckbox.checked) {
+                    alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
+                    return;
+                }
+    
+    // HAPUS playWelcomeSound() jika ada di sini
+    document.querySelector('.opening-screen').style.display = 'none';
+    playWelcomeSound(); // Biarkan ini jika tidak ada di tempat lain
+});
             
             agreeCheckbox.addEventListener('change', function() {
                 continueBtn.disabled = !this.checked;
