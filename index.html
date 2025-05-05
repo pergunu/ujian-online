@@ -2350,23 +2350,50 @@
             document.querySelector('.main-container').style.display = 'none';
         });
 
-        function initAudio() {
-            // Set volume for all audio elements
-            const audioElements = document.querySelectorAll('audio');
-            audioElements.forEach(audio => {
-                audio.volume = 0.5;
-            });
-            
-            // Enable audio after user interaction
-            document.body.addEventListener('click', function enableAudio() {
-                document.body.removeEventListener('click', enableAudio);
-                
-                // Play opening sound if music is enabled
-                if (musicEnabled) {
-                    playOpeningSound();
-                }
-            }, { once: true });
+        // Pastikan opening screen visible dan main container hidden
+document.getElementById('openingScreen').style.display = 'flex';
+document.querySelector('.main-container').style.display = 'none';
+
+// Fungsi initAudio dengan volume maksimal
+function initAudio() {
+    const audioElements = document.querySelectorAll('audio');
+    audioElements.forEach(audio => {
+        audio.volume = 1.0; // Volume 100%
+    });
+    
+    document.body.addEventListener('click', function enableAudio() {
+        document.body.removeEventListener('click', enableAudio);
+        if (musicEnabled) {
+            playOpeningSound();
         }
+    }, { once: true });
+}
+
+// Fungsi putar opening sound dengan volume maksimal
+function playOpeningSound() {
+    const openingSound = document.getElementById('openingSound');
+    openingSound.volume = 1.0; // <-- Tambahkan ini
+    openingSound.play().catch(error => {
+        console.log("Autoplay prevented:", error);
+    });
+}
+
+// Fungsi toggle musik latar dengan volume maksimal
+function toggleBackgroundMusic() {
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    backgroundMusic.volume = 1.0; // Volume 100%
+    
+    if (musicEnabled) {
+        backgroundMusic.pause();
+        document.getElementById('musicToggle').innerHTML = '<i class="fas fa-music"></i><span class="tooltip">Nyalakan Musik Latar</span>';
+    } else {
+        backgroundMusic.play().catch(error => {
+            console.log("Autoplay prevented:", error);
+        });
+        document.getElementById('musicToggle').innerHTML = '<i class="fas fa-music"></i><span class="tooltip">Matikan Musik Latar</span>';
+    }
+    musicEnabled = !musicEnabled;
+}
 
         function createStars() {
             const starsContainer = document.getElementById('stars');
