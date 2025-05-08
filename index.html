@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-
 <html lang="id">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Quiz Pergunu - Sistem Ujian Lengkap</title>
-<!-- Favicon -->
-<link href="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" rel="icon" type="image/png"/>
-<!-- Font & Icons -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<!-- Library untuk screenshot -->
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Pergunu - Sistem Ujian Lengkap</title>
+    <!-- Favicon -->
+    <link rel="icon" href="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" type="image/png">
+    
+    <!-- Font & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Library untuk screenshot -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    
+    <style>
         :root {
             --primary: #4361ee;
             --primary-light: #4895ef;
@@ -981,6 +983,164 @@
             box-shadow: 0 10px 25px rgba(248, 150, 30, 0.4);
         }
         
+        /* Certificate Styles */
+        .certificate-container {
+            background: white;
+            border: 20px solid #f5f5f5;
+            padding: 3rem;
+            position: relative;
+            max-width: 900px;
+            margin: 2rem auto;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1), 0 0 0 1px rgba(67, 97, 238, 0.1);
+            background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 50% auto;
+            background-blend-mode: overlay;
+            background-color: rgba(255,255,255,0.9);
+            border-image: linear-gradient(45deg, #4361ee, #3a0ca3, #f72585) 1;
+        }
+
+        .certificate-border {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px dashed rgba(67, 97, 238, 0.3);
+            pointer-events: none;
+        }
+
+        .certificate-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .certificate-title {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .certificate-title::before, .certificate-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+        }
+
+        .certificate-title::before {
+            left: -70px;
+        }
+
+        .certificate-title::after {
+            right: -70px;
+        }
+
+        .certificate-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .certificate-body {
+            margin-bottom: 3rem;
+        }
+
+        .certificate-score {
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 2rem 0;
+            position: relative;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 10px rgba(67, 97, 238, 0.2);
+        }
+
+        .certificate-score::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 8px;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            opacity: 0.3;
+            border-radius: 4px;
+        }
+
+        .certificate-message {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            line-height: 1.8;
+            font-weight: 500;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .certificate-watermark {
+            background: rgba(248, 249, 250, 0.8);
+            padding: 1.5rem;
+            border-radius: var(--radius-sm);
+            margin-top: 2rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            text-align: center;
+            border-left: 5px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .watermark-code {
+            font-weight: bold;
+            color: var(--primary-dark);
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .watermark-logo {
+            margin-top: 1rem;
+        }
+
+        .watermark-logo img {
+            height: 60px;
+            opacity: 0.7;
+        }
+
+        .barcode-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .barcode-container img {
+            height: 80px;
+            margin-bottom: 0.5rem;
+        }
+
+        .barcode-text {
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: var(--gray);
+            letter-spacing: 2px;
+        }
+
         /* Results Container - FULL SCREEN LAYOUT */
         .results-container {
             background: white;
@@ -1008,97 +1168,7 @@
             background: var(--gradient-primary);
         }
         
-        .results-title {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .score {
-            font-size: 5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin: 3rem 0;
-            position: relative;
-            font-family: 'Playfair Display', serif;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 10px rgba(67, 97, 238, 0.2);
-        }
-        
-        .score::after {
-            content: '';
-            position: absolute;
-            bottom: -1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 8px;
-            background: var(--gradient-primary);
-            opacity: 0.3;
-            border-radius: 4px;
-        }
-        
-        .results-message {
-            font-size: 1.5rem;
-            margin-bottom: 2.5rem;
-            color: var(--dark);
-            line-height: 1.8;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            font-weight: 500;
-        }
-        
-        .thank-you-message {
-            font-size: 1.2rem;
-            color: var(--gray);
-            margin-bottom: 3rem;
-            line-height: 1.8;
-            font-style: italic;
-            padding: 2rem;
-            background: white;
-            border-radius: var(--radius-sm);
-            border-left: 5px solid var(--primary);
-            box-shadow: var(--shadow);
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .results-details {
-            background: white;
-            padding: 2.5rem;
-            border-radius: var(--radius);
-            margin-top: 3rem;
-            text-align: left;
-            border: 1px solid var(--light-gray);
-            box-shadow: var(--shadow);
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .results-details h3 {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
+        /* Stats Container */
         .stats-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1520,6 +1590,36 @@
             .stats-container {
                 grid-template-columns: 1fr 1fr;
             }
+            
+            .certificate-container {
+                padding: 2rem;
+                border-width: 15px;
+            }
+            
+            .certificate-title {
+                font-size: 2rem;
+            }
+            
+            .certificate-title::before, 
+            .certificate-title::after {
+                width: 30px;
+            }
+            
+            .certificate-title::before {
+                left: -50px;
+            }
+            
+            .certificate-title::after {
+                right: -50px;
+            }
+            
+            .certificate-score {
+                font-size: 4rem;
+            }
+            
+            .certificate-message {
+                font-size: 1.1rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1582,6 +1682,16 @@
                 height: 4rem;
                 font-size: 1.5rem;
             }
+            
+            .certificate-container {
+                padding: 1.5rem;
+                border-width: 10px;
+            }
+            
+            .certificate-title::before, 
+            .certificate-title::after {
+                display: none;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1609,18 +1719,6 @@
                 justify-content: center;
             }
             
-            .results-title {
-                font-size: 2rem;
-            }
-            
-            .score {
-                font-size: 4rem;
-            }
-            
-            .results-message {
-                font-size: 1.3rem;
-            }
-            
             .floating-buttons {
                 bottom: 1rem;
                 right: 1rem;
@@ -1642,455 +1740,539 @@
             .floating-btn:hover .tooltip {
                 right: 5rem;
             }
+            
+            .watermark-code {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
-<!-- Star Background -->
-<div class="stars" id="stars"></div>
-<!-- Opening Animation -->
-<div class="opening-screen" id="openingScreen">
-<img alt="Pergunu Logo" class="opening-logo" src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png"/>
-<h1 class="opening-title">Quiz Pergunu</h1>
-<p class="opening-subtitle">Uji pengetahuan Anda &amp; Raih Prestasi Terbaik Bersama PERGUNU SITUBONDO</p>
-<div class="terms-container">
-<h2 class="terms-title">Kebijakan &amp; Persyaratan</h2>
-<div class="terms-content">
-<p>Selamat datang di Quiz Pergunu, platform ujian pengetahuan berbasis web yang dikembangkan oleh Pergunu Situbondo. Dengan mengakses dan menggunakan aplikasi ini, Anda menyetujui untuk terikat oleh syarat dan ketentuan berikut:</p>
-<p><strong>1. Penggunaan Aplikasi</strong><br/>
-                 Quiz Pergunu ditujukan untuk tujuan pendidikan dan pengujian pengetahuan. Pengguna diharapkan menggunakan aplikasi ini dengan jujur dan bertanggung jawab.&lt;</p>
-<p><strong>2. Data Pribadi</strong><br/>
+    <!-- Star Background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Opening Animation -->
+    <div class="opening-screen" id="openingScreen">
+        <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo" class="opening-logo">
+        <h1 class="opening-title">Quiz Pergunu</h1>
+        <p class="opening-subtitle">Uji Pengetahuan Anda & Raih Prestasi Terbaik Bersama PERGUNU SITUBONDO</p>
+        
+        <div class="terms-container">
+            <h2 class="terms-title">Kebijakan & Persyaratan</h2>
+            <div class="terms-content">
+                <p>Selamat datang di Quiz Pergunu, platform ujian pengetahuan berbasis web yang dikembangkan oleh Pergunu Situbondo. Dengan mengakses dan menggunakan aplikasi ini, Anda menyetujui untuk terikat oleh syarat dan ketentuan berikut:</p>
+                
+                <p><strong>1. Penggunaan Aplikasi</strong><br>
+                 Quiz Pergunu ditujukan untuk tujuan pendidikan dan pengujian pengetahuan. Pengguna diharapkan menggunakan aplikasi ini dengan jujur dan bertanggung jawab.<</p>
+                
+                <p><strong>2. Data Pribadi</strong><br>
                Informasi pribadi yang dikumpulkan (nama, nomor telepon, email) hanya akan digunakan untuk keperluan validasi peserta dan penyampaian hasil quiz. Data tidak akan dibagikan kepada pihak ketiga tanpa izin.</p>
-<p><strong>3. Hak Kekayaan Intelektual</strong><br/>
+                
+                <p><strong>3. Hak Kekayaan Intelektual</strong><br>
                 Seluruh konten, termasuk soal quiz, desain antarmuka, dan sistem penilaian merupakan hak milik Pergunu Situbondo. Dilarang melakukan reproduksi, distribusi, atau modifikasi tanpa izin tertulis.</p>
-<p><strong>4. Ketentuan Quiz</strong><br/>
+                
+                <p><strong>4. Ketentuan Quiz</strong><br>
                 Setiap peserta mendapatkan waktu yang telah ditentukan untuk menyelesaikan quiz. Jawaban yang telah dikirim tidak dapat diubah. Sistem penilaian bersifat otomatis dan final.</p>
-<p><strong>5. Perilaku Pengguna</strong><br/>
+                
+                <p><strong>5. Perilaku Pengguna</strong><br>
                 Dilarang keras melakukan kecurangan dalam bentuk apapun selama mengikuti quiz. Pelanggaran akan mengakibatkan pembatalan hasil dan larangan penggunaan aplikasi.</p>
-<p><strong>6. Pembaruan Sistem</strong><br/>
+                
+                <p><strong>6. Pembaruan Sistem</strong><br>
                 Pergunu Situbondo berhak melakukan pembaruan, perbaikan, atau perubahan sistem tanpa pemberitahuan sebelumnya.</p>
-<p><strong>7. Tanggung Jawab</strong><br/>
+                
+                <p><strong>7. Tanggung Jawab</strong><br>
                 Pengguna bertanggung jawab penuh atas perangkat dan koneksi internet yang digunakan untuk mengakses aplikasi ini.</p>
-<p>Dengan melanjutkan, Anda menyatakan telah membaca, memahami, dan menyetujui seluruh ketentuan di atas.</p>
-</div>
-<div class="terms-checkbox">
-<input id="agreeTerms" required="" type="checkbox"/>
-<label for="agreeTerms">Saya telah membaca dan menyetujui syarat &amp; ketentuan di atas</label>
-</div>
-<button class="continue-btn" disabled="" id="continueBtn">
+                
+                <p>Dengan melanjutkan, Anda menyatakan telah membaca, memahami, dan menyetujui seluruh ketentuan di atas.</p>
+            </div>
+            
+            <div class="terms-checkbox">
+                <input type="checkbox" id="agreeTerms" required>
+                <label for="agreeTerms">Saya telah membaca dan menyetujui syarat & ketentuan di atas</label>
+            </div>
+            
+            <button class="continue-btn" id="continueBtn" disabled>
                 Lanjutkan ke Quiz <i class="fas fa-arrow-right"></i>
-</button>
-</div>
-<p class="opening-message">Ilmu Adalah Cahaya, Kecerdasan &amp; Akhlak Adalah Masa Depan Menuju Kesuksesan (By Cendhanu)</p>
-</div>
-<!-- Main Content -->
-<main class="main-container">
-<!-- Participant Form with integrated header -->
-<form class="participant-form" id="participantForm">
-<div class="form-header">
-<img alt="Pergunu Logo" class="form-logo" src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png"/>
-<h2 class="form-title">Quiz Pergunu</h2>
-<p class="form-subtitle">Silakan isi data diri Anda untuk memulai ujian pengetahuan</p>
-</div>
-<div class="form-group">
-<label class="form-label" for="name">Nama Lengkap</label>
-<input class="form-control" id="name" placeholder="Masukkan nama lengkap Anda" required="" type="text"/>
-</div>
-<div class="form-group">
-<label class="form-label" for="phone">Nomor HP/WhatsApp</label>
-<input class="form-control" id="phone" placeholder="Masukkan nomor yang bisa dihubungi" required="" type="tel"/>
-</div>
-<div class="form-group">
-<label class="form-label" for="email">Email</label>
-<input class="form-control" id="email" placeholder="Masukkan email Anda (opsional)" type="email"/>
-</div>
-<div class="form-group">
-<label class="form-label">Kategori Quiz</label>
-<div class="category-tabs">
-<div class="category-tab active" data-category="pelajar">Pelajar</div>
-<div class="category-tab" data-category="umum">Umum</div>
-</div>
-<!-- Subkategori untuk Pelajar -->
-<div class="subcategory-container" id="pelajarSubcategories">
-<div class="subcategory-title">
-<i class="fas fa-book"></i> Pilih Mata Pelajaran:
-                    </div>
-<div class="subcategory-options">
-<label class="subcategory-option">
-<input checked="" class="subcategory-radio" name="subcategory" type="radio" value="ipa"/>
-<span class="subcategory-label">IPA</span>
-</label>
-<label class="subcategory-option">
-<input class="subcategory-radio" name="subcategory" type="radio" value="ips"/>
-<span class="subcategory-label">IPS</span>
-</label>
-<label class="subcategory-option">
-<input class="subcategory-radio" name="subcategory" type="radio" value="matematika"/>
-<span class="subcategory-label">Matematika</span>
-</label>
-<label class="subcategory-option">
-<input class="subcategory-radio" name="subcategory" type="radio" value="agama"/>
-<span class="subcategory-label">Agama</span>
-</label>
-<label class="subcategory-option">
-<input class="subcategory-radio" name="subcategory" type="radio" value="ppkn"/>
-<span class="subcategory-label">PPKN</span>
-</label>
-<label class="subcategory-option">
-<input class="subcategory-radio" name="subcategory" type="radio" value="sejarah"/>
-<span class="subcategory-label">Sejarah</span>
-</label>
-<label class="subcategory-option">
-<input class="subcategory-radio" name="subcategory" type="radio" value="bahasa_indonesia"/>
-<span class="subcategory-label">Bahasa Indonesia</span>
-</label>
-<label class="subcategory-option">
-<input class="subcategory-radio" name="subcategory" type="radio" value="bahasa_inggris"/>
-<span class="subcategory-label">Bahasa Inggris</span>
-</label>
-</div>
-</div>
-<!-- Subkategori untuk Umum -->
-<div class="subcategory-container" id="umumSubcategories" style="display: none;">
-<div class="subcategory-title">
-<i class="fas fa-star"></i> Pilih Jenis Ujian:
-                    </div>
-<div class="subcategory-options">
-<label class="subcategory-option">
-<input class="subcategory-radio" name="subcategory" type="radio" value="logika"/>
-<span class="subcategory-label">Ujian Logika</span>
-</label>
-<label class="subcategory-option">
-<input class="subcategory-radio" name="subcategory" type="radio" value="sambung_lagu"/>
-<span class="subcategory-label">Sambung Lagu</span>
-</label>
-<label class="subcategory-option">
-<input class="subcategory-radio" name="subcategory" type="radio" value="peribahasa"/>
-<span class="subcategory-label">Tebak Peribahasa</span>
-</label>
-</div>
-</div>
-<!-- Field Profesi (hanya untuk umum) -->
-<div class="form-group profesi-field" id="profesiField">
-<label class="form-label" for="profesi">Profesi</label>
-<input class="form-control" id="profesi" placeholder="Masukkan profesi Anda" type="text"/>
-</div>
-</div>
-<div class="form-group">
-<label class="form-label" for="level">Tingkat Kesulitan</label>
-<select class="form-control" id="level" required="">
-<option value="mudah">Mudah</option>
-<option value="sedang">Sedang</option>
-<option value="sulit">Sulit</option>
-</select>
-</div>
-<button class="btn btn-primary" id="startQuiz" type="submit">
-<i class="fas fa-play"></i> Mulai Quiz
             </button>
-</form>
-<!-- Quiz Container -->
-<div class="quiz-container" id="quizContainer">
-<div class="quiz-header">
-<h1 class="quiz-title"><i class="fas fa-question-circle"></i> Quiz Pergunu</h1>
-<div class="quiz-info">
-<div class="quiz-info-item" id="quizCategory">
-<i class="fas fa-tag"></i> Kategori: <span id="categoryDisplay">Pelajar</span>
-</div>
-<div class="quiz-info-item" id="quizSubcategory">
-<i class="fas fa-book"></i> Subkategori: <span id="subcategoryDisplay">IPA</span>
-</div>
-<div class="quiz-info-item" id="quizLevel">
-<i class="fas fa-signal"></i> Level: <span id="levelDisplay">Mudah</span>
-</div>
-<div class="quiz-info-item" id="quizTimer">
-<i class="fas fa-clock"></i> <span id="timeDisplay">10:00</span>
-</div>
-</div>
-</div>
-<div class="question-container">
-<span class="question-number" id="questionNumber">Pertanyaan 1 dari 10</span>
-<p class="question-text" id="questionText">Memuat pertanyaan...</p>
-</div>
-<div class="options-container" id="optionsContainer">
-<!-- Options will be loaded here -->
-</div>
-<div class="explanation" id="explanation">
-<div class="explanation-title">
-<i class="fas fa-lightbulb"></i> Penjelasan Jawaban:
+        </div>
+        
+        <p class="opening-message">Ilmu Adalah Cahaya, Kecerdasan & Akhlak Adalah Masa Depan Menuju Kesuksesan (By Cendhanu)</p>
+    </div>   
+    
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Participant Form with integrated header -->
+        <form id="participantForm" class="participant-form">
+            <div class="form-header">
+                <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo" class="form-logo">
+                <h2 class="form-title">Quiz Pergunu</h2>
+                <p class="form-subtitle">Silakan isi data diri Anda untuk memulai ujian pengetahuan</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="name" class="form-label">Nama Lengkap</label>
+                <input type="text" id="name" class="form-control" required placeholder="Masukkan nama lengkap Anda">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone" class="form-label">Nomor HP/WhatsApp</label>
+                <input type="tel" id="phone" class="form-control" required placeholder="Masukkan nomor yang bisa dihubungi">
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" placeholder="Masukkan email Anda (opsional)">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Kategori Quiz</label>
+                <div class="category-tabs">
+                    <div class="category-tab active" data-category="pelajar">Pelajar</div>
+                    <div class="category-tab" data-category="umum">Umum</div>
                 </div>
-<p class="explanation-text" id="explanationText">Memuat penjelasan...</p>
-</div>
-<div class="navigation-buttons">
-<button class="btn btn-secondary" id="resetBtn">
-<i class="fas fa-redo"></i> Reset Quiz
-                </button>
-<button class="btn btn-primary" id="nextBtn">
-<i class="fas fa-arrow-right"></i> Selanjutnya
-                </button>
-</div>
-</div>
-<!-- Results Container -->
-<div class="results-container" id="resultsContainer">
-<h2 class="results-title">Hasil Quiz</h2>
-<div class="score" id="scoreDisplay">0%</div>
-<p class="results-message" id="resultsMessage">Memuat hasil...</p>
-<div class="thank-you-message">
-<p>Terima kasih telah mengikuti Quiz Pergunu. Hasil yang Anda capai merupakan cerminan dari usaha dan pengetahuan Anda saat ini.</p>
-<p>Jangan berhenti belajar dan terus tingkatkan kemampuan Anda. Setiap langkah kecil dalam belajar akan membawa Anda menuju kesuksesan yang lebih besar.</p>
-<p>Semangat belajar dan sampai jumpa di quiz berikutnya!</p>
-</div>
-<div class="results-details">
-<h3><i class="fas fa-chart-bar"></i> Statistik Hasil</h3>
-<div class="stats-container">
-<div class="stat-item">
-<div class="stat-value" id="totalQuestions">0</div>
-<div class="stat-label">Total Pertanyaan</div>
-</div>
-<div class="stat-item">
-<div class="stat-value" id="correctAnswers">0</div>
-<div class="stat-label">Jawaban Benar</div>
-</div>
-<div class="stat-item">
-<div class="stat-value" id="wrongAnswers">0</div>
-<div class="stat-label">Jawaban Salah</div>
-</div>
-</div>
-<h3><i class="fas fa-clock"></i> Waktu Penyelesaian</h3>
-<p id="completionTime">-</p>
-</div>
-<div class="share-buttons">
-<a class="share-btn facebook" href="#" id="shareFacebook">
-<i class="fab fa-facebook-f"></i> Share ke Facebook
-                </a>
-<a class="share-btn twitter" href="#" id="shareTwitter">
-<i class="fab fa-twitter"></i> Share ke Twitter
-                </a>
-<a class="share-btn whatsapp" href="#" id="shareWhatsapp">
-<i class="fab fa-whatsapp"></i> Share ke WhatsApp
-                </a>
-<a class="share-btn instagram" href="#" id="shareInstagram">
-<i class="fab fa-instagram"></i> Share ke Instagram
-                </a>
-<a class="share-btn tiktok" href="#" id="shareTiktok">
-<i class="fab fa-tiktok"></i> Share ke TikTok
-                </a>
-<button class="share-btn print" id="printBtn">
-<i class="fas fa-print"></i> Cetak Hasil
-                </button>
-<button class="share-btn screenshot" id="screenshotBtn">
-<i class="fas fa-camera"></i> Ambil Screenshot
-                </button>
-</div>
-<button class="btn btn-primary" id="restartBtn" style="margin-top: 2rem;">
-<i class="fas fa-redo"></i> Ulangi Quiz
+                
+                <!-- Subkategori untuk Pelajar -->
+                <div class="subcategory-container" id="pelajarSubcategories">
+                    <div class="subcategory-title">
+                        <i class="fas fa-book"></i> Pilih Mata Pelajaran:
+                    </div>
+                    <div class="subcategory-options">
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="ipa" checked>
+                            <span class="subcategory-label">IPA</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="ips">
+                            <span class="subcategory-label">IPS</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="matematika">
+                            <span class="subcategory-label">Matematika</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="agama">
+                            <span class="subcategory-label">Agama</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="ppkn">
+                            <span class="subcategory-label">PPKN</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="sejarah">
+                            <span class="subcategory-label">Sejarah</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="bahasa_indonesia">
+                            <span class="subcategory-label">Bahasa Indonesia</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="bahasa_inggris">
+                            <span class="subcategory-label">Bahasa Inggris</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Subkategori untuk Umum -->
+                <div class="subcategory-container" id="umumSubcategories" style="display: none;">
+                    <div class="subcategory-title">
+                        <i class="fas fa-star"></i> Pilih Jenis Ujian:
+                    </div>
+                    <div class="subcategory-options">
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="logika">
+                            <span class="subcategory-label">Ujian Logika</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="sambung_lagu">
+                            <span class="subcategory-label">Sambung Lagu</span>
+                        </label>
+                        <label class="subcategory-option">
+                            <input type="radio" name="subcategory" class="subcategory-radio" value="peribahasa">
+                            <span class="subcategory-label">Tebak Peribahasa</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Field Profesi (hanya untuk umum) -->
+                <div class="form-group profesi-field" id="profesiField">
+                    <label for="profesi" class="form-label">Profesi</label>
+                    <input type="text" id="profesi" class="form-control" placeholder="Masukkan profesi Anda">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="level" class="form-label">Tingkat Kesulitan</label>
+                <select id="level" class="form-control" required>
+                    <option value="mudah">Mudah</option>
+                    <option value="sedang">Sedang</option>
+                    <option value="sulit">Sulit</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" id="startQuiz">
+                <i class="fas fa-play"></i> Mulai Quiz
             </button>
-</div>
-</main>
-<!-- Floating Buttons -->
-<div class="floating-buttons">
-<button class="floating-btn music-btn" id="musicToggle">
-<i class="fas fa-music"></i>
-<span class="tooltip">Putar/Mute Musik Latar</span>
-</button>
-<button class="floating-btn call-center-btn" id="callCenterBtn">
-<i class="fab fa-whatsapp"></i>
-<span class="tooltip">Butuh bantuan? Hubungi kami via WhatsApp</span>
-</button>
-<a class="floating-btn pergunu-link-btn" href="https://is.gd/pergunusitubondo" target="_blank">
-<i class="fas fa-link"></i>
-<span class="tooltip">Kunjungi Website Pergunu</span>
-</a>
-<button class="floating-btn admin-btn" id="adminBtn">
-<i class="fas fa-cog"></i>
-<span class="tooltip">Panel Admin</span>
-</button>
-</div>
-<!-- Admin Overlay -->
-<div class="admin-overlay" id="adminOverlay"></div>
-<!-- Admin Login -->
-<div class="admin-panel" id="adminLogin">
-<div class="admin-header">
-<h2 class="admin-title"><i class="fas fa-lock"></i> Admin Login</h2>
-<button class="admin-close" id="adminClose">×</button>
-</div>
-<div class="form-group">
-<label class="form-label" for="adminPassword">Password Admin</label>
-<input class="form-control" id="adminPassword" placeholder="Masukkan password admin" type="password"/>
-</div>
-<button class="btn btn-primary" id="adminLoginBtn">
-<i class="fas fa-sign-in-alt"></i> Login
+        </form>
+        
+        <!-- Quiz Container -->
+        <div id="quizContainer" class="quiz-container">
+            <div class="quiz-header">
+                <h1 class="quiz-title"><i class="fas fa-question-circle"></i> Quiz Pergunu</h1>
+                <div class="quiz-info">
+                    <div class="quiz-info-item" id="quizCategory">
+                        <i class="fas fa-tag"></i> Kategori: <span id="categoryDisplay">Pelajar</span>
+                    </div>
+                    <div class="quiz-info-item" id="quizSubcategory">
+                        <i class="fas fa-book"></i> Subkategori: <span id="subcategoryDisplay">IPA</span>
+                    </div>
+                    <div class="quiz-info-item" id="quizLevel">
+                        <i class="fas fa-signal"></i> Level: <span id="levelDisplay">Mudah</span>
+                    </div>
+                    <div class="quiz-info-item" id="quizTimer">
+                        <i class="fas fa-clock"></i> <span id="timeDisplay">10:00</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <span class="question-number" id="questionNumber">Pertanyaan 1 dari 10</span>
+                <p class="question-text" id="questionText">Memuat pertanyaan...</p>
+            </div>
+            
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be loaded here -->
+            </div>
+            
+            <div class="explanation" id="explanation">
+                <div class="explanation-title">
+                    <i class="fas fa-lightbulb"></i> Penjelasan Jawaban:
+                </div>
+                <p class="explanation-text" id="explanationText">Memuat penjelasan...</p>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button class="btn btn-secondary" id="resetBtn">
+                    <i class="fas fa-redo"></i> Reset Quiz
+                </button>
+                <button class="btn btn-primary" id="nextBtn">
+                    <i class="fas fa-arrow-right"></i> Selanjutnya
+                </button>
+            </div>
+        </div>
+        
+        <!-- Results Container -->
+        <div id="resultsContainer" class="results-container">
+            <div class="certificate-container">
+                <div class="certificate-border"></div>
+                
+                <div class="certificate-header">
+                    <h2 class="certificate-title">Sertifikat Hasil Quiz</h2>
+                    <p class="certificate-subtitle">Diberikan sebagai bukti partisipasi dan pencapaian</p>
+                </div>
+                
+                <div class="certificate-body">
+                    <div class="score certificate-score" id="scoreDisplay">0%</div>
+                    <p class="results-message certificate-message" id="resultsMessage">Memuat hasil...</p>
+                    
+                    <div class="thank-you-message">
+                        <p>Terima kasih telah mengikuti Quiz Pergunu. Hasil yang Anda capai merupakan cerminan dari usaha dan pengetahuan Anda saat ini.</p>
+                        <p>Jangan berhenti belajar dan terus tingkatkan kemampuan Anda. Setiap langkah kecil dalam belajar akan membawa Anda menuju kesuksesan yang lebih besar.</p>
+                        <p>Semangat belajar dan sampai jumpa di quiz berikutnya!</p>
+                    </div>
+                </div>
+                
+                <div class="certificate-watermark">
+                    <div class="watermark-code" id="watermarkCode"></div>
+                    <div class="watermark-logo">
+                        <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo">
+                    </div>
+                </div>
+                
+                <div class="barcode-container">
+                    <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png" alt="Barcode">
+                    <div class="barcode-text">QUIZ-PERGUNU-SITUBONDO</div>
+                </div>
+            </div>
+            
+            <div class="results-details">
+                <h3><i class="fas fa-chart-bar"></i> Statistik Hasil</h3>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalQuestions">0</div>
+                        <div class="stat-label">Total Pertanyaan</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="correctAnswers">0</div>
+                        <div class="stat-label">Jawaban Benar</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="wrongAnswers">0</div>
+                        <div class="stat-label">Jawaban Salah</div>
+                    </div>
+                </div>
+                
+                <h3><i class="fas fa-clock"></i> Waktu Penyelesaian</h3>
+                <p id="completionTime">-</p>
+            </div>
+            
+            <div class="share-buttons">
+                <a href="#" class="share-btn facebook" id="shareFacebook">
+                    <i class="fab fa-facebook-f"></i> Share ke Facebook
+                </a>
+                <a href="#" class="share-btn twitter" id="shareTwitter">
+                    <i class="fab fa-twitter"></i> Share ke Twitter
+                </a>
+                <a href="#" class="share-btn whatsapp" id="shareWhatsapp">
+                    <i class="fab fa-whatsapp"></i> Share ke WhatsApp
+                </a>
+                <a href="#" class="share-btn instagram" id="shareInstagram">
+                    <i class="fab fa-instagram"></i> Share ke Instagram
+                </a>
+                <a href="#" class="share-btn tiktok" id="shareTiktok">
+                    <i class="fab fa-tiktok"></i> Share ke TikTok
+                </a>
+                <button class="share-btn print" id="printBtn">
+                    <i class="fas fa-print"></i> Cetak Hasil
+                </button>
+                <button class="share-btn screenshot" id="screenshotBtn">
+                    <i class="fas fa-camera"></i> Ambil Screenshot
+                </button>
+            </div>
+            
+            <button class="btn btn-primary" id="restartBtn" style="margin-top: 2rem;">
+                <i class="fas fa-redo"></i> Ulangi Quiz
+            </button>
+        </div>
+    </main>
+    
+    <!-- Floating Buttons -->
+    <div class="floating-buttons">
+        <button class="floating-btn music-btn" id="musicToggle">
+            <i class="fas fa-music"></i>
+            <span class="tooltip">Putar/Mute Musik Latar</span>
         </button>
-</div>
-<!-- Admin Panel -->
-<div class="admin-panel" id="adminPanel">
-<div class="admin-header">
-<h2 class="admin-title"><i class="fas fa-cog"></i> Panel Admin</h2>
-<button class="admin-close" id="adminPanelClose">×</button>
-</div>
-<div class="admin-content" id="adminContent">
-<div class="form-group">
-<label class="form-label" for="adminCategoryFilter">Filter Kategori</label>
-<select class="form-control" id="adminCategoryFilter">
-<option value="">Semua Kategori</option>
-<option value="pelajar">Pelajar</option>
-<option value="umum">Umum</option>
-</select>
-</div>
-<div class="question-list" id="questionList">
-<!-- Questions will be loaded here -->
-</div>
-<h3 class="admin-title"><i class="fas fa-plus-circle"></i> Tambah Soal Baru</h3>
-<!-- AI Prompt Section -->
-<div class="ai-prompt-section">
-<div class="ai-prompt-title">
-<i class="fas fa-robot"></i> Generator Soal AI
+        
+        <button class="floating-btn call-center-btn" id="callCenterBtn">
+            <i class="fab fa-whatsapp"></i>
+            <span class="tooltip">Butuh bantuan? Hubungi kami via WhatsApp</span>
+        </button>
+        
+        <a href="https://is.gd/pergunusitubondo" class="floating-btn pergunu-link-btn" target="_blank">
+            <i class="fas fa-link"></i>
+            <span class="tooltip">Kunjungi Website Pergunu</span>
+        </a>
+        
+        <button class="floating-btn admin-btn" id="adminBtn">
+            <i class="fas fa-cog"></i>
+            <span class="tooltip">Panel Admin</span>
+        </button>
+    </div>
+    
+    <!-- Admin Overlay -->
+    <div class="admin-overlay" id="adminOverlay"></div>
+    
+    <!-- Admin Login -->
+    <div class="admin-panel" id="adminLogin">
+        <div class="admin-header">
+            <h2 class="admin-title"><i class="fas fa-lock"></i> Admin Login</h2>
+            <button class="admin-close" id="adminClose">&times;</button>
+        </div>
+        
+        <div class="form-group">
+            <label for="adminPassword" class="form-label">Password Admin</label>
+            <input type="password" id="adminPassword" class="form-control" placeholder="Masukkan password admin">
+        </div>
+        <button class="btn btn-primary" id="adminLoginBtn">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+    </div>
+    
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2 class="admin-title"><i class="fas fa-cog"></i> Panel Admin</h2>
+            <button class="admin-close" id="adminPanelClose">&times;</button>
+        </div>
+        
+        <div class="admin-content" id="adminContent">
+            <div class="form-group">
+                <label for="adminCategoryFilter" class="form-label">Filter Kategori</label>
+                <select id="adminCategoryFilter" class="form-control">
+                    <option value="">Semua Kategori</option>
+                    <option value="pelajar">Pelajar</option>
+                    <option value="umum">Umum</option>
+                </select>
+            </div>
+            
+            <div class="question-list" id="questionList">
+                <!-- Questions will be loaded here -->
+            </div>
+            
+            <h3 class="admin-title"><i class="fas fa-plus-circle"></i> Tambah Soal Baru</h3>
+            
+            <!-- AI Prompt Section -->
+            <div class="ai-prompt-section">
+                <div class="ai-prompt-title">
+                    <i class="fas fa-robot"></i> Generator Soal AI
                 </div>
-<p style="margin-bottom: 0.75rem; font-size: 0.95rem;">Masukkan topik untuk menghasilkan soal secara otomatis:</p>
-<input class="form-control" id="aiPromptInput" placeholder="Contoh: Soal matematika dasar tentang aljabar untuk pelajar SMP" type="text"/>
-<div class="ai-loading" id="aiLoading" style="display: none;">
-<i class="fas fa-spinner fa-spin"></i> Membuat soal, harap tunggu...
+                <p style="margin-bottom: 0.75rem; font-size: 0.95rem;">Masukkan topik untuk menghasilkan soal secara otomatis:</p>
+                <input type="text" id="aiPromptInput" class="form-control" placeholder="Contoh: Soal matematika dasar tentang aljabar untuk pelajar SMP">
+                <div class="ai-loading" id="aiLoading" style="display: none;">
+                    <i class="fas fa-spinner fa-spin"></i> Membuat soal, harap tunggu...
                 </div>
-<button class="btn btn-success" id="generateQuestionBtn" style="width: 100%; margin-top: 1rem;">
-<i class="fas fa-magic"></i> Generate Soal dengan AI
+                <button class="btn btn-success" id="generateQuestionBtn" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-magic"></i> Generate Soal dengan AI
                 </button>
-</div>
-<form id="addQuestionForm">
-<div class="form-group">
-<label class="form-label" for="newCategory">Kategori</label>
-<select class="form-control" id="newCategory" required="">
-<option value="">Pilih Kategori</option>
-<option value="pelajar">Pelajar</option>
-<option value="umum">Umum</option>
-</select>
-</div>
-<div class="form-group" id="newSubcategoryGroup" style="display: none;">
-<label class="form-label" for="newSubcategory">Subkategori</label>
-<select class="form-control" id="newSubcategory">
-<option value="ipa">IPA</option>
-<option value="ips">IPS</option>
-<option value="matematika">Matematika</option>
-<option value="agama">Agama</option>
-<option value="ppkn">PPKN</option>
-<option value="sejarah">Sejarah</option>
-<option value="bahasa_indonesia">Bahasa Indonesia</option>
-<option value="bahasa_inggris">Bahasa Inggris</option>
-</select>
-</div>
-<div class="form-group" id="newUmumSubcategoryGroup" style="display: none;">
-<label class="form-label" for="newUmumSubcategory">Jenis Ujian</label>
-<select class="form-control" id="newUmumSubcategory">
-<option value="logika">Ujian Logika</option>
-<option value="sambung_lagu">Sambung Lagu</option>
-<option value="peribahasa">Tebak Peribahasa</option>
-</select>
-</div>
-<div class="form-group">
-<label class="form-label" for="newLevel">Tingkat Kesulitan</label>
-<select class="form-control" id="newLevel" required="">
-<option value="">Pilih Tingkat</option>
-<option value="mudah">Mudah</option>
-<option value="sedang">Sedang</option>
-<option value="sulit">Sulit</option>
-</select>
-</div>
-<div class="form-group">
-<label class="form-label" for="newQuestion">Pertanyaan</label>
-<textarea class="form-control" id="newQuestion" placeholder="Masukkan pertanyaan" required="" rows="3"></textarea>
-</div>
-<div class="form-group">
-<label class="form-label">Pilihan Jawaban</label>
-<div class="options-grid">
-<div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-<span class="option-prefix">A.</span>
-<input class="form-control" id="optionA" placeholder="Pilihan A" required="" type="text"/>
-</div>
-<div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-<span class="option-prefix">B.</span>
-<input class="form-control" id="optionB" placeholder="Pilihan B" required="" type="text"/>
-</div>
-<div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-<span class="option-prefix">C.</span>
-<input class="form-control" id="optionC" placeholder="Pilihan C" required="" type="text"/>
-</div>
-<div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-<span class="option-prefix">D.</span>
-<input class="form-control" id="optionD" placeholder="Pilihan D" required="" type="text"/>
-</div>
-</div>
-</div>
-<div class="form-group">
-<label class="form-label" for="correctAnswer">Jawaban Benar</label>
-<select class="form-control" id="correctAnswer" required="">
-<option value="">Pilih Jawaban Benar</option>
-<option value="A">A</option>
-<option value="B">B</option>
-<option value="C">C</option>
-<option value="D">D</option>
-</select>
-</div>
-<div class="form-group">
-<label class="form-label" for="newExplanation">Penjelasan Jawaban</label>
-<textarea class="form-control" id="newExplanation" placeholder="Masukkan penjelasan jawaban" required="" rows="3"></textarea>
-</div>
-<div class="form-actions" style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
-<button class="btn btn-secondary" id="cancelAddQuestion" type="button">
-<i class="fas fa-times"></i> Batal
+            </div>
+            
+            <form id="addQuestionForm">
+                <div class="form-group">
+                    <label for="newCategory" class="form-label">Kategori</label>
+                    <select id="newCategory" class="form-control" required>
+                        <option value="">Pilih Kategori</option>
+                        <option value="pelajar">Pelajar</option>
+                        <option value="umum">Umum</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="newSubcategoryGroup" style="display: none;">
+                    <label for="newSubcategory" class="form-label">Subkategori</label>
+                    <select id="newSubcategory" class="form-control">
+                        <option value="ipa">IPA</option>
+                        <option value="ips">IPS</option>
+                        <option value="matematika">Matematika</option>
+                        <option value="agama">Agama</option>
+                        <option value="ppkn">PPKN</option>
+                        <option value="sejarah">Sejarah</option>
+                        <option value="bahasa_indonesia">Bahasa Indonesia</option>
+                        <option value="bahasa_inggris">Bahasa Inggris</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="newUmumSubcategoryGroup" style="display: none;">
+                    <label for="newUmumSubcategory" class="form-label">Jenis Ujian</label>
+                    <select id="newUmumSubcategory" class="form-control">
+                        <option value="logika">Ujian Logika</option>
+                        <option value="sambung_lagu">Sambung Lagu</option>
+                        <option value="peribahasa">Tebak Peribahasa</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newLevel" class="form-label">Tingkat Kesulitan</label>
+                    <select id="newLevel" class="form-control" required>
+                        <option value="">Pilih Tingkat</option>
+                        <option value="mudah">Mudah</option>
+                        <option value="sedang">Sedang</option>
+                        <option value="sulit">Sulit</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newQuestion" class="form-label">Pertanyaan</label>
+                    <textarea id="newQuestion" class="form-control" rows="3" required placeholder="Masukkan pertanyaan"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Pilihan Jawaban</label>
+                    <div class="options-grid">
+                        <div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                            <span class="option-prefix">A.</span>
+                            <input type="text" id="optionA" class="form-control" placeholder="Pilihan A" required>
+                        </div>
+                        <div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                            <span class="option-prefix">B.</span>
+                            <input type="text" id="optionB" class="form-control" placeholder="Pilihan B" required>
+                        </div>
+                        <div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                            <span class="option-prefix">C.</span>
+                            <input type="text" id="optionC" class="form-control" placeholder="Pilihan C" required>
+                        </div>
+                        <div class="option-input" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                            <span class="option-prefix">D.</span>
+                            <input type="text" id="optionD" class="form-control" placeholder="Pilihan D" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="correctAnswer" class="form-label">Jawaban Benar</label>
+                    <select id="correctAnswer" class="form-control" required>
+                        <option value="">Pilih Jawaban Benar</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newExplanation" class="form-label">Penjelasan Jawaban</label>
+                    <textarea id="newExplanation" class="form-control" rows="3" required placeholder="Masukkan penjelasan jawaban"></textarea>
+                </div>
+                
+                <div class="form-actions" style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+                    <button type="button" class="btn btn-secondary" id="cancelAddQuestion">
+                        <i class="fas fa-times"></i> Batal
                     </button>
-<button class="btn btn-primary" type="submit">
-<i class="fas fa-save"></i> Simpan Soal
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Simpan Soal
                     </button>
-</div>
-</form>
-<div class="password-form" style="margin-top: 3rem;">
-<h3 class="admin-title"><i class="fas fa-key"></i> Ganti Password</h3>
-<form id="changePasswordForm">
-<div class="form-group">
-<label class="form-label" for="currentPassword">Password Lama</label>
-<input class="form-control" id="currentPassword" placeholder="Masukkan password lama" required="" type="password"/>
-</div>
-<div class="form-group">
-<label class="form-label" for="newPassword">Password Baru</label>
-<input class="form-control" id="newPassword" placeholder="Masukkan password baru (minimal 8 karakter)" required="" type="password"/>
-</div>
-<div class="form-group">
-<label class="form-label" for="confirmPassword">Konfirmasi Password</label>
-<input class="form-control" id="confirmPassword" placeholder="Konfirmasi password baru" required="" type="password"/>
-</div>
-<div class="form-actions" style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
-<button class="btn btn-primary" type="submit">
-<i class="fas fa-sync-alt"></i> Ganti Password
+                </div>
+            </form>
+            
+            <div class="password-form" style="margin-top: 3rem;">
+                <h3 class="admin-title"><i class="fas fa-key"></i> Ganti Password</h3>
+                <form id="changePasswordForm">
+                    <div class="form-group">
+                        <label for="currentPassword" class="form-label">Password Lama</label>
+                        <input type="password" id="currentPassword" class="form-control" required placeholder="Masukkan password lama">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword" class="form-label">Password Baru</label>
+                        <input type="password" id="newPassword" class="form-control" required placeholder="Masukkan password baru (minimal 8 karakter)">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">Konfirmasi Password</label>
+                        <input type="password" id="confirmPassword" class="form-control" required placeholder="Konfirmasi password baru">
+                    </div>
+                    <div class="form-actions" style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-sync-alt"></i> Ganti Password
                         </button>
-</div>
-</form>
-</div>
-</div>
-</div>
-<!-- Audio Elements -->
-<audio id="openingSound" preload="auto">
-<source src="assets/audio/opening.mp3" type="audio/mpeg"/>
-</audio>
-<audio id="welcomeSound" preload="auto">
-<source src="assets/audio/welcome.mp3" type="audio/mpeg"/>
-</audio>
-<audio id="quizMusic" loop="" preload="auto">
-<source src="assets/audio/quiz-music.mp3" type="audio/mpeg"/>
-</audio>
-<audio id="adhanSound" preload="auto">
-<source src="assets/audio/adhan.mp3" type="audio/mpeg"/>
-</audio>
-<audio id="backgroundMusic" preload="auto">
-<source src="assets/audio/background.mp3" type="audio/mpeg"/>
-</audio>
-<audio id="applauseSound" preload="auto">
-<source src="assets/audio/applause.mp3" type="audio/mpeg"/>
-</audio>
-<audio id="correctSound" preload="auto">
-<source src="assets/audio/correct.mp3" type="audio/mpeg"/>
-</audio>
-<audio id="wrongSound" preload="auto">
-<source src="assets/audio/wrong.mp3" type="audio/mpeg"/>
-</audio>
-<script>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Audio Elements -->
+    <audio id="openingSound" preload="auto">
+        <source src="assets/audio/opening.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="welcomeSound" preload="auto">
+        <source src="assets/audio/welcome.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="quizMusic" loop preload="auto">
+        <source src="assets/audio/quiz-music.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="adhanSound" preload="auto">
+        <source src="assets/audio/adhan.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="backgroundMusic" preload="auto">
+        <source src="assets/audio/background.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="applauseSound" preload="auto">
+        <source src="assets/audio/applause.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="correctSound" preload="auto">
+        <source src="assets/audio/correct.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrongSound" preload="auto">
+        <source src="assets/audio/wrong.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
         // Data Soal yang Diperluas
         let questions = {
             pelajar: {
@@ -2108,7 +2290,7 @@
                             question: "Zat apa yang diperlukan tanaman untuk fotosintesis?",
                             options: ["Karbon dioksida", "Oksigen", "Nitrogen", "Hidrogen"],
                             answer: 0,
-                            explanation: "Tanaman menggunakan karbon dioksida, air, dan cahaya matahari untuk menghasilkan glukosa dan oksigen melalui proses fotosintesis."
+                            explanation: "Tanaman menggunakan karbon dioksida, water, dan cahaya matahari untuk menghasilkan glukosa dan oksigen melalui proses fotosintesis."
                         }
                     ],
                     sedang: [
@@ -2290,50 +2472,46 @@
             document.querySelector('.main-container').style.display = 'none';
         });
 
-        // Pastikan opening screen visible dan main container hidden
-document.getElementById('openingScreen').style.display = 'flex';
-document.querySelector('.main-container').style.display = 'none';
-
-// Fungsi initAudio dengan volume maksimal
-function initAudio() {
-    const audioElements = document.querySelectorAll('audio');
-    audioElements.forEach(audio => {
-        audio.volume = 1.0; // Volume 100%
-    });
-    
-    document.body.addEventListener('click', function enableAudio() {
-        document.body.removeEventListener('click', enableAudio);
-        if (musicEnabled) {
-            playOpeningSound();
+        // Fungsi initAudio dengan volume maksimal
+        function initAudio() {
+            const audioElements = document.querySelectorAll('audio');
+            audioElements.forEach(audio => {
+                audio.volume = 1.0; // Volume 100%
+            });
+            
+            document.body.addEventListener('click', function enableAudio() {
+                document.body.removeEventListener('click', enableAudio);
+                if (musicEnabled) {
+                    playOpeningSound();
+                }
+            }, { once: true });
         }
-    }, { once: true });
-}
 
-// Fungsi putar opening sound dengan volume maksimal
-function playOpeningSound() {
-    const openingSound = document.getElementById('openingSound');
-    openingSound.volume = 1.0; // <-- Tambahkan ini
-    openingSound.play().catch(error => {
-        console.log("Autoplay prevented:", error);
-    });
-}
+        // Fungsi putar opening sound dengan volume maksimal
+        function playOpeningSound() {
+            const openingSound = document.getElementById('openingSound');
+            openingSound.volume = 1.0;
+            openingSound.play().catch(error => {
+                console.log("Autoplay prevented:", error);
+            });
+        }
 
-// Fungsi toggle musik latar dengan volume maksimal
-function toggleBackgroundMusic() {
-    const backgroundMusic = document.getElementById('backgroundMusic');
-    backgroundMusic.volume = 1.0; // Volume 100%
-    
-    if (musicEnabled) {
-        backgroundMusic.pause();
-        document.getElementById('musicToggle').innerHTML = '<i class="fas fa-music"></i><span class="tooltip">Nyalakan Musik Latar</span>';
-    } else {
-        backgroundMusic.play().catch(error => {
-            console.log("Autoplay prevented:", error);
-        });
-        document.getElementById('musicToggle').innerHTML = '<i class="fas fa-music"></i><span class="tooltip">Matikan Musik Latar</span>';
-    }
-    musicEnabled = !musicEnabled;
-}
+        // Fungsi toggle musik latar dengan volume maksimal
+        function toggleBackgroundMusic() {
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            backgroundMusic.volume = 1.0; // Volume 100%
+            
+            if (musicEnabled) {
+                backgroundMusic.pause();
+                document.getElementById('musicToggle').innerHTML = '<i class="fas fa-music"></i><span class="tooltip">Nyalakan Musik Latar</span>';
+            } else {
+                backgroundMusic.play().catch(error => {
+                    console.log("Autoplay prevented:", error);
+                });
+                document.getElementById('musicToggle').innerHTML = '<i class="fas fa-music"></i><span class="tooltip">Matikan Musik Latar</span>';
+            }
+            musicEnabled = !musicEnabled;
+        }
 
         function createStars() {
             const starsContainer = document.getElementById('stars');
@@ -2366,21 +2544,6 @@ function toggleBackgroundMusic() {
                 star.style.animationDelay = `${delay}s`;
                 
                 starsContainer.appendChild(star);
-            }
-        }
-
-        function playOpeningSound() {
-            const openingSound = document.getElementById('openingSound');
-            
-            try {
-                const promise = openingSound.play();
-                if (promise !== undefined) {
-                    promise.catch(error => {
-                        console.log("Autoplay prevented:", error);
-                    });
-                }
-            } catch (error) {
-                console.log("Error playing opening sound:", error);
             }
         }
 
@@ -2569,22 +2732,6 @@ function toggleBackgroundMusic() {
             document.getElementById('callCenterBtn').addEventListener('click', function() {
                 window.open('https://wa.me/6285647709114', '_blank');
             });
-        }
-
-        function toggleBackgroundMusic() {
-            const backgroundMusic = document.getElementById('backgroundMusic');
-            
-            if (musicEnabled) {
-                backgroundMusic.pause();
-                document.getElementById('musicToggle').innerHTML = '<i class="fas fa-music"></i><span class="tooltip">Nyalakan Musik Latar</span>';
-            } else {
-                backgroundMusic.play().catch(error => {
-                    console.log("Autoplay prevented:", error);
-                });
-                document.getElementById('musicToggle').innerHTML = '<i class="fas fa-music"></i><span class="tooltip">Matikan Musik Latar</span>';
-            }
-            
-            musicEnabled = !musicEnabled;
         }
 
         function playSound(soundId) {
@@ -2840,6 +2987,21 @@ function toggleBackgroundMusic() {
             
             // Stop quiz music
             document.getElementById('quizMusic').pause();
+        }
+
+        function generateUniqueCode() {
+            // Generate a 12-character code with dashes (format: XXXX-XXXX-XXXX)
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = '';
+            
+            for (let i = 0; i < 12; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    code += '-';
+                }
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            return code;
         }
 
         function startTimer() {
@@ -3338,7 +3500,7 @@ function toggleBackgroundMusic() {
                 // # UNCOMMENT DAN GUNAKAN INI UNTUK API ASLI        #
                 // ####################################################
                 /*
-                const API_KEY = 'ISI APIKEY DISINI'; // <-- INI TEMPAT API KEY
+                const API_KEY = 'sk-8837b24327bd4db99e36688951ceaea8'; // <-- INI TEMPAT API KEY
                 const generatedQuestion = await callAIGenerateQuestion(prompt, category, level, API_KEY);
                 */
                 
