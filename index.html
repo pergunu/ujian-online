@@ -2857,27 +2857,40 @@ function toggleBackgroundMusic() {
             const minutes = Math.floor(timeDiff / 60);
             const seconds = Math.floor(timeDiff % 60);
             
+            // Get participant data
+            const name = document.getElementById('name').value;
+            const categoryText = currentCategory === 'pelajar' ? 'PELAJAR' : 'UMUM';
+            
+            // Generate watermark code
+            const now = new Date();
+            const dateStr = `${now.getDate().toString().padStart(2, '0')}${(now.getMonth()+1).toString().padStart(2, '0')}${now.getFullYear()}`;
+            
+            // Generate unique code (12 digit with dashes)
+            const uniqueCode = generateUniqueCode();
+            const watermarkCode = `${name.toUpperCase().substring(0, 4)}/${categoryText}/${dateStr}/${uniqueCode}/PERGUNU-SITUBONDO`;
+            
             // Display results
             document.getElementById('scoreDisplay').textContent = `${percentage}%`;
             document.getElementById('totalQuestions').textContent = totalQuestions;
             document.getElementById('correctAnswers').textContent = score;
             document.getElementById('wrongAnswers').textContent = totalQuestions - score;
             document.getElementById('completionTime').textContent = `${minutes} menit ${seconds} detik`;
+            document.getElementById('watermarkCode').textContent = watermarkCode;
             
             // Set result message
             let message = "";
             if (percentage >= 80) {
-                message = "Sempurna! Anda sangat menguasai materi ini.";
+                message = "SEMPURNA! Anda sangat menguasai materi ini. Pertahankan prestasi ini!";
                 playSound('applauseSound');
                 createConfetti();
             } else if (percentage >= 60) {
-                message = "Bagus! Anda memiliki pemahaman yang baik.";
+                message = "BAIK SEKALI! Anda memiliki pemahaman yang solid tentang materi ini.";
                 playSound('applauseSound');
                 createConfetti();
             } else if (percentage >= 40) {
-                message = "Cukup baik. Tingkatkan lagi belajarnya!";
+                message = "CUKUP BAIK. Tingkatkan lagi belajarnya! Anda hampir mencapai level yang lebih baik.";
             } else {
-                message = "Anda perlu belajar lebih giat lagi.";
+                message = "TERUS BERLATIH! Setiap kesalahan adalah kesempatan untuk belajar lebih baik lagi.";
             }
             document.getElementById('resultsMessage').textContent = message;
             
@@ -3385,7 +3398,7 @@ function toggleBackgroundMusic() {
                 // # UNCOMMENT DAN GUNAKAN INI UNTUK API ASLI        #
                 // ####################################################
                 /*
-                const API_KEY = 'sk-8837b24327bd4db99e36688951ceaea8'; // <-- INI TEMPAT API KEY
+                const API_KEY = 'ISI APIKEY DISINI'; // <-- INI TEMPAT API KEY
                 const generatedQuestion = await callAIGenerateQuestion(prompt, category, level, API_KEY);
                 */
                 
