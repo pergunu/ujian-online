@@ -1141,6 +1141,43 @@
             letter-spacing: 2px;
         }
 
+        /* Certificate Action Buttons */
+        .certificate-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .certificate-btn {
+            padding: 1rem 2rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+            color: white;
+        }
+        
+        .certificate-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .certificate-btn.print {
+            background: var(--gray);
+        }
+        
+        .certificate-btn.screenshot {
+            background: var(--primary);
+        }
+
         /* Results Container - FULL SCREEN LAYOUT */
         .results-container {
             background: white;
@@ -1206,72 +1243,6 @@
             font-size: 1.1rem;
             color: var(--gray);
             font-weight: 500;
-        }
-        
-        /* Share Buttons */
-        .share-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .share-btn {
-            padding: 1rem 2rem;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.1rem;
-            text-decoration: none;
-            box-shadow: var(--shadow);
-        }
-        
-        .share-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .share-btn.facebook {
-            background: #1877f2;
-            color: white;
-        }
-        
-        .share-btn.twitter {
-            background: #1da1f2;
-            color: white;
-        }
-        
-        .share-btn.whatsapp {
-            background: #25d366;
-            color: white;
-        }
-        
-        .share-btn.instagram {
-            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
-            color: white;
-        }
-        
-        .share-btn.tiktok {
-            background: #000;
-            color: white;
-        }
-        
-        .share-btn.print {
-            background: var(--gray);
-            color: white;
-        }
-        
-        .share-btn.screenshot {
-            background: var(--primary);
-            color: white;
         }
         
         /* Floating Buttons */
@@ -1692,6 +1663,16 @@
             .certificate-title::after {
                 display: none;
             }
+
+            .certificate-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .certificate-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1709,14 +1690,6 @@
             
             .subcategory-options {
                 grid-template-columns: 1fr 1fr;
-            }
-            
-            .share-buttons {
-                flex-direction: column;
-            }
-            
-            .share-btn {
-                justify-content: center;
             }
             
             .floating-buttons {
@@ -1929,7 +1902,7 @@
                         <i class="fas fa-signal"></i> Level: <span id="levelDisplay">Mudah</span>
                     </div>
                     <div class="quiz-info-item" id="quizTimer">
-                        <i class="fas fa-clock"></i> <span id="timeDisplay">10:00</span>
+                        <i class="fas fa-clock"></i> <span id="timeDisplay">90:00</span>
                     </div>
                 </div>
             </div>
@@ -1992,6 +1965,16 @@
                     <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png" alt="Barcode">
                     <div class="barcode-text">QUIZ-PERGUNU-SITUBONDO</div>
                 </div>
+
+                <!-- Certificate Action Buttons -->
+                <div class="certificate-actions">
+                    <button class="certificate-btn print" id="printBtn">
+                        <i class="fas fa-print"></i> Cetak Hasil
+                    </button>
+                    <button class="certificate-btn screenshot" id="screenshotBtn">
+                        <i class="fas fa-camera"></i> Ambil Screenshot
+                    </button>
+                </div>
             </div>
             
             <div class="results-details">
@@ -2013,30 +1996,6 @@
                 
                 <h3><i class="fas fa-clock"></i> Waktu Penyelesaian</h3>
                 <p id="completionTime">-</p>
-            </div>
-            
-            <div class="share-buttons">
-                <a href="#" class="share-btn facebook" id="shareFacebook">
-                    <i class="fab fa-facebook-f"></i> Share ke Facebook
-                </a>
-                <a href="#" class="share-btn twitter" id="shareTwitter">
-                    <i class="fab fa-twitter"></i> Share ke Twitter
-                </a>
-                <a href="#" class="share-btn whatsapp" id="shareWhatsapp">
-                    <i class="fab fa-whatsapp"></i> Share ke WhatsApp
-                </a>
-                <a href="#" class="share-btn instagram" id="shareInstagram">
-                    <i class="fab fa-instagram"></i> Share ke Instagram
-                </a>
-                <a href="#" class="share-btn tiktok" id="shareTiktok">
-                    <i class="fab fa-tiktok"></i> Share ke TikTok
-                </a>
-                <button class="share-btn print" id="printBtn">
-                    <i class="fas fa-print"></i> Cetak Hasil
-                </button>
-                <button class="share-btn screenshot" id="screenshotBtn">
-                    <i class="fas fa-camera"></i> Ambil Screenshot
-                </button>
             </div>
             
             <button class="btn btn-primary" id="restartBtn" style="margin-top: 2rem;">
@@ -2718,12 +2677,7 @@
             // AI Question Generator
             document.getElementById('generateQuestionBtn').addEventListener('click', generateQuestionWithAI);
             
-            // Share buttons
-            document.getElementById('shareFacebook').addEventListener('click', shareFacebook);
-            document.getElementById('shareTwitter').addEventListener('click', shareTwitter);
-            document.getElementById('shareWhatsapp').addEventListener('click', shareWhatsapp);
-            document.getElementById('shareInstagram').addEventListener('click', shareInstagram);
-            document.getElementById('shareTiktok').addEventListener('click', shareTiktok);
+            // Action buttons
             document.getElementById('printBtn').addEventListener('click', printResults);
             document.getElementById('screenshotBtn').addEventListener('click', takeScreenshot);
             
@@ -2815,8 +2769,8 @@
             document.getElementById('welcomeSound').pause();
             document.getElementById('backgroundMusic').pause();
             
-            // Start timer
-            startTimer();
+            // Start timer (90 minutes)
+            startTimer(90);
             
             // Play quiz music
             playQuizMusic();
@@ -3004,8 +2958,8 @@
             return code;
         }
 
-        function startTimer() {
-            let timeLeft = 600; // 10 minutes in seconds
+        function startTimer(minutes) {
+            let timeLeft = minutes * 60; // Convert minutes to seconds
             
             // Update immediately
             updateTimerDisplay(timeLeft);
@@ -3561,37 +3515,6 @@
                     resolve(mockResponses[Math.floor(Math.random() * mockResponses.length)]);
                 }, 2000);
             });
-        }
-
-        /* Share Functions */
-        function shareFacebook() {
-            const score = document.getElementById('scoreDisplay').textContent;
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent(`Saya baru saja menyelesaikan Quiz Pergunu dengan skor ${score}! Coba kamu juga!`);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
-        }
-
-        function shareTwitter() {
-            const score = document.getElementById('scoreDisplay').textContent;
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent(`Saya baru saja menyelesaikan Quiz Pergunu dengan skor ${score}! Coba kamu juga!`);
-            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
-        }
-
-        function shareWhatsapp() {
-            const score = document.getElementById('scoreDisplay').textContent;
-            const text = encodeURIComponent(`Saya baru saja menyelesaikan Quiz Pergunu dengan skor ${score}! Coba kamu juga: ${window.location.href}`);
-            window.open(`https://wa.me/?text=${text}`, '_blank');
-        }
-
-        function shareInstagram() {
-            alert('Untuk berbagi ke Instagram, silakan ambil screenshot hasil quiz dan unggah ke Instagram Anda.');
-            takeScreenshot();
-        }
-
-        function shareTiktok() {
-            alert('Untuk berbagi ke TikTok, silakan ambil screenshot hasil quiz dan unggah ke TikTok Anda.');
-            takeScreenshot();
         }
 
         function printResults() {
