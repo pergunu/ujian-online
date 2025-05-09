@@ -2887,7 +2887,7 @@
             
             // Generate unique code (12 digit with dashes)
             const uniqueCode = generateUniqueCode();
-            const watermarkCode = `${name.toUpperCase().substring(0, 4)}/${categoryText}/${dateStr}/${uniqueCode}/PERGUNU-SITUBONDO`;
+            const watermarkCode = `${name.toUpperCase().replace(/ /g, '')}/${categoryText}/${dateStr}/${uniqueCode}/PERGUNU-SITUBONDO`;
             
             // Display results
             document.getElementById('scoreDisplay').textContent = `${percentage}%`;
