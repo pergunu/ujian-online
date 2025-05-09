@@ -9,6 +9,7 @@
     
     <!-- Font & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Library untuk screenshot -->
@@ -990,57 +991,41 @@
             max-width: 900px;
             margin: 2rem auto;
             text-align: center;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
-            padding: 40px;
-            border: 15px solid #f8f9fa;
-            background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/certificate-bg.png');
+            background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/sertificate.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 80px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 15px solid #f8f9fa;
         }
 
-        .certificate-border {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+        .certificate-content {
+            position: relative;
+            z-index: 2;
             height: 100%;
-            border: 2px solid var(--primary);
-            border-radius: 5px;
-            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .certificate-header {
-            margin-bottom: 2rem;
-            position: relative;
-            padding-bottom: 1.5rem;
-        }
-
-        .certificate-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary), var(--primary-dark));
-            border-radius: 3px;
+            margin-bottom: 1.5rem;
         }
 
         .certificate-title {
             font-size: 2.8rem;
             color: #3a0ca3;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             font-family: 'Playfair Display', serif;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            position: relative;
-            display: inline-block;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .certificate-subtitle {
@@ -1048,8 +1033,8 @@
             color: #555;
             margin-bottom: 0.5rem;
             font-weight: 500;
-            text-transform: uppercase;
             letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .certificate-presented {
@@ -1059,22 +1044,15 @@
             margin-bottom: 2rem;
         }
 
-        .certificate-body {
-            margin-bottom: 3rem;
-            width: 80%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
         .certificate-name {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 700;
             color: #3a0ca3;
             margin: 1rem 0;
-            font-family: 'Playfair Display', serif;
-            text-transform: uppercase;
+            font-family: 'Great Vibes', cursive;
             letter-spacing: 1px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            line-height: 1.2;
         }
 
         .certificate-text {
@@ -1082,29 +1060,32 @@
             line-height: 1.8;
             margin-bottom: 1.5rem;
             color: #333;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .certificate-score {
             font-size: 5rem;
             font-weight: 700;
             color: #3a0ca3;
-            margin: 2rem 0;
+            margin: 1rem 0;
             position: relative;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Montserrat', sans-serif;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
         .certificate-score::after {
             content: '';
             position: absolute;
-            bottom: -1rem;
+            bottom: -0.5rem;
             left: 50%;
             transform: translateX(-50%);
-            width: 150px;
-            height: 8px;
+            width: 200px;
+            height: 4px;
             background: linear-gradient(to right, var(--primary), var(--primary-dark));
-            opacity: 0.3;
-            border-radius: 4px;
+            opacity: 0.5;
+            border-radius: 2px;
         }
 
         .certificate-message {
@@ -1119,64 +1100,67 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
-        .certificate-footer {
-            margin-top: 3rem;
+        .certificate-stats {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
             flex-wrap: wrap;
         }
 
-        .certificate-signature {
-            flex: 1;
-            min-width: 200px;
-            margin: 1rem;
+        .certificate-stat {
+            background: rgba(255,255,255,0.8);
+            padding: 1.5rem;
+            border-radius: var(--radius-sm);
+            min-width: 150px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(67, 97, 238, 0.2);
         }
 
-        .signature-line {
-            width: 200px;
-            height: 1px;
-            background: #333;
-            margin: 0.5rem auto;
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .certificate-footer {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .certificate-date {
-            margin-top: 2rem;
+            margin-top: 1rem;
             font-weight: 500;
+            color: #555;
+            font-size: 1.1rem;
         }
 
         .certificate-watermark {
-            background: rgba(248, 249, 250, 0.8);
-            padding: 1.5rem;
-            border-radius: var(--radius-sm);
-            margin-top: 2rem;
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
-            text-align: center;
-            border-left: 5px solid var(--primary);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .watermark-code {
-            font-weight: bold;
-            color: var(--primary-dark);
+            color: rgba(67, 97, 238, 0.7);
             letter-spacing: 1px;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .watermark-logo {
-            margin-top: 1rem;
-        }
-
-        .watermark-logo img {
-            height: 60px;
-            opacity: 0.7;
         }
 
         .barcode-container {
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             text-align: center;
         }
 
@@ -1186,10 +1170,11 @@
         }
 
         .barcode-text {
-            font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-            color: var(--gray);
-            letter-spacing: 2px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: var(--dark);
+            font-weight: 600;
+            margin-top: 0.5rem;
         }
 
         /* Print Button */
@@ -1235,10 +1220,10 @@
                 width: 100%;
                 height: 100%;
                 margin: 0;
-                padding: 40px;
+                padding: 60px 80px;
                 border: none;
                 box-shadow: none;
-                background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/certificate-bg.png');
+                background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/sertificate.png');
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
@@ -1639,8 +1624,16 @@
                 grid-template-columns: 1fr 1fr;
             }
             
+            .certificate-wrapper {
+                padding: 40px;
+            }
+            
             .certificate-title {
                 font-size: 2.2rem;
+            }
+            
+            .certificate-name {
+                font-size: 2rem;
             }
             
             .certificate-score {
@@ -1651,8 +1644,17 @@
                 font-size: 1.1rem;
             }
             
-            .certificate-body {
-                width: 90%;
+            .certificate-stats {
+                gap: 1rem;
+            }
+            
+            .certificate-stat {
+                padding: 1rem;
+                min-width: 120px;
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
             }
         }
 
@@ -1718,7 +1720,8 @@
             }
             
             .certificate-wrapper {
-                padding: 20px;
+                padding: 30px;
+                min-height: 500px;
             }
             
             .certificate-title {
@@ -1733,14 +1736,11 @@
                 font-size: 3.5rem;
             }
             
-            .certificate-footer {
+            .certificate-stats {
                 flex-direction: column;
+                align-items: center;
             }
             
-            .certificate-signature {
-                margin: 1rem 0;
-            }
-
             .print-certificate-btn {
                 width: 100%;
             }
@@ -1785,13 +1785,9 @@
                 right: 5rem;
             }
             
-            .watermark-code {
-                font-size: 0.8rem;
-            }
-            
             .certificate-wrapper {
-                padding: 15px;
-                border-width: 5px;
+                padding: 20px;
+                min-height: 400px;
             }
             
             .certificate-title {
@@ -1816,6 +1812,10 @@
             
             .certificate-message {
                 font-size: 1rem;
+            }
+            
+            .barcode-container img {
+                height: 60px;
             }
         }
     </style>
@@ -2036,14 +2036,12 @@
         <!-- Results Container -->
         <div id="resultsContainer" class="results-container">
             <div class="certificate-wrapper">
-                <div class="certificate-border"></div>
-                
-                <div class="certificate-header">
-                    <h2 class="certificate-title">SERTIFIKAT PRESTASI</h2>
-                    <p class="certificate-subtitle">DIBERIKAN KEPADA</p>
-                </div>
-                
-                <div class="certificate-body">
+                <div class="certificate-content">
+                    <div class="certificate-header">
+                        <h2 class="certificate-title">SERTIFIKAT PRESTASI</h2>
+                        <p class="certificate-subtitle">DIBERIKAN KEPADA</p>
+                    </div>
+                    
                     <div class="certificate-name" id="participantName">Nama Peserta</div>
                     
                     <div class="certificate-text">
@@ -2056,62 +2054,42 @@
                     <div class="certificate-message" id="resultsMessage">
                         SEMPURNA! Anda sangat menguasai materi ini. Pertahankan prestasi ini!
                     </div>
-                </div>
-                
-                <div class="certificate-footer">
-                    <div class="certificate-signature">
-                        <div class="signature-line"></div>
-                        <p>Ketua Pergunu Situbondo</p>
+                    
+                    <div class="certificate-stats">
+                        <div class="certificate-stat">
+                            <div class="stat-value" id="totalQuestions">0</div>
+                            <div class="stat-label">Total Pertanyaan</div>
+                        </div>
+                        <div class="certificate-stat">
+                            <div class="stat-value" id="correctAnswers">0</div>
+                            <div class="stat-label">Jawaban Benar</div>
+                        </div>
+                        <div class="certificate-stat">
+                            <div class="stat-value" id="wrongAnswers">0</div>
+                            <div class="stat-label">Jawaban Salah</div>
+                        </div>
+                        <div class="certificate-stat">
+                            <div class="stat-value" id="completionTime">-</div>
+                            <div class="stat-label">Waktu Penyelesaian</div>
+                        </div>
                     </div>
                     
-                    <div class="certificate-signature">
-                        <div class="signature-line"></div>
-                        <p>Direktur Pendidikan</p>
-                    </div>
-                    
-                    <div class="certificate-date">
-                        Situbondo, <span id="certificateDate"></span>
-                    </div>
-                </div>
-                
-                <div class="certificate-watermark">
-                    <div class="watermark-code" id="watermarkCode"></div>
-                    <div class="watermark-logo">
-                        <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo">
+                    <div class="certificate-footer">
+                        <div class="barcode-container">
+                            <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png" alt="Barcode">
+                            <div class="barcode-text">KETUA PERGUNU SITUBONDO</div>
+                        </div>
+                        <div class="certificate-date" id="certificateDate">Situbondo, 09 Mei 2025</div>
                     </div>
                 </div>
                 
-                <div class="barcode-container">
-                    <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png" alt="Barcode">
-                    <div class="barcode-text">QUIZ-PERGUNU-SITUBONDO</div>
-                </div>
+                <div class="certificate-watermark" id="watermarkCode">CENDHANU/PELAJAR/IPS/09052025/8FVE-WX5K-ZXTN/PERGUNU-SITUBONDO</div>
             </div>
             
             <!-- Print Button -->
             <button class="print-certificate-btn" id="printBtn">
                 <i class="fas fa-print"></i> Cetak Sertifikat
             </button>
-            
-            <div class="results-details">
-                <h3><i class="fas fa-chart-bar"></i> Statistik Hasil</h3>
-                <div class="stats-container">
-                    <div class="stat-item">
-                        <div class="stat-value" id="totalQuestions">0</div>
-                        <div class="stat-label">Total Pertanyaan</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="correctAnswers">0</div>
-                        <div class="stat-label">Jawaban Benar</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="wrongAnswers">0</div>
-                        <div class="stat-label">Jawaban Salah</div>
-                    </div>
-                </div>
-                
-                <h3><i class="fas fa-clock"></i> Waktu Penyelesaian</h3>
-                <p id="completionTime">-</p>
-            </div>
             
             <button class="btn btn-primary" id="restartBtn" style="margin-top: 2rem;">
                 <i class="fas fa-redo"></i> Ulangi Quiz
@@ -2544,7 +2522,7 @@
             // Set current date for certificate
             const now = new Date();
             const options = { day: '2-digit', month: 'long', year: 'numeric' };
-            document.getElementById('certificateDate').textContent = now.toLocaleDateString('id-ID', options);
+            document.getElementById('certificateDate').textContent = `Situbondo, ${now.toLocaleDateString('id-ID', options)}`;
             
             // Pastikan opening screen visible dan main container hidden
             document.getElementById('openingScreen').style.display = 'flex';
@@ -3061,7 +3039,7 @@
             document.getElementById('totalQuestions').textContent = totalQuestions;
             document.getElementById('correctAnswers').textContent = score;
             document.getElementById('wrongAnswers').textContent = totalQuestions - score;
-            document.getElementById('completionTime').textContent = `${minutes} menit ${seconds} detik`;
+            document.getElementById('completionTime').textContent = `${minutes}m ${seconds}s`;
             document.getElementById('watermarkCode').textContent = watermarkCode;
             
             // Set result message
