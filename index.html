@@ -1141,16 +1141,10 @@
             letter-spacing: 2px;
         }
 
-        /* Certificate Action Buttons */
-        .certificate-actions {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .certificate-btn {
+        /* Print Button */
+        .print-certificate-btn {
+            display: block;
+            width: 300px;
             padding: 1rem 2rem;
             border-radius: var(--radius-sm);
             font-weight: 600;
@@ -1158,24 +1152,21 @@
             transition: var(--transition);
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.75rem;
             font-size: 1.1rem;
             text-decoration: none;
             box-shadow: var(--shadow);
             color: white;
+            background: var(--gray);
+            margin: 2rem auto;
+            border: none;
         }
         
-        .certificate-btn:hover {
+        .print-certificate-btn:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-md);
-        }
-        
-        .certificate-btn.print {
-            background: var(--gray);
-        }
-        
-        .certificate-btn.screenshot {
-            background: var(--primary);
+            background: #5a6268;
         }
 
         /* Results Container - FULL SCREEN LAYOUT */
@@ -1208,7 +1199,7 @@
         /* Stats Container */
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, 1fr));
             gap: 2rem;
             margin-bottom: 3rem;
         }
@@ -1664,14 +1655,8 @@
                 display: none;
             }
 
-            .certificate-actions {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .certificate-btn {
+            .print-certificate-btn {
                 width: 100%;
-                justify-content: center;
             }
         }
 
@@ -1965,17 +1950,12 @@
                     <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png" alt="Barcode">
                     <div class="barcode-text">QUIZ-PERGUNU-SITUBONDO</div>
                 </div>
-
-                <!-- Certificate Action Buttons -->
-                <div class="certificate-actions">
-                    <button class="certificate-btn print" id="printBtn">
-                        <i class="fas fa-print"></i> Cetak Hasil
-                    </button>
-                    <button class="certificate-btn screenshot" id="screenshotBtn">
-                        <i class="fas fa-camera"></i> Ambil Screenshot
-                    </button>
-                </div>
             </div>
+            
+            <!-- Print Button moved outside certificate container -->
+            <button class="print-certificate-btn" id="printBtn">
+                <i class="fas fa-print"></i> Print Sertificate
+            </button>
             
             <div class="results-details">
                 <h3><i class="fas fa-chart-bar"></i> Statistik Hasil</h3>
@@ -2005,7 +1985,7 @@
     </main>
     
     <!-- Floating Buttons -->
-    <div class="floating-buttons">
+    <div class="floating-buttons" id="floatingButtons">
         <button class="floating-btn music-btn" id="musicToggle">
             <i class="fas fa-music"></i>
             <span class="tooltip">Putar/Mute Musik Latar</span>
@@ -2679,7 +2659,6 @@
             
             // Action buttons
             document.getElementById('printBtn').addEventListener('click', printResults);
-            document.getElementById('screenshotBtn').addEventListener('click', takeScreenshot);
             
             // Music controls
             document.getElementById('musicToggle').addEventListener('click', toggleBackgroundMusic);
@@ -2939,6 +2918,9 @@
             document.getElementById('quizContainer').style.display = 'none';
             document.getElementById('resultsContainer').style.display = 'block';
             
+            // Hide floating buttons when in results page
+            document.getElementById('floatingButtons').style.display = 'none';
+            
             // Stop quiz music
             document.getElementById('quizMusic').pause();
         }
@@ -3003,6 +2985,9 @@
             document.getElementById('participantForm').style.display = 'block';
             document.getElementById('quizContainer').style.display = 'none';
             document.getElementById('resultsContainer').style.display = 'none';
+            
+            // Show floating buttons again when leaving results page
+            document.getElementById('floatingButtons').style.display = 'flex';
             
             // Reset form
             document.getElementById('participantForm').reset();
@@ -3519,22 +3504,6 @@
 
         function printResults() {
             window.print();
-        }
-
-        function takeScreenshot() {
-            const resultsContainer = document.getElementById('resultsContainer');
-            
-            html2canvas(resultsContainer, {
-                scale: 2,
-                logging: false,
-                useCORS: true,
-                allowTaint: true
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'hasil-quiz-pergunu.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            });
         }
     </script>
 </body>
