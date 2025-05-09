@@ -983,44 +983,55 @@
             box-shadow: 0 10px 25px rgba(248, 150, 30, 0.4);
         }
         
-        /* Certificate Styles */
+        /* Certificate Styles - REVISED DESIGN */
         .certificate-wrapper {
             position: relative;
             width: 100%;
             max-width: 900px;
             margin: 2rem auto;
             text-align: center;
-        }
-
-        .certificate-background {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 10px;
+            background: white;
+            border-radius: 15px;
             box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            border: 15px solid #f8f9fa;
+            background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/certificate-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        .certificate-content {
+        .certificate-border {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 3rem;
-            box-sizing: border-box;
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+            pointer-events: none;
         }
 
         .certificate-header {
             margin-bottom: 2rem;
             position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        .certificate-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            border-radius: 3px;
         }
 
         .certificate-title {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: #3a0ca3;
             margin-bottom: 1rem;
             font-family: 'Playfair Display', serif;
@@ -1029,20 +1040,48 @@
             letter-spacing: 2px;
             position: relative;
             display: inline-block;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
 
         .certificate-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #555;
-            margin-bottom: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .certificate-presented {
+            font-size: 1.1rem;
+            color: #666;
             font-style: italic;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
         }
 
         .certificate-body {
             margin-bottom: 3rem;
             width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .certificate-name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #3a0ca3;
+            margin: 1rem 0;
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .certificate-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #333;
         }
 
         .certificate-score {
@@ -1078,6 +1117,32 @@
             margin-left: auto;
             margin-right: auto;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .certificate-footer {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .certificate-signature {
+            flex: 1;
+            min-width: 200px;
+            margin: 1rem;
+        }
+
+        .signature-line {
+            width: 200px;
+            height: 1px;
+            background: #333;
+            margin: 0.5rem auto;
+        }
+
+        .certificate-date {
+            margin-top: 2rem;
+            font-weight: 500;
         }
 
         .certificate-watermark {
@@ -1170,14 +1235,20 @@
                 width: 100%;
                 height: 100%;
                 margin: 0;
-                padding: 0;
-            }
-            .certificate-background {
-                height: 100%;
-                object-fit: contain;
+                padding: 40px;
+                border: none;
+                box-shadow: none;
+                background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/certificate-bg.png');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
             }
             .print-certificate-btn, .floating-buttons, .results-details, #restartBtn {
                 display: none !important;
+            }
+            @page {
+                size: A4 landscape;
+                margin: 0;
             }
         }
 
@@ -1211,9 +1282,12 @@
         /* Stats Container */
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin-bottom: 3rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .stat-item {
@@ -1566,20 +1640,7 @@
             }
             
             .certificate-title {
-                font-size: 2rem;
-            }
-            
-            .certificate-title::before, 
-            .certificate-title::after {
-                width: 30px;
-            }
-            
-            .certificate-title::before {
-                left: -50px;
-            }
-            
-            .certificate-title::after {
-                right: -50px;
+                font-size: 2.2rem;
             }
             
             .certificate-score {
@@ -1588,6 +1649,10 @@
             
             .certificate-message {
                 font-size: 1.1rem;
+            }
+            
+            .certificate-body {
+                width: 90%;
             }
         }
 
@@ -1652,9 +1717,28 @@
                 font-size: 1.5rem;
             }
             
-            .certificate-title::before, 
-            .certificate-title::after {
-                display: none;
+            .certificate-wrapper {
+                padding: 20px;
+            }
+            
+            .certificate-title {
+                font-size: 1.8rem;
+            }
+            
+            .certificate-name {
+                font-size: 1.8rem;
+            }
+            
+            .certificate-score {
+                font-size: 3.5rem;
+            }
+            
+            .certificate-footer {
+                flex-direction: column;
+            }
+            
+            .certificate-signature {
+                margin: 1rem 0;
             }
 
             .print-certificate-btn {
@@ -1704,6 +1788,35 @@
             .watermark-code {
                 font-size: 0.8rem;
             }
+            
+            .certificate-wrapper {
+                padding: 15px;
+                border-width: 5px;
+            }
+            
+            .certificate-title {
+                font-size: 1.5rem;
+            }
+            
+            .certificate-subtitle {
+                font-size: 1rem;
+            }
+            
+            .certificate-name {
+                font-size: 1.5rem;
+            }
+            
+            .certificate-text {
+                font-size: 1rem;
+            }
+            
+            .certificate-score {
+                font-size: 3rem;
+            }
+            
+            .certificate-message {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -1723,7 +1836,7 @@
                 <p>Selamat datang di Quiz Pergunu, platform ujian pengetahuan berbasis web yang dikembangkan oleh Pergunu Situbondo. Dengan mengakses dan menggunakan aplikasi ini, Anda menyetujui untuk terikat oleh syarat dan ketentuan berikut:</p>
                 
                 <p><strong>1. Penggunaan Aplikasi</strong><br>
-                 Quiz Pergunu ditujukan untuk tujuan pendidikan dan pengujian pengetahuan. Pengguna diharapkan menggunakan aplikasi ini dengan jujur dan bertanggung jawab.<</p>
+                 Quiz Pergunu ditujukan untuk tujuan pendidikan dan pengujian pengetahuan. Pengguna diharapkan menggunakan aplikasi ini dengan jujur dan bertanggung jawab.</p>
                 
                 <p><strong>2. Data Pribadi</strong><br>
                Informasi pribadi yang dikumpulkan (nama, nomor telepon, email) hanya akan digunakan untuk keperluan validasi peserta dan penyampaian hasil quiz. Data tidak akan dibagikan kepada pihak ketiga tanpa izin.</p>
@@ -1923,44 +2036,60 @@
         <!-- Results Container -->
         <div id="resultsContainer" class="results-container">
             <div class="certificate-wrapper">
-                <!-- Certificate Background Image -->
-                <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/sertificate.png" alt="Certificate Background" class="certificate-background">
+                <div class="certificate-border"></div>
                 
-                <!-- Certificate Content Overlay -->
-                <div class="certificate-content">
-                    <div class="certificate-header">
-                        <h2 class="certificate-title">Sertifikat Ujian Pergunu Situbondo</h2>
-                        <p class="certificate-subtitle">Diberikan sebagai bukti partisipasi dan pencapaian</p>
+                <div class="certificate-header">
+                    <h2 class="certificate-title">SERTIFIKAT PRESTASI</h2>
+                    <p class="certificate-subtitle">DIBERIKAN KEPADA</p>
+                </div>
+                
+                <div class="certificate-body">
+                    <div class="certificate-name" id="participantName">Nama Peserta</div>
+                    
+                    <div class="certificate-text">
+                        Atas partisipasi dan pencapaian luar biasa dalam<br>
+                        <strong>Quiz Pergunu Situbondo</strong>
                     </div>
                     
-                    <div class="certificate-body">
-                        <div class="score certificate-score" id="scoreDisplay">0%</div>
-                        <p class="results-message certificate-message" id="resultsMessage">Memuat hasil...</p>
-                        
-                        <div class="thank-you-message">
-                            <p>Terima kasih telah mengikuti Ujian Pergunu. Hasil yang Anda capai merupakan cerminan dari usaha dan pengetahuan Anda saat ini.</p>
-                            <p>Jangan berhenti belajar dan terus tingkatkan kemampuan Anda. Setiap langkah kecil dalam belajar akan membawa Anda menuju kesuksesan yang lebih besar.</p>
-                            <p>Semangat belajar dan sampai jumpa di quiz berikutnya!</p>
-                        </div>
+                    <div class="certificate-score" id="scoreDisplay">0%</div>
+                    
+                    <div class="certificate-message" id="resultsMessage">
+                        SEMPURNA! Anda sangat menguasai materi ini. Pertahankan prestasi ini!
+                    </div>
+                </div>
+                
+                <div class="certificate-footer">
+                    <div class="certificate-signature">
+                        <div class="signature-line"></div>
+                        <p>Ketua Pergunu Situbondo</p>
                     </div>
                     
-                    <div class="certificate-watermark">
-                        <div class="watermark-code" id="watermarkCode"></div>
-                        <div class="watermark-logo">
-                            <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo">
-                        </div>
+                    <div class="certificate-signature">
+                        <div class="signature-line"></div>
+                        <p>Direktur Pendidikan</p>
                     </div>
                     
-                    <div class="barcode-container">
-                        <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png" alt="Barcode">
-                        <div class="barcode-text">SERTIFIKAT-ASLI-PERGUNU-SITUBONDO</div>
+                    <div class="certificate-date">
+                        Situbondo, <span id="certificateDate"></span>
                     </div>
+                </div>
+                
+                <div class="certificate-watermark">
+                    <div class="watermark-code" id="watermarkCode"></div>
+                    <div class="watermark-logo">
+                        <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo">
+                    </div>
+                </div>
+                
+                <div class="barcode-container">
+                    <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png" alt="Barcode">
+                    <div class="barcode-text">QUIZ-PERGUNU-SITUBONDO</div>
                 </div>
             </div>
             
-            <!-- Print Button moved outside certificate container -->
+            <!-- Print Button -->
             <button class="print-certificate-btn" id="printBtn">
-                <i class="fas fa-print"></i> Print Sertifikat
+                <i class="fas fa-print"></i> Cetak Sertifikat
             </button>
             
             <div class="results-details">
@@ -2412,6 +2541,11 @@
             initAudio();
             initEventListeners();
             
+            // Set current date for certificate
+            const now = new Date();
+            const options = { day: '2-digit', month: 'long', year: 'numeric' };
+            document.getElementById('certificateDate').textContent = now.toLocaleDateString('id-ID', options);
+            
             // Pastikan opening screen visible dan main container hidden
             document.getElementById('openingScreen').style.display = 'flex';
             document.querySelector('.main-container').style.display = 'none';
@@ -2710,6 +2844,9 @@
                 return;
             }
             
+            // Update participant name in certificate
+            document.getElementById('participantName').textContent = name;
+            
             // Update quiz info
             document.getElementById('categoryDisplay').textContent = currentCategory === 'pelajar' ? 'Pelajar' : 'Umum';
             
@@ -2893,29 +3030,31 @@
             
             // Generate unique code (12 digit with dashes)
             const uniqueCode = generateUniqueCode();
+            
+            // Map subcategory to display text
             const subcategoryMap = {
-  pelajar: {
-    ipa: "IPA",
-    ips: "IPS",
-    matematika: "MATEMATIKA",
-    agama: "AGAMA",
-    ppkn: "PPKN",
-    sejarah: "SEJARAH",
-    bahasa_indonesia: "BAHASA INDONESIA",
-    bahasa_inggris: "BAHASA INGGRIS"
-  },
-  umum: {
-    logika: "UJIAN LOGIKA",
-    sambung_lagu: "SAMBAH LAGU",
-    peribahasa: "PERIBAHASA"
-  }
-};
-
-// Dapatkan teks subkategori yang sesuai
-const subcategoryText = subcategoryMap[currentCategory][currentSubcategory];
-
-// Format watermark code baru
-const watermarkCode = `${name.toUpperCase()}/${currentCategory === 'pelajar' ? 'PELAJAR' : 'UMUM'}/${subcategoryText}/${dateStr}/${uniqueCode}/PERGUNU-SITUBONDO`;
+                pelajar: {
+                    ipa: "IPA",
+                    ips: "IPS",
+                    matematika: "MATEMATIKA",
+                    agama: "AGAMA",
+                    ppkn: "PPKN",
+                    sejarah: "SEJARAH",
+                    bahasa_indonesia: "BAHASA INDONESIA",
+                    bahasa_inggris: "BAHASA INGGRIS"
+                },
+                umum: {
+                    logika: "UJIAN LOGIKA",
+                    sambung_lagu: "SAMBAH LAGU",
+                    peribahasa: "PERIBAHASA"
+                }
+            };
+            
+            // Dapatkan teks subkategori yang sesuai
+            const subcategoryText = subcategoryMap[currentCategory][currentSubcategory];
+            
+            // Format watermark code baru
+            const watermarkCode = `${name.toUpperCase()}/${categoryText}/${subcategoryText}/${dateStr}/${uniqueCode}/PERGUNU-SITUBONDO`;
             
             // Display results
             document.getElementById('scoreDisplay').textContent = `${percentage}%`;
