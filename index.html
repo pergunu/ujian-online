@@ -2887,7 +2887,29 @@
             
             // Generate unique code (12 digit with dashes)
             const uniqueCode = generateUniqueCode();
-            const watermarkCode = `${name.toUpperCase().replace(/ /g, '')}/${categoryText}/${dateStr}/${uniqueCode}/PERGUNU-SITUBONDO`;
+            const subcategoryMap = {
+  pelajar: {
+    ipa: "IPA",
+    ips: "IPS",
+    matematika: "MATEMATIKA",
+    agama: "AGAMA",
+    ppkn: "PPKN",
+    sejarah: "SEJARAH",
+    bahasa_indonesia: "BAHASA INDONESIA",
+    bahasa_inggris: "BAHASA INGGRIS"
+  },
+  umum: {
+    logika: "UJIAN LOGIKA",
+    sambung_lagu: "SAMBAH LAGU",
+    peribahasa: "PERIBAHASA"
+  }
+};
+
+// Dapatkan teks subkategori yang sesuai
+const subcategoryText = subcategoryMap[currentCategory][currentSubcategory];
+
+// Format watermark code baru
+const watermarkCode = `${name.toUpperCase()}/${currentCategory === 'pelajar' ? 'PELAJAR' : 'UMUM'}/${subcategoryText}/${dateStr}/${uniqueCode}/PERGUNU-SITUBONDO`;
             
             // Display results
             document.getElementById('scoreDisplay').textContent = `${percentage}%`;
