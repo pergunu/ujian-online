@@ -1018,12 +1018,13 @@
         .certificate-header {
             margin-bottom: 2rem;
             position: relative;
+            padding-top: 50px;
         }
 
         .certificate-title {
             font-size: 2.8rem;
             color: #3a0ca3;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             font-family: 'Playfair Display', serif;
             font-weight: 700;
             text-transform: uppercase;
@@ -1046,46 +1047,30 @@
         }
 
         .certificate-subtitle {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: #555;
+            margin-top: 30px;
             margin-bottom: 0.5rem;
             font-weight: 500;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
 
-        .certificate-presented {
-            font-size: 1.1rem;
-            color: #666;
-            font-style: italic;
-            margin-bottom: 2rem;
-        }
-
         .certificate-name {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 700;
             color: #3a0ca3;
-            margin: 1.5rem 0;
+            margin: 2rem 0;
             font-family: 'Alex Brush', cursive;
             letter-spacing: 2px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             line-height: 1.2;
-            position: relative;
-            text-transform: capitalize;
-        }
-
-        .certificate-name::before,
-        .certificate-name::after {
-            content: '✧';
-            color: #3a0ca3;
-            margin: 0 15px;
-            opacity: 0.7;
         }
 
         .certificate-text {
             font-size: 1.2rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
             color: #333;
             max-width: 700px;
             margin-left: auto;
@@ -1116,19 +1101,14 @@
         }
 
         .certificate-message {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
+            font-size: 1rem;
+            margin: 1.5rem 0;
             color: #333;
-            line-height: 1.8;
+            line-height: 1.6;
             font-weight: 500;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-            padding: 1rem;
-            background: rgba(255,255,255,0.7);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .certificate-stats {
@@ -1136,7 +1116,7 @@
             bottom: 180px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #555;
             text-align: center;
             width: 100%;
@@ -1146,8 +1126,8 @@
 
         .certificate-stat {
             display: inline-block;
-            margin: 0 10px;
-            font-size: 0.9rem;
+            margin: 0 5px;
+            font-size: 0.8rem;
         }
 
         .stat-value {
@@ -1167,7 +1147,7 @@
             margin-top: 1rem;
             font-weight: 500;
             color: #555;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .certificate-watermark {
@@ -1177,7 +1157,7 @@
             width: 100%;
             text-align: center;
             font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: rgba(67, 97, 238, 0.5);
             letter-spacing: 1px;
             padding: 0.5rem;
@@ -1189,13 +1169,13 @@
         }
 
         .barcode-container img {
-            height: 80px;
+            height: 60px;
             margin-bottom: 0.5rem;
         }
 
         .barcode-text {
             font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--dark);
             font-weight: 600;
             margin-top: 0.5rem;
@@ -1267,13 +1247,16 @@
                 padding: 0;
             }
             .certificate-name {
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
             .certificate-score {
                 font-size: 4rem;
             }
             .certificate-text, .certificate-message {
-                font-size: 1.1rem;
+                font-size: 1rem;
+            }
+            .certificate-stats {
+                font-size: 0.7rem;
             }
         }
 
