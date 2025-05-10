@@ -988,18 +988,18 @@
         .certificate-wrapper {
             position: relative;
             width: 100%;
-            max-width: 900px;
+            max-width: 800px;
             margin: 2rem auto;
             text-align: center;
             background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/certificate.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            min-height: 600px;
+            min-height: 1122px; /* A4 height in pixels at 96dpi */
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 60px 80px;
+            padding: 100px 80px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             border-radius: 15px;
             overflow: hidden;
@@ -1131,51 +1131,35 @@
         }
 
         .certificate-stats {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-            background: rgba(255,255,255,0.8);
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            position: absolute;
+            bottom: 180px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: #555;
+            text-align: center;
+            width: 100%;
+            padding: 0 80px;
+            font-family: 'Poppins', sans-serif;
         }
 
         .certificate-stat {
-            background: rgba(255,255,255,0.9);
-            padding: 1rem 1.5rem;
-            border-radius: var(--radius-sm);
-            min-width: 120px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border: 1px solid rgba(67, 97, 238, 0.2);
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 0.9rem;
         }
 
         .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin-bottom: 0.5rem;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--gray);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-weight: 600;
+            color: #3a0ca3;
         }
 
         .certificate-footer {
-            margin-top: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            width: 100%;
+            text-align: center;
         }
 
         .certificate-date {
@@ -1183,10 +1167,6 @@
             font-weight: 500;
             color: #555;
             font-size: 1.1rem;
-            background: rgba(255,255,255,0.8);
-            padding: 0.5rem 1.5rem;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .certificate-watermark {
@@ -1196,32 +1176,15 @@
             width: 100%;
             text-align: center;
             font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            color: rgba(67, 97, 238, 0.7);
+            font-size: 0.8rem;
+            color: rgba(67, 97, 238, 0.5);
             letter-spacing: 1px;
             padding: 0.5rem;
-            background: rgba(255,255,255,0.7);
-            border-top: 1px dashed rgba(67, 97, 238, 0.3);
-        }
-
-        .certificate-watermark::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 1px;
-            background: rgba(67, 97, 238, 0.3);
         }
 
         .barcode-container {
             margin-top: 1.5rem;
             text-align: center;
-            background: rgba(255,255,255,0.8);
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .barcode-container img {
@@ -1280,7 +1243,7 @@
                 width: 100%;
                 height: 100%;
                 margin: 0;
-                padding: 60px 80px;
+                padding: 100px 80px;
                 border: none;
                 box-shadow: none;
                 background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/certificate.png');
@@ -1292,7 +1255,7 @@
                 display: none !important;
             }
             @page {
-                size: A4 landscape;
+                size: A4 portrait;
                 margin: 0;
             }
         }
@@ -1896,10 +1859,10 @@
                 <p>Selamat datang di Quiz Pergunu, platform ujian pengetahuan berbasis web yang dikembangkan oleh Cendhanu (Tim Kreator Digital Pergunu Situbondo). Dengan mengakses dan menggunakan aplikasi ini, Anda menyetujui untuk terikat oleh syarat dan ketentuan berikut:</p>
                 
                 <p><strong>1. Penggunaan Aplikasi</strong><br>
-                 Quiz Pergunu ditujukan untuk tujuan pendidikan dan pengujian pengetahuan. Pengguna diharapkan menggunakan aplikasi ini dengan jujur dan bertanggung jawab.</p>
+                 Ujian Pergunu ditujukan untuk tujuan pendidikan dan pengujian pengetahuan. Pengguna diharapkan menggunakan aplikasi ini dengan jujur dan bertanggung jawab.</p>
                 
                 <p><strong>2. Data Pribadi</strong><br>
-               Informasi pribadi yang dikumpulkan (nama, nomor telepon, email) hanya akan digunakan untuk keperluan validasi peserta dan penyampaian hasil quiz. Data tidak akan dibagikan kepada pihak ketiga tanpa izin.</p>
+               Informasi pribadi yang dikumpulkan (nama, nomor telepon, email) hanya akan digunakan untuk keperluan validasi peserta dan penyampaian hasil ujian. Data tidak akan dibagikan kepada pihak ketiga tanpa izin.</p>
                 
                 <p><strong>3. Hak Kekayaan Intelektual</strong><br>
                 Seluruh konten, termasuk soal quiz, desain antarmuka, dan sistem penilaian merupakan hak milik Pergunu Situbondo. Dilarang melakukan reproduksi, distribusi, atau modifikasi tanpa izin tertulis.</p>
@@ -1908,7 +1871,7 @@
                 Setiap peserta mendapatkan waktu yang telah ditentukan untuk menyelesaikan quiz. Jawaban yang telah dikirim tidak dapat diubah. Sistem penilaian bersifat otomatis dan final.</p>
                 
                 <p><strong>5. Perilaku Pengguna</strong><br>
-                Dilarang keras melakukan kecurangan dalam bentuk apapun selama mengikuti quiz. Pelanggaran akan mengakibatkan pembatalan hasil dan larangan penggunaan aplikasi.</p>
+                Dilarang keras melakukan kecurangan dalam bentuk apapun selama mengikuti ujian. Pelanggaran akan mengakibatkan pembatalan hasil dan larangan penggunaan aplikasi.</p>
                 
                 <p><strong>6. Pembaruan Sistem</strong><br>
                 Pergunu Situbondo berhak melakukan pembaruan, perbaikan, atau perubahan sistem tanpa pemberitahuan sebelumnya.</p>
@@ -2106,7 +2069,7 @@
                     
                     <div class="certificate-text">
                         Atas partisipasi dan pencapaian luar biasa dalam<br>
-                        <strong>Quiz Pergunu Situbondo</strong>
+                        <strong>Ujian Pergunu Situbondo</strong>
                     </div>
                     
                     <div class="certificate-score" id="scoreDisplay">0%</div>
@@ -2115,23 +2078,12 @@
                         SEMPURNA! Anda sangat menguasai materi ini. Pertahankan prestasi ini!
                     </div>
                     
-                    <div class="certificate-stats">
-                        <div class="certificate-stat">
-                            <div class="stat-value" id="totalQuestions">0</div>
-                            <div class="stat-label">Total Pertanyaan</div>
-                        </div>
-                        <div class="certificate-stat">
-                            <div class="stat-value" id="correctAnswers">0</div>
-                            <div class="stat-label">Jawaban Benar</div>
-                        </div>
-                        <div class="certificate-stat">
-                            <div class="stat-value" id="wrongAnswers">0</div>
-                            <div class="stat-label">Jawaban Salah</div>
-                        </div>
-                        <div class="certificate-stat">
-                            <div class="stat-value" id="completionTime">-</div>
-                            <div class="stat-label">Waktu Penyelesaian</div>
-                        </div>
+                    <div class="certificate-stats" id="certificateStats">
+                        STATISTIK HASIL UJIAN: 
+                        <span class="certificate-stat">Total Pertanyaan (<span id="totalQuestions">0</span>)</span> // 
+                        <span class="certificate-stat">Jawaban Salah (<span id="wrongAnswers">0</span>)</span> // 
+                        <span class="certificate-stat">Jawaban Benar (<span id="correctAnswers">0</span>)</span> // 
+                        <span class="certificate-stat">Waktu Penyelesaian (<span id="completionTime">-</span>)</span>
                     </div>
                     
                     <div class="certificate-footer">
