@@ -154,31 +154,32 @@
 
         /* Improved Terms Container */
         .terms-container {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: var(--radius);
-            padding: 2rem;
+            padding: 2.5rem;
             width: 90%;
             max-width: 900px;
-            max-height: 70vh;
+            max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(67, 97, 238, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(67, 97, 238, 0.3);
             animation: fadeIn 1s ease-out 5s forwards;
             opacity: 0;
             color: #333;
             backdrop-filter: blur(10px);
-            border: 2px solid rgba(67, 97, 238, 0.3);
             margin: 1rem auto;
+            font-size: 1.05rem;
+            line-height: 1.8;
         }
 
         .terms-title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             margin-bottom: 1.5rem;
             color: var(--primary-dark);
             text-align: center;
             font-family: 'Playfair Display', serif;
             position: relative;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
         }
 
         .terms-title::after {
@@ -187,41 +188,43 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
+            width: 100px;
+            height: 4px;
             background: var(--gradient-primary);
             border-radius: 3px;
         }
 
         .terms-content {
-            font-size: 1rem;
+            font-size: 1.05rem;
             line-height: 1.8;
             margin-bottom: 1.5rem;
             color: #444;
-            padding: 0 1rem;
+            padding: 0 1.5rem;
         }
 
         .terms-content p {
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
         }
 
         .terms-content strong {
             color: var(--primary-dark);
+            font-weight: 600;
         }
 
         .terms-checkbox {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             color: var(--dark);
-            padding: 0 1rem;
+            padding: 0 1.5rem;
+            font-size: 1.05rem;
         }
 
         .terms-checkbox input {
             margin-right: 0.75rem;
-            width: 1.2rem;
-            height: 1.2rem;
+            width: 1.3rem;
+            height: 1.3rem;
             accent-color: var(--primary);
         }
 
@@ -233,7 +236,7 @@
             padding: 1.2rem 3rem;
             border-radius: var(--radius-sm);
             font-weight: 600;
-            margin: 1.5rem auto 0;
+            margin: 2rem auto 0;
             cursor: pointer;
             transition: var(--transition);
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
@@ -1022,28 +1025,30 @@
         }
 
         .certificate-header {
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             position: relative;
         }
 
         .certificate-watermark {
             position: absolute;
-            top: 30px;
+            top: 40px;
             left: 0;
             width: 100%;
             text-align: center;
             font-family: 'Courier New', monospace;
             font-size: 0.8rem;
-            color: rgba(67, 97, 238, 0.7);
+            color: rgba(67, 97, 238, 0.8);
             letter-spacing: 1px;
             font-weight: bold;
             padding: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 700;
         }
 
         .certificate-title {
             font-size: 2.8rem;
             color: #3a0ca3;
-            margin: 2rem 0 1rem;
+            margin: 3rem 0 1rem;
             font-family: 'Playfair Display', serif;
             font-weight: 700;
             text-transform: uppercase;
@@ -1124,6 +1129,11 @@
             font-weight: 500;
             max-width: 700px;
             font-style: italic;
+            padding: 0 2rem;
+        }
+
+        .certificate-message p {
+            margin-bottom: 1rem;
         }
 
         .certificate-stats {
@@ -1134,12 +1144,17 @@
             width: 100%;
             padding: 0 80px;
             font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
         }
 
         .certificate-stat {
             display: inline-block;
-            margin: 0 10px;
+            margin: 0;
             font-size: 1rem;
+            white-space: nowrap;
         }
 
         .stat-value {
@@ -1163,7 +1178,7 @@
         }
 
         .barcode-container {
-            margin-top: 1.5rem;
+            margin-top: 2.5rem;
             text-align: center;
         }
 
@@ -1250,16 +1265,21 @@
             }
             .certificate-score {
                 font-size: 4rem;
+                margin: 1.5rem 0;
             }
             .certificate-text, .certificate-message {
                 font-size: 1rem;
             }
             .certificate-stats {
                 font-size: 0.9rem;
+                gap: 1rem;
             }
             .certificate-watermark {
                 font-size: 0.7rem;
-                top: 20px;
+                top: 30px;
+            }
+            .barcode-container {
+                margin-top: 1.5rem;
             }
         }
 
@@ -2078,7 +2098,6 @@
                     </div>
                     
                     <div class="certificate-stats" id="certificateStats">
-                        STATISTIK HASIL UJIAN: 
                         <span class="certificate-stat">Total Pertanyaan = <span id="totalQuestions" class="stat-value">0</span></span> 
                         <span class="certificate-stat">Jawaban Salah = <span id="wrongAnswers" class="stat-value">0</span></span> 
                         <span class="certificate-stat">Jawaban Benar = <span id="correctAnswers" class="stat-value">0</span></span>
@@ -2088,7 +2107,8 @@
                     <div class="certificate-score" id="scoreDisplay">0%</div>
                     
                     <div class="certificate-message" id="resultsMessage">
-                        SEMPURNA! Anda sangat menguasai materi ini. Pertahankan prestasi ini!
+                        <p>SEMPURNA! Anda sangat menguasai materi ini.</p>
+                        <p>Pertahankan prestasi ini dan teruslah belajar untuk mencapai kesuksesan!</p>
                     </div>
                     
                     <div class="certificate-footer">
@@ -3040,19 +3060,19 @@
             // Map subcategory to display text
             const subcategoryMap = {
                 pelajar: {
-                    ipa: "IPA",
-                    ips: "IPS",
-                    matematika: "MATEMATIKA",
-                    agama: "AGAMA",
-                    ppkn: "PPKN",
-                    sejarah: "SEJARAH",
-                    bahasa_indonesia: "BAHASA INDONESIA",
-                    bahasa_inggris: "BAHASA INGGRIS"
+                    'ipa': "IPA",
+                    'ips': "IPS",
+                    'matematika': "MATEMATIKA",
+                    'agama': "AGAMA",
+                    'ppkn': "PPKN",
+                    'sejarah': "SEJARAH",
+                    'bahasa_indonesia': "BAHASA INDONESIA",
+                    'bahasa_inggris': "BAHASA INGGRIS"
                 },
                 umum: {
-                    logika: "UJIAN LOGIKA",
-                    sambung_lagu: "SAMBAH LAGU",
-                    peribahasa: "PERIBAHASA"
+                    'logika': "UJIAN LOGIKA",
+                    'sambung_lagu': "SAMBAH LAGU",
+                    'peribahasa': "PERIBAHASA"
                 }
             };
             
@@ -3073,19 +3093,19 @@
             // Set result message
             let message = "";
             if (percentage >= 80) {
-                message = "SEMPURNA! Anda sangat menguasai materi ini. Pertahankan prestasi ini!";
+                message = `<p>SEMPURNA! Anda sangat menguasai materi ini.</p><p>Pertahankan prestasi ini dan teruslah belajar untuk mencapai kesuksesan!</p>`;
                 playSound('applauseSound');
                 createConfetti();
             } else if (percentage >= 60) {
-                message = "BAIK SEKALI! Anda memiliki pemahaman yang solid tentang materi ini.";
+                message = `<p>BAIK SEKALI! Anda memiliki pemahaman yang solid tentang materi ini.</p><p>Tingkatkan terus pengetahuan Anda untuk mencapai hasil yang lebih baik!</p>`;
                 playSound('applauseSound');
                 createConfetti();
             } else if (percentage >= 40) {
-                message = "CUKUP BAIK. Tingkatkan lagi belajarnya! Anda hampir mencapai level yang lebih baik.";
+                message = `<p>CUKUP BAIK. Tingkatkan lagi belajarnya!</p><p>Anda hampir mencapai level yang lebih baik.</p>`;
             } else {
-                message = "TERUS BERLATIH! Setiap kesalahan adalah kesempatan untuk belajar lebih baik lagi.";
+                message = `<p>TERUS BERLATIH! Setiap kesalahan adalah kesempatan untuk belajar lebih baik lagi.</p><p>Jangan menyerah dan teruslah berusaha!</p>`;
             }
-            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('resultsMessage').innerHTML = message;
             
             // Show results
             document.getElementById('quizContainer').style.display = 'none';
@@ -3309,7 +3329,7 @@
             
             // Add event listeners
             questionItem.querySelector('.edit-question').addEventListener('click', function() {
-                showEditForm(question, oldCategory, oldSubcategory, oldLevel);
+                showEditForm(question, category, subcategory, level);
             });
             
             questionItem.querySelector('.delete-question').addEventListener('click', function() {
