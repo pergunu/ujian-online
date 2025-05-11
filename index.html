@@ -157,9 +157,9 @@
             background: rgba(255, 255, 255, 0.9);
             border-radius: var(--radius);
             padding: 2rem;
-            max-width: 800px;
-            margin: 2rem auto 0;
-            max-height: 60vh;
+            width: 90%;
+            max-width: 900px;
+            max-height: 70vh;
             overflow-y: auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(67, 97, 238, 0.2);
@@ -168,6 +168,7 @@
             color: #333;
             backdrop-filter: blur(10px);
             border: 2px solid rgba(67, 97, 238, 0.3);
+            margin: 1rem auto;
         }
 
         .terms-title {
@@ -193,10 +194,11 @@
         }
 
         .terms-content {
-            font-size: 0.95rem;
+            font-size: 1rem;
             line-height: 1.8;
             margin-bottom: 1.5rem;
             color: #444;
+            padding: 0 1rem;
         }
 
         .terms-content p {
@@ -213,6 +215,7 @@
             justify-content: center;
             margin-top: 1.5rem;
             color: var(--dark);
+            padding: 0 1rem;
         }
 
         .terms-checkbox input {
@@ -230,7 +233,7 @@
             padding: 1.2rem 3rem;
             border-radius: var(--radius-sm);
             font-weight: 600;
-            margin-top: 1.5rem;
+            margin: 1.5rem auto 0;
             cursor: pointer;
             transition: var(--transition);
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
@@ -846,6 +849,7 @@
             border-color: var(--primary);
             box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
             transform: translateY(-5px);
+            pointer-events: none; /* Prevent changing answer after selection */
         }
         
         .option.selected .option-prefix {
@@ -858,6 +862,7 @@
             color: white;
             border-color: var(--success-dark);
             box-shadow: 0 8px 20px rgba(76, 201, 240, 0.3);
+            pointer-events: none;
         }
         
         .option.incorrect {
@@ -865,6 +870,7 @@
             color: white;
             border-color: var(--danger);
             box-shadow: 0 8px 20px rgba(239, 35, 60, 0.3);
+            pointer-events: none;
         }
         
         .option-prefix {
@@ -1016,15 +1022,28 @@
         }
 
         .certificate-header {
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             position: relative;
-            padding-top: 50px;
+        }
+
+        .certificate-watermark {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: rgba(67, 97, 238, 0.7);
+            letter-spacing: 1px;
+            font-weight: bold;
+            padding: 0.5rem;
         }
 
         .certificate-title {
             font-size: 2.8rem;
             color: #3a0ca3;
-            margin-bottom: 1rem;
+            margin: 2rem 0 1rem;
             font-family: 'Playfair Display', serif;
             font-weight: 700;
             text-transform: uppercase;
@@ -1049,8 +1068,7 @@
         .certificate-subtitle {
             font-size: 1.1rem;
             color: #555;
-            margin-top: 30px;
-            margin-bottom: 0.5rem;
+            margin: 30px 0 0.5rem;
             font-weight: 500;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -1070,18 +1088,16 @@
         .certificate-text {
             font-size: 1.2rem;
             line-height: 1.6;
-            margin-bottom: 1rem;
+            margin: 1rem auto;
             color: #333;
             max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .certificate-score {
             font-size: 5rem;
             font-weight: 700;
             color: #3a0ca3;
-            margin: 1.5rem 0;
+            margin: 2rem 0;
             position: relative;
             font-family: 'Montserrat', sans-serif;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
@@ -1101,22 +1117,18 @@
         }
 
         .certificate-message {
-            font-size: 1rem;
-            margin: 1.5rem 0;
+            font-size: 1.1rem;
+            margin: 2rem auto;
             color: #333;
             line-height: 1.6;
             font-weight: 500;
             max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            font-style: italic;
         }
 
         .certificate-stats {
-            position: absolute;
-            bottom: 180px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.8rem;
+            margin: 1.5rem auto;
+            font-size: 1rem;
             color: #555;
             text-align: center;
             width: 100%;
@@ -1126,8 +1138,8 @@
 
         .certificate-stat {
             display: inline-block;
-            margin: 0 5px;
-            font-size: 0.8rem;
+            margin: 0 10px;
+            font-size: 1rem;
         }
 
         .stat-value {
@@ -1137,7 +1149,7 @@
 
         .certificate-footer {
             position: absolute;
-            bottom: 80px;
+            bottom: 100px;
             left: 0;
             width: 100%;
             text-align: center;
@@ -1150,32 +1162,19 @@
             font-size: 1rem;
         }
 
-        .certificate-watermark {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            font-size: 0.7rem;
-            color: rgba(67, 97, 238, 0.5);
-            letter-spacing: 1px;
-            padding: 0.5rem;
-        }
-
         .barcode-container {
             margin-top: 1.5rem;
             text-align: center;
         }
 
         .barcode-container img {
-            height: 60px;
+            height: 80px;
             margin-bottom: 0.5rem;
         }
 
         .barcode-text {
             font-family: 'Poppins', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: var(--dark);
             font-weight: 600;
             margin-top: 0.5rem;
@@ -1256,7 +1255,11 @@
                 font-size: 1rem;
             }
             .certificate-stats {
+                font-size: 0.9rem;
+            }
+            .certificate-watermark {
                 font-size: 0.7rem;
+                top: 20px;
             }
         }
 
@@ -2060,6 +2063,8 @@
         <div id="resultsContainer" class="results-container">
             <div class="certificate-wrapper">
                 <div class="certificate-content">
+                    <div class="certificate-watermark" id="watermarkCode">YUDHA CENDHANU/PELAJAR/IPA/10052025/URG9-46MC-AYNW/PERGUNU-SITUBONDO</div>
+                    
                     <div class="certificate-header">
                         <h2 class="certificate-title">SERTIFIKAT PRESTASI</h2>
                         <p class="certificate-subtitle">DIBERIKAN KEPADA</p>
@@ -2072,30 +2077,28 @@
                         <strong>Ujian Pergunu Situbondo</strong>
                     </div>
                     
+                    <div class="certificate-stats" id="certificateStats">
+                        STATISTIK HASIL UJIAN: 
+                        <span class="certificate-stat">Total Pertanyaan = <span id="totalQuestions" class="stat-value">0</span></span> 
+                        <span class="certificate-stat">Jawaban Salah = <span id="wrongAnswers" class="stat-value">0</span></span> 
+                        <span class="certificate-stat">Jawaban Benar = <span id="correctAnswers" class="stat-value">0</span></span>
+                        <span class="certificate-stat">Waktu Penyelesaian = <span id="completionTime" class="stat-value">-</span></span>
+                    </div>
+                    
                     <div class="certificate-score" id="scoreDisplay">0%</div>
                     
                     <div class="certificate-message" id="resultsMessage">
                         SEMPURNA! Anda sangat menguasai materi ini. Pertahankan prestasi ini!
                     </div>
                     
-                    <div class="certificate-stats" id="certificateStats">
-                        STATISTIK HASIL UJIAN: 
-                        <span class="certificate-stat">Total Pertanyaan (<span id="totalQuestions">0</span>)</span> // 
-                        <span class="certificate-stat">Jawaban Salah (<span id="wrongAnswers">0</span>)</span> // 
-                        <span class="certificate-stat">Jawaban Benar (<span id="correctAnswers">0</span>)</span> // 
-                        <span class="certificate-stat">Waktu Penyelesaian (<span id="completionTime">-</span>)</span>
-                    </div>
-                    
                     <div class="certificate-footer">
+                        <div class="certificate-date" id="certificateDate">Situbondo, 09 Mei 2025</div>
                         <div class="barcode-container">
                             <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png" alt="Barcode">
                             <div class="barcode-text">KETUA PERGUNU SITUBONDO</div>
                         </div>
-                        <div class="certificate-date" id="certificateDate">Situbondo, 09 Mei 2025</div>
                     </div>
                 </div>
-                
-                <div class="certificate-watermark" id="watermarkCode">CENDHANU/PELAJAR/IPS/09052025/8FVE-WX5K-ZXTN/PERGUNU-SITUBONDO</div>
             </div>
             
             <!-- Print Button -->
@@ -2981,6 +2984,11 @@
             if (!isCorrect) {
                 options[selectedIndex].classList.add('incorrect');
             }
+            
+            // Disable all options after selection
+            options.forEach(option => {
+                option.style.pointerEvents = 'none';
+            });
         }
 
         function nextQuestion() {
@@ -3301,7 +3309,7 @@
             
             // Add event listeners
             questionItem.querySelector('.edit-question').addEventListener('click', function() {
-                showEditForm(question, category, subcategory, level);
+                showEditForm(question, oldCategory, oldSubcategory, oldLevel);
             });
             
             questionItem.querySelector('.delete-question').addEventListener('click', function() {
