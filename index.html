@@ -2834,6 +2834,20 @@
         }
 
         function initEventListeners() {
+    // Login event - TAMBAHKAN KODE INI DI SINI
+    document.getElementById('loginBtn').addEventListener('click', function() {
+        const examCode = document.getElementById('examCode').value;
+        if (examCode === 'p8dy-7xl4-m3dt') {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('openingScreen').style.display = 'flex';
+        } else {
+            alert('Kode ujian salah!');
+        }
+    });
+
+    // Terms agreement - enforce mandatory checkbox
+    const agreeCheckbox = document.getElementById('agreeTerms');
+    // ... kode yang sudah ada berikutnya ...
             // Login event
            document.getElementById('enablePelajarBtn').addEventListener('click', function() {
     enabledCategories.pelajar = true;
