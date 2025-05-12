@@ -661,6 +661,10 @@
     animation: spin 1s ease-in-out infinite;
     margin-right: 8px;
 }
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
 </style> <!-- Ini adalah penutup tag style -->
         
         /* Subkategori Container */
@@ -3139,34 +3143,37 @@ document.getElementById('disablePelajarBtn').addEventListener('click', function(
 });
 
             // Terms agreement - enforce mandatory checkbox
-            document.addEventListener('DOMContentLoaded', function() {
+           document.addEventListener('DOMContentLoaded', function() {
     const agreeCheckbox = document.getElementById('agreeTerms');
     const continueBtn = document.getElementById('continueBtn');
     
-    // 1. Periksa perubahan checkbox
+    // 1. Update tombol berdasarkan status checkbox
     agreeCheckbox.addEventListener('change', function() {
         continueBtn.disabled = !this.checked;
     });
     
-    // 2. Tambahkan event listener untuk tombol
+    // 2. Event listener untuk tombol lanjutkan
     continueBtn.addEventListener('click', function() {
+        // Validasi checkbox
         if (!agreeCheckbox.checked) {
             alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
             return;
         }
         
-        // Animasi transisi
+        // Animasi loading
         this.innerHTML = '<div class="spinner"></div> Memproses...';
         
         // Simulasi loading (bisa diganti dengan operasi async)
         setTimeout(() => {
+            // Sembunyikan opening screen dan tampilkan form peserta
             document.getElementById('openingScreen').style.display = 'none';
             document.querySelector('.main-container').style.display = 'flex';
+            document.getElementById('participantForm').style.display = 'block';
             
             // Reset tombol
             this.innerHTML = 'Lanjutkan ke Quiz <i class="fas fa-arrow-right"></i>';
             
-            // Play welcome sound
+            // Putar suara selamat datang
             document.getElementById('welcomeSound').play().catch(e => console.log("Autoplay blocked:", e));
         }, 1000);
     });
