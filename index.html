@@ -426,7 +426,10 @@
             50% { transform: translateY(-15px); }
             100% { transform: translateY(0px); }
         }
-        
+
+        @keyframes spin {
+    to { transform: rotate(360deg); }
+}
         /* Main Content - FULL SCREEN LAYOUT */
         .main-container {
             width: 100%;
@@ -636,11 +639,29 @@
             transform: translateY(-3px);
         }
 
-        .category-tab.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
+        /* Disabled state styles */
+.category-tab.disabled, 
+.subcategory-label.disabled {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+[data-tooltip] {
+    position: relative;
+}
+
+/* Tambahkan di sini */
+.continue-btn .spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 8px;
+}
+</style> <!-- Ini adalah penutup tag style -->
         
         /* Subkategori Container */
         .subcategory-container {
@@ -2142,13 +2163,13 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             </div>
             
             <div class="terms-checkbox">
-                <input type="checkbox" id="agreeTerms" required>
-                <label for="agreeTerms">Saya telah membaca dan menyetujui syarat & ketentuan di atas</label>
-            </div>
-            
-            <button class="continue-btn" id="continueBtn" disabled>
-                Lanjutkan ke Quiz <i class="fas fa-arrow-right"></i>
-            </button>
+  <input type="checkbox" id="agreeTerms" required>
+  <label for="agreeTerms">Saya telah membaca dan menyetujui syarat & ketentuan di atas</label>
+</div>
+
+<button class="continue-btn" id="continueBtn" disabled>
+  Lanjutkan ke Quiz <i class="fas fa-arrow-right"></i>
+</button>
         </div>
         
         <p class="opening-message">Ilmu Adalah Cahaya, Kecerdasan & Akhlak Adalah Kunci Kesuksesan (By Cendhanu)</p>
@@ -3118,36 +3139,38 @@ document.getElementById('disablePelajarBtn').addEventListener('click', function(
 });
 
             // Terms agreement - enforce mandatory checkbox
-            const agreeCheckbox = document.getElementById('agreeTerms');
-            const continueBtn = document.getElementById('continueBtn');
-
-            agreeCheckbox.addEventListener('change', function() {
-                continueBtn.disabled = !this.checked;
-            });
+            document.addEventListener('DOMContentLoaded', function() {
+    const agreeCheckbox = document.getElementById('agreeTerms');
+    const continueBtn = document.getElementById('continueBtn');
+    
+    // 1. Periksa perubahan checkbox
+    agreeCheckbox.addEventListener('change', function() {
+        continueBtn.disabled = !this.checked;
+    });
+    
+    // 2. Tambahkan event listener untuk tombol
+    continueBtn.addEventListener('click', function() {
+        if (!agreeCheckbox.checked) {
+            alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
+            return;
+        }
+        
+        // Animasi transisi
+        this.innerHTML = '<div class="spinner"></div> Memproses...';
+        
+        // Simulasi loading (bisa diganti dengan operasi async)
+        setTimeout(() => {
+            document.getElementById('openingScreen').style.display = 'none';
+            document.querySelector('.main-container').style.display = 'flex';
             
-            continueBtn.addEventListener('click', function() {
-                if (!agreeCheckbox.checked) {
-                    alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
-                    return;
-                }
-                
-                // Play continue sound
-                const continueSound = document.getElementById('openingSound');
-                continueSound.play().catch(error => {
-                    console.log("Autoplay prevented:", error);
-                });
-                
-                document.getElementById('openingScreen').style.display = 'none';
-                document.querySelector('.main-container').style.display = 'flex';
-                
-                // Play welcome sound when entering form
-                setTimeout(() => {
-                    const welcomeSound = document.getElementById('welcomeSound');
-                    welcomeSound.play().catch(error => {
-                        console.log("Autoplay prevented:", error);
-                    });
-                }, 500);
-            });
+            // Reset tombol
+            this.innerHTML = 'Lanjutkan ke Quiz <i class="fas fa-arrow-right"></i>';
+            
+            // Play welcome sound
+            document.getElementById('welcomeSound').play().catch(e => console.log("Autoplay blocked:", e));
+        }, 1000);
+    });
+});
 
             // Pilih kategori utama
             document.querySelectorAll('.category-tab').forEach(tab => {
