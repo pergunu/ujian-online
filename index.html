@@ -1084,183 +1084,147 @@
         }
         
         /* Certificate Styles - REVISED PROFESSIONAL DESIGN */
-        .certificate-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin: 2rem auto;
-            text-align: center;
-            background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/certificate.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            min-height: 1122px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 80px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #e0e0e0;
-        }
+    .certificate-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 2rem auto;
+    text-align: center;
+    background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/certificate.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 1122px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 80px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
 
-        .certificate-content {
-            position: relative;
-            z-index: 2;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+.certificate-header {
+    margin-bottom: 1rem;
+    position: relative;
+    order: 1; /* Menentukan urutan tampilan */
+}
 
-        .certificate-header {
-            margin-bottom: 1rem;
-            position: relative;
-        }
+.certificate-watermark {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: rgba(67, 97, 238, 0.8);
+    letter-spacing: 1px;
+    font-weight: bold;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    order: 1; /* Posisi paling atas */
+}
 
-        .certificate-watermark {
-            position: absolute;
-            top: 20px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-            color: rgba(67, 97, 238, 0.8);
-            letter-spacing: 1px;
-            font-weight: bold;
-            padding: 0.5rem;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
+.certificate-title {
+    font-size: 2.8rem;
+    color: #3a0ca3;
+    margin: 4rem 0 0.5rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+    display: inline-block;
+    order: 2;
+}
 
-        .certificate-title {
-            font-size: 2.8rem;
-            color: #3a0ca3;
-            margin: 4rem 0 0.5rem;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            position: relative;
-            display: inline-block;
-        }
+.certificate-subtitle {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 1rem 0;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    order: 3;
+}
 
-        .certificate-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 3px;
-            background: linear-gradient(to right, #3a0ca3, #4361ee, #3a0ca3);
-            border-radius: 3px;
-        }
+.certificate-name {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #3a0ca3;
+    margin: 1.5rem 0;
+    font-family: 'Alex Brush', cursive;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    line-height: 1.2;
+    order: 4;
+}
 
-        .certificate-subtitle {
-            font-size: 1.1rem;
-            color: #555;
-            margin: 1rem 0;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+.certificate-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin: 1rem auto;
+    color: #333;
+    max-width: 700px;
+    order: 5;
+}
 
-        .certificate-name {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: #3a0ca3;
-            margin: 1.5rem 0;
-            font-family: 'Alex Brush', cursive;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            line-height: 1.2;
-        }
+.certificate-score {
+    font-size: 5rem;
+    font-weight: 700;
+    color: #3a0ca3;
+    margin: 2rem 0;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    order: 6;
+}
 
-        .certificate-text {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin: 1rem auto;
-            color: #333;
-            max-width: 700px;
-        }
+.certificate-message {
+    font-size: 1.1rem;
+    margin: 1rem auto;
+    color: #333;
+    line-height: 1.6;
+    font-weight: 500;
+    max-width: 700px;
+    font-style: italic;
+    padding: 0 2rem;
+    order: 7;
+}
 
-        .certificate-score {
-            font-size: 5rem;
-            font-weight: 700;
-            color: #3a0ca3;
-            margin: 2rem 0;
-            position: relative;
-            font-family: 'Montserrat', sans-serif;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
+.certificate-footer {
+    margin-top: auto;
+    text-align: center;
+    padding-top: 2rem;
+    order: 9; /* Pindah ke bawah barcode */
+}
 
-        .certificate-score::after {
-            content: '';
-            position: absolute;
-            bottom: -0.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 4px;
-            background: linear-gradient(to right, var(--primary), var(--primary-dark));
-            opacity: 0.5;
-            border-radius: 2px;
-        }
+.certificate-date {
+    margin-top: 1rem;
+    font-weight: 500;
+    color: #555;
+    font-size: 1rem;
+    order: 8; /* Pindah ke atas barcode */
+}
 
-        .certificate-message {
-            font-size: 1.1rem;
-            margin: 1rem auto;
-            color: #333;
-            line-height: 1.6;
-            font-weight: 500;
-            max-width: 700px;
-            font-style: italic;
-            padding: 0 2rem;
-        }
+.barcode-container {
+    margin-top: 0;
+    text-align: center;
+    order: 10; /* Posisi paling bawah */
+}
 
-        .certificate-message p {
-            margin-bottom: 1rem;
-        }
-
-        .certificate-stats {
-            display: none;
-        }
-
-        .certificate-footer {
-            margin-top: auto;
-            text-align: center;
-            padding-top: 2rem;
-        }
-
-        .certificate-date {
-            margin-top: 1rem;
-            font-weight: 500;
-            color: #555;
-            font-size: 1rem;
-        }
-
-        .barcode-container {
-            margin-top: 2.5rem;
-            text-align: center;
-        }
-
-        .barcode-container img {
-            height: 80px;
-            margin-bottom: 0.5rem;
-        }
-
-        .barcode-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            color: var(--dark);
-            font-weight: 600;
-            margin-top: 0.5rem;
-        }
-
+.barcode-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: var(--dark);
+    font-weight: 600;
+    margin-bottom: 1rem; /* Pindahkan ke atas barcode */
+    order: 8; /* Sebelum barcode */
+}
         /* Print Button */
         .print-certificate-btn {
             display: block;
@@ -2871,15 +2835,19 @@
 
         function initEventListeners() {
             // Login event
-            document.getElementById('loginBtn').addEventListener('click', function() {
-                const examCode = document.getElementById('examCode').value;
-                if (examCode === 'p8dyw74db') {
-                    document.getElementById('loginScreen').style.display = 'none';
-                    document.getElementById('openingScreen').style.display = 'flex';
-                } else {
-                    alert('Kode ujian salah! Silakan coba lagi.');
-                }
-            });
+           document.getElementById('enablePelajarBtn').addEventListener('click', function() {
+    enabledCategories.pelajar = true;
+    updateCategoryUI();
+    alert('Kategori Pelajar telah diaktifkan');
+});
+
+document.getElementById('disablePelajarBtn').addEventListener('click', function() {
+    if (confirm('Apakah Anda yakin ingin menonaktifkan kategori Pelajar?')) {
+        enabledCategories.pelajar = false;
+        updateCategoryUI();
+        alert('Kategori Pelajar telah dinonaktifkan');
+    }
+});
 
             // Terms agreement - enforce mandatory checkbox
             const agreeCheckbox = document.getElementById('agreeTerms');
@@ -3079,10 +3047,96 @@
             }
         }
 
-        function startQuiz() {
-            // Get participant data
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
+        // Tambahkan fungsi validasi sebelum memulai quiz
+function startQuiz() {
+    // Get participant data
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const profesi = currentCategory === 'umum' ? document.getElementById('profesi').value : '';
+    currentLevel = document.getElementById('level').value;
+    
+    if (!name || !phone) {
+        alert('Silakan isi nama lengkap dan nomor HP terlebih dahulu');
+        return;
+    }
+    
+    // Validasi kategori dan subkategori yang di-disable
+    const selectedCategory = document.querySelector('.category-tab.active').dataset.category;
+    const selectedSubcategory = document.querySelector('input[name="subcategory"]:checked').value;
+    
+    // Cek apakah kategori di-disable
+    if (!enabledCategories[selectedCategory]) {
+        alert('Kategori ini sedang tidak tersedia!');
+        return;
+    }
+    
+    // Cek apakah subkategori di-disable
+    if (!enabledCategories.subcategories[selectedCategory][selectedSubcategory]) {
+        alert('Subkategori ini sedang tidak tersedia!');
+        return;
+    }
+    
+    // Periksa ketersediaan soal
+    const availableQuestions = questions[selectedCategory][selectedSubcategory][currentLevel];
+    if (!availableQuestions || availableQuestions.length === 0) {
+        alert('Belum ada soal untuk kategori, subkategori, dan level yang dipilih!');
+        return;
+    }
+    
+    // Update current category dan subcategory
+    currentCategory = selectedCategory;
+    currentSubcategory = selectedSubcategory;
+    
+    // Lanjutkan proses start quiz seperti sebelumnya...
+    // ... (kode selanjutnya tetap sama)
+}
+
+// Perbaikan fungsi update UI untuk disable/enable
+function updateCategoryUI() {
+    // Update kategori utama
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        const category = tab.dataset.category;
+        tab.classList.toggle('disabled', !enabledCategories[category]);
+        if (tab.classList.contains('disabled')) {
+            tab.style.pointerEvents = 'none';
+            tab.style.opacity = '0.5';
+        } else {
+            tab.style.pointerEvents = 'auto';
+            tab.style.opacity = '1';
+        }
+    });
+
+    // Update subkategori pelajar
+    document.querySelectorAll('#pelajarSubcategories .subcategory-label').forEach(label => {
+        const radio = label.previousElementSibling;
+        const subcategory = radio.value;
+        label.classList.toggle('disabled', !enabledCategories.subcategories.pelajar[subcategory]);
+        radio.disabled = !enabledCategories.subcategories.pelajar[subcategory];
+        if (label.classList.contains('disabled')) {
+            label.style.pointerEvents = 'none';
+            label.style.opacity = '0.5';
+        } else {
+            label.style.pointerEvents = 'auto';
+            label.style.opacity = '1';
+        }
+    });
+
+    // Update subkategori umum
+    document.querySelectorAll('#umumSubcategories .subcategory-label').forEach(label => {
+        const radio = label.previousElementSibling;
+        const subcategory = radio.value;
+        label.classList.toggle('disabled', !enabledCategories.subcategories.umum[subcategory]);
+        radio.disabled = !enabledCategories.subcategories.umum[subcategory];
+        if (label.classList.contains('disabled')) {
+            label.style.pointerEvents = 'none';
+            label.style.opacity = '0.5';
+        } else {
+            label.style.pointerEvents = 'auto';
+            label.style.opacity = '1';
+        }
+    });
+}
             const email = document.getElementById('email').value;
             const profesi = currentCategory === 'umum' ? document.getElementById('profesi').value : '';
             currentLevel = document.getElementById('level').value;
@@ -3874,7 +3928,7 @@
                 // # UNCOMMENT DAN GUNAKAN INI UNTUK API ASLI        #
                 // ####################################################
                 /*
-                const API_KEY = 'sk-8837b24327bd4db99e36688951ceaea8'; // <-- INI TEMPAT API KEY
+                const API_KEY = 'ISI API KEY DISINI'; // <-- INI TEMPAT API KEY
                 const generatedQuestion = await callAIGenerateQuestion(prompt, category, level, API_KEY);
                 */
                 
