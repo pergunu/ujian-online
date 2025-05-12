@@ -650,22 +650,49 @@
     position: relative;
 }
 
-/* Tambahkan di sini */
-/* ####################### PASTE CSS BARU MULAI DI SINI ####################### */
+/* Continue Button Styles */
+.continue-btn {
+    background: var(--primary);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 2rem auto 0;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+}
+
+.continue-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+}
+
+.continue-btn:disabled {
+    background: var(--light-gray);
+    color: var(--gray);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
 .continue-btn .spinner {
-    display: inline-block;
-    width: 1rem;
-    height: 1rem;
+    display: none;
+    width: 1.25rem;
+    height: 1.25rem;
     border: 2px solid rgba(255,255,255,0.3);
     border-radius: 50%;
     border-top-color: white;
     animation: spin 1s ease-in-out infinite;
-    margin-right: 8px;
-    vertical-align: middle;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
 }
 /* ####################### PASTE CSS BARU SELESAI DI SINI ####################### */
 </style> <!-- Ini adalah penutup tag style -->
@@ -2169,13 +2196,14 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
                 <p>Dengan melanjutkan, Anda menyatakan telah membaca, memahami, dan menyetujui seluruh ketentuan di atas.</p>
             </div>
             
-            <div class="terms-checkbox">
+ <div class="terms-checkbox">
   <input type="checkbox" id="agreeTerms" required>
   <label for="agreeTerms">Saya telah membaca dan menyetujui syarat & ketentuan di atas</label>
 </div>
 
 <button class="continue-btn" id="continueBtn" disabled>
-  Lanjutkan ke Quiz <i class="fas fa-arrow-right"></i>
+  <span id="continueBtnText">Lanjutkan ke Quiz</span> 
+  <i class="fas fa-arrow-right"></i>
 </button>
         </div>
         
@@ -3118,40 +3146,70 @@ document.getElementById('adminPanel').addEventListener('keypress', resetAdminSes
         function initEventListeners() {
     // Login event - TAMBAHKAN KODE INI DI SINI
    // ####################### PASTE BARU MULAI DI SINI #######################
+// Terms checkbox validation
 document.getElementById('agreeTerms').addEventListener('change', function() {
     document.getElementById('continueBtn').disabled = !this.checked;
 });
 
+// Continue button functionality
 document.getElementById('continueBtn').addEventListener('click', function() {
-    // Validasi checkbox
+    const btn = this;
+    const btnText = document.getElementById('continueBtnText');
+    const originalText = btnText.textContent;
+    const spinner = btn.querySelector('.spinner');
+    
+    // Validate terms
     if (!document.getElementById('agreeTerms').checked) {
-        alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
+        showValidationError('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
         return;
     }
     
-    // Animasi loading
-    const originalHtml = this.innerHTML;
-    this.innerHTML = '<div class="spinner"></div> Memproses...';
-    this.disabled = true;
+    // Show loading state
+    btn.disabled = true;
+    btnText.textContent = 'Memproses...';
+    spinner.style.display = 'block';
     
-    // Simulasi loading (bisa diganti dengan operasi async)
+    // Simulate loading (replace with actual async operation if needed)
     setTimeout(() => {
-        // Sembunyikan opening screen dan tampilkan form peserta
+        // Hide opening screen and show main content
         document.getElementById('openingScreen').style.display = 'none';
         document.querySelector('.main-container').style.display = 'flex';
         document.getElementById('participantForm').style.display = 'block';
         
-        // Reset tombol
-        this.innerHTML = originalHtml;
-        this.disabled = false;
+        // Play welcome sound
+        try {
+            document.getElementById('welcomeSound').play();
+        } catch (e) {
+            console.log("Autoplay blocked:", e);
+        }
         
-        // Putar suara selamat datang
-        document.getElementById('welcomeSound').play().catch(e => console.log("Autoplay blocked:", e));
-        
-        // Scroll ke atas
+        // Scroll to top
         window.scrollTo(0, 0);
-    }, 1000);
+        
+        // Reset button state (in case user goes back)
+        btn.disabled = false;
+        btnText.textContent = originalText;
+        spinner.style.display = 'none';
+    }, 800);
 });
+
+// Helper function to show validation errors
+function showValidationError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'validation-error';
+    errorDiv.innerHTML = `
+        <i class="fas fa-exclamation-circle"></i>
+        <span>${message}</span>
+    `;
+    
+    document.body.appendChild(errorDiv);
+    
+    // Remove after 5 seconds
+    setTimeout(() => {
+        errorDiv.style.opacity = '0';
+        setTimeout(() => errorDiv.remove(), 300);
+    }, 5000);
+}
 // ####################### PASTE BARU SELESAI DI SINI #######################
 
             // Pilih kategori utama
