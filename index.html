@@ -1144,6 +1144,23 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(248, 150, 30, 0.4);
         }
+
+        .continue-btn {
+    transition: all 0.3s ease;
+    margin: 2rem auto 0;
+}
+
+.continue-btn:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.continue-btn:not(:disabled) {
+    opacity: 1;
+    pointer-events: auto;
+    cursor: pointer;
+}
         
         /* Certificate Styles - REVISED PROFESSIONAL DESIGN */
     .certificate-wrapper {
@@ -2352,7 +2369,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   <label for="agreeTerms">Saya telah membaca dan menyetujui syarat & ketentuan di atas</label>
 </div>
 
-<button class="continue-btn" id="continueBtn" disabled>
+<button class="continue-btn" id="continueBtn" disabled style="display: block;">
   <span id="continueBtnText">Lanjutkan ke Quiz</span> 
   <i class="fas fa-arrow-right"></i>
 </button>
@@ -3379,15 +3396,19 @@ function updateSubcategoryUI(category) {
 // Terms checkbox validation
 document.getElementById('agreeTerms').addEventListener('change', function() {
     const continueBtn = document.getElementById('continueBtn');
+    continueBtn.disabled = !this.checked;
+    
+    // Update button styling based on state
     if (this.checked) {
-        continueBtn.disabled = false;
-        continueBtn.style.display = 'inline-block';
+        continueBtn.style.opacity = '1';
+        continueBtn.style.pointerEvents = 'auto';
+        continueBtn.style.cursor = 'pointer';
     } else {
-        continueBtn.disabled = true;
-        continueBtn.style.display = 'none';
+        continueBtn.style.opacity = '0.5';
+        continueBtn.style.pointerEvents = 'none';
+        continueBtn.style.cursor = 'not-allowed';
     }
 });
-
 // Continue button functionality
 document.getElementById('continueBtn').addEventListener('click', function() {
     const btn = this;
