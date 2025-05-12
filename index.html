@@ -2521,6 +2521,24 @@ document.getElementById('participantForm').addEventListener('submit', function(e
         spinner.style.display = 'none';
     }, 800);
 });
+
+    function saveEnabledCategories() {
+    localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
+}
+
+function loadEnabledCategories() {
+    const saved = localStorage.getItem('enabledCategories');
+    if (saved) {
+        enabledCategories = JSON.parse(saved);
+    }
+    updateCategoryUI();
+}
+
+// Panggil saat inisialisasi
+document.addEventListener('DOMContentLoaded', function() {
+    loadEnabledCategories();
+    // ... kode lainnya
+});
 </script>
         
         <!-- Quiz Container -->
@@ -3077,6 +3095,26 @@ document.getElementById('participantForm').addEventListener('submit', function(e
         let score = 0;
         let timer;
         let quizStartTime;
+
+        let enabledCategories = {
+    pelajar: true,
+    umum: true,
+    subcategories: {
+        pelajar: {
+            ipa: true,
+            ips: true,
+            matematika: true,
+            agama: true,
+            ppkn: true,
+            sejarah: true,
+            bahasa_indonesia: true,
+            bahasa_inggris: true
+        },
+        umum: {
+            logika: true
+        }
+    }
+};
         // Ganti seluruh bagian admin dengan yang berikut
 let adminAuthenticated = false;
 const ADMIN_SESSION_TIMEOUT = 30 * 60 * 1000; // 30 menit
@@ -3162,29 +3200,36 @@ document.getElementById('adminPanel').addEventListener('keypress', resetAdminSes
         });
 
         // Fungsi update tampilan kategori berdasarkan pengaturan
-        function updateCategoryUI() {
-            // Update kategori utama
-            document.querySelectorAll('.category-tab').forEach(tab => {
-                const category = tab.dataset.category;
-                tab.classList.toggle('disabled', !enabledCategories[category]);
-            });
+       function updateCategoryUI() {
+    // Update kategori utama
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        const category = tab.dataset.category;
+        tab.classList.toggle('disabled', !enabledCategories[category]);
+        tab.style.cursor = enabledCategories[category] ? 'pointer' : 'not-allowed';
+    });
 
-            // Update subkategori pelajar
-            document.querySelectorAll('#pelajarSubcategories .subcategory-label').forEach(label => {
-                const radio = label.previousElementSibling;
-                const subcategory = radio.value;
-                label.classList.toggle('disabled', !enabledCategories.subcategories.pelajar[subcategory]);
-                radio.disabled = !enabledCategories.subcategories.pelajar[subcategory];
-            });
+    // Update subkategori
+    updateSubcategoryUI('pelajar');
+    updateSubcategoryUI('umum');
+}
 
-            // Update subkategori umum
-            document.querySelectorAll('#umumSubcategories .subcategory-label').forEach(label => {
-                const radio = label.previousElementSibling;
-                const subcategory = radio.value;
-                label.classList.toggle('disabled', !enabledCategories.subcategories.umum[subcategory]);
-                radio.disabled = !enabledCategories.subcategories.umum[subcategory];
-            });
+function updateSubcategoryUI(category) {
+    const container = document.getElementById(`${category}Subcategories`);
+    if (!container) return;
+    
+    container.querySelectorAll('.subcategory-radio').forEach(radio => {
+        const subcategory = radio.value;
+        const isEnabled = enabledCategories.subcategories[category][subcategory];
+        radio.disabled = !isEnabled;
+        
+        const label = radio.nextElementSibling;
+        if (label) {
+            label.classList.toggle('disabled', !isEnabled);
+            label.style.cursor = isEnabled ? 'pointer' : 'not-allowed';
+            label.style.opacity = isEnabled ? '1' : '0.6';
         }
+    });
+}
 
         // Fungsi initAudio dengan volume maksimal
         function initAudio() {
