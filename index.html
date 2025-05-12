@@ -1894,6 +1894,90 @@
                 height: 60px;
             }
         }
+
+        /* ==================== */
+/* VALIDATION STYLES */
+/* ==================== */
+.validation-error {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffebee;
+    color: #c62828;
+    padding: 12px 24px;
+    border-radius: 4px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+    border-left: 4px solid #c62828;
+}
+
+.validation-error i {
+    font-size: 1.2em;
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px); 
+    }
+    to { 
+        opacity: 1;
+        transform: translateX(-50%) translateY(0); 
+    }
+}
+
+/* Disabled state styles */
+.category-tab.disabled, 
+.subcategory-label.disabled {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.category-tab.disabled::after,
+.subcategory-label.disabled::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.85);
+    z-index: 1;
+    border-radius: inherit;
+}
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s;
+    z-index: 10;
+    pointer-events: none;
+}
+
+[data-tooltip]:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
     </style>
 </head>
 <body>
@@ -3063,40 +3147,107 @@ document.getElementById('disablePelajarBtn').addEventListener('click', function(
 
         // Tambahkan fungsi validasi sebelum memulai quiz
 function startQuiz() {
-    // Get participant data
-    const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
-    const profesi = currentCategory === 'umum' ? document.getElementById('profesi').value : '';
-    currentLevel = document.getElementById('level').value;
-    
-    if (!name || !phone) {
-        alert('Silakan isi nama lengkap dan nomor HP terlebih dahulu');
-        return;
+    // 1. Ambil data peserta
+    const participantData = getParticipantData();
+    if (!validateParticipantData(participantData)) return;
+
+    // 2. Validasi kategori/subkategori
+    const quizSelection = getQuizSelection();
+    if (!quizSelection.valid) return;
+
+    // 3. Set current category/level
+    currentCategory = quizSelection.category;
+    currentSubcategory = quizSelection.subcategory;
+    currentLevel = quizSelection.level;
+
+    // 4. Mulai quiz
+    initializeQuiz(participantData.name);
+}
+
+// Helper functions
+function getParticipantData() {
+    return {
+        name: document.getElementById('name').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        profesi: currentCategory === 'umum' 
+               ? document.getElementById('profesi').value.trim() 
+               : ''
+    };
+}
+
+function validateParticipantData(data) {
+    if (!data.name || !data.phone) {
+        showValidationError('Nama lengkap dan nomor HP wajib diisi');
+        return false;
     }
     
-    // Validasi kategori dan subkategori yang di-disable
-    const selectedCategory = document.querySelector('.category-tab.active').dataset.category;
-    const selectedSubcategory = document.querySelector('input[name="subcategory"]:checked').value;
+    if (!/^[0-9]{10,13}$/.test(data.phone)) {
+        showValidationError('Nomor HP harus 10-13 digit angka');
+        return false;
+    }
     
+    if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+        showValidationError('Format email tidak valid');
+        return false;
+    }
+    
+    return true;
+}
+
+function getQuizSelection() {
+    const categoryEl = document.querySelector('.category-tab.active');
+    const subcategoryEl = document.querySelector('input[name="subcategory"]:checked');
+    
+    if (!categoryEl || !subcategoryEl) {
+        showValidationError('Silakan pilih kategori dan subkategori');
+        return { valid: false };
+    }
+
+    const selection = {
+        category: categoryEl.dataset.category,
+        subcategory: subcategoryEl.value,
+        level: document.getElementById('level').value,
+        valid: true
+    };
+
+    if (!validateQuizAvailability(selection.category, selection.subcategory, selection.level)) {
+        return { valid: false };
+    }
+
+    return selection;
+}
+    
+    // Update UI dan mulai quiz
+    updateQuizUI(name);
+    initializeQuiz();
+}
+
+// Fungsi validasi terpisah yang lebih robust
+function validateQuizAvailability(category, subcategory, level) {
     // Cek apakah kategori di-disable
-    if (!enabledCategories[selectedCategory]) {
+    if (!enabledCategories[category]) {
         alert('Kategori ini sedang tidak tersedia!');
-        return;
+        return false;
     }
     
     // Cek apakah subkategori di-disable
-    if (!enabledCategories.subcategories[selectedCategory][selectedSubcategory]) {
+    if (!enabledCategories.subcategories[category] || 
+        !enabledCategories.subcategories[category][subcategory]) {
         alert('Subkategori ini sedang tidak tersedia!');
-        return;
+        return false;
     }
     
     // Periksa ketersediaan soal
-    const availableQuestions = questions[selectedCategory][selectedSubcategory][currentLevel];
-    if (!availableQuestions || availableQuestions.length === 0) {
+    if (!questions[category] || !questions[category][subcategory] || 
+        !questions[category][subcategory][level] || 
+        questions[category][subcategory][level].length === 0) {
         alert('Belum ada soal untuk kategori, subkategori, dan level yang dipilih!');
-        return;
+        return false;
     }
+    
+    return true;
+}
     
     // Update current category dan subcategory
     currentCategory = selectedCategory;
@@ -3122,32 +3273,71 @@ function updateCategoryUI() {
     });
 
     // Update subkategori pelajar
-    document.querySelectorAll('#pelajarSubcategories .subcategory-label').forEach(label => {
-        const radio = label.previousElementSibling;
-        const subcategory = radio.value;
-        label.classList.toggle('disabled', !enabledCategories.subcategories.pelajar[subcategory]);
-        radio.disabled = !enabledCategories.subcategories.pelajar[subcategory];
-        if (label.classList.contains('disabled')) {
-            label.style.pointerEvents = 'none';
-            label.style.opacity = '0.5';
+  // Fungsi utama update UI kategori
+function updateCategoryUI() {
+    // Update kategori utama
+    updateMainCategories();
+    
+    // Update subkategori
+    updateSubcategoryUI('pelajar');
+    updateSubcategoryUI('umum');
+}
+
+// Fungsi untuk update kategori utama
+function updateMainCategories() {
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        const category = tab.dataset.category;
+        const isEnabled = enabledCategories[category];
+        
+        // Update class dan style
+        tab.classList.toggle('disabled', !isEnabled);
+        tab.style.cssText = `
+            pointer-events: ${isEnabled ? 'auto' : 'none'};
+            opacity: ${isEnabled ? '1' : '0.5'};
+            cursor: ${isEnabled ? 'pointer' : 'not-allowed'};
+        `;
+        
+        // Tambahkan tooltip jika dinonaktifkan
+        if (!isEnabled) {
+            tab.setAttribute('data-tooltip', 'Kategori dinonaktifkan oleh admin');
         } else {
-            label.style.pointerEvents = 'auto';
-            label.style.opacity = '1';
+            tab.removeAttribute('data-tooltip');
         }
     });
+}
 
-    // Update subkategori umum
-    document.querySelectorAll('#umumSubcategories .subcategory-label').forEach(label => {
+// Fungsi untuk update subkategori (reusable)
+function updateSubcategoryUI(category) {
+    const containerId = `${category}Subcategories`;
+    const container = document.getElementById(containerId);
+    
+    if (!container) {
+        console.warn(`Container #${containerId} tidak ditemukan`);
+        return;
+    }
+
+    container.querySelectorAll('.subcategory-label').forEach(label => {
         const radio = label.previousElementSibling;
+        if (!radio) return;
+
         const subcategory = radio.value;
-        label.classList.toggle('disabled', !enabledCategories.subcategories.umum[subcategory]);
-        radio.disabled = !enabledCategories.subcategories.umum[subcategory];
-        if (label.classList.contains('disabled')) {
-            label.style.pointerEvents = 'none';
-            label.style.opacity = '0.5';
+        const isEnabled = enabledCategories.subcategories[category]?.[subcategory] ?? false;
+
+        // Update elemen
+        label.classList.toggle('disabled', !isEnabled);
+        radio.disabled = !isEnabled;
+        
+        label.style.cssText = `
+            pointer-events: ${isEnabled ? 'auto' : 'none'};
+            opacity: ${isEnabled ? '1' : '0.5'};
+            cursor: ${isEnabled ? 'pointer' : 'not-allowed'};
+        `;
+        
+        // Tooltip
+        if (!isEnabled) {
+            label.setAttribute('data-tooltip', 'Subkategori dinonaktifkan oleh admin');
         } else {
-            label.style.pointerEvents = 'auto';
-            label.style.opacity = '1';
+            label.removeAttribute('data-tooltip');
         }
     });
 }
