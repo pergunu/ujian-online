@@ -335,12 +335,19 @@
             background: var(--primary-dark);
         }
 
-        .continue-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            animation: none;
-            background: var(--gray);
-        }
+      .continue-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--light-gray);
+    color: var(--gray);
+    border-color: var(--light-gray);
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.continue-btn:not(:disabled) {
+    display: block !important;
+}
 
         .continue-btn::after {
             content: '';
@@ -2033,6 +2040,63 @@
     opacity: 1;
     visibility: visible;
 }
+    <!-- Floating Exam Code Button -->
+<div class="floating-exam-code-btn" id="examCodeBtn">
+    <i class="fas fa-key"></i>
+    <span class="tooltip">Kelola Kode Ujian</span>
+</div>
+
+<!-- Exam Code Admin Panel -->
+<div class="admin-overlay" id="examCodeOverlay"></div>
+<div class="admin-panel exam-code-panel" id="examCodePanel">
+    <div class="admin-header">
+        <h2 class="admin-title"><i class="fas fa-key"></i> Kontrol Panel Kode Ujian</h2>
+        <button class="admin-close" id="examCodeClose">&times;</button>
+    </div>
+    
+    <div class="form-group">
+        <label for="currentExamCode" class="form-label">Kode Ujian Saat Ini</label>
+        <input type="text" id="currentExamCode" class="form-control" readonly>
+    </div>
+    
+    <div class="form-group">
+        <label for="newExamCode" class="form-label">Kode Ujian Baru</label>
+        <input type="text" id="newExamCode" class="form-control" 
+               placeholder="Masukkan kode ujian baru (min 8 karakter)">
+    </div>
+    
+    <div class="form-group">
+        <label for="examCodePassword" class="form-label">Password Admin</label>
+        <input type="password" id="examCodePassword" class="form-control" 
+               placeholder="Masukkan password admin">
+    </div>
+    
+    <button class="btn btn-primary" id="saveExamCodeBtn">
+        <i class="fas fa-save"></i> Simpan Kode Baru
+    </button>
+    
+    <div class="password-form" style="margin-top: 2rem;">
+        <h3 class="admin-title"><i class="fas fa-lock"></i> Ganti Password</h3>
+        <div class="form-group">
+            <label for="currentExamPassword" class="form-label">Password Lama</label>
+            <input type="password" id="currentExamPassword" class="form-control" 
+                   placeholder="Masukkan password lama">
+        </div>
+        <div class="form-group">
+            <label for="newExamPassword" class="form-label">Password Baru</label>
+            <input type="password" id="newExamPassword" class="form-control" 
+                   placeholder="Masukkan password baru (min 8 karakter)">
+        </div>
+        <div class="form-group">
+            <label for="confirmExamPassword" class="form-label">Konfirmasi Password</label>
+            <input type="password" id="confirmExamPassword" class="form-control" 
+                   placeholder="Konfirmasi password baru">
+        </div>
+        <button class="btn btn-warning" id="changeExamPasswordBtn">
+            <i class="fas fa-sync-alt"></i> Ganti Password
+        </button>
+    </div>
+</div>
     </style>
 </head>
 <body>
@@ -2122,6 +2186,93 @@
 </style>
 
 <script>
+    // Exam Code Management
+let examCode = "p8dy-7xl4-m3dt"; // Default exam code
+const DEFAULT_EXAM_PASSWORD = "Pergunu.010499";
+let examPassword = DEFAULT_EXAM_PASSWORD;
+
+// Initialize exam code panel
+document.getElementById('currentExamCode').value = examCode;
+document.getElementById('examCodeBtn').addEventListener('click', showExamCodePanel);
+document.getElementById('examCodeClose').addEventListener('click', closeExamCodePanel);
+document.getElementById('examCodeOverlay').addEventListener('click', closeExamCodePanel);
+document.getElementById('saveExamCodeBtn').addEventListener('click', saveNewExamCode);
+document.getElementById('changeExamPasswordBtn').addEventListener('click', changeExamPassword);
+
+function showExamCodePanel() {
+    document.getElementById('examCodeOverlay').style.display = 'block';
+    document.getElementById('examCodePanel').style.display = 'block';
+    document.getElementById('examCodePassword').focus();
+}
+
+function closeExamCodePanel() {
+    document.getElementById('examCodeOverlay').style.display = 'none';
+    document.getElementById('examCodePanel').style.display = 'none';
+    document.getElementById('examCodePassword').value = '';
+    document.getElementById('newExamCode').value = '';
+}
+
+function saveNewExamCode() {
+    const password = document.getElementById('examCodePassword').value;
+    const newCode = document.getElementById('newExamCode').value.trim();
+    
+    if (!password || password !== examPassword) {
+        alert('Password admin salah!');
+        return;
+    }
+    
+    if (!newCode || newCode.length < 8) {
+        alert('Kode ujian baru harus minimal 8 karakter!');
+        return;
+    }
+    
+    examCode = newCode;
+    document.getElementById('currentExamCode').value = examCode;
+    document.getElementById('newExamCode').value = '';
+    alert('Kode ujian berhasil diperbarui!');
+}
+
+function changeExamPassword() {
+    const currentPass = document.getElementById('currentExamPassword').value;
+    const newPass = document.getElementById('newExamPassword').value;
+    const confirmPass = document.getElementById('confirmExamPassword').value;
+    
+    if (currentPass !== examPassword) {
+        alert('Password lama salah!');
+        return;
+    }
+    
+    if (newPass !== confirmPass) {
+        alert('Password baru dan konfirmasi tidak cocok!');
+        return;
+    }
+    
+    if (newPass.length < 8) {
+        alert('Password baru harus minimal 8 karakter!');
+        return;
+    }
+    
+    examPassword = newPass;
+    document.getElementById('currentExamPassword').value = '';
+    document.getElementById('newExamPassword').value = '';
+    document.getElementById('confirmExamPassword').value = '';
+    alert('Password admin berhasil diubah!');
+}
+
+// Update login validation to use the examCode variable
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const inputCode = document.getElementById('examCode').value;
+    
+    if (inputCode !== examCode) {
+        alert('Kode ujian tidak valid!');
+        return;
+    }
+    
+    // Proceed with login
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('openingScreen').style.display = 'flex';
+});
 // Ganti event listener login dengan yang berikut
 document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -2279,6 +2430,40 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     border-width: 2px;
     width: 1.25rem;
     height: 1.25rem;
+}
+    /* Floating Exam Code Button */
+.floating-exam-code-btn {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    background: var(--primary-dark);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    z-index: 100;
+    transition: var(--transition);
+}
+
+.floating-exam-code-btn:hover {
+    transform: scale(1.1);
+    background: var(--primary);
+}
+
+.exam-code-panel {
+    max-width: 500px;
+}
+
+/* Hide exam code button when not in login screen */
+.main-container ~ .floating-exam-code-btn,
+.opening-screen ~ .floating-exam-code-btn {
+    display: none;
 }
 </style>
 
@@ -3148,7 +3333,14 @@ document.getElementById('adminPanel').addEventListener('keypress', resetAdminSes
    // ####################### PASTE BARU MULAI DI SINI #######################
 // Terms checkbox validation
 document.getElementById('agreeTerms').addEventListener('change', function() {
-    document.getElementById('continueBtn').disabled = !this.checked;
+    const continueBtn = document.getElementById('continueBtn');
+    if (this.checked) {
+        continueBtn.disabled = false;
+        continueBtn.style.display = 'inline-block';
+    } else {
+        continueBtn.disabled = true;
+        continueBtn.style.display = 'none';
+    }
 });
 
 // Continue button functionality
