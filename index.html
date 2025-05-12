@@ -1985,17 +1985,126 @@
     <div class="stars" id="stars"></div>
 
     <!-- Login Screen -->
-    <div class="login-screen" id="loginScreen">
-        <div class="login-container">
-            <h2 class="login-title">Selamat Datang di Ujian Pergunu</h2>
-            <p class="login-description">
-                Selamat datang di platform ujian kompetensi Pergunu Situbondo. Situs ini dirancang sebagai wadah bagi peserta untuk menguji kemampuan, mengasah wawasan, dan meningkatkan kualitas akademik maupun profesional.
-                Untuk memastikan keamanan dan eksklusivitas ujian, silakan masukkan kode sandi ujian terlebih dahulu sebelum melanjutkan. Semoga ujian ini menjadi langkah menuju prestasi dan keberhasilan yang lebih tinggi!
-            </p>
-            <input type="password" id="examCode" class="login-input" placeholder="Masukkan Kode Login Ujian">
-            <button class="login-btn" id="loginBtn">Masuk</button>
-        </div>
+   <!-- Ganti seluruh bagian login screen dengan kode berikut -->
+<div class="login-screen" id="loginScreen">
+    <div class="login-container">
+        <h2 class="login-title">Selamat Datang di Ujian Pergunu</h2>
+        <p class="login-description">
+            Selamat datang di platform ujian kompetensi Pergunu Situbondo. 
+            Untuk memulai, silakan masukkan kode akses yang valid.
+        </p>
+        <form id="loginForm">
+            <input type="password" id="examCode" class="login-input" 
+                   placeholder="Masukkan Kode Login Ujian" required
+                   pattern="[A-Za-z0-9-]{12}" 
+                   title="Kode harus 12 karakter (huruf/angka/tanda hubung)">
+            <div id="loginError" class="error-message" style="display:none;"></div>
+            <button type="submit" class="login-btn" id="loginBtn">
+                <span id="loginBtnText">Masuk</span>
+                <div id="loginSpinner" class="spinner" style="display:none;"></div>
+            </button>
+        </form>
     </div>
+</div>
+
+<style>
+/* Tambahkan style ini di bagian CSS */
+.error-message {
+    color: var(--danger);
+    background-color: #ffebee;
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--danger);
+    display: none;
+}
+
+.login-btn {
+    position: relative;
+}
+
+.spinner {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+    /* PASTE BARU DARI SINI */
+.error-message {
+    color: var(--danger);
+    background-color: #ffebee;
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--danger);
+    display: none;
+}
+
+.field-error {
+    color: var(--danger);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.spinner {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+}
+/* SAMPAI SINI */
+</style>
+
+<script>
+// Ganti event listener login dengan yang berikut
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const loginBtn = document.getElementById('loginBtn');
+    const loginBtnText = document.getElementById('loginBtnText');
+    const spinner = document.getElementById('loginSpinner');
+    const errorDisplay = document.getElementById('loginError');
+    
+    // Tampilkan loading
+    loginBtn.disabled = true;
+    loginBtnText.textContent = 'Memeriksa...';
+    spinner.style.display = 'block';
+    errorDisplay.style.display = 'none';
+    
+    try {
+        // Simulasikan pengecekan ke server (dalam implementasi nyata, ganti dengan fetch/axios)
+        const examCode = document.getElementById('examCode').value;
+        await new Promise(resolve => setTimeout(resolve, 800)); // Simulasi delay jaringan
+        
+        // Validasi kode (dalam implementasi nyata, ganti dengan validasi server)
+        const validCodes = ['p8dy-7xl4-m3dt', 'test123-456', 'demo-quiz-789'];
+        if (!validCodes.includes(examCode)) {
+            throw new Error('Kode ujian tidak valid. Silakan coba lagi.');
+        }
+        
+        // Jika valid, lanjutkan
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('openingScreen').style.display = 'flex';
+    } catch (error) {
+        errorDisplay.textContent = error.message;
+        errorDisplay.style.display = 'block';
+    } finally {
+        loginBtn.disabled = false;
+        loginBtnText.textContent = 'Masuk';
+        spinner.style.display = 'none';
+    }
+});
+</script>
 
     <!-- Opening Animation -->
     <div class="opening-screen" id="openingScreen">
@@ -2048,109 +2157,130 @@
     <!-- Main Content -->
     <main class="main-container">
         <!-- Participant Form with integrated header -->
-        <form id="participantForm" class="participant-form">
-            <div class="form-header">
-                <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo" class="form-logo">
-                <h2 class="form-title">Quiz Pergunu</h2>
-                <p class="form-subtitle">Silakan isi data diri Anda untuk memulai ujian pengetahuan</p>
-            </div>
-            
-            <div class="form-group">
-                <label for="name" class="form-label">Nama Lengkap</label>
-                <input type="text" id="name" class="form-control" required placeholder="Masukkan nama lengkap Anda">
-            </div>
-            
-            <div class="form-group">
-                <label for="phone" class="form-label">Nomor HP/WhatsApp</label>
-                <input type="tel" id="phone" class="form-control" required placeholder="Masukkan nomor yang bisa dihubungi">
-            </div>
-            
-            <div class="form-group">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" class="form-control" placeholder="Masukkan email Anda (opsional)">
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Kategori Quiz</label>
-                <div class="category-tabs">
-                    <div class="category-tab active" data-category="pelajar">Pelajar</div>
-                    <div class="category-tab" data-category="umum">Umum</div>
-                </div>
-                
-                <!-- Subkategori untuk Pelajar -->
-                <div class="subcategory-container" id="pelajarSubcategories">
-                    <div class="subcategory-title">
-                        <i class="fas fa-book"></i> Pilih Mata Pelajaran:
-                    </div>
-                    <div class="subcategory-options">
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="ipa" checked>
-                            <span class="subcategory-label">IPA</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="ips">
-                            <span class="subcategory-label">IPS</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="matematika">
-                            <span class="subcategory-label">Matematika</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="agama">
-                            <span class="subcategory-label">Agama</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="ppkn">
-                            <span class="subcategory-label">PPKN</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="sejarah">
-                            <span class="subcategory-label">Sejarah</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="bahasa_indonesia">
-                            <span class="subcategory-label">Bahasa Indonesia</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="bahasa_inggris">
-                            <span class="subcategory-label">Bahasa Inggris</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- Subkategori untuk Umum -->
-                <div class="subcategory-container" id="umumSubcategories" style="display: none;">
-                    <div class="subcategory-title">
-                        <i class="fas fa-star"></i> Pilih Jenis Ujian:
-                    </div>
-                    <div class="subcategory-options">
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="logika">
-                            <span class="subcategory-label">Ujian Logika</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- Field Profesi (hanya untuk umum) -->
-                <div class="form-group profesi-field" id="profesiField">
-                    <label for="profesi" class="form-label">Profesi</label>
-                    <input type="text" id="profesi" class="form-control" placeholder="Masukkan profesi Anda">
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="level" class="form-label">Tingkat Kesulitan</label>
-                <select id="level" class="form-control" required>
-                    <option value="mudah">Mudah</option>
-                    <option value="sedang">Sedang</option>
-                    <option value="sulit">Sulit</option>
-                </select>
-            </div>
-            
-            <button type="submit" class="btn btn-primary" id="startQuiz">
-                <i class="fas fa-play"></i> Mulai Quiz
-            </button>
-        </form>
+        <!-- Ganti seluruh form peserta dengan yang berikut -->
+<form id="participantForm" class="participant-form" novalidate>
+    <div class="form-header">
+        <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" 
+             alt="Pergunu Logo" class="form-logo">
+        <h2 class="form-title">Quiz Pergunu</h2>
+        <p class="form-subtitle">Silakan isi data diri Anda untuk memulai ujian pengetahuan</p>
+    </div>
+    
+    <div id="formErrors" class="error-message" style="display:none; margin-bottom:1.5rem;"></div>
+    
+    <div class="form-group">
+        <label for="name" class="form-label">Nama Lengkap</label>
+        <input type="text" id="name" class="form-control" required 
+               placeholder="Masukkan nama lengkap Anda"
+               minlength="3" maxlength="50">
+        <div class="field-error" id="nameError"></div>
+    </div>
+    
+    <div class="form-group">
+        <label for="phone" class="form-label">Nomor HP/WhatsApp</label>
+        <input type="tel" id="phone" class="form-control" required
+               placeholder="Contoh: 6281234567890"
+               pattern="^[0-9]{10,14}$"
+               title="Nomor HP harus 10-14 digit angka">
+        <div class="field-error" id="phoneError"></div>
+    </div>
+    
+    <div class="form-group">
+        <label for="email" class="form-label">Email (Opsional)</label>
+        <input type="email" id="email" class="form-control" 
+               placeholder="Masukkan email Anda"
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+        <div class="field-error" id="emailError"></div>
+    </div>
+    
+    <!-- ... (kategori dan subkategori tetap sama) ... -->
+    
+    <button type="submit" class="btn btn-primary" id="startQuiz">
+        <i class="fas fa-play"></i> Mulai Quiz
+        <div id="formSpinner" class="spinner" style="display:none;"></div>
+    </button>
+</form>
+
+<style>
+/* Tambahkan style ini */
+.field-error {
+    color: var(--danger);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.participant-form {
+    position: relative;
+}
+
+.participant-form .spinner {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top-color: var(--primary);
+    border-width: 2px;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+</style>
+
+<script>
+// Ganti event listener form peserta dengan yang berikut
+document.getElementById('participantForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const errors = [];
+    const errorDisplay = document.getElementById('formErrors');
+    const spinner = document.getElementById('formSpinner');
+    const submitBtn = document.getElementById('startQuiz');
+    
+    // Reset error display
+    errorDisplay.style.display = 'none';
+    document.querySelectorAll('.field-error').forEach(el => el.style.display = 'none');
+    
+    // Validasi field
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    
+    if (!name || name.length < 3) {
+        document.getElementById('nameError').textContent = 'Nama harus minimal 3 karakter';
+        document.getElementById('nameError').style.display = 'block';
+        errors.push('Nama tidak valid');
+    }
+    
+    if (!phone || !/^[0-9]{10,14}$/.test(phone)) {
+        document.getElementById('phoneError').textContent = 'Nomor HP harus 10-14 digit angka';
+        document.getElementById('phoneError').style.display = 'block';
+        errors.push('Nomor HP tidak valid');
+    }
+    
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('emailError').textContent = 'Format email tidak valid';
+        document.getElementById('emailError').style.display = 'block';
+        errors.push('Email tidak valid');
+    }
+    
+    if (errors.length > 0) {
+        errorDisplay.textContent = 'Terdapat kesalahan dalam form: ' + errors.join(', ');
+        errorDisplay.style.display = 'block';
+        return;
+    }
+    
+    // Jika valid, proses form
+    submitBtn.disabled = true;
+    spinner.style.display = 'block';
+    
+    // Simpan data peserta (simulasi)
+    setTimeout(() => {
+        startQuiz();
+        submitBtn.disabled = false;
+        spinner.style.display = 'none';
+    }, 800);
+});
+</script>
         
         <!-- Quiz Container -->
         <div id="quizContainer" class="quiz-container">
@@ -2706,32 +2836,72 @@
         let score = 0;
         let timer;
         let quizStartTime;
-        let adminPassword = "65614222";
-        let musicEnabled = true;
-        let soundEffectsEnabled = true;
-        let quizMusicEnabled = true;
-        let adhanTimeout;
+        // Ganti seluruh bagian admin dengan yang berikut
+let adminAuthenticated = false;
+const ADMIN_SESSION_TIMEOUT = 30 * 60 * 1000; // 30 menit
+let adminSessionTimeout;
 
-        // Pengaturan kategori aktif
-        let enabledCategories = {
-            pelajar: true,
-            umum: true,
-            subcategories: {
-                pelajar: {
-                    ipa: true,
-                    ips: true,
-                    matematika: true,
-                    agama: true,
-                    ppkn: true,
-                    sejarah: true,
-                    bahasa_indonesia: true,
-                    bahasa_inggris: true
-                },
-                umum: {
-                    logika: true
-                }
-            }
-        };
+function toggleAdminPanel() {
+    if (adminAuthenticated) {
+        showAdminPanel();
+    } else {
+        showAdminLogin();
+    }
+}
+
+function showAdminLogin() {
+    document.getElementById('adminOverlay').style.display = 'block';
+    document.getElementById('adminLogin').style.display = 'block';
+    document.getElementById('adminPassword').focus();
+}
+
+function showAdminPanel() {
+    document.getElementById('adminOverlay').style.display = 'block';
+    document.getElementById('adminPanel').style.display = 'block';
+    document.getElementById('adminContent').style.display = 'block';
+    loadQuestionsForAdmin();
+    
+    // Reset session timeout
+    resetAdminSessionTimeout();
+}
+
+function resetAdminSessionTimeout() {
+    clearTimeout(adminSessionTimeout);
+    adminSessionTimeout = setTimeout(() => {
+        adminAuthenticated = false;
+        closeAdminPanels();
+        alert('Sesi admin telah berakhir karena tidak aktif');
+    }, ADMIN_SESSION_TIMEOUT);
+}
+
+function adminLogin() {
+    const password = document.getElementById('adminPassword').value;
+    
+    // Dalam implementasi nyata, ganti dengan request ke server
+    // Ini hanya contoh - JANGAN simpan password di kode frontend!
+    const validPassword = "65614222"; // Hapus di production, gunakan autentikasi server
+    
+    if (password === validPassword) {
+        adminAuthenticated = true;
+        document.getElementById('adminLogin').style.display = 'none';
+        showAdminPanel();
+    } else {
+        alert('Password salah!');
+        document.getElementById('adminPassword').value = '';
+        document.getElementById('adminPassword').focus();
+    }
+}
+
+// Update semua event listener admin
+document.getElementById('adminBtn').addEventListener('click', toggleAdminPanel);
+document.getElementById('adminOverlay').addEventListener('click', closeAdminPanels);
+document.getElementById('adminClose').addEventListener('click', closeAdminPanels);
+document.getElementById('adminPanelClose').addEventListener('click', closeAdminPanels);
+document.getElementById('adminLoginBtn').addEventListener('click', adminLogin);
+
+// Tambahkan event listener untuk reset timeout saat ada interaksi
+document.getElementById('adminPanel').addEventListener('mousemove', resetAdminSessionTimeout);
+document.getElementById('adminPanel').addEventListener('keypress', resetAdminSessionTimeout);
 
         // Inisialisasi
         document.addEventListener('DOMContentLoaded', function() {
@@ -3146,22 +3316,97 @@ document.getElementById('disablePelajarBtn').addEventListener('click', function(
         }
 
         // Tambahkan fungsi validasi sebelum memulai quiz
+// Ganti seluruh fungsi startQuiz dengan yang berikut
 function startQuiz() {
-    // 1. Ambil data peserta
-    const participantData = getParticipantData();
-    if (!validateParticipantData(participantData)) return;
+    // Validasi ketersediaan quiz
+    const selectedCategory = document.querySelector('.category-tab.active').dataset.category;
+    const selectedSubcategory = document.querySelector('input[name="subcategory"]:checked').value;
+    const selectedLevel = document.getElementById('level').value;
+    
+    // Validasi kategori aktif
+    if (!enabledCategories[selectedCategory]) {
+        showValidationError('Kategori ini sedang tidak tersedia');
+        return;
+    }
+    
+    // Validasi subkategori aktif
+    if (!enabledCategories.subcategories[selectedCategory] || 
+        !enabledCategories.subcategories[selectedCategory][selectedSubcategory]) {
+        showValidationError('Subkategori ini sedang tidak tersedia');
+        return;
+    }
+    
+    // Validasi ketersediaan soal
+    if (!questions[selectedCategory] || 
+        !questions[selectedCategory][selectedSubcategory] || 
+        !questions[selectedCategory][selectedSubcategory][selectedLevel] || 
+        questions[selectedCategory][selectedSubcategory][selectedLevel].length === 0) {
+        showValidationError('Belum ada soal untuk kombinasi kategori, subkategori, dan level ini');
+        return;
+    }
+    
+    // Set current quiz parameters
+    currentCategory = selectedCategory;
+    currentSubcategory = selectedSubcategory;
+    currentLevel = selectedLevel;
+    
+    // Update UI
+    document.getElementById('participantName').textContent = formatName(document.getElementById('name').value);
+    document.getElementById('categoryDisplay').textContent = currentCategory === 'pelajar' ? 'Pelajar' : 'Umum';
+    
+    // Map subcategory to display text
+    const subcategoryMap = {
+        pelajar: {
+            'ipa': 'IPA',
+            'ips': 'IPS',
+            'matematika': 'Matematika',
+            'agama': 'Agama',
+            'ppkn': 'PPKN',
+            'sejarah': 'Sejarah',
+            'bahasa_indonesia': 'Bahasa Indonesia',
+            'bahasa_inggris': 'Bahasa Inggris'
+        },
+        umum: {
+            'logika': 'Logika'
+        }
+    };
+    
+    document.getElementById('subcategoryDisplay').textContent = subcategoryMap[currentCategory][currentSubcategory];
+    document.getElementById('levelDisplay').textContent = currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1);
+    
+    // Hide form and show quiz
+    document.getElementById('participantForm').style.display = 'none';
+    document.getElementById('quizContainer').style.display = 'block';
+    document.getElementById('resultsContainer').style.display = 'none';
+    
+    // Reset quiz variables
+    currentQuestionIndex = 0;
+    score = 0;
+    quizStartTime = new Date();
+    
+    // Start timer (90 minutes)
+    startTimer(90);
+    
+    // Load first question
+    loadQuestion();
+}
 
-    // 2. Validasi kategori/subkategori
-    const quizSelection = getQuizSelection();
-    if (!quizSelection.valid) return;
-
-    // 3. Set current category/level
-    currentCategory = quizSelection.category;
-    currentSubcategory = quizSelection.subcategory;
-    currentLevel = quizSelection.level;
-
-    // 4. Mulai quiz
-    initializeQuiz(participantData.name);
+// Tambahkan fungsi helper ini
+function showValidationError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'validation-error';
+    errorDiv.innerHTML = `
+        <i class="fas fa-exclamation-circle"></i>
+        <span>${message}</span>
+    `;
+    
+    document.body.appendChild(errorDiv);
+    
+    // Hilangkan setelah 5 detik
+    setTimeout(() => {
+        errorDiv.style.opacity = '0';
+        setTimeout(() => errorDiv.remove(), 300);
+    }, 5000);
 }
 
 // Helper functions
