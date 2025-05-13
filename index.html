@@ -1015,19 +1015,23 @@
             border: 1px solid #e0e0e0;
         }
 
-        .certificate-content {
-            position: relative;
-            z-index: 2;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+       .certificate-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* Diubah dari space-between */
+    align-items: center; /* Ditambahkan untuk center alignment */
+    padding: 20px 0; /* Ditambahkan padding */
+}
 
-        .certificate-header {
-            margin-bottom: 1rem;
-            position: relative;
-        }
+       .certificate-header {
+    margin-bottom: 0.5rem; /* Diperkecil dari 1rem */
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
 
         .certificate-watermark {
             position: absolute;
@@ -1046,18 +1050,10 @@
             margin-bottom: 2rem;
         }
 
-        .certificate-title {
-            font-size: 2.8rem;
-            color: #3a0ca3;
-            margin: 4rem 0 0.5rem;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            position: relative;
-            display: inline-block;
-        }
+        certificate-title {
+    font-size: 2.5rem; /* Diperkecil dari 2.8rem */
+    margin: 2rem 0 0.5rem; /* Diperkecil margin top */
+}
 
         .certificate-title::after {
             content: '';
@@ -1080,34 +1076,30 @@
             text-transform: uppercase;
         }
 
-        .certificate-name {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: #3a0ca3;
-            margin: 1.5rem 0;
-            font-family: 'Alex Brush', cursive;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            line-height: 1.2;
-        }
+       .certificate-name {
+    font-size: 4rem; /* Diperbesar dari 3.5rem */
+    margin: 1rem 0;
+    text-align: center;
+    width: 100%;
+}
 
         .certificate-text {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin: 1rem auto;
-            color: #333;
-            max-width: 700px;
-        }
+    font-size: 1.1rem; /* Diperkecil dari 1.2rem */
+    line-height: 1.6;
+    margin: 0.5rem auto; /* Diperkecil margin */
+    max-width: 700px;
+    text-align: center;
+    padding: 0 1rem;
+}
 
-        .certificate-score {
-            font-size: 5rem;
-            font-weight: 700;
-            color: #3a0ca3;
-            margin: 2rem 0;
-            position: relative;
-            font-family: 'Montserrat', sans-serif;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
+        .certificate-text {
+    font-size: 1.1rem; /* Diperkecil dari 1.2rem */
+    line-height: 1.6;
+    margin: 0.5rem auto; /* Diperkecil margin */
+    max-width: 700px;
+    text-align: center;
+    padding: 0 1rem;
+}
 
         .certificate-score::after {
             content: '';
@@ -1142,12 +1134,15 @@
         }
 
         .certificate-footer {
-            position: absolute;
-            bottom: 100px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-        }
+    position: absolute;
+    bottom: 50px; /* Diperkecil dari 100px */
+    left: 0;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
         .certificate-date {
             margin-top: 1rem;
@@ -1156,24 +1151,24 @@
             font-size: 1rem;
         }
 
-        .barcode-container {
-            margin-top: 2.5rem;
-            text-align: center;
-        }
+       .barcode-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+}
 
-        .barcode-container img {
-            height: 80px;
-            margin-bottom: 0.5rem;
-        }
+     .barcode-text {
+    order: 1; /* Teks di atas barcode */
+    margin-bottom: 0.5rem;
+}
 
-        .barcode-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            color: var(--dark);
-            font-weight: 600;
-            margin-top: 0.5rem;
-        }
-
+       .barcode-container img {
+    order: 2; /* Barcode di bawah teks */
+    height: 60px;
+    margin-top: 0;
+}
+       
         /* Print Button */
         .print-certificate-btn {
             display: block;
@@ -1210,57 +1205,53 @@
             .certificate-wrapper, .certificate-wrapper * {
                 visibility: visible;
             }
-            .certificate-wrapper {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 100px 80px;
-                border: none;
-                box-shadow: none;
-                background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/certificate.png');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                page-break-after: always;
-                page-break-inside: avoid;
-            }
-            .print-certificate-btn, .floating-buttons, .results-details, #restartBtn {
-                display: none !important;
-            }
-            @page {
-                size: A4 portrait;
-                margin: 0;
-            }
-            body {
-                background: white;
-                margin: 0;
-                padding: 0;
-            }
-            .certificate-name {
-                font-size: 3rem;
-            }
-            .certificate-score {
-                font-size: 4rem;
-                margin: 1.5rem 0;
-            }
-            .certificate-text, .certificate-message {
-                font-size: 1rem;
-            }
-            .certificate-stats {
-                font-size: 0.9rem;
-                gap: 1rem;
-            }
-            .certificate-watermark {
-                font-size: 0.7rem;
-                top: 30px;
-            }
-            .barcode-container {
-                margin-top: 1.5rem;
-            }
-        }
+             .certificate-wrapper {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 80px 60px; /* Diperkecil dari 100px 80px */
+        border: none;
+        box-shadow: none;
+        background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/certificate.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        page-break-after: always;
+        page-break-inside: avoid;
+    }
+    
+    .certificate-name {
+        font-size: 4rem; /* Diperbesar dari 3rem */
+        margin: 1rem 0;
+    }
+    
+    .certificate-score {
+        font-size: 3.5rem; /* Diperkecil dari 4rem */
+        margin: 1rem 0;
+    }
+    
+    .certificate-footer {
+        bottom: 50px; /* Diperkecil dari 100px */
+    }
+    
+    .barcode-container {
+        margin-top: 1rem; /* Diperkecil dari 2.5rem */
+        display: flex;
+        flex-direction: column-reverse; /* Membalik urutan teks dan barcode */
+    }
+    
+    .barcode-container img {
+        height: 60px; /* Diperkecil dari 80px */
+        margin-top: 0.5rem;
+    }
+    
+    .barcode-text {
+        margin-bottom: 0.5rem; /* Pindah ke atas barcode */
+    }
+}
 
         /* Results Container - FULL SCREEN LAYOUT */
         .results-container {
@@ -2088,14 +2079,12 @@
                     </div>
                     
                     <div class="certificate-footer">
-                        <div class="certificate-date" id="certificateDate">Ditetapkan di: Situbondo, 09 Mei 2025</div>
-                        <div class="barcode-container">
-                            <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png" alt="Barcode">
-                            <div class="barcode-text">KETUA PERGUNU SITUBONDO</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="certificate-date" id="certificateDate">Ditetapkan di: Situbondo, 09 Mei 2025</div>
+    <div class="barcode-container">
+        <div class="barcode-text">KETUA PERGUNU SITUBONDO</div>
+        <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png" alt="Barcode">
+    </div>
+</div>
             
             <!-- Print Button -->
             <button class="print-certificate-btn" id="printBtn">
