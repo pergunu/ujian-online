@@ -651,7 +651,6 @@
 }
 
 /* Tambahkan di sini */
-/* ####################### PASTE CSS BARU MULAI DI SINI ####################### */
 .continue-btn .spinner {
     display: inline-block;
     width: 1rem;
@@ -661,13 +660,11 @@
     border-top-color: white;
     animation: spin 1s ease-in-out infinite;
     margin-right: 8px;
-    vertical-align: middle;
 }
 
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
-/* ####################### PASTE CSS BARU SELESAI DI SINI ####################### */
 </style> <!-- Ini adalah penutup tag style -->
         
         /* Subkategori Container */
@@ -2018,9 +2015,9 @@
     <div class="login-container">
         <h2 class="login-title">Selamat Datang di Ujian Pergunu</h2>
         <p class="login-description">
-                Selamat datang di platform ujian kompetensi Pergunu Situbondo. Situs ini dirancang sebagai wadah bagi peserta untuk menguji kemampuan, mengasah wawasan, dan meningkatkan kualitas akademik maupun profesional.
-                Untuk memastikan keamanan dan eksklusivitas ujian, silakan masukkan kode sandi ujian terlebih dahulu sebelum melanjutkan. Semoga ujian ini menjadi langkah menuju prestasi dan keberhasilan yang lebih tinggi!
-            </p>
+            Selamat datang di platform ujian kompetensi Pergunu Situbondo. 
+            Untuk memulai, silakan masukkan kode akses yang valid.
+        </p>
         <form id="loginForm">
             <input type="password" id="examCode" class="login-input" 
                    placeholder="Masukkan Kode Login Ujian" required
@@ -3117,42 +3114,70 @@ document.getElementById('adminPanel').addEventListener('keypress', resetAdminSes
 
         function initEventListeners() {
     // Login event - TAMBAHKAN KODE INI DI SINI
-   // ####################### PASTE BARU MULAI DI SINI #######################
-document.getElementById('agreeTerms').addEventListener('change', function() {
-    document.getElementById('continueBtn').disabled = !this.checked;
+    document.getElementById('loginBtn').addEventListener('click', function() {
+        const examCode = document.getElementById('examCode').value;
+        if (examCode === 'p8dy-7xl4-m3dt') {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('openingScreen').style.display = 'flex';
+        } else {
+            alert('Kode ujian salah!');
+        }
+    });
+
+    // Terms agreement - enforce mandatory checkbox
+    const agreeCheckbox = document.getElementById('agreeTerms');
+    // ... kode yang sudah ada berikutnya ...
+            // Login event
+           document.getElementById('enablePelajarBtn').addEventListener('click', function() {
+    enabledCategories.pelajar = true;
+    updateCategoryUI();
+    alert('Kategori Pelajar telah diaktifkan');
 });
 
-document.getElementById('continueBtn').addEventListener('click', function() {
-    // Validasi checkbox
-    if (!document.getElementById('agreeTerms').checked) {
-        alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
-        return;
+document.getElementById('disablePelajarBtn').addEventListener('click', function() {
+    if (confirm('Apakah Anda yakin ingin menonaktifkan kategori Pelajar?')) {
+        enabledCategories.pelajar = false;
+        updateCategoryUI();
+        alert('Kategori Pelajar telah dinonaktifkan');
     }
-    
-    // Animasi loading
-    const originalHtml = this.innerHTML;
-    this.innerHTML = '<div class="spinner"></div> Memproses...';
-    this.disabled = true;
-    
-    // Simulasi loading (bisa diganti dengan operasi async)
-    setTimeout(() => {
-        // Sembunyikan opening screen dan tampilkan form peserta
-        document.getElementById('openingScreen').style.display = 'none';
-        document.querySelector('.main-container').style.display = 'flex';
-        document.getElementById('participantForm').style.display = 'block';
-        
-        // Reset tombol
-        this.innerHTML = originalHtml;
-        this.disabled = false;
-        
-        // Putar suara selamat datang
-        document.getElementById('welcomeSound').play().catch(e => console.log("Autoplay blocked:", e));
-        
-        // Scroll ke atas
-        window.scrollTo(0, 0);
-    }, 1000);
 });
-// ####################### PASTE BARU SELESAI DI SINI #######################
+
+            // Terms agreement - enforce mandatory checkbox
+           document.addEventListener('DOMContentLoaded', function() {
+    const agreeCheckbox = document.getElementById('agreeTerms');
+    const continueBtn = document.getElementById('continueBtn');
+    
+    // 1. Update tombol berdasarkan status checkbox
+    agreeCheckbox.addEventListener('change', function() {
+        continueBtn.disabled = !this.checked;
+    });
+    
+    // 2. Event listener untuk tombol lanjutkan
+    continueBtn.addEventListener('click', function() {
+        // Validasi checkbox
+        if (!agreeCheckbox.checked) {
+            alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
+            return;
+        }
+        
+        // Animasi loading
+        this.innerHTML = '<div class="spinner"></div> Memproses...';
+        
+        // Simulasi loading (bisa diganti dengan operasi async)
+        setTimeout(() => {
+            // Sembunyikan opening screen dan tampilkan form peserta
+            document.getElementById('openingScreen').style.display = 'none';
+            document.querySelector('.main-container').style.display = 'flex';
+            document.getElementById('participantForm').style.display = 'block';
+            
+            // Reset tombol
+            this.innerHTML = 'Lanjutkan ke Quiz <i class="fas fa-arrow-right"></i>';
+            
+            // Putar suara selamat datang
+            document.getElementById('welcomeSound').play().catch(e => console.log("Autoplay blocked:", e));
+        }, 1000);
+    });
+});
 
             // Pilih kategori utama
             document.querySelectorAll('.category-tab').forEach(tab => {
