@@ -4979,5 +4979,127 @@ function updateSubcategoryUI(category) {
             window.print();
         }      
     </script>
+
+<!-- Floating Admin Button (only on opening screen) -->
+<style>
+  #floatingAdminBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    padding: 12px 18px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    display: none;
+  }
+</style>
+
+<button id="floatingAdminBtn" onclick="openAdminPanel()">Panel Admin</button>
+
+<!-- Admin Panel Modal -->
+<div id="adminModal" style="display:none; position:fixed; top:0;left:0;width:100%;height:100%;background:#000000a0;z-index:1000;">
+  <div style="background:white;padding:20px;max-width:400px;margin:10% auto;border-radius:8px;">
+    <h3>Login Admin Panel</h3>
+    <input type="password" id="adminPassword" placeholder="Masukkan Password" style="width:100%;padding:10px;"><br><br>
+    <button onclick="checkAdminLogin()">Masuk</button>
+    <button onclick="document.getElementById('adminModal').style.display='none'">Batal</button>
+  </div>
+</div>
+
+<!-- Real Admin Control Panel -->
+<div id="realAdminPanel" style="display:none; position:fixed; top:0;left:0;width:100%;height:100%;background:#ffffff;z-index:1001;overflow:auto;padding:20px;">
+  <h2>Kontrol Panel Ujian</h2>
+  <div>
+    <h4>Buat Kode Ujian Baru:</h4>
+    <input id="kodeBaru" type="text" placeholder="Kode Ujian Baru">
+    <button onclick="buatKodeUjian()">Simpan</button>
+  </div>
+  <hr>
+  <div>
+    <h4>Ganti Password Panel:</h4>
+    <input id="oldPass" type="password" placeholder="Password Lama"><br><br>
+    <input id="newPass" type="password" placeholder="Password Baru">
+    <button onclick="gantiPasswordPanel()">Ganti Password</button>
+  </div>
+  <hr>
+  <div>
+    <h4>Pengaturan Akses Ujian:</h4>
+    <label><input type="checkbox" id="enablePelajar" onchange="saveSettings()"> Aktifkan Ujian Pelajar</label><br>
+    <label><input type="checkbox" id="enableUmum" onchange="saveSettings()"> Aktifkan Ujian Umum</label>
+  </div>
+  <br>
+  <button onclick="logoutAdmin()">Keluar Panel</button>
+</div>
+
+<script>
+  // Tampilkan tombol hanya di screen opening
+  window.addEventListener("load", () => {
+    if (document.querySelector('.screen.opening')) {
+      document.getElementById("floatingAdminBtn").style.display = "block";
+    }
+    // Set tombol lanjutkan ke quiz aktif setelah centang syarat
+    const checkbox = document.getElementById("agreement");
+    const btn = document.getElementById("startQuizButton");
+    if (checkbox && btn) {
+      checkbox.addEventListener("change", () => {
+        btn.disabled = !checkbox.checked;
+      });
+    }
+  });
+
+  function openAdminPanel() {
+    document.getElementById("adminModal").style.display = "block";
+  }
+
+  function checkAdminLogin() {
+    const pass = localStorage.getItem("adminPass") || "Pergunu.010499";
+    const input = document.getElementById("adminPassword").value;
+    if (input === pass) {
+      document.getElementById("adminModal").style.display = "none";
+      document.getElementById("realAdminPanel").style.display = "block";
+      loadSettings();
+    } else {
+      alert("Password salah!");
+    }
+  }
+
+  function buatKodeUjian() {
+    const kode = document.getElementById("kodeBaru").value;
+    if (kode) {
+      localStorage.setItem("kodeUjian", kode);
+      alert("Kode ujian disimpan!");
+    }
+  }
+
+  function gantiPasswordPanel() {
+    const oldP = document.getElementById("oldPass").value;
+    const newP = document.getElementById("newPass").value;
+    const current = localStorage.getItem("adminPass") || "Pergunu.010499";
+    if (oldP === current && newP) {
+      localStorage.setItem("adminPass", newP);
+      alert("Password diubah!");
+    } else {
+      alert("Password lama salah atau baru kosong.");
+    }
+  }
+
+  function saveSettings() {
+    localStorage.setItem("enablePelajar", document.getElementById("enablePelajar").checked);
+    localStorage.setItem("enableUmum", document.getElementById("enableUmum").checked);
+  }
+
+  function loadSettings() {
+    document.getElementById("enablePelajar").checked = localStorage.getItem("enablePelajar") === "true";
+    document.getElementById("enableUmum").checked = localStorage.getItem("enableUmum") === "true";
+  }
+
+  function logoutAdmin() {
+    document.getElementById("realAdminPanel").style.display = "none";
+  }
+</script>
+
 </body>
 </html>
