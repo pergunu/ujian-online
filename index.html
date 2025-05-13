@@ -1156,17 +1156,14 @@
             font-size: 1rem;
         }
 
-        ..barcode-container {
+        .barcode-container {
             margin-top: 2.5rem;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
         .barcode-container img {
             height: 80px;
-            margin-top: 0.5rem; /* Pindahkan margin ke atas */
+            margin-bottom: 0.5rem;
         }
 
         .barcode-text {
@@ -1174,7 +1171,7 @@
             font-size: 0.9rem;
             color: var(--dark);
             font-weight: 600;
-            margin-bottom: 0.5rem; /* Tambahkan margin bawah */
+            margin-top: 0.5rem;
         }
 
         /* Print Button */
@@ -1642,48 +1639,6 @@
             100% { transform: translateY(-100vh) rotate(720deg) translateX(100px); opacity: 0; }
         }
 
-        .exam-code-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 2rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-lg);
-    z-index: 10000;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-}
-
-.exam-code-modal h3 {
-    margin-bottom: 1.5rem;
-    color: var(--primary);
-}
-
-.exam-code-modal input {
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: 1px solid var(--light-gray);
-    border-radius: var(--radius-sm);
-}
-
-.exam-code-modal button {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.exam-code-modal button:hover {
-    background: var(--primary-dark);
-}
-        
         /* Responsive adjustments */
         @media (max-width: 992px) {
             .participant-form, .quiz-container, .results-container {
@@ -2116,33 +2071,31 @@
                     
                     <div class="certificate-name" id="participantName">Nama Peserta</div>
                     
-                   <div class="certificate-wrapper">
-    <div class="certificate-content">
-        <!-- Urutan yang benar -->
-        <div class="certificate-watermark" id="watermarkCode">...</div>
-        <div class="certificate-header">
-            <h2 class="certificate-title">SERTIFIKAT PRESTASI</h2>
-            <p class="certificate-subtitle">Diberikan Kepada</p>
-        </div>
-        <div class="certificate-name" id="participantName">...</div>
-        <div class="certificate-text">
-            Atas partisipasi dan pencapaian luar biasa dalam<br>
-            <strong>Ujian Pergunu Situbondo</strong>
-        </div>
-        <div class="certificate-score" id="scoreDisplay">...</div>
-        <div class="certificate-text">
-            Sertifikat ini diberikan sebagai bentuk apresiasi atas dedikasi dan ketekunan...
-        </div>
-        <div class="certificate-message" id="resultsMessage">...</div>
-        <div class="certificate-footer">
-            <div class="certificate-date" id="certificateDate">Ditetapkan di: Situbondo, 09 Mei 2025</div>
-            <div class="barcode-container">
-                <div class="barcode-text">KETUA PERGUNU SITUBONDO</div>
-                <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png" alt="Barcode">
+                    <div class="certificate-text">
+                        Atas partisipasi dan pencapaian luar biasa dalam<br>
+                        <strong>Ujian Pergunu Situbondo</strong>
+                    </div>
+                    
+                    <div class="certificate-score" id="scoreDisplay">0%</div>
+                    
+                    <div class="certificate-text">
+                        Sertifikat ini diberikan sebagai bentuk apresiasi atas dedikasi dan ketekunan dalam mengembangkan kemampuan berpikir logis serta pemahaman materi ujian. 
+                        Semoga prestasi ini menjadi motivasi untuk terus belajar dan mengasah keterampilan demi masa depan yang lebih gemilang.
+                    </div>
+                    
+                    <div class="certificate-message" id="resultsMessage">
+                        <p>SEMPURNA! Anda sangat menguasai materi ini. Pertahankan prestasi ini!</p>
+                    </div>
+                    
+                    <div class="certificate-footer">
+                        <div class="certificate-date" id="certificateDate">Ditetapkan di: Situbondo, 09 Mei 2025</div>
+                        <div class="barcode-container">
+                            <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png" alt="Barcode">
+                            <div class="barcode-text">KETUA PERGUNU SITUBONDO</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
             
             <!-- Print Button -->
             <button class="print-certificate-btn" id="printBtn">
@@ -2571,115 +2524,6 @@
         let quizMusicEnabled = true;
         let adhanTimeout;
 
-        // Variabel untuk menyimpan status kategori
-let categoryStatus = {
-    pelajar: {
-        ipa: true,
-        ips: true,
-        matematika: true,
-        agama: true,
-        ppkn: true,
-        sejarah: true,
-        bahasa_indonesia: true,
-        bahasa_inggris: true
-    },
-    umum: {
-        logika: true,
-        sambung_lagu: true,
-        peribahasa: true
-    }
-};
-
-// Fungsi untuk mengecek status kategori
-function checkCategoryStatus(category, subcategory) {
-    return categoryStatus[category][subcategory];
-}
-
-// Modifikasi fungsi startQuiz untuk mengecek status kategori
-function startQuiz() {
-    // ... kode sebelumnya ...
-    
-    // Cek status kategori
-    if (!checkCategoryStatus(currentCategory, currentSubcategory)) {
-        alert('Kategori ujian ini sedang dinonaktifkan oleh admin');
-        return;
-    }
-    
-    // ... lanjutan kode ...
-}
-
-// Tambahkan UI untuk mengontrol status kategori di admin panel
-function addCategoryControlsToAdmin() {
-    const adminContent = document.getElementById('adminContent');
-    
-    const controlsHTML = `
-        <div class="category-controls" style="margin-bottom: 2rem;">
-            <h3 class="admin-title"><i class="fas fa-toggle-on"></i> Kontrol Kategori Ujian</h3>
-            <div class="control-grid">
-                ${Object.entries(categoryStatus).map(([category, subcategories]) => `
-                    <div class="control-category">
-                        <h4>${category === 'pelajar' ? 'Pelajar' : 'Umum'}</h4>
-                        ${Object.entries(subcategories).map(([subcat, status]) => `
-                            <div class="control-item">
-                                <label>
-                                    <input type="checkbox" 
-                                           class="category-toggle" 
-                                           data-category="${category}" 
-                                           data-subcat="${subcat}"
-                                           ${status ? 'checked' : ''}>
-                                    ${getSubcategoryName(category, subcat)}
-                                </label>
-                            </div>
-                        `).join('')}
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
-    
-    adminContent.insertAdjacentHTML('afterbegin', controlsHTML);
-    
-    // Tambahkan event listener untuk toggle
-    document.querySelectorAll('.category-toggle').forEach(toggle => {
-        toggle.addEventListener('change', function() {
-            const category = this.dataset.category;
-            const subcat = this.dataset.subcat;
-            categoryStatus[category][subcat] = this.checked;
-        });
-    });
-}
-
-// Helper function untuk nama subkategori
-function getSubcategoryName(category, subcat) {
-    const names = {
-        pelajar: {
-            ipa: 'IPA',
-            ips: 'IPS',
-            matematika: 'Matematika',
-            agama: 'Agama',
-            ppkn: 'PPKN',
-            sejarah: 'Sejarah',
-            bahasa_indonesia: 'Bahasa Indonesia',
-            bahasa_inggris: 'Bahasa Inggris'
-        },
-        umum: {
-            logika: 'Logika',
-            sambung_lagu: 'Sambung Lagu',
-            peribahasa: 'Peribahasa'
-        }
-    };
-    return names[category][subcat];
-}
-
-// Panggil fungsi ini saat admin login
-function adminLogin() {
-    // ... kode sebelumnya ...
-    if (password === adminPassword) {
-        addCategoryControlsToAdmin();
-        // ... lanjutan kode ...
-    }
-}
-
         // Inisialisasi
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
@@ -2970,109 +2814,6 @@ function adminLogin() {
         }
 
         function startQuiz() {
-            // Variabel untuk kode ujian
-let examCode = {
-    code: null,
-    password: "Pergunu.010499" // Password default
-};
-
-// Fungsi untuk menampilkan modal kode ujian
-function showExamCodeModal() {
-    const modalHTML = `
-        <div class="exam-code-modal">
-            <h3>Masukkan Kode Ujian</h3>
-            <input type="text" id="examCodeInput" placeholder="Masukkan kode ujian">
-            <button id="submitExamCode">Submit</button>
-        </div>
-    `;
-    
-    // Tambahkan modal ke DOM dan tampilkan
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    
-    // Event listener untuk submit
-    document.getElementById('submitExamCode').addEventListener('click', function() {
-        const inputCode = document.getElementById('examCodeInput').value;
-        if (inputCode === examCode.code) {
-            // Lanjutkan ke terms
-            document.querySelector('.exam-code-modal').remove();
-        } else {
-            alert('Kode ujian salah!');
-        }
-    });
-}
-
-// Fungsi untuk menambahkan kontrol kode ujian di admin panel
-function addExamCodeControls() {
-    const adminContent = document.getElementById('adminContent');
-    
-    const controlsHTML = `
-        <div class="exam-code-controls">
-            <h3 class="admin-title"><i class="fas fa-key"></i> Kontrol Kode Ujian</h3>
-            <div class="form-group">
-                <label for="newExamCode">Kode Ujian Baru</label>
-                <input type="text" id="newExamCode" class="form-control" 
-                       placeholder="Masukkan kode ujian baru" value="${examCode.code || ''}">
-            </div>
-            <div class="form-group">
-                <label for="currentExamPassword">Password Admin Kode Ujian</label>
-                <input type="password" id="currentExamPassword" class="form-control" 
-                       placeholder="Masukkan password saat ini">
-            </div>
-            <div class="form-group">
-                <label for="newExamPassword">Password Baru</label>
-                <input type="password" id="newExamPassword" class="form-control" 
-                       placeholder="Masukkan password baru">
-            </div>
-            <button class="btn btn-primary" id="saveExamCode">
-                <i class="fas fa-save"></i> Simpan Perubahan
-            </button>
-        </div>
-    `;
-    
-    adminContent.insertAdjacentHTML('afterbegin', controlsHTML);
-    
-    // Event listener untuk simpan
-    document.getElementById('saveExamCode').addEventListener('click', function() {
-        const newCode = document.getElementById('newExamCode').value;
-        const currentPass = document.getElementById('currentExamPassword').value;
-        const newPass = document.getElementById('newExamPassword').value;
-        
-        // Validasi
-        if (currentPass !== examCode.password) {
-            alert('Password admin kode ujian salah!');
-            return;
-        }
-        
-        if (newCode) {
-            examCode.code = newCode;
-        }
-        
-        if (newPass) {
-            examCode.password = newPass;
-        }
-        
-        alert('Perubahan berhasil disimpan!');
-    });
-}
-
-// Panggil fungsi ini saat admin login
-function adminLogin() {
-    // ... kode sebelumnya ...
-    if (password === adminPassword) {
-        addExamCodeControls();
-        // ... lanjutan kode ...
-    }
-}
-
-// Modifikasi fungsi untuk menampilkan modal kode ujian saat pertama kali
-document.addEventListener('DOMContentLoaded', function() {
-    // ... kode sebelumnya ...
-    
-    // Jika kode ujian sudah diset, tampilkan modal
-    if (examCode.code) {
-        showExamCodeModal();
-    }
-});
             // Get participant data
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
