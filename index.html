@@ -1025,13 +1025,13 @@
         }
 
         .certificate-header {
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             position: relative;
         }
 
         .certificate-watermark {
             position: absolute;
-            top: 20px;
+            top: 40px;
             left: 0;
             width: 100%;
             text-align: center;
@@ -1043,13 +1043,12 @@
             padding: 0.5rem;
             text-transform: uppercase;
             font-weight: 700;
-            margin-bottom: 2rem;
         }
 
         .certificate-title {
             font-size: 2.8rem;
             color: #3a0ca3;
-            margin: 4rem 0 0.5rem;
+            margin: 3rem 0 1rem;
             font-family: 'Playfair Display', serif;
             font-weight: 700;
             text-transform: uppercase;
@@ -1074,7 +1073,7 @@
         .certificate-subtitle {
             font-size: 1.1rem;
             color: #555;
-            margin: 1rem 0;
+            margin: 30px 0 0.5rem;
             font-weight: 500;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -1084,7 +1083,7 @@
             font-size: 3.5rem;
             font-weight: 700;
             color: #3a0ca3;
-            margin: 1.5rem 0;
+            margin: 2rem 0;
             font-family: 'Alex Brush', cursive;
             letter-spacing: 2px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
@@ -1124,7 +1123,7 @@
 
         .certificate-message {
             font-size: 1.1rem;
-            margin: 1rem auto;
+            margin: 2rem auto;
             color: #333;
             line-height: 1.6;
             font-weight: 500;
@@ -1138,7 +1137,29 @@
         }
 
         .certificate-stats {
-            display: none; /* Hide stats as requested */
+            margin: 1.5rem auto;
+            font-size: 1rem;
+            color: #555;
+            text-align: center;
+            width: 100%;
+            padding: 0 80px;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .certificate-stat {
+            display: inline-block;
+            margin: 0;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #3a0ca3;
         }
 
         .certificate-footer {
@@ -1292,7 +1313,7 @@
         /* Stats Container */
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin-bottom: 3rem;
             max-width: 900px;
@@ -1894,7 +1915,7 @@
             </button>
         </div>
         
-        <p class="opening-message">Ilmu Adalah Cahaya, Kecerdasan & Akhlak Adalah Kunci Kesuksesan (By Cendhanu)</p>
+        <p class="opening-message">Ilmu Adalah Cahaya, Kecerdasan & Akhlak Adalah Masa Depan Menuju Kesuksesan (By Cendhanu)</p>
     </div>   
     
     <!-- Main Content -->
@@ -2062,11 +2083,11 @@
         <div id="resultsContainer" class="results-container">
             <div class="certificate-wrapper">
                 <div class="certificate-content">
-                    <div class="certificate-watermark" id="watermarkCode">YUDHA CENDHANU/PELAJAR/IPA/10052025/URG9-46MC-AYNW/PERGUNU-STB</div>
+                    <div class="certificate-watermark" id="watermarkCode">YUDHA CENDHANU/PELAJAR/IPA/10052025/URG9-46MC-AYNW/PERGUNU-SITUBONDO</div>
                     
                     <div class="certificate-header">
                         <h2 class="certificate-title">SERTIFIKAT PRESTASI</h2>
-                        <p class="certificate-subtitle">Diberikan Kepada</p>
+                        <p class="certificate-subtitle">DIBERIKAN KEPADA</p>
                     </div>
                     
                     <div class="certificate-name" id="participantName">Nama Peserta</div>
@@ -2076,19 +2097,22 @@
                         <strong>Ujian Pergunu Situbondo</strong>
                     </div>
                     
-                    <div class="certificate-score" id="scoreDisplay">0%</div>
-                    
-                    <div class="certificate-text">
-                        Sertifikat ini diberikan sebagai bentuk apresiasi atas dedikasi dan ketekunan dalam mengembangkan kemampuan berpikir logis serta pemahaman materi ujian. 
-                        Semoga prestasi ini menjadi motivasi untuk terus belajar dan mengasah keterampilan demi masa depan yang lebih gemilang.
+                    <div class="certificate-stats" id="certificateStats">
+                        <span class="certificate-stat">Total Pertanyaan = <span id="totalQuestions" class="stat-value">0</span></span> 
+                        <span class="certificate-stat">Jawaban Salah = <span id="wrongAnswers" class="stat-value">0</span></span> 
+                        <span class="certificate-stat">Jawaban Benar = <span id="correctAnswers" class="stat-value">0</span></span>
+                        <span class="certificate-stat">Waktu Penyelesaian = <span id="completionTime" class="stat-value">-</span></span>
                     </div>
                     
+                    <div class="certificate-score" id="scoreDisplay">0%</div>
+                    
                     <div class="certificate-message" id="resultsMessage">
-                        <p>SEMPURNA! Anda sangat menguasai materi ini. Pertahankan prestasi ini!</p>
+                        <p>SEMPURNA! Anda sangat menguasai materi ini.</p>
+                        <p>Pertahankan prestasi ini dan teruslah belajar untuk mencapai kesuksesan!</p>
                     </div>
                     
                     <div class="certificate-footer">
-                        <div class="certificate-date" id="certificateDate">Ditetapkan di: Situbondo, 09 Mei 2025</div>
+                        <div class="certificate-date" id="certificateDate">Situbondo, 09 Mei 2025</div>
                         <div class="barcode-container">
                             <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png" alt="Barcode">
                             <div class="barcode-text">KETUA PERGUNU SITUBONDO</div>
@@ -2533,7 +2557,7 @@
             // Set current date for certificate
             const now = new Date();
             const options = { day: '2-digit', month: 'long', year: 'numeric' };
-            document.getElementById('certificateDate').textContent = `Ditetapkan di: Situbondo, ${now.toLocaleDateString('id-ID', options)}`;
+            document.getElementById('certificateDate').textContent = `Situbondo, ${now.toLocaleDateString('id-ID', options)}`;
             
             // Pastikan opening screen visible dan main container hidden
             document.getElementById('openingScreen').style.display = 'flex';
@@ -3056,26 +3080,30 @@
             const subcategoryText = subcategoryMap[currentCategory][currentSubcategory];
             
             // Format watermark code baru
-            const watermarkCode = `${name.toUpperCase()}/${categoryText}/${subcategoryText}/${dateStr}/${uniqueCode}/PERGUNU-STB`;
+            const watermarkCode = `${name.toUpperCase()}/${categoryText}/${subcategoryText}/${dateStr}/${uniqueCode}/PERGUNU-SITUBONDO`;
             
             // Display results
             document.getElementById('scoreDisplay').textContent = `${percentage}%`;
+            document.getElementById('totalQuestions').textContent = totalQuestions;
+            document.getElementById('correctAnswers').textContent = score;
+            document.getElementById('wrongAnswers').textContent = totalQuestions - score;
+            document.getElementById('completionTime').textContent = `${minutes}m ${seconds}s`;
             document.getElementById('watermarkCode').textContent = watermarkCode;
             
             // Set result message
             let message = "";
             if (percentage >= 80) {
-                message = `<p>SEMPURNA! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini!</p>`;
+                message = `<p>SEMPURNA! Anda sangat menguasai materi ini.</p><p>Pertahankan prestasi ini dan teruslah belajar untuk mencapai kesuksesan!</p>`;
                 playSound('applauseSound');
                 createConfetti();
             } else if (percentage >= 60) {
-                message = `<p>BAIK SEKALI! Anda memiliki pemahaman yang solid tentang materi ini.</p>`;
+                message = `<p>BAIK SEKALI! Anda memiliki pemahaman yang solid tentang materi ini.</p><p>Tingkatkan terus pengetahuan Anda untuk mencapai hasil yang lebih baik!</p>`;
                 playSound('applauseSound');
                 createConfetti();
             } else if (percentage >= 40) {
-                message = `<p>CUKUP BAIK. Tingkatkan lagi belajarnya!</p>`;
+                message = `<p>CUKUP BAIK. Tingkatkan lagi belajarnya!</p><p>Anda hampir mencapai level yang lebih baik.</p>`;
             } else {
-                message = `<p>TERUS BERLATIH! Setiap kesalahan adalah kesempatan untuk belajar lebih baik lagi.</p>`;
+                message = `<p>TERUS BERLATIH! Setiap kesalahan adalah kesempatan untuk belajar lebih baik lagi.</p><p>Jangan menyerah dan teruslah berusaha!</p>`;
             }
             document.getElementById('resultsMessage').innerHTML = message;
             
