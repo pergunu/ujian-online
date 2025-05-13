@@ -61,6 +61,84 @@
             overflow-x: hidden;
         }
 
+        /* Login Screen */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(67, 97, 238, 0.3);
+            color: #333;
+        }
+
+        .login-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .login-description {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: #444;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
+        }
+
+        .login-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+            font-size: 1.1rem;
+            width: 100%;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.6);
+        }
+
         /* Star Animation */
         .stars {
             position: fixed;
@@ -94,7 +172,7 @@
             height: 100%;
             background: var(--gradient-primary);
             z-index: 9999;
-            display: flex;
+            display: none; /* Changed from flex to none */
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -348,13 +426,16 @@
             50% { transform: translateY(-15px); }
             100% { transform: translateY(0px); }
         }
-        
+
+        @keyframes spin {
+    to { transform: rotate(360deg); }
+}
         /* Main Content - FULL SCREEN LAYOUT */
         .main-container {
             width: 100%;
             min-height: 100vh;
             padding: 0;
-            display: none; /* Changed from flex to none */
+            display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -463,7 +544,7 @@
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
-            width: 100%; /* Added to ensure full width */
+            width: 100%;
         }
 
         .form-group:nth-child(1) { animation-delay: 0.2s; }
@@ -509,7 +590,7 @@
             background: white;
             color: var(--dark);
             box-shadow: var(--shadow);
-            margin-bottom: 0.5rem; /* Added for better spacing */
+            margin-bottom: 0.5rem;
         }
         
         .form-control:focus {
@@ -557,6 +638,34 @@
             box-shadow: 0 6px 12px rgba(67, 97, 238, 0.25);
             transform: translateY(-3px);
         }
+
+        /* Disabled state styles */
+.category-tab.disabled, 
+.subcategory-label.disabled {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+[data-tooltip] {
+    position: relative;
+}
+
+/* Tambahkan di sini */
+.continue-btn .spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+</style> <!-- Ini adalah penutup tag style -->
         
         /* Subkategori Container */
         .subcategory-container {
@@ -620,6 +729,12 @@
             background: var(--lighter);
             transform: translateY(-3px);
             box-shadow: var(--shadow-md);
+        }
+
+        .subcategory-label.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
         }
         
         /* Profesi Field (khusus umum) */
@@ -852,7 +967,7 @@
             border-color: var(--primary);
             box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
             transform: translateY(-5px);
-            pointer-events: none; /* Prevent changing answer after selection */
+            pointer-events: none;
         }
         
         .option.selected .option-prefix {
@@ -994,186 +1109,147 @@
         }
         
         /* Certificate Styles - REVISED PROFESSIONAL DESIGN */
-        .certificate-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin: 2rem auto;
-            text-align: center;
-            background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/certificate.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            min-height: 1122px; /* A4 height in pixels at 96dpi */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 100px 80px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #e0e0e0;
-        }
+    .certificate-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 2rem auto;
+    text-align: center;
+    background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/certificate.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 1122px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 80px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
 
-        .certificate-content {
-            position: relative;
-            z-index: 2;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+.certificate-header {
+    margin-bottom: 1rem;
+    position: relative;
+    order: 1; /* Menentukan urutan tampilan */
+}
 
-        .certificate-header {
-            margin-bottom: 1rem;
-            position: relative;
-        }
+.certificate-watermark {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: rgba(67, 97, 238, 0.8);
+    letter-spacing: 1px;
+    font-weight: bold;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    order: 1; /* Posisi paling atas */
+}
 
-        .certificate-watermark {
-            position: absolute;
-            top: 20px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-            color: rgba(67, 97, 238, 0.8);
-            letter-spacing: 1px;
-            font-weight: bold;
-            padding: 0.5rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 2rem;
-        }
+.certificate-title {
+    font-size: 2.8rem;
+    color: #3a0ca3;
+    margin: 4rem 0 0.5rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+    display: inline-block;
+    order: 2;
+}
 
-        .certificate-title {
-            font-size: 2.8rem;
-            color: #3a0ca3;
-            margin: 4rem 0 0.5rem;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            position: relative;
-            display: inline-block;
-        }
+.certificate-subtitle {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 1rem 0;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    order: 3;
+}
 
-        .certificate-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 3px;
-            background: linear-gradient(to right, #3a0ca3, #4361ee, #3a0ca3);
-            border-radius: 3px;
-        }
+.certificate-name {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #3a0ca3;
+    margin: 1.5rem 0;
+    font-family: 'Alex Brush', cursive;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    line-height: 1.2;
+    order: 4;
+}
 
-        .certificate-subtitle {
-            font-size: 1.1rem;
-            color: #555;
-            margin: 1rem 0;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+.certificate-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin: 1rem auto;
+    color: #333;
+    max-width: 700px;
+    order: 5;
+}
 
-        .certificate-name {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: #3a0ca3;
-            margin: 1.5rem 0;
-            font-family: 'Alex Brush', cursive;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            line-height: 1.2;
-        }
+.certificate-score {
+    font-size: 5rem;
+    font-weight: 700;
+    color: #3a0ca3;
+    margin: 2rem 0;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    order: 6;
+}
 
-        .certificate-text {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin: 1rem auto;
-            color: #333;
-            max-width: 700px;
-        }
+.certificate-message {
+    font-size: 1.1rem;
+    margin: 1rem auto;
+    color: #333;
+    line-height: 1.6;
+    font-weight: 500;
+    max-width: 700px;
+    font-style: italic;
+    padding: 0 2rem;
+    order: 7;
+}
 
-        .certificate-score {
-            font-size: 5rem;
-            font-weight: 700;
-            color: #3a0ca3;
-            margin: 2rem 0;
-            position: relative;
-            font-family: 'Montserrat', sans-serif;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
+.certificate-footer {
+    margin-top: auto;
+    text-align: center;
+    padding-top: 2rem;
+    order: 9; /* Pindah ke bawah barcode */
+}
 
-        .certificate-score::after {
-            content: '';
-            position: absolute;
-            bottom: -0.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 4px;
-            background: linear-gradient(to right, var(--primary), var(--primary-dark));
-            opacity: 0.5;
-            border-radius: 2px;
-        }
+.certificate-date {
+    margin-top: 1rem;
+    font-weight: 500;
+    color: #555;
+    font-size: 1rem;
+    order: 8; /* Pindah ke atas barcode */
+}
 
-        .certificate-message {
-            font-size: 1.1rem;
-            margin: 1rem auto;
-            color: #333;
-            line-height: 1.6;
-            font-weight: 500;
-            max-width: 700px;
-            font-style: italic;
-            padding: 0 2rem;
-        }
+.barcode-container {
+    margin-top: 0;
+    text-align: center;
+    order: 10; /* Posisi paling bawah */
+}
 
-        .certificate-message p {
-            margin-bottom: 1rem;
-        }
-
-        .certificate-stats {
-            display: none; /* Hide stats as requested */
-        }
-
-        .certificate-footer {
-            position: absolute;
-            bottom: 100px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-        }
-
-        .certificate-date {
-            margin-top: 1rem;
-            font-weight: 500;
-            color: #555;
-            font-size: 1rem;
-        }
-
-        .barcode-container {
-            margin-top: 2.5rem;
-            text-align: center;
-        }
-
-        .barcode-container img {
-            height: 80px;
-            margin-bottom: 0.5rem;
-        }
-
-        .barcode-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            color: var(--dark);
-            font-weight: 600;
-            margin-top: 0.5rem;
-        }
-
+.barcode-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: var(--dark);
+    font-weight: 600;
+    margin-bottom: 1rem; /* Pindahkan ke atas barcode */
+    order: 8; /* Sebelum barcode */
+}
         /* Print Button */
         .print-certificate-btn {
             display: block;
@@ -1292,7 +1368,7 @@
         /* Stats Container */
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin-bottom: 3rem;
             max-width: 900px;
@@ -1843,11 +1919,217 @@
                 height: 60px;
             }
         }
+
+        /* ==================== */
+/* VALIDATION STYLES */
+/* ==================== */
+.validation-error {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffebee;
+    color: #c62828;
+    padding: 12px 24px;
+    border-radius: 4px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+    border-left: 4px solid #c62828;
+}
+
+.validation-error i {
+    font-size: 1.2em;
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px); 
+    }
+    to { 
+        opacity: 1;
+        transform: translateX(-50%) translateY(0); 
+    }
+}
+
+/* Disabled state styles */
+.category-tab.disabled, 
+.subcategory-label.disabled {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.category-tab.disabled::after,
+.subcategory-label.disabled::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.85);
+    z-index: 1;
+    border-radius: inherit;
+}
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s;
+    z-index: 10;
+    pointer-events: none;
+}
+
+[data-tooltip]:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
     </style>
 </head>
 <body>
     <!-- Star Background -->
     <div class="stars" id="stars"></div>
+
+    <!-- Login Screen -->
+   <!-- Ganti seluruh bagian login screen dengan kode berikut -->
+<div class="login-screen" id="loginScreen">
+    <div class="login-container">
+        <h2 class="login-title">Selamat Datang di Ujian Pergunu</h2>
+        <p class="login-description">
+            Selamat datang di platform ujian kompetensi Pergunu Situbondo. 
+            Untuk memulai, silakan masukkan kode akses yang valid.
+        </p>
+        <form id="loginForm">
+            <input type="password" id="examCode" class="login-input" 
+                   placeholder="Masukkan Kode Login Ujian" required
+                   pattern="[A-Za-z0-9-]{12}" 
+                   title="Kode harus 12 karakter (huruf/angka/tanda hubung)">
+            <div id="loginError" class="error-message" style="display:none;"></div>
+            <button type="submit" class="login-btn" id="loginBtn">
+                <span id="loginBtnText">Masuk</span>
+                <div id="loginSpinner" class="spinner" style="display:none;"></div>
+            </button>
+        </form>
+    </div>
+</div>
+
+<style>
+/* Tambahkan style ini di bagian CSS */
+.error-message {
+    color: var(--danger);
+    background-color: #ffebee;
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--danger);
+    display: none;
+}
+
+.login-btn {
+    position: relative;
+}
+
+.spinner {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+    /* PASTE BARU DARI SINI */
+.error-message {
+    color: var(--danger);
+    background-color: #ffebee;
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--danger);
+    display: none;
+}
+
+.field-error {
+    color: var(--danger);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.spinner {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+}
+/* SAMPAI SINI */
+</style>
+
+<script>
+// Ganti event listener login dengan yang berikut
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const loginBtn = document.getElementById('loginBtn');
+    const loginBtnText = document.getElementById('loginBtnText');
+    const spinner = document.getElementById('loginSpinner');
+    const errorDisplay = document.getElementById('loginError');
+    
+    // Tampilkan loading
+    loginBtn.disabled = true;
+    loginBtnText.textContent = 'Memeriksa...';
+    spinner.style.display = 'block';
+    errorDisplay.style.display = 'none';
+    
+    try {
+        // Simulasikan pengecekan ke server (dalam implementasi nyata, ganti dengan fetch/axios)
+        const examCode = document.getElementById('examCode').value;
+        await new Promise(resolve => setTimeout(resolve, 800)); // Simulasi delay jaringan
+        
+        // Validasi kode (dalam implementasi nyata, ganti dengan validasi server)
+        const validCodes = ['p8dy-7xl4-m3dt', 'test123-456', 'demo-quiz-789'];
+        if (!validCodes.includes(examCode)) {
+            throw new Error('Kode ujian tidak valid. Silakan coba lagi.');
+        }
+        
+        // Jika valid, lanjutkan
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('openingScreen').style.display = 'flex';
+    } catch (error) {
+        errorDisplay.textContent = error.message;
+        errorDisplay.style.display = 'block';
+    } finally {
+        loginBtn.disabled = false;
+        loginBtnText.textContent = 'Masuk';
+        spinner.style.display = 'none';
+    }
+});
+</script>
 
     <!-- Opening Animation -->
     <div class="opening-screen" id="openingScreen">
@@ -1885,13 +2167,13 @@
             </div>
             
             <div class="terms-checkbox">
-                <input type="checkbox" id="agreeTerms" required>
-                <label for="agreeTerms">Saya telah membaca dan menyetujui syarat & ketentuan di atas</label>
-            </div>
-            
-            <button class="continue-btn" id="continueBtn" disabled>
-                Lanjutkan ke Quiz <i class="fas fa-arrow-right"></i>
-            </button>
+  <input type="checkbox" id="agreeTerms" required>
+  <label for="agreeTerms">Saya telah membaca dan menyetujui syarat & ketentuan di atas</label>
+</div>
+
+<button class="continue-btn" id="continueBtn" disabled>
+  Lanjutkan ke Quiz <i class="fas fa-arrow-right"></i>
+</button>
         </div>
         
         <p class="opening-message">Ilmu Adalah Cahaya, Kecerdasan & Akhlak Adalah Kunci Kesuksesan (By Cendhanu)</p>
@@ -1900,117 +2182,130 @@
     <!-- Main Content -->
     <main class="main-container">
         <!-- Participant Form with integrated header -->
-        <form id="participantForm" class="participant-form">
-            <div class="form-header">
-                <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo" class="form-logo">
-                <h2 class="form-title">Quiz Pergunu</h2>
-                <p class="form-subtitle">Silakan isi data diri Anda untuk memulai ujian pengetahuan</p>
-            </div>
-            
-            <div class="form-group">
-                <label for="name" class="form-label">Nama Lengkap</label>
-                <input type="text" id="name" class="form-control" required placeholder="Masukkan nama lengkap Anda">
-            </div>
-            
-            <div class="form-group">
-                <label for="phone" class="form-label">Nomor HP/WhatsApp</label>
-                <input type="tel" id="phone" class="form-control" required placeholder="Masukkan nomor yang bisa dihubungi">
-            </div>
-            
-            <div class="form-group">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" class="form-control" placeholder="Masukkan email Anda (opsional)">
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Kategori Quiz</label>
-                <div class="category-tabs">
-                    <div class="category-tab active" data-category="pelajar">Pelajar</div>
-                    <div class="category-tab" data-category="umum">Umum</div>
-                </div>
-                
-                <!-- Subkategori untuk Pelajar -->
-                <div class="subcategory-container" id="pelajarSubcategories">
-                    <div class="subcategory-title">
-                        <i class="fas fa-book"></i> Pilih Mata Pelajaran:
-                    </div>
-                    <div class="subcategory-options">
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="ipa" checked>
-                            <span class="subcategory-label">IPA</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="ips">
-                            <span class="subcategory-label">IPS</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="matematika">
-                            <span class="subcategory-label">Matematika</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="agama">
-                            <span class="subcategory-label">Agama</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="ppkn">
-                            <span class="subcategory-label">PPKN</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="sejarah">
-                            <span class="subcategory-label">Sejarah</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="bahasa_indonesia">
-                            <span class="subcategory-label">Bahasa Indonesia</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="bahasa_inggris">
-                            <span class="subcategory-label">Bahasa Inggris</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- Subkategori untuk Umum -->
-                <div class="subcategory-container" id="umumSubcategories" style="display: none;">
-                    <div class="subcategory-title">
-                        <i class="fas fa-star"></i> Pilih Jenis Ujian:
-                    </div>
-                    <div class="subcategory-options">
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="logika">
-                            <span class="subcategory-label">Ujian Logika</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="sambung_lagu">
-                            <span class="subcategory-label">Sambung Lagu</span>
-                        </label>
-                        <label class="subcategory-option">
-                            <input type="radio" name="subcategory" class="subcategory-radio" value="peribahasa">
-                            <span class="subcategory-label">Tebak Peribahasa</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- Field Profesi (hanya untuk umum) -->
-                <div class="form-group profesi-field" id="profesiField">
-                    <label for="profesi" class="form-label">Profesi</label>
-                    <input type="text" id="profesi" class="form-control" placeholder="Masukkan profesi Anda">
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="level" class="form-label">Tingkat Kesulitan</label>
-                <select id="level" class="form-control" required>
-                    <option value="mudah">Mudah</option>
-                    <option value="sedang">Sedang</option>
-                    <option value="sulit">Sulit</option>
-                </select>
-            </div>
-            
-            <button type="submit" class="btn btn-primary" id="startQuiz">
-                <i class="fas fa-play"></i> Mulai Quiz
-            </button>
-        </form>
+        <!-- Ganti seluruh form peserta dengan yang berikut -->
+<form id="participantForm" class="participant-form" novalidate>
+    <div class="form-header">
+        <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" 
+             alt="Pergunu Logo" class="form-logo">
+        <h2 class="form-title">Quiz Pergunu</h2>
+        <p class="form-subtitle">Silakan isi data diri Anda untuk memulai ujian pengetahuan</p>
+    </div>
+    
+    <div id="formErrors" class="error-message" style="display:none; margin-bottom:1.5rem;"></div>
+    
+    <div class="form-group">
+        <label for="name" class="form-label">Nama Lengkap</label>
+        <input type="text" id="name" class="form-control" required 
+               placeholder="Masukkan nama lengkap Anda"
+               minlength="3" maxlength="50">
+        <div class="field-error" id="nameError"></div>
+    </div>
+    
+    <div class="form-group">
+        <label for="phone" class="form-label">Nomor HP/WhatsApp</label>
+        <input type="tel" id="phone" class="form-control" required
+               placeholder="Contoh: 6281234567890"
+               pattern="^[0-9]{10,14}$"
+               title="Nomor HP harus 10-14 digit angka">
+        <div class="field-error" id="phoneError"></div>
+    </div>
+    
+    <div class="form-group">
+        <label for="email" class="form-label">Email (Opsional)</label>
+        <input type="email" id="email" class="form-control" 
+               placeholder="Masukkan email Anda"
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+        <div class="field-error" id="emailError"></div>
+    </div>
+    
+    <!-- ... (kategori dan subkategori tetap sama) ... -->
+    
+    <button type="submit" class="btn btn-primary" id="startQuiz">
+        <i class="fas fa-play"></i> Mulai Quiz
+        <div id="formSpinner" class="spinner" style="display:none;"></div>
+    </button>
+</form>
+
+<style>
+/* Tambahkan style ini */
+.field-error {
+    color: var(--danger);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.participant-form {
+    position: relative;
+}
+
+.participant-form .spinner {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top-color: var(--primary);
+    border-width: 2px;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+</style>
+
+<script>
+// Ganti event listener form peserta dengan yang berikut
+document.getElementById('participantForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const errors = [];
+    const errorDisplay = document.getElementById('formErrors');
+    const spinner = document.getElementById('formSpinner');
+    const submitBtn = document.getElementById('startQuiz');
+    
+    // Reset error display
+    errorDisplay.style.display = 'none';
+    document.querySelectorAll('.field-error').forEach(el => el.style.display = 'none');
+    
+    // Validasi field
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    
+    if (!name || name.length < 3) {
+        document.getElementById('nameError').textContent = 'Nama harus minimal 3 karakter';
+        document.getElementById('nameError').style.display = 'block';
+        errors.push('Nama tidak valid');
+    }
+    
+    if (!phone || !/^[0-9]{10,14}$/.test(phone)) {
+        document.getElementById('phoneError').textContent = 'Nomor HP harus 10-14 digit angka';
+        document.getElementById('phoneError').style.display = 'block';
+        errors.push('Nomor HP tidak valid');
+    }
+    
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('emailError').textContent = 'Format email tidak valid';
+        document.getElementById('emailError').style.display = 'block';
+        errors.push('Email tidak valid');
+    }
+    
+    if (errors.length > 0) {
+        errorDisplay.textContent = 'Terdapat kesalahan dalam form: ' + errors.join(', ');
+        errorDisplay.style.display = 'block';
+        return;
+    }
+    
+    // Jika valid, proses form
+    submitBtn.disabled = true;
+    spinner.style.display = 'block';
+    
+    // Simpan data peserta (simulasi)
+    setTimeout(() => {
+        startQuiz();
+        submitBtn.disabled = false;
+        spinner.style.display = 'none';
+    }, 800);
+});
+</script>
         
         <!-- Quiz Container -->
         <div id="quizContainer" class="quiz-container">
@@ -2167,6 +2462,82 @@
                 </select>
             </div>
             
+            <!-- Category Toggle Section -->
+            <div class="ai-prompt-section">
+                <div class="ai-prompt-title">
+                    <i class="fas fa-toggle-on"></i> Aktifkan/Nonaktifkan Kategori Ujian
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Kategori Utama</label>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-success" id="enablePelajarBtn">
+                            <i class="fas fa-check"></i> Aktifkan Pelajar
+                        </button>
+                        <button class="btn btn-danger" id="disablePelajarBtn">
+                            <i class="fas fa-times"></i> Nonaktifkan Pelajar
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button class="btn btn-success" id="enableUmumBtn">
+                            <i class="fas fa-check"></i> Aktifkan Umum
+                        </button>
+                        <button class="btn btn-danger" id="disableUmumBtn">
+                            <i class="fas fa-times"></i> Nonaktifkan Umum
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Subkategori Pelajar</label>
+                    <div class="subcategory-options" style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));">
+                        <button class="btn btn-sm btn-success enable-subcategory" data-category="pelajar" data-subcategory="ipa">
+                            <i class="fas fa-check"></i> IPA
+                        </button>
+                        <button class="btn btn-sm btn-success enable-subcategory" data-category="pelajar" data-subcategory="ips">
+                            <i class="fas fa-check"></i> IPS
+                        </button>
+                        <button class="btn btn-sm btn-success enable-subcategory" data-category="pelajar" data-subcategory="matematika">
+                            <i class="fas fa-check"></i> Matematika
+                        </button>
+                        <button class="btn btn-sm btn-success enable-subcategory" data-category="pelajar" data-subcategory="agama">
+                            <i class="fas fa-check"></i> Agama
+                        </button>
+                        <button class="btn btn-sm btn-success enable-subcategory" data-category="pelajar" data-subcategory="ppkn">
+                            <i class="fas fa-check"></i> PPKN
+                        </button>
+                        <button class="btn btn-sm btn-success enable-subcategory" data-category="pelajar" data-subcategory="sejarah">
+                            <i class="fas fa-check"></i> Sejarah
+                        </button>
+                        <button class="btn btn-sm btn-success enable-subcategory" data-category="pelajar" data-subcategory="bahasa_indonesia">
+                            <i class="fas fa-check"></i> Bahasa Indonesia
+                        </button>
+                        <button class="btn btn-sm btn-success enable-subcategory" data-category="pelajar" data-subcategory="bahasa_inggris">
+                            <i class="fas fa-check"></i> Bahasa Inggris
+                        </button>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn btn-sm btn-danger" id="disableAllPelajarBtn">
+                            <i class="fas fa-times"></i> Nonaktifkan Semua Subkategori Pelajar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Subkategori Umum</label>
+                    <div class="subcategory-options" style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));">
+                        <button class="btn btn-sm btn-success enable-subcategory" data-category="umum" data-subcategory="logika">
+                            <i class="fas fa-check"></i> Logika
+                        </button>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn btn-sm btn-danger" id="disableAllUmumBtn">
+                            <i class="fas fa-times"></i> Nonaktifkan Semua Subkategori Umum
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
             <div class="question-list" id="questionList">
                 <!-- Questions will be loaded here -->
             </div>
@@ -2216,8 +2587,6 @@
                     <label for="newUmumSubcategory" class="form-label">Jenis Ujian</label>
                     <select id="newUmumSubcategory" class="form-control">
                         <option value="logika">Ujian Logika</option>
-                        <option value="sambung_lagu">Sambung Lagu</option>
-                        <option value="peribahasa">Tebak Peribahasa</option>
                     </select>
                 </div>
                 
@@ -2480,32 +2849,6 @@
                     ],
                     sedang: [],
                     sulit: []
-                },
-                sambung_lagu: {
-                    mudah: [
-                        {
-                            id: 13,
-                            question: "Lanjutkan lirik: 'Tanah airku tidak kulupakan...'",
-                            options: ["'Kan terkenang selama hidupku", "Selamanya akan kukenang", "Di hatiku selalu terpatri", "Takkan pernah kulupakan"],
-                            answer: 0,
-                            explanation: "Lirik lengkapnya: 'Tanah airku tidak kulupakan, 'kan terkenang selama hidupku'"
-                        }
-                    ],
-                    sedang: [],
-                    sulit: []
-                },
-                peribahasa: {
-                    mudah: [
-                        {
-                            id: 14,
-                            question: "Lanjutkan peribahasa: 'Air tenang...'",
-                            options: ["menghanyutkan", "jernih selalu", "tak berombak", "dingin sekali"],
-                            answer: 0,
-                            explanation: "Peribahasa lengkapnya: 'Air tenang menghanyutkan' yang berarti orang yang kelihatannya pendiam bisa jadi berbahaya."
-                        }
-                    ],
-                    sedang: [],
-                    sulit: []
                 }
             }
         };
@@ -2518,27 +2861,114 @@
         let score = 0;
         let timer;
         let quizStartTime;
-        let adminPassword = "65614222";
-        let musicEnabled = true;
-        let soundEffectsEnabled = true;
-        let quizMusicEnabled = true;
-        let adhanTimeout;
+        // Ganti seluruh bagian admin dengan yang berikut
+let adminAuthenticated = false;
+const ADMIN_SESSION_TIMEOUT = 30 * 60 * 1000; // 30 menit
+let adminSessionTimeout;
+
+function toggleAdminPanel() {
+    if (adminAuthenticated) {
+        showAdminPanel();
+    } else {
+        showAdminLogin();
+    }
+}
+
+function showAdminLogin() {
+    document.getElementById('adminOverlay').style.display = 'block';
+    document.getElementById('adminLogin').style.display = 'block';
+    document.getElementById('adminPassword').focus();
+}
+
+function showAdminPanel() {
+    document.getElementById('adminOverlay').style.display = 'block';
+    document.getElementById('adminPanel').style.display = 'block';
+    document.getElementById('adminContent').style.display = 'block';
+    loadQuestionsForAdmin();
+    
+    // Reset session timeout
+    resetAdminSessionTimeout();
+}
+
+function resetAdminSessionTimeout() {
+    clearTimeout(adminSessionTimeout);
+    adminSessionTimeout = setTimeout(() => {
+        adminAuthenticated = false;
+        closeAdminPanels();
+        alert('Sesi admin telah berakhir karena tidak aktif');
+    }, ADMIN_SESSION_TIMEOUT);
+}
+
+function adminLogin() {
+    const password = document.getElementById('adminPassword').value;
+    
+    // Dalam implementasi nyata, ganti dengan request ke server
+    // Ini hanya contoh - JANGAN simpan password di kode frontend!
+    const validPassword = "65614222"; // Hapus di production, gunakan autentikasi server
+    
+    if (password === validPassword) {
+        adminAuthenticated = true;
+        document.getElementById('adminLogin').style.display = 'none';
+        showAdminPanel();
+    } else {
+        alert('Password salah!');
+        document.getElementById('adminPassword').value = '';
+        document.getElementById('adminPassword').focus();
+    }
+}
+
+// Update semua event listener admin
+document.getElementById('adminBtn').addEventListener('click', toggleAdminPanel);
+document.getElementById('adminOverlay').addEventListener('click', closeAdminPanels);
+document.getElementById('adminClose').addEventListener('click', closeAdminPanels);
+document.getElementById('adminPanelClose').addEventListener('click', closeAdminPanels);
+document.getElementById('adminLoginBtn').addEventListener('click', adminLogin);
+
+// Tambahkan event listener untuk reset timeout saat ada interaksi
+document.getElementById('adminPanel').addEventListener('mousemove', resetAdminSessionTimeout);
+document.getElementById('adminPanel').addEventListener('keypress', resetAdminSessionTimeout);
 
         // Inisialisasi
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             initAudio();
             initEventListeners();
+            updateCategoryUI();
             
             // Set current date for certificate
             const now = new Date();
             const options = { day: '2-digit', month: 'long', year: 'numeric' };
             document.getElementById('certificateDate').textContent = `Ditetapkan di: Situbondo, ${now.toLocaleDateString('id-ID', options)}`;
             
-            // Pastikan opening screen visible dan main container hidden
-            document.getElementById('openingScreen').style.display = 'flex';
+            // Pastikan opening screen hidden dan main container hidden
+            document.getElementById('openingScreen').style.display = 'none';
             document.querySelector('.main-container').style.display = 'none';
         });
+
+        // Fungsi update tampilan kategori berdasarkan pengaturan
+        function updateCategoryUI() {
+            // Update kategori utama
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                const category = tab.dataset.category;
+                tab.classList.toggle('disabled', !enabledCategories[category]);
+            });
+
+            // Update subkategori pelajar
+            document.querySelectorAll('#pelajarSubcategories .subcategory-label').forEach(label => {
+                const radio = label.previousElementSibling;
+                const subcategory = radio.value;
+                label.classList.toggle('disabled', !enabledCategories.subcategories.pelajar[subcategory]);
+                radio.disabled = !enabledCategories.subcategories.pelajar[subcategory];
+            });
+
+            // Update subkategori umum
+            document.querySelectorAll('#umumSubcategories .subcategory-label').forEach(label => {
+                const radio = label.previousElementSibling;
+                const subcategory = radio.value;
+                label.classList.toggle('disabled', !enabledCategories.subcategories.umum[subcategory]);
+                radio.disabled = !enabledCategories.subcategories.umum[subcategory];
+            });
+        }
 
         // Fungsi initAudio dengan volume maksimal
         function initAudio() {
@@ -2683,41 +3113,77 @@
         }
 
         function initEventListeners() {
-            // Terms agreement - enforce mandatory checkbox
-            const agreeCheckbox = document.getElementById('agreeTerms');
-            const continueBtn = document.getElementById('continueBtn');
+    // Login event - TAMBAHKAN KODE INI DI SINI
+    document.getElementById('loginBtn').addEventListener('click', function() {
+        const examCode = document.getElementById('examCode').value;
+        if (examCode === 'p8dy-7xl4-m3dt') {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('openingScreen').style.display = 'flex';
+        } else {
+            alert('Kode ujian salah!');
+        }
+    });
 
-            agreeCheckbox.addEventListener('change', function() {
-                continueBtn.disabled = !this.checked;
-            });
+    // Terms agreement - enforce mandatory checkbox
+    const agreeCheckbox = document.getElementById('agreeTerms');
+    // ... kode yang sudah ada berikutnya ...
+            // Login event
+           document.getElementById('enablePelajarBtn').addEventListener('click', function() {
+    enabledCategories.pelajar = true;
+    updateCategoryUI();
+    alert('Kategori Pelajar telah diaktifkan');
+});
+
+document.getElementById('disablePelajarBtn').addEventListener('click', function() {
+    if (confirm('Apakah Anda yakin ingin menonaktifkan kategori Pelajar?')) {
+        enabledCategories.pelajar = false;
+        updateCategoryUI();
+        alert('Kategori Pelajar telah dinonaktifkan');
+    }
+});
+
+            // Terms agreement - enforce mandatory checkbox
+           document.addEventListener('DOMContentLoaded', function() {
+    const agreeCheckbox = document.getElementById('agreeTerms');
+    const continueBtn = document.getElementById('continueBtn');
+    
+    // 1. Update tombol berdasarkan status checkbox
+    agreeCheckbox.addEventListener('change', function() {
+        continueBtn.disabled = !this.checked;
+    });
+    
+    // 2. Event listener untuk tombol lanjutkan
+    continueBtn.addEventListener('click', function() {
+        // Validasi checkbox
+        if (!agreeCheckbox.checked) {
+            alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
+            return;
+        }
+        
+        // Animasi loading
+        this.innerHTML = '<div class="spinner"></div> Memproses...';
+        
+        // Simulasi loading (bisa diganti dengan operasi async)
+        setTimeout(() => {
+            // Sembunyikan opening screen dan tampilkan form peserta
+            document.getElementById('openingScreen').style.display = 'none';
+            document.querySelector('.main-container').style.display = 'flex';
+            document.getElementById('participantForm').style.display = 'block';
             
-            continueBtn.addEventListener('click', function() {
-                if (!agreeCheckbox.checked) {
-                    alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
-                    return;
-                }
-                
-                // Play continue sound
-                const continueSound = document.getElementById('openingSound');
-                continueSound.play().catch(error => {
-                    console.log("Autoplay prevented:", error);
-                });
-                
-                document.getElementById('openingScreen').style.display = 'none';
-                document.querySelector('.main-container').style.display = 'flex';
-                
-                // Play welcome sound when entering form
-                setTimeout(() => {
-                    const welcomeSound = document.getElementById('welcomeSound');
-                    welcomeSound.play().catch(error => {
-                        console.log("Autoplay prevented:", error);
-                    });
-                }, 500);
-            });
+            // Reset tombol
+            this.innerHTML = 'Lanjutkan ke Quiz <i class="fas fa-arrow-right"></i>';
+            
+            // Putar suara selamat datang
+            document.getElementById('welcomeSound').play().catch(e => console.log("Autoplay blocked:", e));
+        }, 1000);
+    });
+});
 
             // Pilih kategori utama
             document.querySelectorAll('.category-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
+                    if (this.classList.contains('disabled')) return;
+                    
                     document.querySelector('.category-tab.active').classList.remove('active');
                     this.classList.add('active');
                     currentCategory = this.dataset.category;
@@ -2794,6 +3260,72 @@
             document.getElementById('callCenterBtn').addEventListener('click', function() {
                 window.open('https://wa.me/6285647709114', '_blank');
             });
+
+            // Category toggle buttons
+            document.getElementById('enablePelajarBtn').addEventListener('click', function() {
+                enabledCategories.pelajar = true;
+                updateCategoryUI();
+                alert('Kategori Pelajar telah diaktifkan');
+            });
+
+            document.getElementById('disablePelajarBtn').addEventListener('click', function() {
+                enabledCategories.pelajar = false;
+                updateCategoryUI();
+                alert('Kategori Pelajar telah dinonaktifkan');
+            });
+
+            document.getElementById('enableUmumBtn').addEventListener('click', function() {
+                enabledCategories.umum = true;
+                updateCategoryUI();
+                alert('Kategori Umum telah diaktifkan');
+            });
+
+            document.getElementById('disableUmumBtn').addEventListener('click', function() {
+                enabledCategories.umum = false;
+                updateCategoryUI();
+                alert('Kategori Umum telah dinonaktifkan');
+            });
+
+            // Subcategory toggle buttons
+            document.querySelectorAll('.enable-subcategory').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    const subcategory = this.dataset.subcategory;
+                    const isEnabled = enabledCategories.subcategories[category][subcategory];
+                    
+                    if (isEnabled) {
+                        if (confirm(`Apakah Anda yakin ingin menonaktifkan subkategori ${subcategory}?`)) {
+                            enabledCategories.subcategories[category][subcategory] = false;
+                            updateCategoryUI();
+                            alert(`Subkategori ${subcategory} telah dinonaktifkan`);
+                        }
+                    } else {
+                        enabledCategories.subcategories[category][subcategory] = true;
+                        updateCategoryUI();
+                        alert(`Subkategori ${subcategory} telah diaktifkan`);
+                    }
+                });
+            });
+
+            document.getElementById('disableAllPelajarBtn').addEventListener('click', function() {
+                if (confirm('Apakah Anda yakin ingin menonaktifkan semua subkategori Pelajar?')) {
+                    Object.keys(enabledCategories.subcategories.pelajar).forEach(subcategory => {
+                        enabledCategories.subcategories.pelajar[subcategory] = false;
+                    });
+                    updateCategoryUI();
+                    alert('Semua subkategori Pelajar telah dinonaktifkan');
+                }
+            });
+
+            document.getElementById('disableAllUmumBtn').addEventListener('click', function() {
+                if (confirm('Apakah Anda yakin ingin menonaktifkan semua subkategori Umum?')) {
+                    Object.keys(enabledCategories.subcategories.umum).forEach(subcategory => {
+                        enabledCategories.subcategories.umum[subcategory] = false;
+                    });
+                    updateCategoryUI();
+                    alert('Semua subkategori Umum telah dinonaktifkan');
+                }
+            });
         }
 
         function playSound(soundId) {
@@ -2813,16 +3345,295 @@
             }
         }
 
-        function startQuiz() {
-            // Get participant data
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
+        // Tambahkan fungsi validasi sebelum memulai quiz
+// Ganti seluruh fungsi startQuiz dengan yang berikut
+function startQuiz() {
+    // Validasi ketersediaan quiz
+    const selectedCategory = document.querySelector('.category-tab.active').dataset.category;
+    const selectedSubcategory = document.querySelector('input[name="subcategory"]:checked').value;
+    const selectedLevel = document.getElementById('level').value;
+    
+    // Validasi kategori aktif
+    if (!enabledCategories[selectedCategory]) {
+        showValidationError('Kategori ini sedang tidak tersedia');
+        return;
+    }
+    
+    // Validasi subkategori aktif
+    if (!enabledCategories.subcategories[selectedCategory] || 
+        !enabledCategories.subcategories[selectedCategory][selectedSubcategory]) {
+        showValidationError('Subkategori ini sedang tidak tersedia');
+        return;
+    }
+    
+    // Validasi ketersediaan soal
+    if (!questions[selectedCategory] || 
+        !questions[selectedCategory][selectedSubcategory] || 
+        !questions[selectedCategory][selectedSubcategory][selectedLevel] || 
+        questions[selectedCategory][selectedSubcategory][selectedLevel].length === 0) {
+        showValidationError('Belum ada soal untuk kombinasi kategori, subkategori, dan level ini');
+        return;
+    }
+    
+    // Set current quiz parameters
+    currentCategory = selectedCategory;
+    currentSubcategory = selectedSubcategory;
+    currentLevel = selectedLevel;
+    
+    // Update UI
+    document.getElementById('participantName').textContent = formatName(document.getElementById('name').value);
+    document.getElementById('categoryDisplay').textContent = currentCategory === 'pelajar' ? 'Pelajar' : 'Umum';
+    
+    // Map subcategory to display text
+    const subcategoryMap = {
+        pelajar: {
+            'ipa': 'IPA',
+            'ips': 'IPS',
+            'matematika': 'Matematika',
+            'agama': 'Agama',
+            'ppkn': 'PPKN',
+            'sejarah': 'Sejarah',
+            'bahasa_indonesia': 'Bahasa Indonesia',
+            'bahasa_inggris': 'Bahasa Inggris'
+        },
+        umum: {
+            'logika': 'Logika'
+        }
+    };
+    
+    document.getElementById('subcategoryDisplay').textContent = subcategoryMap[currentCategory][currentSubcategory];
+    document.getElementById('levelDisplay').textContent = currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1);
+    
+    // Hide form and show quiz
+    document.getElementById('participantForm').style.display = 'none';
+    document.getElementById('quizContainer').style.display = 'block';
+    document.getElementById('resultsContainer').style.display = 'none';
+    
+    // Reset quiz variables
+    currentQuestionIndex = 0;
+    score = 0;
+    quizStartTime = new Date();
+    
+    // Start timer (90 minutes)
+    startTimer(90);
+    
+    // Load first question
+    loadQuestion();
+}
+
+// Tambahkan fungsi helper ini
+function showValidationError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'validation-error';
+    errorDiv.innerHTML = `
+        <i class="fas fa-exclamation-circle"></i>
+        <span>${message}</span>
+    `;
+    
+    document.body.appendChild(errorDiv);
+    
+    // Hilangkan setelah 5 detik
+    setTimeout(() => {
+        errorDiv.style.opacity = '0';
+        setTimeout(() => errorDiv.remove(), 300);
+    }, 5000);
+}
+
+// Helper functions
+function getParticipantData() {
+    return {
+        name: document.getElementById('name').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        profesi: currentCategory === 'umum' 
+               ? document.getElementById('profesi').value.trim() 
+               : ''
+    };
+}
+
+function validateParticipantData(data) {
+    if (!data.name || !data.phone) {
+        showValidationError('Nama lengkap dan nomor HP wajib diisi');
+        return false;
+    }
+    
+    if (!/^[0-9]{10,13}$/.test(data.phone)) {
+        showValidationError('Nomor HP harus 10-13 digit angka');
+        return false;
+    }
+    
+    if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+        showValidationError('Format email tidak valid');
+        return false;
+    }
+    
+    return true;
+}
+
+function getQuizSelection() {
+    const categoryEl = document.querySelector('.category-tab.active');
+    const subcategoryEl = document.querySelector('input[name="subcategory"]:checked');
+    
+    if (!categoryEl || !subcategoryEl) {
+        showValidationError('Silakan pilih kategori dan subkategori');
+        return { valid: false };
+    }
+
+    const selection = {
+        category: categoryEl.dataset.category,
+        subcategory: subcategoryEl.value,
+        level: document.getElementById('level').value,
+        valid: true
+    };
+
+    if (!validateQuizAvailability(selection.category, selection.subcategory, selection.level)) {
+        return { valid: false };
+    }
+
+    return selection;
+}
+    
+    // Update UI dan mulai quiz
+    updateQuizUI(name);
+    initializeQuiz();
+}
+
+// Fungsi validasi terpisah yang lebih robust
+function validateQuizAvailability(category, subcategory, level) {
+    // Cek apakah kategori di-disable
+    if (!enabledCategories[category]) {
+        alert('Kategori ini sedang tidak tersedia!');
+        return false;
+    }
+    
+    // Cek apakah subkategori di-disable
+    if (!enabledCategories.subcategories[category] || 
+        !enabledCategories.subcategories[category][subcategory]) {
+        alert('Subkategori ini sedang tidak tersedia!');
+        return false;
+    }
+    
+    // Periksa ketersediaan soal
+    if (!questions[category] || !questions[category][subcategory] || 
+        !questions[category][subcategory][level] || 
+        questions[category][subcategory][level].length === 0) {
+        alert('Belum ada soal untuk kategori, subkategori, dan level yang dipilih!');
+        return false;
+    }
+    
+    return true;
+}
+    
+    // Update current category dan subcategory
+    currentCategory = selectedCategory;
+    currentSubcategory = selectedSubcategory;
+    
+    // Lanjutkan proses start quiz seperti sebelumnya...
+    // ... (kode selanjutnya tetap sama)
+}
+
+// Perbaikan fungsi update UI untuk disable/enable
+function updateCategoryUI() {
+    // Update kategori utama
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        const category = tab.dataset.category;
+        tab.classList.toggle('disabled', !enabledCategories[category]);
+        if (tab.classList.contains('disabled')) {
+            tab.style.pointerEvents = 'none';
+            tab.style.opacity = '0.5';
+        } else {
+            tab.style.pointerEvents = 'auto';
+            tab.style.opacity = '1';
+        }
+    });
+
+    // Update subkategori pelajar
+  // Fungsi utama update UI kategori
+function updateCategoryUI() {
+    // Update kategori utama
+    updateMainCategories();
+    
+    // Update subkategori
+    updateSubcategoryUI('pelajar');
+    updateSubcategoryUI('umum');
+}
+
+// Fungsi untuk update kategori utama
+function updateMainCategories() {
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        const category = tab.dataset.category;
+        const isEnabled = enabledCategories[category];
+        
+        // Update class dan style
+        tab.classList.toggle('disabled', !isEnabled);
+        tab.style.cssText = `
+            pointer-events: ${isEnabled ? 'auto' : 'none'};
+            opacity: ${isEnabled ? '1' : '0.5'};
+            cursor: ${isEnabled ? 'pointer' : 'not-allowed'};
+        `;
+        
+        // Tambahkan tooltip jika dinonaktifkan
+        if (!isEnabled) {
+            tab.setAttribute('data-tooltip', 'Kategori dinonaktifkan oleh admin');
+        } else {
+            tab.removeAttribute('data-tooltip');
+        }
+    });
+}
+
+// Fungsi untuk update subkategori (reusable)
+function updateSubcategoryUI(category) {
+    const containerId = `${category}Subcategories`;
+    const container = document.getElementById(containerId);
+    
+    if (!container) {
+        console.warn(`Container #${containerId} tidak ditemukan`);
+        return;
+    }
+
+    container.querySelectorAll('.subcategory-label').forEach(label => {
+        const radio = label.previousElementSibling;
+        if (!radio) return;
+
+        const subcategory = radio.value;
+        const isEnabled = enabledCategories.subcategories[category]?.[subcategory] ?? false;
+
+        // Update elemen
+        label.classList.toggle('disabled', !isEnabled);
+        radio.disabled = !isEnabled;
+        
+        label.style.cssText = `
+            pointer-events: ${isEnabled ? 'auto' : 'none'};
+            opacity: ${isEnabled ? '1' : '0.5'};
+            cursor: ${isEnabled ? 'pointer' : 'not-allowed'};
+        `;
+        
+        // Tooltip
+        if (!isEnabled) {
+            label.setAttribute('data-tooltip', 'Subkategori dinonaktifkan oleh admin');
+        } else {
+            label.removeAttribute('data-tooltip');
+        }
+    });
+}
             const email = document.getElementById('email').value;
             const profesi = currentCategory === 'umum' ? document.getElementById('profesi').value : '';
             currentLevel = document.getElementById('level').value;
             
             if (!name || !phone) {
                 alert('Silakan isi nama lengkap dan nomor HP terlebih dahulu');
+                return;
+            }
+            
+            // Check if category is enabled
+            if (!enabledCategories[currentCategory]) {
+                alert('Kategori ini sedang tidak tersedia!');
+                return;
+            }
+            
+            // Check if subcategory is enabled
+            if (!enabledCategories.subcategories[currentCategory][currentSubcategory]) {
+                alert('Subkategori ini sedang tidak tersedia!');
                 return;
             }
             
@@ -2855,9 +3666,7 @@
                 subcategoryText = subcategoryMap[currentSubcategory];
             } else {
                 const subcategoryMap = {
-                    'logika': 'Logika',
-                    'sambung_lagu': 'Sambung Lagu',
-                    'peribahasa': 'Peribahasa'
+                    'logika': 'Logika'
                 };
                 subcategoryText = subcategoryMap[currentSubcategory];
             }
@@ -3046,9 +3855,7 @@
                     'bahasa_inggris': "BAHASA INGGRIS"
                 },
                 umum: {
-                    'logika': "UJIAN LOGIKA",
-                    'sambung_lagu': "SAMBAH LAGU",
-                    'peribahasa': "PERIBAHASA"
+                    'logika': "UJIAN LOGIKA"
                 }
             };
             
@@ -3271,9 +4078,7 @@
                 subcategoryText = subcategoryMap[subcategory];
             } else {
                 const subcategoryMap = {
-                    'logika': 'Logika',
-                    'sambung_lagu': 'Sambung Lagu',
-                    'peribahasa': 'Peribahasa'
+                    'logika': 'Logika'
                 };
                 subcategoryText = subcategoryMap[subcategory];
             }
@@ -3352,8 +4157,6 @@
                     <label>Jenis Ujian</label>
                     <select class="form-control edit-subcategory">
                         <option value="logika" ${oldSubcategory === 'logika' ? 'selected' : ''}>Logika</option>
-                        <option value="sambung_lagu" ${oldSubcategory === 'sambung_lagu' ? 'selected' : ''}>Sambung Lagu</option>
-                        <option value="peribahasa" ${oldSubcategory === 'peribahasa' ? 'selected' : ''}>Peribahasa</option>
                     </select>
                 </div>
                 `}
@@ -3604,7 +4407,7 @@
                 // # UNCOMMENT DAN GUNAKAN INI UNTUK API ASLI        #
                 // ####################################################
                 /*
-                const API_KEY = 'ISI APIKEY DISINI'; // <-- INI TEMPAT API KEY
+                const API_KEY = 'ISI API KEY DISINI'; // <-- INI TEMPAT API KEY
                 const generatedQuestion = await callAIGenerateQuestion(prompt, category, level, API_KEY);
                 */
                 
