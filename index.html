@@ -2675,7 +2675,8 @@
         let score = 0;
         let timer;
         let quizStartTime;
-        let adminPassword = "65614222";
+        let adminPassword = "pergunu.010499"; // Default password in lowercase
+        let defaultExamCode = "pergunu.010499"; // Tambahkan variabel ini
         let musicEnabled = true;
         let soundEffectsEnabled = true;
         let quizMusicEnabled = true;
@@ -2888,38 +2889,72 @@
 
             // Tambahkan fungsi baru
         function changeExamCode(e) {
-    e.preventDefault();
+            e.preventDefault();
+            
+            const currentCode = document.getElementById('currentExamCode').value;
+            const newCode = document.getElementById('newExamCode').value;
+            const confirmCode = document.getElementById('confirmExamCode').value;
+            
+            // Validasi lebih ketat
+            if (!currentCode || !newCode || !confirmCode) {
+                alert('Semua field harus diisi!');
+                return;
+            }
+            
+            // Periksa kode lama (case insensitive)
+            if (currentCode.trim().toLowerCase() !== 'pergunu.010499') {
+                alert('Kode ujian lama salah!');
+                return;
+            }
+            
+            if (newCode !== confirmCode) {
+                alert('Kode baru dan konfirmasi tidak cocok!');
+                return;
+            }
+            
+            if (newCode.length < 8) { // Ubah minimal 8 karakter untuk keamanan lebih
+                alert('Kode ujian minimal 8 karakter!');
+                return;
+            }
+            
+            if (newCode.toLowerCase() === 'pergunu.010499') {
+                alert('Kode baru tidak boleh sama dengan kode default!');
+                return;
+            }
     
-    const currentCode = document.getElementById('currentExamCode').value;
-    const newCode = document.getElementById('newExamCode').value;
-    const confirmCode = document.getElementById('confirmExamCode').value;
+    // Simpan kode baru di localStorage dan sessionStorage
+    localStorage.setItem('examCode', newCode);
+    sessionStorage.setItem('examCode', newCode);
     
-    // Validasi lebih ketat
-    if (!currentCode || !newCode || !confirmCode) {
-        alert('Semua field harus diisi!');
-        return;
-    }
+    // Update kode default di memori
+    adminPassword = newCode; // Jika digunakan untuk admin
     
-    // Periksa kode lama (case insensitive)
-    if (currentCode.trim().toLowerCase() !== 'pergunu.010499') {
-        alert('Kode ujian lama salah!');
-        return;
-    }
+    // Reset form
+    document.getElementById('examCodeForm').reset();
     
-    if (newCode !== confirmCode) {
-        alert('Kode baru dan konfirmasi tidak cocok!');
-        return;
-    }
+    // Tampilkan notifikasi lebih baik
+    const notification = document.createElement('div');
+    notification.style.position = 'fixed';
+    notification.style.bottom = '20px';
+    notification.style.right = '20px';
+    notification.style.padding = '15px';
+    notification.style.backgroundColor = '#4CAF50';
+    notification.style.color = 'white';
+    notification.style.borderRadius = '5px';
+    notification.style.zIndex = '1000';
+    notification.innerHTML = '<i class="fas fa-check-circle"></i> Kode ujian berhasil diubah!';
+    document.body.appendChild(notification);
     
-    if (newCode.length < 8) { // Ubah minimal 8 karakter untuk keamanan lebih
-        alert('Kode ujian minimal 8 karakter!');
-        return;
-    }
+    // Hilangkan notifikasi setelah 3 detik
+    setTimeout(() => {
+        notification.style.transition = 'opacity 1s';
+        notification.style.opacity = '0';
+        setTimeout(() => notification.remove(), 1000);
+    }, 3000);
     
-    if (newCode.toLowerCase() === 'pergunu.010499') {
-        alert('Kode baru tidak boleh sama dengan kode default!');
-        return;
-    }
+    // Log perubahan kode (untuk debugging)
+    console.log(`Kode ujian diubah dari ${currentCode} menjadi ${newCode}`);
+}
     
     // Simpan kode baru di localStorage dan sessionStorage
     localStorage.setItem('examCode', newCode);
@@ -2966,19 +3001,83 @@
             alert('Kode ujian berhasil diubah!');
         }
         
-        function initEventListeners() {
-            // Login event
-           document.getElementById('loginBtn').addEventListener('click', function() {
-            const examCode = document.getElementById('examCode').value;
-            const savedCode = localStorage.getItem('examCode') || 'Pergunu.010499'; // Changed default code
+      function changeExamCode(e) {
+            e.preventDefault();
             
-            if (examCode === savedCode) {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('openingScreen').style.display = 'flex';
-            } else {
-                alert('Kode ujian salah! Silakan coba lagi.');
+            const currentCode = document.getElementById('currentExamCode').value;
+            const newCode = document.getElementById('newExamCode').value;
+            const confirmCode = document.getElementById('confirmExamCode').value;
+            
+            // Validasi lebih ketat
+            if (!currentCode || !newCode || !confirmCode) {
+                alert('Semua field harus diisi!');
+                return;
             }
-        });
+            
+            // Periksa kode lama (case insensitive)
+            if (currentCode.trim().toLowerCase() !== defaultExamCode) {
+                alert('Kode ujian lama salah!');
+                return;
+            }
+            
+            if (newCode !== confirmCode) {
+                alert('Kode baru dan konfirmasi tidak cocok!');
+                return;
+            }
+            
+            if (newCode.length < 8) {
+                alert('Kode ujian minimal 8 karakter!');
+                return;
+            }
+            
+            if (newCode.toLowerCase() === defaultExamCode) {
+                alert('Kode baru tidak boleh sama dengan kode default!');
+                return;
+            }
+            
+            // Simpan kode baru di localStorage dan sessionStorage
+            localStorage.setItem('examCode', newCode);
+            sessionStorage.setItem('examCode', newCode);
+            
+            // Update kode default di memori
+            adminPassword = newCode; // Update admin password if needed
+            
+            // Reset form
+            document.getElementById('examCodeForm').reset();
+            
+            // Tampilkan notifikasi lebih baik
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.padding = '15px';
+            notification.style.backgroundColor = '#4CAF50';
+            notification.style.color = 'white';
+            notification.style.borderRadius = '5px';
+            notification.style.zIndex = '1000';
+            notification.innerHTML = '<i class="fas fa-check-circle"></i> Kode ujian berhasil diubah!';
+            document.body.appendChild(notification);
+            
+            // Hilangkan notifikasi setelah 3 detik
+            setTimeout(() => {
+                notification.style.transition = 'opacity 1s';
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 1000);
+            }, 3000);
+            
+            // Log perubahan kode
+            console.log(`Kode ujian diubah dari ${currentCode} menjadi ${newCode}`);
+        }
+
+    // Enter key support for login
+    document.getElementById('examCode').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            document.getElementById('loginBtn').click();
+        }
+    });
+
+    // ... (kode lainnya tetap sama)
+}
         
                     // Terms agreement - enforce mandatory checkbox
             const agreeCheckbox = document.getElementById('agreeTerms');
