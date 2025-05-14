@@ -336,18 +336,20 @@
         }
 
       .continue-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: var(--light-gray);
-    color: var(--gray);
-    border-color: var(--light-gray);
-    transform: none !important;
-    box-shadow: none !important;
-}
+        opacity: 0.5;
+        cursor: not-allowed;
+        background: var(--light-gray);
+        color: var(--gray);
+        border-color: var(--light-gray);
+        transform: none !important;
+        box-shadow: none !important;
+    }
 
-.continue-btn:not(:disabled) {
-    display: block !important;
-}
+    .continue-btn:not(:disabled) {
+        display: block;
+        background: var(--gradient-primary);
+        color: white;
+    }
 
         .continue-btn::after {
             content: '';
@@ -406,6 +408,16 @@
             display: block;
             margin-top: 0.5rem;
             font-size: 0.9em;
+        }
+
+                /* Pastikan ini ada di CSS Anda */
+        #continueBtn {
+            transition: all 0.3s ease;
+        }
+        
+        #continueBtn:not(:disabled):hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.6);
         }
 
         @keyframes fadeOut {
@@ -2348,13 +2360,13 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             </div>
             
  <div class="terms-checkbox">
-  <input type="checkbox" id="agreeTerms" required>
-  <label for="agreeTerms">Saya telah membaca dan menyetujui syarat & ketentuan di atas</label>
+    <input type="checkbox" id="agreeTerms" required>
+    <label for="agreeTerms">Saya telah membaca dan menyetujui syarat & ketentuan di atas</label>
 </div>
 
 <button class="continue-btn" id="continueBtn" disabled>
-  <span id="continueBtnText">Lanjutkan ke Quiz</span> 
-  <i class="fas fa-arrow-right"></i>
+    <span id="continueBtnText">Lanjutkan ke Quiz</span> 
+    <i class="fas fa-arrow-right"></i>
 </button>
         </div>
         
@@ -2469,6 +2481,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
 <script>
 // Ganti event listener form peserta dengan yang berikut
+// Event listener untuk form peserta
 document.getElementById('participantForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const form = e.target;
@@ -2522,7 +2535,8 @@ document.getElementById('participantForm').addEventListener('submit', function(e
     }, 800);
 });
 
-    function saveEnabledCategories() {
+// Fungsi penyimpanan kategori
+function saveEnabledCategories() {
     localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
 }
 
@@ -2534,10 +2548,10 @@ function loadEnabledCategories() {
     updateCategoryUI();
 }
 
-// Panggil saat inisialisasi
+// Inisialisasi saat DOM ready
 document.addEventListener('DOMContentLoaded', function() {
     loadEnabledCategories();
-    // ... kode lainnya
+    // ... kode inisialisasi lainnya yang sudah ada ...
 });
 </script>
         
@@ -3375,21 +3389,25 @@ function updateSubcategoryUI(category) {
 
         function initEventListeners() {
     // Login event - TAMBAHKAN KODE INI DI SINI
-   // ####################### PASTE BARU MULAI DI SINI #######################
-// Terms checkbox validation
+   // Terms checkbox validation
 document.getElementById('agreeTerms').addEventListener('change', function() {
     const continueBtn = document.getElementById('continueBtn');
+    continueBtn.disabled = !this.checked;
+    
+    // Update tampilan tombol
     if (this.checked) {
-        continueBtn.disabled = false;
-        continueBtn.style.display = 'inline-block';
+        continueBtn.classList.remove('disabled-state');
+        continueBtn.style.cursor = 'pointer';
     } else {
-        continueBtn.disabled = true;
-        continueBtn.style.display = 'none';
+        continueBtn.classList.add('disabled-state');
+        continueBtn.style.cursor = 'not-allowed';
     }
 });
 
 // Continue button functionality
 document.getElementById('continueBtn').addEventListener('click', function() {
+    if (this.disabled) return;
+    
     const btn = this;
     const btnText = document.getElementById('continueBtnText');
     const originalText = btnText.textContent;
@@ -3402,10 +3420,11 @@ document.getElementById('continueBtn').addEventListener('click', function() {
     }
     
     // Show loading state
-    btn.disabled = true;
+     btn.disabled = true;
     btnText.textContent = 'Memproses...';
-    spinner.style.display = 'block';
+    if (spinner) spinner.style.display = 'block';
     
+        
     // Simulate loading (replace with actual async operation if needed)
     setTimeout(() => {
         // Hide opening screen and show main content
@@ -3426,7 +3445,7 @@ document.getElementById('continueBtn').addEventListener('click', function() {
         // Reset button state (in case user goes back)
         btn.disabled = false;
         btnText.textContent = originalText;
-        spinner.style.display = 'none';
+        if (spinner) spinner.style.display = 'none';
     }, 800);
 });
 
