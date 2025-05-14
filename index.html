@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Pergunu - Sistem Ujian Lengkap</title>
+    <title>ujian Pergunu - Sistem Ujian Lengkap</title>
     <!-- Favicon -->
     <link rel="icon" href="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" type="image/png">
     
@@ -1952,13 +1952,13 @@
     <!-- Opening Animation -->
     <div class="opening-screen" id="openingScreen">
         <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo" class="opening-logo">
-        <h1 class="opening-title">Quiz Pergunu</h1>
+        <h1 class="opening-title">Ujian Pergunu</h1>
         <p class="opening-subtitle">Uji Pengetahuan Anda & Raih Prestasi Terbaik Bersama PERGUNU SITUBONDO</p>
         
         <div class="terms-container">
             <h2 class="terms-title">Kebijakan & Persyaratan</h2>
             <div class="terms-content">
-                <p>Selamat datang di Quiz Pergunu, platform ujian pengetahuan berbasis web yang dikembangkan oleh Cendhanu (Tim Kreator Digital Pergunu Situbondo). Dengan mengakses dan menggunakan aplikasi ini, Anda menyetujui untuk terikat oleh syarat dan ketentuan berikut:</p>
+                <p>Selamat datang di Ujian Pergunu, platform ujian pengetahuan berbasis web yang dikembangkan oleh Cendhanu (Tim Kreator Digital Pergunu Situbondo). Dengan mengakses dan menggunakan aplikasi ini, Anda menyetujui untuk terikat oleh syarat dan ketentuan berikut:</p>
                 
                 <p><strong>1. Penggunaan Aplikasi</strong><br>
                  Ujian Pergunu ditujukan untuk tujuan pendidikan dan pengujian pengetahuan. Pengguna diharapkan menggunakan aplikasi ini dengan jujur dan bertanggung jawab.</p>
@@ -1967,10 +1967,10 @@
                Informasi pribadi yang dikumpulkan (nama, nomor telepon, email) hanya akan digunakan untuk keperluan validasi peserta dan penyampaian hasil ujian. Data tidak akan dibagikan kepada pihak ketiga tanpa izin.</p>
                 
                 <p><strong>3. Hak Kekayaan Intelektual</strong><br>
-                Seluruh konten, termasuk soal quiz, desain antarmuka, dan sistem penilaian merupakan hak milik Pergunu Situbondo. Dilarang melakukan reproduksi, distribusi, atau modifikasi tanpa izin tertulis.</p>
+                Seluruh konten, termasuk soal Ujian, desain antarmuka, dan sistem penilaian merupakan hak milik Pergunu Situbondo. Dilarang melakukan reproduksi, distribusi, atau modifikasi tanpa izin tertulis.</p>
                 
-                <p><strong>4. Ketentuan Quiz</strong><br>
-                Setiap peserta mendapatkan waktu yang telah ditentukan untuk menyelesaikan quiz. Jawaban yang telah dikirim tidak dapat diubah. Sistem penilaian bersifat otomatis dan final.</p>
+                <p><strong>4. Ketentuan ujian</strong><br>
+                Setiap peserta mendapatkan waktu yang telah ditentukan untuk menyelesaikan Ujian. Jawaban yang telah dikirim tidak dapat diubah. Sistem penilaian bersifat otomatis dan final.</p>
                 
                 <p><strong>5. Perilaku Pengguna</strong><br>
                 Dilarang keras melakukan kecurangan dalam bentuk apapun selama mengikuti ujian. Pelanggaran akan mengakibatkan pembatalan hasil dan larangan penggunaan aplikasi.</p>
@@ -1990,7 +1990,7 @@
             </div>
             
             <button class="continue-btn" id="continueBtn" disabled>
-                Lanjutkan ke Quiz <i class="fas fa-arrow-right"></i>
+                Lanjutkan ke Ujian <i class="fas fa-arrow-right"></i>
             </button>
         </div>
         
@@ -2003,7 +2003,7 @@
         <form id="participantForm" class="participant-form">
             <div class="form-header">
                 <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo" class="form-logo">
-                <h2 class="form-title">Quiz Pergunu</h2>
+                <h2 class="form-title">Ujian Pergunu</h2>
                 <p class="form-subtitle">Silakan isi data diri Anda untuk memulai ujian pengetahuan</p>
             </div>
             
@@ -2100,14 +2100,14 @@
             </div>
             
             <button type="submit" class="btn btn-primary" id="startQuiz">
-                <i class="fas fa-play"></i> Mulai Quiz
+                <i class="fas fa-play"></i> Mulai ujian
             </button>
         </form>
         
         <!-- Quiz Container -->
         <div id="quizContainer" class="quiz-container">
             <div class="quiz-header">
-                <h1 class="quiz-title"><i class="fas fa-question-circle"></i> Quiz Pergunu</h1>
+                <h1 class="quiz-title"><i class="fas fa-question-circle"></i> ujian Pergunu</h1>
                 <div class="quiz-info">
                     <div class="quiz-info-item" id="quizCategory">
                         <i class="fas fa-tag"></i> Kategori: <span id="categoryDisplay">Pelajar</span>
@@ -2142,7 +2142,7 @@
             
             <div class="navigation-buttons">
                 <button class="btn btn-secondary" id="resetBtn">
-                    <i class="fas fa-redo"></i> Reset Quiz
+                    <i class="fas fa-redo"></i> Reset Ujian
                 </button>
                 <button class="btn btn-primary" id="nextBtn">
                     <i class="fas fa-arrow-right"></i> Selanjutnya
@@ -2154,7 +2154,7 @@
         <div id="resultsContainer" class="results-container">
             <div class="certificate-wrapper">
                 <div class="certificate-content">
-                    <div class="certificate-watermark" id="watermarkCode">YUDHA CENDHANU/PELAJAR/IPA/10052025/URG9-46MC-AYNW/PERGUNU-STB</div>
+                    <div class="certificate-watermark" id="watermarkCode">YUDHA CENDHANU/PELAJAR/IPA/10052025/URG9-46MC/PERGUNU-STB</div>
                     
                     <div class="certificate-header">
                         <h2 class="certificate-title">SERTIFIKAT PRESTASI</h2>
@@ -2171,8 +2171,7 @@
                     <div class="certificate-score" id="scoreDisplay">0%</div>
                     
                     <div class="certificate-text">
-                        Sertifikat ini diberikan sebagai bentuk apresiasi atas dedikasi dan ketekunan dalam mengembangkan kemampuan berpikir logis serta pemahaman materi ujian. 
-                        Semoga prestasi ini menjadi motivasi untuk terus belajar dan mengasah keterampilan demi masa depan yang lebih gemilang.
+                        Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, sertifikat ini diberikan sebagai motivasi untuk terus berkembang. 
                     </div>
                     
                     <div class="certificate-message" id="resultsMessage">
@@ -2195,7 +2194,7 @@
             </button>
             
             <button class="btn btn-primary" id="restartBtn" style="margin-top: 2rem;">
-                <i class="fas fa-redo"></i> Ulangi Quiz
+                <i class="fas fa-redo"></i> Ulangi Ujian
             </button>
         </div>
     </main>
@@ -3306,7 +3305,7 @@
             const now = new Date();
             const dateStr = `${now.getDate().toString().padStart(2, '0')}${(now.getMonth()+1).toString().padStart(2, '0')}${now.getFullYear()}`;
             
-            // Generate unique code (12 digit with dashes)
+            // Generate unique code (8 digit with dashes)
             const uniqueCode = generateUniqueCode();
             
             // Map subcategory to display text
@@ -3365,7 +3364,7 @@
         }
 
         function generateUniqueCode() {
-            // Generate a 12-character code with dashes (format: XXXX-XXXX-XXXX)
+            // Generate a 8-character code with dashes (format: XXXX-XXXX-)
             const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
             let code = '';
             
