@@ -2707,7 +2707,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             initAudio();
-            initEventListeners();
+            initEventListeners(); // Pindahkan semua event listeners ke sini
             updateCategoryUI();
             
             // Set current date for certificate
@@ -3001,7 +3001,7 @@
             alert('Kode ujian berhasil diubah!');
         }
         
-      function changeExamCode(e) {
+         function changeExamCode(e) {
             e.preventDefault();
             
             const currentCode = document.getElementById('currentExamCode').value;
@@ -3015,7 +3015,8 @@
             }
             
             // Periksa kode lama (case insensitive)
-            if (currentCode.trim().toLowerCase() !== defaultExamCode) {
+            const storedCode = localStorage.getItem('examCode') || defaultExamCode;
+            if (currentCode.trim().toLowerCase() !== storedCode.toLowerCase()) {
                 alert('Kode ujian lama salah!');
                 return;
             }
@@ -3069,23 +3070,67 @@
             console.log(`Kode ujian diubah dari ${currentCode} menjadi ${newCode}`);
         }
 
-    // Enter key support for login
+   // Fungsi untuk menangani login
+    function handleLogin() {
+        const enteredCode = document.getElementById('examCode').value.trim();
+        const storedCode = localStorage.getItem('examCode') || defaultExamCode;
+        
+        // Periksa kode (case insensitive)
+        if (enteredCode.toLowerCase() === storedCode.toLowerCase()) {
+            // Login berhasil
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('openingScreen').style.display = 'flex';
+            
+            // Play opening sound
+            if (musicEnabled) {
+                playOpeningSound();
+            }
+        } else {
+            alert('Kode ujian salah! Silakan coba lagi.');
+        }
+    }
+    
+    // Event listeners untuk login
+    document.getElementById('loginBtn').addEventListener('click', handleLogin);
+    
     document.getElementById('examCode').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
-            document.getElementById('loginBtn').click();
+            handleLogin();
         }
     });
+        // Inisialisasi Event Listeners
+function initEventListeners() {
+    // Login Screen
+    document.getElementById('loginBtn').addEventListener('click', handleLogin);
+    document.getElementById('examCode').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') handleLogin();
+    });
 
-    // ... (kode lainnya tetap sama)
-}
+    // Terms agreement
+    const agreeCheckbox = document.getElementById('agreeTerms');
+    const continueBtn = document.getElementById('continueBtn');
+    
+    agreeCheckbox.addEventListener('change', function() {
+        continueBtn.disabled = !this.checked;
+    });
+    
+    continueBtn.addEventListener('click', function() {
+        if (!agreeCheckbox.checked) {
+            alert('Anda harus menyetujui syarat dan ketentuan terlebih dahulu');
+            return;
+        }
         
-                    // Terms agreement - enforce mandatory checkbox
-            const agreeCheckbox = document.getElementById('agreeTerms');
-            const continueBtn = document.getElementById('continueBtn');
+        document.getElementById('openingScreen').style.display = 'none';
+        document.querySelector('.main-container').style.display = 'flex';
+        
+        // Play welcome sound
+        setTimeout(() => {
+            playSound('welcomeSound');
+        }, 500);
+    });
 
-            agreeCheckbox.addEventListener('change', function() {
-                continueBtn.disabled = !this.checked;
-            });
+    // ... (event listeners lainnya tetap sama)
+}
             
             continueBtn.addEventListener('click', function() {
                 if (!agreeCheckbox.checked) {
