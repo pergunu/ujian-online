@@ -3072,25 +3072,63 @@
 
    // Fungsi untuk menangani login
 function handleLogin() {
-    const enteredCode = document.getElementById('examCode').value.trim();
-    const storedCode = localStorage.getItem('examCode') || defaultExamCode;
-    
-    // Debugging: Tampilkan nilai yang dibandingkan
-    console.log('Entered Code:', enteredCode);
-    console.log('Stored Code:', storedCode);
-    
-    // Periksa kode (case insensitive)
-    if (enteredCode.toLowerCase() === storedCode.toLowerCase()) {
-        // Login berhasil
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('openingScreen').style.display = 'flex';
+        const enteredCode = document.getElementById('examCode').value.trim();
+        const defaultCode = "pergunu.010499"; // Kode default
         
-        // Play opening sound
-        if (musicEnabled) {
-            const openingSound = document.getElementById('openingSound');
-            openingSound.play().catch(error => {
-                console.log("Autoplay prevented:", error);
+        // Periksa kode (case insensitive)
+        if (enteredCode.toLowerCase() === defaultCode.toLowerCase()) {
+            // Login berhasil
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('openingScreen').style.display = 'flex';
+            
+            // Play opening sound
+            if (musicEnabled) {
+                const openingSound = document.getElementById('openingSound');
+                openingSound.play().catch(error => {
+                    console.log("Autoplay prevented:", error);
+                });
+            }
+        } else {
+            alert('Kode ujian salah! Silakan coba lagi.');
+            // Fokus kembali ke input
+            document.getElementById('examCode').focus();
+        }
+    }
+
+    // Inisialisasi Event Listeners untuk login
+    function initLoginListeners() {
+        // Pastikan elemen ada sebelum menambahkan event listener
+        const loginBtn = document.getElementById('loginBtn');
+        const examCodeInput = document.getElementById('examCode');
+        
+        if (loginBtn && examCodeInput) {
+            loginBtn.addEventListener('click', handleLogin);
+            
+            examCodeInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleLogin();
+                }
             });
+        }
+    }
+
+    // Panggil fungsi inisialisasi saat DOM selesai dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+        createStars();
+        initAudio();
+        initEventListeners();
+        initLoginListeners(); // Tambahkan ini
+        updateCategoryUI();
+        
+        // Set current date for certificate
+        const now = new Date();
+        const options = { day: '2-digit', month: 'long', year: 'numeric' };
+        document.getElementById('certificateDate').textContent = `Ditetapkan di: Situbondo, ${now.toLocaleDateString('id-ID', options)}`;
+        
+        // Pastikan opening screen hidden dan main container hidden
+        document.getElementById('openingScreen').style.display = 'none';
+        document.querySelector('.main-container').style.display = 'none';
+    });
         }
     } else {
         alert('Kode ujian salah! Silakan coba lagi.');
