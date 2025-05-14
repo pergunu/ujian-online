@@ -2255,6 +2255,7 @@
                     <option value="">Semua Kategori</option>
                     <option value="pelajar">Pelajar</option>
                     <option value="umum">Umum</option>
+                    
                 </select>
             </div>
             
@@ -2467,13 +2468,31 @@
                     <div class="form-actions" style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-sync-alt"></i> Ganti Password
-                        </button>
+                                <!-- [PASTE THE NEW EXAM CODE FORM RIGHT HERE] -->
+                    <div class="password-form" style="margin-top: 3rem;">
+                        <h3 class="admin-title"><i class="fas fa-unlock-alt"></i> Pengaturan Kode Ujian</h3>
+                        <form id="examCodeForm">
+                            <div class="form-group">
+                                <label for="currentExamCode" class="form-label">Kode Ujian Lama</label>
+                                <input type="password" id="currentExamCode" class="form-control" required placeholder="Masukkan kode ujian saat ini">
+                            </div>
+                            <div class="form-group">
+                                <label for="newExamCode" class="form-label">Kode Ujian Baru</label>
+                                <input type="password" id="newExamCode" class="form-control" required placeholder="Masukkan kode ujian baru">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmExamCode" class="form-label">Konfirmasi Kode Baru</label>
+                                <input type="password" id="confirmExamCode" class="form-control" required placeholder="Masukkan kembali kode baru">
+                            </div>
+                            <div class="form-actions" style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-sync-alt"></i> Update Kode Ujian
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    
+                </div> 
+                    
     <!-- Audio Elements -->
     <audio id="openingSound" preload="auto">
         <source src="assets/audio/opening.mp3" type="audio/mpeg">
@@ -2868,19 +2887,57 @@
             }
         }
 
+            // Tambahkan fungsi baru
+        function changeExamCode(e) {
+            e.preventDefault();
+            
+            const currentCode = document.getElementById('currentExamCode').value;
+            const newCode = document.getElementById('newExamCode').value;
+            const confirmCode = document.getElementById('confirmExamCode').value;
+            
+            // Validasi
+            if (currentCode !== 'p8dy-7xl4-m3dt') { // Kode default
+                alert('Kode ujian lama salah!');
+                return;
+            }
+            
+            if (newCode !== confirmCode) {
+                alert('Kode baru dan konfirmasi tidak cocok!');
+                return;
+            }
+            
+            if (newCode.length < 6) {
+                alert('Kode ujian minimal 6 karakter!');
+                return;
+            }
+            
+            // Ubah kode ujian di sistem
+            // Catatan: Dalam implementasi nyata, ini harus disimpan di server/database
+            // Untuk demo, kita simpan di localStorage
+            localStorage.setItem('examCode', newCode);
+            
+            // Reset form
+            document.getElementById('examCodeForm').reset();
+            
+            alert('Kode ujian berhasil diubah!');
+        }
+        
         function initEventListeners() {
             // Login event
-            document.getElementById('loginBtn').addEventListener('click', function() {
-                const examCode = document.getElementById('examCode').value;
-                if (examCode === 'p8dy-7xl4-m3dt') {
-                    document.getElementById('loginScreen').style.display = 'none';
-                    document.getElementById('openingScreen').style.display = 'flex';
-                } else {
-                    alert('Kode ujian salah! Silakan coba lagi.');
-                }
-            });
-
-            // Terms agreement - enforce mandatory checkbox
+            document.getElementById('examCodeForm').addEventListener('submit', changeExamCode);
+           document.getElementById('loginBtn').addEventListener('click', function() {
+            const examCode = document.getElementById('examCode').value;
+            const savedCode = localStorage.getItem('examCode') || 'p8dy-7xl4-m3dt'; // Default jika belum diubah
+            
+            if (examCode === savedCode) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('openingScreen').style.display = 'flex';
+            } else {
+                alert('Kode ujian salah! Silakan coba lagi.');
+            }
+        });
+        
+                    // Terms agreement - enforce mandatory checkbox
             const agreeCheckbox = document.getElementById('agreeTerms');
             const continueBtn = document.getElementById('continueBtn');
 
@@ -3078,7 +3135,40 @@
             }
         }
 
-        function startQuiz() {
+    function startQuiz() {
+    // Get participant data
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const profesi = currentCategory === 'umum' ? document.getElementById('profesi').value : '';
+    currentLevel = document.getElementById('level').value;
+    
+    if (!name || !phone) {
+        alert('Silakan isi nama lengkap dan nomor HP terlebih dahulu');
+        return;
+    }
+    
+    // Check if category is enabled
+    if (!enabledCategories[currentCategory]) {
+        alert('Kategori ini sedang tidak tersedia!');
+        return;
+    }
+    
+    // Check if subcategory is enabled
+    if (!enabledCategories.subcategories[currentCategory][currentSubcategory]) {
+        alert('Subkategori ini sedang tidak tersedia!');
+        return;
+    }
+    
+    // Check if there are questions for selected category/subcategory/level
+    const availableQuestions = questions[currentCategory][currentSubcategory][currentLevel];
+    if (!availableQuestions || availableQuestions.length === 0) {
+        alert('Belum ada soal untuk kategori, subkategori, dan level yang dipilih!');
+        return;
+    }
+    
+    // Lanjutkan dengan kode yang ada...
+}
             // Get participant data
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
@@ -3368,7 +3458,7 @@
             const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
             let code = '';
             
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 8; i++) {
                 if (i > 0 && i % 4 === 0) {
                     code += '-';
                 }
