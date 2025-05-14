@@ -1170,7 +1170,7 @@
         }
 
         .certificate-name {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             font-weight: 700;
             color: #3a0ca3;
             margin: 1.5rem 0;
@@ -1745,11 +1745,11 @@
             }
             
             .certificate-name {
-                font-size: 2rem;
+                font-size: 3.5rem;
             }
             
             .certificate-score {
-                font-size: 4rem;
+                font-size: 3rem;
             }
             
             .certificate-message {
@@ -1845,7 +1845,7 @@
             }
             
             .certificate-score {
-                font-size: 3.5rem;
+                font-size: 3rem;
             }
             
             .certificate-stats {
@@ -1911,7 +1911,7 @@
             }
             
             .certificate-name {
-                font-size: 1.5rem;
+                font-size: 3.5rem;
             }
             
             .certificate-text {
@@ -2468,30 +2468,29 @@
                     <div class="form-actions" style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-sync-alt"></i> Ganti Password
-                                <!-- [PASTE THE NEW EXAM CODE FORM RIGHT HERE] -->
-                    <div class="password-form" style="margin-top: 3rem;">
-                        <h3 class="admin-title"><i class="fas fa-unlock-alt"></i> Pengaturan Kode Ujian</h3>
-                        <form id="examCodeForm">
-                            <div class="form-group">
-                                <label for="currentExamCode" class="form-label">Kode Ujian Lama</label>
-                                <input type="password" id="currentExamCode" class="form-control" required placeholder="Masukkan kode ujian saat ini">
-                            </div>
-                            <div class="form-group">
-                                <label for="newExamCode" class="form-label">Kode Ujian Baru</label>
-                                <input type="password" id="newExamCode" class="form-control" required placeholder="Masukkan kode ujian baru">
-                            </div>
-                            <div class="form-group">
-                                <label for="confirmExamCode" class="form-label">Konfirmasi Kode Baru</label>
-                                <input type="password" id="confirmExamCode" class="form-control" required placeholder="Masukkan kembali kode baru">
-                            </div>
-                            <div class="form-actions" style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-sync-alt"></i> Update Kode Ujian
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div> 
+                                
+                   <div class="password-form" style="margin-top: 3rem;">
+    <h3 class="admin-title"><i class="fas fa-unlock-alt"></i> Pengaturan Kode Ujian</h3>
+    <form id="examCodeForm">
+        <div class="form-group">
+            <label for="currentExamCode" class="form-label">Kode Ujian Lama</label>
+            <input type="password" id="currentExamCode" class="form-control" required placeholder="Masukkan kode ujian saat ini">
+        </div>
+        <div class="form-group">
+            <label for="newExamCode" class="form-label">Kode Ujian Baru</label>
+            <input type="password" id="newExamCode" class="form-control" required placeholder="Masukkan kode ujian baru">
+        </div>
+        <div class="form-group">
+            <label for="confirmExamCode" class="form-label">Konfirmasi Kode Baru</label>
+            <input type="password" id="confirmExamCode" class="form-control" required placeholder="Masukkan kembali kode baru">
+        </div>
+        <div class="form-actions" style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-sync-alt"></i> Update Kode Ujian
+            </button>
+        </div>
+    </form>
+</div>
                     
     <!-- Audio Elements -->
     <audio id="openingSound" preload="auto">
@@ -2889,27 +2888,72 @@
 
             // Tambahkan fungsi baru
         function changeExamCode(e) {
-            e.preventDefault();
-            
-            const currentCode = document.getElementById('currentExamCode').value;
-            const newCode = document.getElementById('newExamCode').value;
-            const confirmCode = document.getElementById('confirmExamCode').value;
-            
-            // Validasi
-            if (currentCode !== 'p8dy-7xl4-m3dt') { // Kode default
-                alert('Kode ujian lama salah!');
-                return;
-            }
-            
-            if (newCode !== confirmCode) {
-                alert('Kode baru dan konfirmasi tidak cocok!');
-                return;
-            }
-            
-            if (newCode.length < 6) {
-                alert('Kode ujian minimal 6 karakter!');
-                return;
-            }
+    e.preventDefault();
+    
+    const currentCode = document.getElementById('currentExamCode').value;
+    const newCode = document.getElementById('newExamCode').value;
+    const confirmCode = document.getElementById('confirmExamCode').value;
+    
+    // Validasi lebih ketat
+    if (!currentCode || !newCode || !confirmCode) {
+        alert('Semua field harus diisi!');
+        return;
+    }
+    
+    // Periksa kode lama (case insensitive)
+    if (currentCode.trim().toLowerCase() !== 'pergunu.010499') {
+        alert('Kode ujian lama salah!');
+        return;
+    }
+    
+    if (newCode !== confirmCode) {
+        alert('Kode baru dan konfirmasi tidak cocok!');
+        return;
+    }
+    
+    if (newCode.length < 8) { // Ubah minimal 8 karakter untuk keamanan lebih
+        alert('Kode ujian minimal 8 karakter!');
+        return;
+    }
+    
+    if (newCode.toLowerCase() === 'pergunu.010499') {
+        alert('Kode baru tidak boleh sama dengan kode default!');
+        return;
+    }
+    
+    // Simpan kode baru di localStorage dan sessionStorage
+    localStorage.setItem('examCode', newCode);
+    sessionStorage.setItem('examCode', newCode);
+    
+    // Update kode default di memori
+    adminPassword = newCode; // Jika digunakan untuk admin
+    
+    // Reset form
+    document.getElementById('examCodeForm').reset();
+    
+    // Tampilkan notifikasi lebih baik
+    const notification = document.createElement('div');
+    notification.style.position = 'fixed';
+    notification.style.bottom = '20px';
+    notification.style.right = '20px';
+    notification.style.padding = '15px';
+    notification.style.backgroundColor = '#4CAF50';
+    notification.style.color = 'white';
+    notification.style.borderRadius = '5px';
+    notification.style.zIndex = '1000';
+    notification.innerHTML = '<i class="fas fa-check-circle"></i> Kode ujian berhasil diubah!';
+    document.body.appendChild(notification);
+    
+    // Hilangkan notifikasi setelah 3 detik
+    setTimeout(() => {
+        notification.style.transition = 'opacity 1s';
+        notification.style.opacity = '0';
+        setTimeout(() => notification.remove(), 1000);
+    }, 3000);
+    
+    // Log perubahan kode (untuk debugging)
+    console.log(`Kode ujian diubah dari ${currentCode} menjadi ${newCode}`);
+}
             
             // Ubah kode ujian di sistem
             // Catatan: Dalam implementasi nyata, ini harus disimpan di server/database
@@ -2924,10 +2968,9 @@
         
         function initEventListeners() {
             // Login event
-            document.getElementById('examCodeForm').addEventListener('submit', changeExamCode);
            document.getElementById('loginBtn').addEventListener('click', function() {
             const examCode = document.getElementById('examCode').value;
-            const savedCode = localStorage.getItem('examCode') || 'p8dy-7xl4-m3dt'; // Default jika belum diubah
+            const savedCode = localStorage.getItem('examCode') || 'Pergunu.010499'; // Changed default code
             
             if (examCode === savedCode) {
                 document.getElementById('loginScreen').style.display = 'none';
@@ -3052,32 +3095,31 @@
             });
 
             // Category toggle buttons
-            document.getElementById('enablePelajarBtn').addEventListener('click', function() {
-                enabledCategories.pelajar = true;
-                updateCategoryUI();
-                alert('Kategori Pelajar telah diaktifkan');
-            });
-
-            document.getElementById('disablePelajarBtn').addEventListener('click', function() {
-                enabledCategories.pelajar = false;
-                updateCategoryUI();
-                alert('Kategori Pelajar telah dinonaktifkan');
-            });
-
-            document.getElementById('enableUmumBtn').addEventListener('click', function() {
-                enabledCategories.umum = true;
-                updateCategoryUI();
-                alert('Kategori Umum telah diaktifkan');
-            });
-
-            document.getElementById('disableUmumBtn').addEventListener('click', function() {
-                enabledCategories.umum = false;
-                updateCategoryUI();
-                alert('Kategori Umum telah dinonaktifkan');
-            });
-
+           document.getElementById('enablePelajarBtn').addEventListener('click', function() {
+            enabledCategories.pelajar = true;
+            updateCategoryUI();
+            alert('Kategori Pelajar telah diaktifkan');
+        });
+        
+        document.getElementById('disablePelajarBtn').addEventListener('click', function() {
+            enabledCategories.pelajar = false;
+            updateCategoryUI();
+            alert('Kategori Pelajar telah dinonaktifkan');
+        });
+        
+        document.getElementById('enableUmumBtn').addEventListener('click', function() {
+            enabledCategories.umum = true;
+            updateCategoryUI();
+            alert('Kategori Umum telah diaktifkan');
+        });
+        
+        document.getElementById('disableUmumBtn').addEventListener('click', function() {
+            enabledCategories.umum = false;
+            updateCategoryUI();
+            alert('Kategori Umum telah dinonaktifkan');
+        });
             // Subcategory toggle buttons
-            document.querySelectorAll('.enable-subcategory').forEach(btn => {
+                        document.querySelectorAll('.enable-subcategory').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const category = this.dataset.category;
                     const subcategory = this.dataset.subcategory;
@@ -3096,7 +3138,7 @@
                     }
                 });
             });
-
+            
             document.getElementById('disableAllPelajarBtn').addEventListener('click', function() {
                 if (confirm('Apakah Anda yakin ingin menonaktifkan semua subkategori Pelajar?')) {
                     Object.keys(enabledCategories.subcategories.pelajar).forEach(subcategory => {
@@ -3104,6 +3146,16 @@
                     });
                     updateCategoryUI();
                     alert('Semua subkategori Pelajar telah dinonaktifkan');
+                }
+            });
+            
+            document.getElementById('disableAllUmumBtn').addEventListener('click', function() {
+                if (confirm('Apakah Anda yakin ingin menonaktifkan semua subkategori Umum?')) {
+                    Object.keys(enabledCategories.subcategories.umum).forEach(subcategory => {
+                        enabledCategories.subcategories.umum[subcategory] = false;
+                    });
+                    updateCategoryUI();
+                    alert('Semua subkategori Umum telah dinonaktifkan');
                 }
             });
 
@@ -3453,15 +3505,12 @@
             document.getElementById('quizMusic').pause();
         }
 
-        function generateUniqueCode() {
-            // Generate a 8-character code with dashes (format: XXXX-XXXX-)
+       function generateUniqueCode() {
+            // Generate a 8-character code (no dashes)
             const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
             let code = '';
             
             for (let i = 0; i < 8; i++) {
-                if (i > 0 && i % 4 === 0) {
-                    code += '-';
-                }
                 code += chars.charAt(Math.floor(Math.random() * chars.length));
             }
             
