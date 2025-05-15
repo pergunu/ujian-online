@@ -1,114 +1,56 @@
-class QuizEngine {
-    static init() {
-        this.currentCategory = 'pelajar';
-        this.currentSubcategory = 'ipa';
-        this.currentLevel = 'mudah';
-        this.currentQuestionIndex = 0;
-        this.score = 0;
-        this.timer = null;
-        this.quizStartTime = null;
-        this.questions = [];
-    }
+function startQuiz() {
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('phone').value;
 
-    static async loadQuestions(category, subcategory, level) {
-        try {
-            this.questions = await Database.loadQuestions(category, subcategory, level);
-            return this.questions;
-        } catch (error) {
-            console.error("Error loading questions:", error);
-            return [];
-        }
-    }
+  if (!name || !phone) {
+    alert('Silakan isi nama lengkap dan nomor HP terlebih dahulu');
+    return;
+  }
 
-    static startQuiz(participantData) {
-        this.currentCategory = participantData.category;
-        this.currentSubcategory = participantData.subcategory;
-        this.currentLevel = participantData.level;
-        this.currentQuestionIndex = 0;
-        this.score = 0;
-        this.quizStartTime = new Date();
-        
-        this.startTimer();
-        UIManager.showQuestion(this.getCurrentQuestion());
-    }
+  if (!enabledCategories[currentCategory]) {
+    alert("Kategori ini sedang tidak tersedia!");
+    return;
+  }
 
-    static getCurrentQuestion() {
-        return this.questions[this.currentQuestionIndex];
-    }
+  if (!enabledCategories.subcategories[currentCategory]?.[currentSubcategory]) {
+    alert("Subkategori ini sedang tidak tersedia!");
+    return;
+  }
 
-    static checkAnswer(selectedIndex) {
-        const question = this.getCurrentQuestion();
-        const isCorrect = selectedIndex === question.answer;
-        
-        question.userAnswer = selectedIndex;
-        question.isCorrect = isCorrect;
-        
-        if (isCorrect) {
-            this.score++;
-            UIManager.playSound('correct');
-        } else {
-            UIManager.playSound('wrong');
-        }
-        
-        return {
-            isCorrect,
-            correctAnswer: question.answer,
-            explanation: question.explanation
-        };
-    }
-
-    static nextQuestion() {
-        this.currentQuestionIndex++;
-        if (this.currentQuestionIndex < this.questions.length) {
-            UIManager.showQuestion(this.getCurrentQuestion());
-        } else {
-            this.finishQuiz();
-        }
-    }
-
-    static finishQuiz() {
-        this.stopTimer();
-        const percentage = Math.round((this.score / this.questions.length) * 100);
-        const timeTaken = (new Date() - this.quizStartTime) / 1000;
-        
-        Database.saveScore(UserManager.getCurrentUser().id, {
-            score: this.score,
-            totalQuestions: this.questions.length,
-            percentage,
-            timeTaken,
-            category: this.currentCategory,
-            subcategory: this.currentSubcategory,
-            level: this.currentLevel
-        });
-        
-        UIManager.showResults({
-            score: this.score,
-            totalQuestions: this.questions.length,
-            percentage,
-            timeTaken
-        });
-    }
-
-    static startTimer() {
-        let timeLeft = Config.quizDuration;
-        UIManager.updateTimerDisplay(timeLeft);
-        
-        this.timer = setInterval(() => {
-            timeLeft--;
-            UIManager.updateTimerDisplay(timeLeft);
-            
-            if (timeLeft <= 0) {
-                this.finishQuiz();
-            }
-        }, 1000);
-    }
-
-    static stopTimer() {
-        if (this.timer) {
-            clearInterval(this.timer);
-            this.timer = null;
-        }
-    }
+  document.getElementById('participantForm').style.display = 'none';
+  document.getElementById('levelSelection').classList.remove('hidden');
 }
 
-export default QuizEngine;
+async function loadQuestions() {
+  const level = document.getElementById('levelSelect').value;
+  const response = await fetch(`data/questions/${currentCategory}/${currentSubcategory}/${level}.json`);
+  const questionsData = await response.json();
+
+  // Load soal ke UI
+  const questionContainer = document.getElementById('questionContainer');
+  questionContainer.innerHTML = '';
+
+  questionsData.forEach((q, idx) => {
+    const div = document.createElement('div');
+    div.className = 'question-item';
+    div.id = `question-${idx}`;
+    div.innerHTML = `<p>${idx+1}. ${q.question}</p>`;
+    
+    q.options.forEach((opt, i) => {
+      const label = document.createElement('label');
+      label.innerHTML = `
+        <input type="radio" name="answer-${idx}" value="${opt}">
+        ${opt}
+      `;
+      div.appendChild(label);
+    });
+
+    questionContainer.appendChild(div);
+  });
+
+  document.getElementById('quizContainer').classList.remove('hidden');
+  document.getElementById('timerContainer').classList.remove('hidden');
+  document.getElementById('floatingButtons').classList.remove('hidden');
+
+  startTimer(90); // Mulai timer 90 menit
+}
