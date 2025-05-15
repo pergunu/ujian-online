@@ -95,4 +95,114 @@ function loadQuestion() {
     });
 
     // Tampilkan tombol navigasi
-    document.getElementById
+    document.getElementById('navigationButtons').style.display = 'flex';
+}
+
+function handleAnswer(input) {
+    const selectedOption = input.value;
+    const correctAnswer = questions[currentCategory][currentSubcategory][currentLevel][currentQuestionIndex].correct;
+
+    // Simpan jawaban pengguna
+    questions[currentCategory][currentSubcategory][currentLevel][currentQuestionIndex].userAnswer = selectedOption;
+
+    // Periksa apakah benar
+    const isCorrect = selectedOption === correctAnswer;
+    questions[currentCategory][currentSubcategory][currentLevel][currentQuestionIndex].isCorrect = isCorrect;
+
+    // Efek suara
+    if (isCorrect) {
+        playAudio('correctSound');
+    } else {
+        playAudio('wrongSound');
+    }
+}
+
+function nextQuestion() {
+    const question = questions[currentCategory][currentSubcategory][currentLevel][currentQuestionIndex];
+    if (!question.userAnswer) {
+        alert('Silakan pilih jawaban terlebih dahulu');
+        return;
+    }
+
+    if (question.isCorrect) {
+        score++;
+    }
+
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < questions[currentCategory][currentSubcategory][currentLevel].length) {
+        loadQuestion();
+    } else {
+        finishQuiz();
+    }
+}
+
+function prevQuestion() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion();
+    }
+}
+
+function finishQuiz() {
+    clearInterval(timer); // Hentikan timer
+    clearTimeout(adhanTimeout); // Hentikan notifikasi adhan
+
+    // Hitung skor
+    const totalQuestions = questions[currentCategory][currentSubcategory][currentLevel].length;
+    const percentage = Math.round((score / totalQuestions) * 100);
+    document.getElementById('scoreDisplay').textContent = `${percentage}%`;
+    document.getElementById('resultsMessage').innerHTML = `
+        Anda menjawab <strong>${score}</strong> dari <strong>${totalQuestions}</strong> soal dengan benar.
+    `;
+
+    // Tampilkan hasil
+    document.getElementById('resultsContainer').classList.remove('hidden');
+    document.getElementById('quizContainer').classList.add('hidden');
+    document.getElementById('floatingButtons').classList.add('hidden');
+
+    // Simpan hasil ke localStorage
+    saveResult({
+        name: document.getElementById('name').value,
+        category: currentCategory,
+        subcategory: currentSubcategory,
+        level: currentLevel,
+        score: score,
+        total: totalQuestions,
+        date: new Date().toLocaleString()
+    });
+
+    // Putar efek suara kelulusan
+    if (percentage >= 80) {
+        playAudio('applauseSound');
+    } else if (percentage >= 60) {
+        playAudio('applauseSound');
+    } else {
+        playAudio('wrongSound');
+    }
+}
+
+function startTimer(durationInSeconds) {
+    let remaining = durationInSeconds;
+    const display = document.getElementById('timeDisplay');
+
+    timer = setInterval(() => {
+        const minutes = Math.floor(remaining / 60).toString().padStart(2, '0');
+        const seconds = Math.floor(remaining % 60).toString().padStart(2, '0');
+        display.textContent = `${minutes}:${seconds}`;
+
+        if (remaining <= 0) {
+            clearInterval(timer);
+            finishQuiz();
+            alert('Waktu habis!');
+        }
+
+        remaining--;
+
+        // Play adhan setiap 2 jam
+        if (remaining % (2 * 60 * 60) === 0 && remaining !== 0) {
+            playAdhan();
+        }
+
+    }, 1000);
+}
