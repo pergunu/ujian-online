@@ -45,12 +45,3 @@ function formatSubcategory(cat, subcat) {
     };
     return map[cat]?.[subcat] || subcat;
 }
-
-function exportResultsToJSON() {
-    const results = JSON.parse(localStorage.getItem('quizResults') || '[]');
-    const blob = new Blob([JSON.stringify(results, null, 2)], { type: 'application/json' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'quiz-results-' + new Date().toISOString().split('T')[0] + '.json';
-    link.click();
-}
