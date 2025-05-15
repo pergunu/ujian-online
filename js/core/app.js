@@ -11,7 +11,9 @@ let quizMusicEnabled = true;
 let adhanTimeout;
 
 function formatName(name) {
-  return name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  return name.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
 }
 
 function generateUniqueCode() {
