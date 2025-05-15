@@ -1,43 +1,42 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Panel Admin - Ujian Pergunu</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="admin.css">
+  <meta charset="UTF-8">
+  <title>Panel Admin - Ujian Pergunu</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
 <div class="admin-wrapper">
-    <h2>Panel Admin - Kontrol Kategori</h2>
+  <h2>Panel Admin - Kontrol Kategori</h2>
 
-    <!-- Toggle Kategori -->
-    <div class="admin-section">
-        <h3>Kontrol Kategori</h3>
-        <label><input type="checkbox" id="togglePelajar" checked onchange="enableCategory('pelajar', this.checked)"> Pelajar</label>
-        <label><input type="checkbox" id="toggleUmum" checked onchange="enableCategory('umum', this.checked)"> Umum</label>
+  <!-- Toggle Kategori -->
+  <div class="admin-section">
+    <h3>Kontrol Kategori</h3>
+    <label><input type="checkbox" id="togglePelajar" checked onchange="enableCategory('pelajar', this.checked)"> Pelajar</label>
+    <label><input type="checkbox" id="toggleUmum" checked onchange="enableCategory('umum', this.checked)"> Umum</label>
 
-        <hr>
+    <hr>
 
-        <!-- Subkategori Pelajar -->
-        <div id="pelajarSubcategoryControls">
-            <h4>Subkategori - Pelajar</h4>
-            <label><input type="checkbox" class="toggle-subcategory" data-category="pelajar" data-subcategory="ipa" onchange="enableSubcategory('pelajar', 'ipa', this.checked)" checked> IPA</label>
-            <label><input type="checkbox" class="toggle-subcategory" data-category="pelajar" data-subcategory="ips" onchange="enableSubcategory('pelajar', 'ips', this.checked)" checked> IPS</label>
-            <button onclick="disableAllSubcategories('pelajar')">Nonaktifkan Semua</button>
-        </div>
-
-        <!-- Subkategori Umum -->
-        <div id="umumSubcategoryControls">
-            <h4>Subkategori - Umum</h4>
-            <label><input type="checkbox" class="toggle-subcategory" data-category="umum" data-subcategory="logika" onchange="enableSubcategory('umum', 'logika', this.checked)" checked> Logika</label>
-            <button onclick="disableAllSubcategories('umum')">Nonaktifkan Semua</button>
-        </div>
+    <!-- Subkategori Pelajar -->
+    <div id="pelajarSubcategoryControls">
+      <h4>Subkategori - Pelajar</h4>
+      <label><input type="checkbox" class="toggle-subcategory" data-category="pelajar" data-subcategory="ipa" onchange="enableSubcategory(this.dataset.category, this.dataset.subcategory, this.checked)" checked> IPA</label>
+      <label><input type="checkbox" class="toggle-subcategory" data-category="pelajar" data-subcategory="ips" onchange="enableSubcategory(this.dataset.category, this.dataset.subcategory, this.checked)" checked> IPS</label>
+      <button onclick="disableAllSubcategories('pelajar')">Nonaktifkan Semua</button>
     </div>
+
+    <!-- Subkategori Umum -->
+    <div id="umumSubcategoryControls">
+      <h4>Subkategori - Umum</h4>
+      <label><input type="checkbox" class="toggle-subcategory" data-category="umum" data-subcategory="logika" onchange="enableSubcategory(this.dataset.category, this.dataset.subcategory, this.checked)" checked> Ujian Logika</label>
+      <button onclick="disableAllSubcategories('umum')">Nonaktifkan Semua</button>
+    </div>
+  </div>
 </div>
 
 <script src="../js/core/config.js"></script>
-<script src="../js/utils/helpers.js"></script>
 <script src="admin.js"></script>
 
 </body>
