@@ -1,22 +1,36 @@
-// ui-manager.js
+// config.js
 
-function updateCategoryUI() {
-  document.querySelectorAll('.category-tab').forEach(tab => {
-    const category = tab.dataset.category;
-    tab.style.display = enabledCategories[category] ? 'inline-block' : 'none';
-  });
+let enabledCategories = {
+    pelajar: true,
+    umum: true,
+    subcategories: {
+        pelajar: {
+            ipa: true,
+            ips: true,
+            matematika: true,
+            agama: true,
+            ppkn: true,
+            sejarah: true,
+            bahasa_indonesia: true,
+            bahasa_inggris: true
+        },
+        umum: {
+            logika: true
+        }
+    }
+};
 
-  // Subkategori Pelajar
-  document.querySelectorAll('#pelajarSubcategories .subcategory-label').forEach(label => {
-    const radio = label.querySelector('input[type="radio"]');
-    const subcategory = radio.value;
-    label.style.display = enabledCategories.subcategories.pelajar[subcategory] ? 'block' : 'none';
-  });
+function saveEnabledCategories() {
+    localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
+}
 
-  // Subkategori Umum
-  document.querySelectorAll('#umumSubcategories .subcategory-label').forEach(label => {
-    const radio = label.querySelector('input[type="radio"]');
-    const subcategory = radio.value;
-    label.style.display = enabledCategories.subcategories.umum[subcategory] ? 'block' : 'none';
-  });
+function loadEnabledCategories() {
+    const saved = localStorage.getItem('enabledCategories');
+    if (saved) {
+        try {
+            enabledCategories = JSON.parse(saved);
+        } catch (e) {
+            console.error("Gagal memuat data kategori");
+        }
+    }
 }
