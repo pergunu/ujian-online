@@ -1990,7 +1990,7 @@
             </div>
             
             <button class="continue-btn" id="continueBtn" disabled>
-                Lanjutkan ke Quiz <i class="fas fa-arrow-right"></i>
+                Lanjutkan ke Ujian <i class="fas fa-arrow-right"></i>
             </button>
         </div>
         
@@ -2003,7 +2003,7 @@
         <form id="participantForm" class="participant-form">
             <div class="form-header">
                 <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo" class="form-logo">
-                <h2 class="form-title">Quiz Pergunu</h2>
+                <h2 class="form-title">Ujian Pergunu</h2>
                 <p class="form-subtitle">Silakan isi data diri Anda untuk memulai ujian pengetahuan</p>
             </div>
             
@@ -2684,6 +2684,22 @@
             }
         };
 
+        function updateCategoryState(category, subcategory, enabled) {
+            if (subcategory) {
+                // Update subcategory state
+                enabledCategories.subcategories[category][subcategory] = enabled;
+            } else {
+                // Update main category state
+                enabledCategories[category] = enabled;
+                
+                // If disabling main category, disable all its subcategories
+                if (!enabled) {
+                    for (const subcat in enabledCategories.subcategories[category]) {
+                        enabledCategories.subcategories[category][subcat] = false;
+                    }
+                }
+            }
+            
         // Inisialisasi
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
@@ -2702,92 +2718,100 @@
         });
 
         // Fungsi update tampilan kategori berdasarkan pengaturan
-        function updateCategoryUI() {
-            // Update kategori utama
+       function updateCategoryUI() {
+            // Update main category tabs
             document.querySelectorAll('.category-tab').forEach(tab => {
                 const category = tab.dataset.category;
                 const isEnabled = enabledCategories[category];
+                
                 tab.classList.toggle('disabled', !isEnabled);
                 
-                // Jika kategori dinonaktifkan, reset pilihan jika aktif
+                // If category is disabled and active, switch to another enabled category
                 if (!isEnabled && tab.classList.contains('active')) {
                     tab.classList.remove('active');
-                    const otherTab = document.querySelector(`.category-tab:not([data-category="${category}"])`);
-                    if (otherTab) {
-                        otherTab.classList.add('active');
-                        currentCategory = otherTab.dataset.category;
-                        
-                        // Update tampilan subkategori
-                        if (currentCategory === 'pelajar') {
-                            document.getElementById('pelajarSubcategories').style.display = 'block';
-                            document.getElementById('umumSubcategories').style.display = 'none';
-                            document.getElementById('profesiField').style.display = 'none';
-                            document.querySelector('input[name="subcategory"][value="ipa"]').checked = true;
-                            currentSubcategory = 'ipa';
-                        } else {
-                            document.getElementById('pelajarSubcategories').style.display = 'none';
-                            document.getElementById('umumSubcategories').style.display = 'block';
-                            document.getElementById('profesiField').style.display = 'block';
-                            document.querySelector('input[name="subcategory"][value="logika"]').checked = true;
-                            currentSubcategory = 'logika';
+                    
+                    // Find first enabled category
+                    const enabledCategory = Object.keys(enabledCategories)
+                        .find(cat => cat !== category && enabledCategories[cat]);
+                    
+                    if (enabledCategory) {
+                        const otherTab = document.querySelector(`.category-tab[data-category="${enabledCategory}"]`);
+                        if (otherTab) {
+                            otherTab.classList.add('active');
+                            currentCategory = enabledCategory;
+                            updateSubcategoryUI();
                         }
                     }
                 }
             });
+            
+            // Update subcategories
+            updateSubcategoryUI();
+        }
         
-            // Update subkategori pelajar
-            document.querySelectorAll('#pelajarSubcategories .subcategory-label').forEach(label => {
-                const radio = label.previousElementSibling;
+        function updateSubcategoryUI() {
+            // Update pelajar subcategories
+            document.querySelectorAll('#pelajarSubcategories .subcategory-option').forEach(option => {
+                const radio = option.querySelector('.subcategory-radio');
+                const label = option.querySelector('.subcategory-label');
                 const subcategory = radio.value;
                 const isEnabled = enabledCategories.subcategories.pelajar[subcategory];
                 
                 label.classList.toggle('disabled', !isEnabled);
                 radio.disabled = !isEnabled;
                 
-                // Jika subkategori dinonaktifkan dan terpilih, pilih subkategori lain yang aktif
+                // If subcategory is disabled and selected, select first enabled subcategory
                 if (!isEnabled && radio.checked) {
-                    const enabledSubcategory = Object.keys(enabledCategories.subcategories.pelajar).find(
-                        sc => enabledCategories.subcategories.pelajar[sc]
-                    );
+                    const enabledSubcategory = Object.keys(enabledCategories.subcategories.pelajar)
+                        .find(sc => enabledCategories.subcategories.pelajar[sc]);
                     
                     if (enabledSubcategory) {
                         document.querySelector(`input[name="subcategory"][value="${enabledSubcategory}"]`).checked = true;
                         currentSubcategory = enabledSubcategory;
                     } else {
-                        // Jika tidak ada subkategori yang aktif, nonaktifkan kategori utama
+                        // No enabled subcategories - disable main category
                         enabledCategories.pelajar = false;
                         updateCategoryUI();
-                        alert('Tidak ada subkategori Pelajar yang aktif! Kategori Pelajar dinonaktifkan.');
                     }
                 }
             });
-        
-            // Update subkategori umum
-            document.querySelectorAll('#umumSubcategories .subcategory-label').forEach(label => {
-                const radio = label.previousElementSibling;
+            
+            // Update umum subcategories
+            document.querySelectorAll('#umumSubcategories .subcategory-option').forEach(option => {
+                const radio = option.querySelector('.subcategory-radio');
+                const label = option.querySelector('.subcategory-label');
                 const subcategory = radio.value;
                 const isEnabled = enabledCategories.subcategories.umum[subcategory];
                 
                 label.classList.toggle('disabled', !isEnabled);
                 radio.disabled = !isEnabled;
                 
-                // Jika subkategori dinonaktifkan dan terpilih, pilih subkategori lain yang aktif
+                // If subcategory is disabled and selected, select first enabled subcategory
                 if (!isEnabled && radio.checked) {
-                    const enabledSubcategory = Object.keys(enabledCategories.subcategories.umum).find(
-                        sc => enabledCategories.subcategories.umum[sc]
-                    );
+                    const enabledSubcategory = Object.keys(enabledCategories.subcategories.umum)
+                        .find(sc => enabledCategories.subcategories.umum[sc]);
                     
                     if (enabledSubcategory) {
                         document.querySelector(`input[name="subcategory"][value="${enabledSubcategory}"]`).checked = true;
                         currentSubcategory = enabledSubcategory;
                     } else {
-                        // Jika tidak ada subkategori yang aktif, nonaktifkan kategori utama
+                        // No enabled subcategories - disable main category
                         enabledCategories.umum = false;
                         updateCategoryUI();
-                        alert('Tidak ada subkategori Umum yang aktif! Kategori Umum dinonaktifkan.');
                     }
                 }
             });
+            
+            // Show/hide subcategory containers based on current category
+            if (currentCategory === 'pelajar') {
+                document.getElementById('pelajarSubcategories').style.display = 'block';
+                document.getElementById('umumSubcategories').style.display = 'none';
+                document.getElementById('profesiField').style.display = 'none';
+            } else {
+                document.getElementById('pelajarSubcategories').style.display = 'none';
+                document.getElementById('umumSubcategories').style.display = 'block';
+                document.getElementById('profesiField').style.display = 'block';
+            }
         }
         // Fungsi initAudio dengan volume maksimal
         function initAudio() {
@@ -3058,25 +3082,58 @@
             });
 
             // Category toggle buttons
-            document.getElementById('enablePelajarBtn').addEventListener('click', function() {
-                updateCategoryState('pelajar', null, true);
-                alert('Kategori Pelajar telah diaktifkan');
+        document.getElementById('enablePelajarBtn').addEventListener('click', function() {
+            updateCategoryState('pelajar', null, true);
+            alert('Kategori Pelajar telah diaktifkan');
+        });
+        
+        document.getElementById('disablePelajarBtn').addEventListener('click', function() {
+            updateCategoryState('pelajar', null, false);
+            alert('Kategori Pelajar telah dinonaktifkan');
+        });
+        
+        document.getElementById('enableUmumBtn').addEventListener('click', function() {
+            updateCategoryState('umum', null, true);
+            alert('Kategori Umum telah diaktifkan');
+        });
+        
+        document.getElementById('disableUmumBtn').addEventListener('click', function() {
+            updateCategoryState('umum', null, false);
+            alert('Kategori Umum telah dinonaktifkan');
+        });
+        
+        // Subcategory toggle buttons
+        document.querySelectorAll('.enable-subcategory').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.dataset.category;
+                const subcategory = this.dataset.subcategory;
+                const isEnabled = enabledCategories.subcategories[category][subcategory];
+                
+                updateCategoryState(category, subcategory, !isEnabled);
+                alert(`Subkategori ${subcategory} telah ${isEnabled ? 'dinonaktifkan' : 'diaktifkan'}`);
             });
-            
-            document.getElementById('disablePelajarBtn').addEventListener('click', function() {
-                updateCategoryState('pelajar', null, false);
-                alert('Kategori Pelajar telah dinonaktifkan');
-            });
-            
-            document.getElementById('enableUmumBtn').addEventListener('click', function() {
-                updateCategoryState('umum', null, true);
-                alert('Kategori Umum telah diaktifkan');
-            });
-            
-            document.getElementById('disableUmumBtn').addEventListener('click', function() {
-                updateCategoryState('umum', null, false);
-                alert('Kategori Umum telah dinonaktifkan');
-            });
+        });
+        
+        // Disable all subcategories buttons
+        document.getElementById('disableAllPelajarBtn').addEventListener('click', function() {
+            if (confirm('Apakah Anda yakin ingin menonaktifkan semua subkategori Pelajar?')) {
+                Object.keys(enabledCategories.subcategories.pelajar).forEach(subcategory => {
+                    enabledCategories.subcategories.pelajar[subcategory] = false;
+                });
+                updateCategoryUI();
+                alert('Semua subkategori Pelajar telah dinonaktifkan');
+            }
+        });
+        
+        document.getElementById('disableAllUmumBtn').addEventListener('click', function() {
+            if (confirm('Apakah Anda yakin ingin menonaktifkan semua subkategori Umum?')) {
+                Object.keys(enabledCategories.subcategories.umum).forEach(subcategory => {
+                    enabledCategories.subcategories.umum[subcategory] = false;
+                });
+                updateCategoryUI();
+                alert('Semua subkategori Umum telah dinonaktifkan');
+            }
+        });
 
             // Subcategory toggle buttons
             document.querySelectorAll('.enable-subcategory').forEach(btn => {
