@@ -1,29 +1,23 @@
 // admin.js
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadEnabledCategories();
-    updateCategoryUI();
+document.getElementById('togglePelajar').addEventListener('change', function () {
+  enabledCategories.pelajar = this.checked;
+  updateCategoryUI();
+  saveEnabledCategories();
 });
 
-function enableCategory(category, isChecked) {
-    enabledCategories[category] = isChecked;
+document.getElementById('toggleUmum').addEventListener('change', function () {
+  enabledCategories.umum = this.checked;
+  updateCategoryUI();
+  saveEnabledCategories();
+});
+
+document.querySelectorAll('.toggle-subcategory').forEach(checkbox => {
+  checkbox.addEventListener('change', function () {
+    const category = this.dataset.category;
+    const subcategory = this.dataset.subcategory;
+    enabledCategories.subcategories[category][subcategory] = this.checked;
     updateCategoryUI();
     saveEnabledCategories();
-}
-
-function enableSubcategory(category, subcategory, isChecked) {
-    enabledCategories.subcategories[category][subcategory] = isChecked;
-    updateCategoryUI();
-    saveEnabledCategories();
-}
-
-function disableAllSubcategories(category) {
-    if (confirm(`Nonaktifkan semua subkategori ${category}?`)) {
-        Object.keys(enabledCategories.subcategories[category]).forEach(sub => {
-            enabledCategories.subcategories[category][sub] = false;
-        });
-        updateCategoryUI();
-        saveEnabledCategories();
-        alert(`Semua subkategori ${category} telah dinonaktifkan.`);
-    }
-}
+  });
+});
