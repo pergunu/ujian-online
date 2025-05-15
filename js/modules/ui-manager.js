@@ -18,9 +18,10 @@ function updateCategoryUI() {
 }
 
 document.querySelectorAll('.category-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
+  tab.addEventListener('click', function () {
     document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    currentCategory = tab.dataset.category;
+    this.classList.add('active');
+    currentCategory = this.dataset.category;
     showSubcategories(currentCategory);
+  });
 });
