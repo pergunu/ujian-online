@@ -1,3 +1,5 @@
+// user-manager.js
+
 function saveResult(result) {
     let results = JSON.parse(localStorage.getItem('quizResults') || '[]');
     results.push(result);
