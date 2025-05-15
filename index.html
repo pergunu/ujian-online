@@ -219,6 +219,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+    <!-- Load konfigurasi dan validasi kategori -->
+<script src="js/core/config.js"></script>
+<script src="js/modules/ui-manager.js"></script>
+<script src="js/modules/quiz-engine.js"></script>
+<script src="js/admin-panel.js"></script>
+
+<!-- Inisialisasi saat halaman dimuat -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    loadEnabledCategories();
+    updateCategoryUI();
+});
 </script>
 
 </body>
