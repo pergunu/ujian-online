@@ -1,9 +1,9 @@
 const ADMIN_PASSWORD = 'PERGUNU2025';
 
 function toggleAdminPanel() {
-    const adminPanel = document.getElementById('adminPanel');
+    const panel = document.getElementById('adminPanel');
     const overlay = document.getElementById('adminOverlay');
-    adminPanel.classList.toggle('hidden');
+    panel.classList.toggle('hidden');
     overlay.classList.toggle('hidden');
 }
 
