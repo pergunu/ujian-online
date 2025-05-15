@@ -47,3 +47,13 @@ function formatSubcategory(cat, subcat) {
     };
     return map[cat]?.[subcat] || subcat;
 }
+
+document.querySelectorAll('.toggle-subcategory').forEach(checkbox => {
+  checkbox.addEventListener('change', function () {
+    const category = this.dataset.category;
+    const subcategory = this.dataset.subcategory;
+    enabledCategories.subcategories[category][subcategory] = this.checked;
+    updateCategoryUI();
+    saveEnabledCategories();
+  });
+});
