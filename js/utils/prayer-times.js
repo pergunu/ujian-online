@@ -3,11 +3,11 @@ function checkPrayerTime() {
     const hours = now.getHours();
     const minutes = now.getMinutes();
 
-    // Contoh waktu adhan dhuha
+    // Contoh waktu dhuha
     if (hours === 6 && minutes === 0) {
         playAdhan();
     }
-    // Tambahkan waktu sholat lainnya sesuai jadwal
+    // Tambahkan kondisi lain sesuai jadwal sholat
 }
 
 function playAdhan() {
