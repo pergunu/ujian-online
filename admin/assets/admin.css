@@ -1,58 +1,29 @@
-.admin-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+.admin-wrapper {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.admin-header {
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--light-gray);
+.admin-section h3 {
+  margin-top: 0;
 }
 
-.admin-nav ul {
-    display: flex;
-    gap: 1rem;
-    list-style: none;
-    margin-top: 1rem;
+.toggle-subcategory {
+  margin-right: 0.5rem;
 }
 
-.admin-nav a {
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    color: var(--dark);
-    transition: var(--transition);
+button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
 }
 
-.admin-nav a.active {
-    background: var(--primary);
-    color: white;
-}
-
-.admin-section {
-    display: none;
-}
-
-.admin-section.active {
-    display: block;
-}
-
-/* Question table styles */
-.questions-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-}
-
-.questions-table th, 
-.questions-table td {
-    padding: 0.75rem;
-    text-align: left;
-    border-bottom: 1px solid var(--light-gray);
-}
-
-.questions-table th {
-    background: var(--lighter);
-    font-weight: 500;
+button:hover {
+  background-color: #e63f3f;
 }
