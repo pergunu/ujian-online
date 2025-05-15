@@ -1,39 +1,25 @@
-// Main application entry point
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize modules
-    initUI();
-    initQuizEngine();
-    initUserManager();
-    
-    // Load initial data
-    loadInitialData();
-    
-    // Set up event listeners
-    setupEventListeners();
-});
+let currentCategory = '';
+let currentSubcategory = '';
+let currentLevel = '';
+let currentQuestionIndex = 0;
+let score = 0;
+let quizStartTime = null;
+let timer = null;
+let musicEnabled = true;
+let soundEffectsEnabled = true;
+let quizMusicEnabled = true;
+let adhanTimeout;
 
-function initUI() {
-    // Initialize UI Manager
-    UIManager.init();
-    
-    // Load prayer times if enabled
-    if (Config.showPrayerTimes) {
-        PrayerTimes.init();
-    }
+function formatName(name) {
+  return name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
 
-function initQuizEngine() {
-    QuizEngine.init();
-}
-
-function initUserManager() {
-    UserManager.init();
-}
-
-function loadInitialData() {
-    // Load initial data if needed
-}
-
-function setupEventListeners() {
-    // Set up global event listeners
+function generateUniqueCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 8; i++) {
+    if (i > 0 && i % 4 === 0) code += '-';
+    code += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return code;
 }
