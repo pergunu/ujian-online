@@ -1,3 +1,5 @@
+// auth.js
+
 const ADMIN_PASSWORD = 'PERGUNU2025';
 
 function toggleAdminPanel() {
