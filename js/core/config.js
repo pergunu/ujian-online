@@ -30,7 +30,7 @@ function loadEnabledCategories() {
         try {
             enabledCategories = JSON.parse(saved);
         } catch (e) {
-            console.error("Gagal memuat data kategori");
+            console.error("Gagal memuat status kategori");
         }
     }
 }
