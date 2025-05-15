@@ -1,3 +1,23 @@
+let enabledCategories = {
+    pelajar: true,
+    umum: true,
+    subcategories: {
+        pelajar: {
+            ipa: true,
+            ips: true,
+            matematika: true,
+            agama: true,
+            ppkn: true,
+            sejarah: true,
+            bahasa_indonesia: true,
+            bahasa_inggris: true
+        },
+        umum: {
+            logika: true
+        }
+    }
+};
+
 function saveEnabledCategories() {
     localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
 }
