@@ -1990,7 +1990,7 @@
             </div>
             
             <button class="continue-btn" id="continueBtn" disabled>
-                Lanjutkan ke Ujian <i class="fas fa-arrow-right"></i>
+                Lanjutkan ke Quiz <i class="fas fa-arrow-right"></i>
             </button>
         </div>
         
@@ -2003,7 +2003,7 @@
         <form id="participantForm" class="participant-form">
             <div class="form-header">
                 <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png" alt="Pergunu Logo" class="form-logo">
-                <h2 class="form-title">Ujian Pergunu</h2>
+                <h2 class="form-title">Quiz Pergunu</h2>
                 <p class="form-subtitle">Silakan isi data diri Anda untuk memulai ujian pengetahuan</p>
             </div>
             
@@ -2224,33 +2224,6 @@
     
     <!-- Admin Overlay -->
     <div class="admin-overlay" id="adminOverlay"></div>
-    <!-- Exam Code Panel Overlay -->
-    <div class="admin-overlay" id="examCodeOverlay"></div>
-    
-    <!-- Exam Code Panel -->
-    <div class="admin-panel" id="examCodePanel">
-      <div class="admin-header">
-        <h2 class="admin-title"><i class="fas fa-key"></i> Login Panel Kode Ujian</h2>
-        <button class="admin-close" id="examCodePanelClose">&times;</button>
-      </div>
-      <div class="password-form">
-        <form id="examCodeLoginForm">
-          <div class="form-group">
-            <label for="examCodePassword" class="form-label">Masukkan Password Panel Kode Ujian</label>
-            <input type="password" id="examCodePassword" class="form-control" required placeholder="Password Default: Pergunu.010499">
-          </div>
-          <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Masuk</button>
-        </form>
-      </div>
-
-  <!-- Panel Kontrol Setelah Login -->
-  <div id="examCodeControlPanel" style="display:none;">
-    <hr>
-    <h4><i class="fas fa-cogs"></i> Kontrol Panel Kode Ujian</h4>
-    <button class="btn btn-success" id="createNewExamCode"><i class="fas fa-plus"></i> Buat Kode Ujian Baru</button>
-    <button class="btn btn-info mt-2" id="changeExamControlPassword"><i class="fas fa-lock"></i> Ganti Password Panel Kode Ujian</button>
-  </div>
-</div>
     
     <!-- Admin Login -->
     <div class="admin-panel" id="adminLogin">
@@ -2282,33 +2255,6 @@
                     <option value="">Semua Kategori</option>
                     <option value="pelajar">Pelajar</option>
                     <option value="umum">Umum</option>
-                    <!-- Section Kelola Kode Ujian -->
-            <div class="ai-prompt-section">
-              <div class="ai-prompt-title"><i class="fas fa-key"></i> Kelola Kode Ujian</div>
-              <button class="btn btn-primary" id="generateExamCodeBtn"><i class="fas fa-qrcode"></i> Buat Kode Ujian Baru</button>
-              <button class="btn btn-warning mt-2" id="changeExamPasswordBtn"><i class="fas fa-lock"></i> Ganti Password Panel Kode Ujian</button>
-               <!-- Modal Change Exam Control Password -->
-            <div class="admin-panel" id="examPasswordChangePanel">
-              <div class="admin-header">
-                <h2 class="admin-title"><i class="fas fa-unlock-alt"></i> Ganti Password Panel Kode Ujian</h2>
-                <button class="admin-close" id="examPasswordChangeClose">&times;</button>
-              </div>
-              <form id="examPasswordChangeForm">
-                <div class="form-group">
-                  <label for="currentExamPassword" class="form-label">Password Lama</label>
-                  <input type="password" id="currentExamPassword" class="form-control" required placeholder="Masukkan password lama">
-                </div>
-                <div class="form-group">
-                  <label for="newExamPassword" class="form-label">Password Baru</label>
-                  <input type="password" id="newExamPassword" class="form-control" required placeholder="Masukkan password baru">
-                </div>
-                <div class="form-group">
-                  <label for="confirmExamPassword" class="form-label">Konfirmasi Password</label>
-                  <input type="password" id="confirmExamPassword" class="form-control" required placeholder="Ulangi password baru">
-                </div>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-sync-alt"></i> Simpan Perubahan</button>
-              </form>
-            </div>
                 </select>
             </div>
             
@@ -3927,7 +3873,7 @@
                 // # UNCOMMENT DAN GUNAKAN INI UNTUK API ASLI        #
                 // ####################################################
                 /*
-                const API_KEY = 'sk-8837b24327bd4db99e36688951ceaea8'; // <-- INI TEMPAT API KEY
+                const API_KEY = 'ISI APIKEY DISINI'; // <-- INI TEMPAT API KEY
                 const generatedQuestion = await callAIGenerateQuestion(prompt, category, level, API_KEY);
                 */
                 
@@ -3993,71 +3939,6 @@
         function printResults() {
             window.print();
         }
-
-        // Variabel global untuk password panel kode ujian
-        let examCodePassword = "Pergunu.010499";
-        
-        // Buka panel kode ujian
-        document.getElementById('generateExamCodeBtn').addEventListener('click', function() {
-          document.getElementById('examCodeOverlay').style.display = 'block';
-          document.getElementById('examCodePanel').style.display = 'block';
-        });
-        
-        // Tutup panel kode ujian
-        document.getElementById('examCodePanelClose').addEventListener('click', function() {
-          document.getElementById('examCodeOverlay').style.display = 'none';
-          document.getElementById('examCodePanel').style.display = 'none';
-        });
-        document.getElementById('examCodeOverlay').addEventListener('click', function() {
-          this.style.display = 'none';
-          document.getElementById('examCodePanel').style.display = 'none';
-        });
-        
-        // Login ke panel kode ujian
-        document.getElementById('examCodeLoginForm').addEventListener('submit', function(e) {
-          e.preventDefault();
-          const inputPass = document.getElementById('examCodePassword').value;
-          if (inputPass === examCodePassword) {
-            document.getElementById('examCodeControlPanel').style.display = 'block';
-          } else {
-            alert("Password salah!");
-          }
-        });
-        
-        // Generate kode ujian baru (contoh)
-        document.getElementById('createNewExamCode').addEventListener('click', function() {
-          const newCode = generateUniqueCode();
-          alert("Kode ujian baru dibuat: " + newCode);
-        });
-        
-        // Buka form ganti password panel kode ujian
-        document.getElementById('changeExamPasswordBtn').addEventListener('click', function() {
-          document.getElementById('examPasswordChangePanel').style.display = 'block';
-        });
-        document.getElementById('examPasswordChangeClose').addEventListener('click', function() {
-          document.getElementById('examPasswordChangePanel').style.display = 'none';
-        });
-        
-        // Submit ganti password panel kode ujian
-        document.getElementById('examPasswordChangeForm').addEventListener('submit', function(e) {
-          e.preventDefault();
-          const currentPass = document.getElementById('currentExamPassword').value;
-          const newPass = document.getElementById('newExamPassword').value;
-          const confirmPass = document.getElementById('confirmExamPassword').value;
-        
-          if (currentPass !== examCodePassword) {
-            alert("Password lama salah!");
-            return;
-          }
-          if (newPass !== confirmPass) {
-            alert("Password baru tidak cocok!");
-            return;
-          }
-        
-          examCodePassword = newPass;
-          alert("Password berhasil diubah!");
-          document.getElementById('examPasswordChangePanel').style.display = 'none';
-        });
     </script>
 </body>
 </html>
