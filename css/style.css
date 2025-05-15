@@ -1,20 +1,35 @@
-@media (max-width: 768px) {
-  .monitor-frame {
-    width: 95%;
-    margin: 1rem auto;
-  }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
+}
 
-  .screen {
-    padding: 1rem;
-    min-height: 400px;
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+}
 
-  .category-tabs span {
-    display: block;
-    margin: 0.5rem 0;
-  }
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
 
-  .subcategory-label {
-    display: block;
-  }
+.monitor-frame {
+  width: 80%;
+  max-width: 1000px;
+  margin: 2rem auto;
+  border: 10px double #4361ee;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.screen {
+  background: url('../assets/images/monitor-crt.png') no-repeat center center;
+  background-size: cover;
+  min-height: 500px;
+  padding: 2rem;
+  color: white;
+  position: relative;
 }
