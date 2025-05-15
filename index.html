@@ -1,147 +1,224 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ujian Pergunu Situbondo</title>
-  <link rel="icon" href="assets/images/logo.png" type="image/png">
+    <meta charset="UTF-8">
+    <title>Ujian Pergunu Situbondo</title>
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
 
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css "/>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/responsive.css">
-  <link rel="stylesheet" href="css/animations.css">
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css "/>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
 
+<!-- Opening Screen -->
+<div id="openingScreen" class="opening-screen">
+    <h1>Selamat Datang di Ujian Online PERGUNU Situbondo</h1>
+    <p>Ketuk layar untuk mulai</p>
+    <button onclick="startApp()">Mulai</button>
+</div>
+
 <!-- Form Pendaftaran -->
-<div id="participantForm" class="container mt-5">
-  <h2>Selamat Datang di Ujian Online PERGUNU Situbondo</h2>
-  <form onsubmit="event.preventDefault(); startQuiz();">
-    <div class="form-group">
-      <label>Nama Lengkap</label>
-      <input type="text" id="name" required />
+<div class="main-container hidden">
+    <form id="participantForm">
+        <h2>Masukkan Kode Ujian</h2>
+        <input type="text" id="examCode" placeholder="Kode Ujian" required>
+        <button type="button" onclick="verifyExamCode()">Lanjutkan</button>
+    </form>
+</div>
+
+<!-- Main Quiz Container -->
+<div class="quiz-main hidden">
+    <div class="monitor-frame">
+        <div class="screen">
+            <div class="quiz-content" id="quizContainer">
+                <h2>Pilih Kategori Ujian</h2>
+                <div class="category-tabs">
+                    <span class="category-tab active" data-category="pelajar">Pelajar</span>
+                    <span class="category-tab" data-category="umum">Umum</span>
+                </div>
+
+                <div id="pelajarSubcategories">
+                    <h3>Mata Pelajaran</h3>
+                    <label class="subcategory-label"><input type="radio" name="subcategory" value="ipa"> IPA</label>
+                    <label class="subcategory-label"><input type="radio" name="subcategory" value="ips"> IPS</label>
+                    <label class="subcategory-label"><input type="radio" name="subcategory" value="matematika"> Matematika</label>
+                    <label class="subcategory-label"><input type="radio" name="subcategory" value="agama"> Agama</label>
+                    <label class="subcategory-label"><input type="radio" name="subcategory" value="ppkn"> PPKN</label>
+                    <label class="subcategory-label"><input type="radio" name="subcategory" value="sejarah"> Sejarah</label>
+                    <label class="subcategory-label"><input type="radio" name="subcategory" value="bahasa_indonesia"> Bahasa Indonesia</label>
+                    <label class="subcategory-label"><input type="radio" name="subcategory" value="bahasa_inggris"> Bahasa Inggris</label>
+                </div>
+
+                <div id="umumSubcategories">
+                    <h3>Jenis Ujian</h3>
+                    <label class="subcategory-label"><input type="radio" name="subcategory" value="logika"> Ujian Logika</label>
+                </div>
+
+                <div id="levelSelection">
+                    <h3>Pilih Tingkat</h3>
+                    <select id="levelSelect">
+                        <option value="sd">SD</option>
+                        <option value="smp">SMP</option>
+                        <option value="sma">SMA</option>
+                        <option value="umum">Umum</option>
+                    </select>
+                    <button onclick="loadQuestions()">Mulai Ujian</button>
+                </div>
+
+                <div id="timerContainer">
+                    Waktu Tersisa: <span id="timeDisplay">90:00</span>
+                </div>
+
+                <div id="questionContainer"></div>
+
+                <div id="navigationButtons">
+                    <button onclick="prevQuestion()">Sebelumnya</button>
+                    <button onclick="nextQuestion()">Berikutnya</button>
+                </div>
+
+                <div id="resultsContainer">
+                    <h3>Hasil Ujian</h3>
+                    <p>Skor: <strong id="scoreDisplay">0%</strong></p>
+                    <p id="resultsMessage"></p>
+                    <button onclick="printCertificate()" class="btn btn-success">Cetak Sertifikat</button>
+                </div>
+
+                <div id="certificateContainer" class="certificate hidden">
+                    <div class="certificate-content">
+                        <h1>SERTIFIKAT UJIAN</h1>
+                        <p>Diberikan kepada:</p>
+                        <h2 id="participantName">Nama Peserta</h2>
+                        <p>Kategori: <span id="categoryDisplay">Pelajar</span></p>
+                        <p>Subkategori: <span id="subcategoryDisplay">IPA</span></p>
+                        <p>Level: <span id="levelDisplay">SD</span></p>
+                        <p>Tanggal: <span id="certificateDate">Tanggal</span></p>
+                        <p class="watermark" id="watermarkCode">ABCD-1234/PERGUNU-STB</p>
+                    </div>
+                </div>
+
+                <div id="floatingButtons">
+                    <button onclick="finishQuiz()">Selesai</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-      <label>Nomor HP</label>
-      <input type="tel" id="phone" required />
-    </div>
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="email" />
-    </div>
-    <div class="form-group">
-      <label>Kode Ujian</label>
-      <input type="text" id="examCode" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Mulai Ujian</button>
-  </form>
 </div>
 
-<!-- Kategori Tab -->
-<div id="categoryTabs" class="tab-container hidden">
-  <span class="category-tab active" data-category="pelajar">Pelajar</span>
-  <span class="category-tab" data-category="umum">Umum</span>
-</div>
-
-<!-- Subkategori Pelajar -->
-<div id="pelajarSubcategories" class="subcategory-container hidden">
-  <h4>Pilih Mata Pelajaran:</h4>
-  <label class="subcategory-label"><input type="radio" name="subcategory" value="ipa"> IPA</label>
-  <label class="subcategory-label"><input type="radio" name="subcategory" value="ips"> IPS</label>
-  <label class="subcategory-label"><input type="radio" name="subcategory" value="matematika"> Matematika</label>
-  <label class="subcategory-label"><input type="radio" name="subcategory" value="agama"> Agama</label>
-  <label class="subcategory-label"><input type="radio" name="subcategory" value="ppkn"> PPKN</label>
-  <label class="subcategory-label"><input type="radio" name="subcategory" value="sejarah"> Sejarah</label>
-  <label class="subcategory-label"><input type="radio" name="subcategory" value="bahasa_indonesia"> Bahasa Indonesia</label>
-  <label class="subcategory-label"><input type="radio" name="subcategory" value="bahasa_inggris"> Bahasa Inggris</label>
-</div>
-
-<!-- Subkategori Umum -->
-<div id="umumSubcategories" class="subcategory-container hidden">
-  <h4>Jenis Ujian:</h4>
-  <label class="subcategory-label"><input type="radio" name="subcategory" value="logika"> Ujian Logika</label>
-</div>
-
-<!-- Level Ujian -->
-<div id="levelSelection" class="hidden">
-  <h4>Pilih Tingkat:</h4>
-  <select id="levelSelect">
-    <option value="sd">SD</option>
-    <option value="smp">SMP</option>
-    <option value="sma">SMA</option>
-  </select>
-  <button onclick="loadQuestions()">Mulai Ujian</button>
-</div>
-
-<!-- Timer -->
-<div id="timerContainer" class="hidden text-center">
-  <h5>Waktu Tersisa: <span id="timeDisplay">90:00</span></h5>
-</div>
-
-<!-- Soal Ujian -->
-<div id="quizContainer" class="hidden">
-  <div id="questionContainer"></div>
-  <div id="navigationButtons" class="mt-3">
-    <button onclick="prevQuestion()" class="btn btn-secondary">Sebelumnya</button>
-    <button onclick="nextQuestion()" class="btn btn-primary">Berikutnya</button>
-  </div>
-</div>
-
-<!-- Hasil Ujian -->
-<div id="resultsContainer" class="hidden mt-5">
-  <h3>Hasil Ujian</h3>
-  <p>Skor: <strong id="scoreDisplay">0%</strong></p>
-  <p id="resultsMessage"></p>
-  <button onclick="printCertificate()" class="btn btn-success">Cetak Sertifikat</button>
-</div>
-
-<!-- Sertifikat -->
-<div id="certificateContainer" class="certificate hidden">
-  <div class="certificate-content">
-    <h1>SERTIFIKAT UJIAN</h1>
-    <p>Diberikan kepada:</p>
-    <h2 id="participantName">Nama Peserta</h2>
-    <p>Kategori: <span id="categoryDisplay">Pelajar</span></p>
-    <p>Mata Pelajaran: <span id="subcategoryDisplay">IPA</span></p>
-    <p>Tanggal: <span id="certificateDate">Tanggal</span></p>
-    <p class="watermark" id="watermarkCode">ABCD-1234/PERGUNU-STB</p>
-  </div>
-</div>
-
-<!-- Tombol Floating -->
-<div id="floatingButtons" class="floating-buttons hidden">
-  <button onclick="finishQuiz()">Selesai</button>
-</div>
-
-<!-- Audio -->
+<!-- Audio Elements -->
 <audio id="welcomeSound" src="assets/audio/opening.mp3"></audio>
 <audio id="quizMusic" src="assets/audio/quiz-music.mp3"></audio>
 <audio id="correctSound" src="assets/audio/correct.mp3"></audio>
 <audio id="wrongSound" src="assets/audio/wrong.mp3"></audio>
 <audio id="applauseSound" src="assets/audio/applause.mp3"></audio>
 
-<!-- Script -->
-<script src="js/core/config.js"></script>
-<script src="js/core/app.js"></script>
-<script src="js/modules/quiz-engine.js"></script>
-<script src="js/modules/ui-manager.js"></script>
-<script src="js/modules/score-manager.js"></script>
-<script src="js/admin-panel.js"></script>
+<!-- Script Utama -->
+<script>
+let musicEnabled = true;
+let soundEffectsEnabled = true;
+let quizMusicEnabled = true;
+let adhanTimeout;
+
+// Pengaturan kategori aktif
+let enabledCategories = {
+    pelajar: true,
+    umum: true,
+    subcategories: {
+        pelajar: {
+            ipa: true,
+            ips: true,
+            matematika: true,
+            agama: true,
+            ppkn: true,
+            sejarah: true,
+            bahasa_indonesia: true,
+            bahasa_inggris: true
+        },
+        umum: {
+            logika: true
+        }
+    }
+};
+
+function saveEnabledCategories() {
+    localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
+}
+
+function loadEnabledCategories() {
+    const saved = localStorage.getItem('enabledCategories');
+    if (saved) {
+        try {
+            enabledCategories = JSON.parse(saved);
+        } catch (e) {
+            console.error("Gagal memuat data kategori");
+        }
+    }
+}
+
+function updateCategoryUI() {
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        const category = tab.dataset.category;
+        tab.style.display = enabledCategories[category] ? 'inline-block' : 'none';
+    });
+
+    document.querySelectorAll('#pelajarSubcategories .subcategory-label').forEach(label => {
+        const radio = label.querySelector('input[type="radio"]');
+        const subcategory = radio.value;
+        label.style.display = enabledCategories.subcategories.pelajar[subcategory] ? 'block' : 'none';
+    });
+
+    document.querySelectorAll('#umumSubcategories .subcategory-label').forEach(label => {
+        const radio = label.querySelector('input[type="radio"]');
+        const subcategory = radio.value;
+        label.style.display = enabledCategories.subcategories.umum[subcategory] ? 'block' : 'none';
+    });
+}
+
+function startQuiz() {
+    const activeTab = document.querySelector('.category-tab.active');
+    const selectedRadio = document.querySelector('input[name="subcategory"]:checked');
+
+    if (!activeTab || !selectedRadio) {
+        alert("Silakan pilih kategori dan subkategori ujian.");
+        return;
+    }
+
+    const currentCategory = activeTab.dataset.category;
+    const currentSubcategory = selectedRadio.value;
+
+    if (!enabledCategories[currentCategory]) {
+        alert("Kategori ini sedang tidak tersedia!");
+        return;
+    }
+
+    if (!enabledCategories.subcategories[currentCategory]?.[currentSubcategory]) {
+        alert("Subkategori ini sedang tidak tersedia!");
+        return;
+    }
+
+    // Lanjutkan ke ujian...
+}
+</script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
     loadEnabledCategories();
     updateCategoryUI();
 
-    // Inisialisasi UI lainnya
-    createStars();
-    initAudio();
-    initEventListeners();
-  });
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.addEventListener('click', function () {
+            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            currentCategory = this.dataset.category;
+            showSubcategories(currentCategory);
+        });
+    });
+});
 </script>
 
 </body>
