@@ -1,92 +1,177 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Ujian Pergunu</title>
-    <link rel="icon" href="assets/images/logo.png" type="image/png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ujian Pergunu Situbondo</title>
+  <link rel="icon" href="assets/images/logo.png" type="image/png"/>
 
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css " />
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css "/>
+  <style>
+    /* Gaya dasar disederhanakan untuk fokus pada logika */
+    .category-tab {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 10px;
+      background: #4361ee;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/animations.css">
+    .subcategory-label {
+      display: none;
+      margin: 5px;
+      padding: 8px;
+      background: #eee;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
 
-<!-- Form Peserta -->
-<div class="main-container hidden" id="participantForm">
-    <h2>Masukkan Kode Ujian</h2>
-    <input type="text" id="examCode" placeholder="Masukkan kode ujian">
-    <button onclick="verifyExamCode()">Lanjutkan ke Ujian</button>
-</div>
+<!-- Form Pendaftaran -->
+<form id="participantForm">
+  <div class="form-group">
+    <label>Nama Lengkap</label>
+    <input type="text" id="name" required />
+  </div>
+  <div class="form-group">
+    <label>No HP</label>
+    <input type="tel" id="phone" required />
+  </div>
 
-<!-- Layar Monitor CRT -->
-<div class="monitor-frame hidden" id="quizMonitor">
-    <div class="screen">
-        <div class="quiz-content" id="quizContainer">
-            <h2>Pilih Kategori</h2>
-            <div class="category-tabs">
-                <span class="category-tab active" data-category="pelajar">Pelajar</span>
-                <span class="category-tab" data-category="umum">Umum</span>
-            </div>
+  <!-- Tab Kategori -->
+  <div>
+    <span class="category-tab" data-category="pelajar">Pelajar</span>
+    <span class="category-tab" data-category="umum">Umum</span>
+  </div>
 
-            <div id="pelajarSubcategories">
-                <h3>Mata Pelajaran</h3>
-                <label class="subcategory-label"><input type="radio" name="subcategory" value="ipa"> IPA</label>
-                <label class="subcategory-label"><input type="radio" name="subcategory" value="ips"> IPS</label>
-                <label class="subcategory-label"><input type="radio" name="subcategory" value="matematika"> Matematika</label>
-                <label class="subcategory-label"><input type="radio" name="subcategory" value="agama"> Agama</label>
-                <label class="subcategory-label"><input type="radio" name="subcategory" value="ppkn"> PPKN</label>
-                <label class="subcategory-label"><input type="radio" name="subcategory" value="sejarah"> Sejarah</label>
-                <label class="subcategory-label"><input type="radio" name="subcategory" value="bahasa_indonesia"> Bahasa Indonesia</label>
-                <label class="subcategory-label"><input type="radio" name="subcategory" value="bahasa_inggris"> Bahasa Inggris</label>
-            </div>
+  <!-- Subkategori Pelajar -->
+  <div id="pelajarSubcategories">
+    <label class="subcategory-label">IPA <input type="radio" name="subcategory" value="ipa"></label>
+    <label class="subcategory-label">IPS <input type="radio" name="subcategory" value="ips"></label>
+    <label class="subcategory-label">Matematika <input type="radio" name="subcategory"
+            value="matematika"></label>
+    <label class="subcategory-label">Agama <input type="radio" name="subcategory" value="agama"></label>
+    <label class="subcategory-label">PPKN <input type="radio" name="subcategory" value="ppkn"></label>
+    <label class="subcategory-label">Sejarah <input type="radio" name="subcategory" value="sejarah"></label>
+    <label class="subcategory-label">Bahasa Indonesia <input type="radio" name="subcategory"
+            value="bahasa_indonesia"></label>
+    <label class="subcategory-label">Bahasa Inggris <input type="radio" name="subcategory"
+            value="bahasa_inggris"></label>
+  </div>
 
-            <div id="umumSubcategories">
-                <h3>Jenis Ujian</h3>
-                <label class="subcategory-label"><input type="radio" name="subcategory" value="logika"> Logika</label>
-            </div>
+  <!-- Subkategori Umum -->
+  <div id="umumSubcategories">
+    <label class="subcategory-label">Logika <input type="radio" name="subcategory" value="logika"></label>
+  </div>
 
-            <div id="levelSelection">
-                <h3>Pilih Tingkat</h3>
-                <select id="levelSelect">
-                    <option value="sd">SD</option>
-                    <option value="smp">SMP</option>
-                    <option value="sma">SMA</option>
-                    <option value="umum">Umum</option>
-                </select>
-                <button onclick="loadQuestions()">Mulai Ujian</button>
-            </div>
-        </div>
-    </div>
-</div>
+  <button type="button" onclick="startQuiz()">Mulai Ujian</button>
+</form>
 
-<!-- Sertifikat -->
-<div id="certificateContainer" class="certificate hidden">
-    <div class="certificate-content">
-        <h1>SERTIFIKAT UJIAN</h1>
-        <p>Diberikan kepada:</p>
-        <h2 id="participantName">Nama Peserta</h2>
-        <p>Kategori: <span id="categoryDisplay">Pelajar</span></p>
-        <p>Subkategori: <span id="subcategoryDisplay">IPA</span></p>
-        <p>Tingkat: <span id="levelDisplay">SD</span></p>
-    </div>
-</div>
+<script>
+// Variabel status kategori
+let enabledCategories = {
+  pelajar: true,
+  umum: true,
+  subcategories: {
+    pelajar: {
+      ipa: true,
+      ips: true,
+      matematika: true,
+      agama: true,
+      ppkn: true,
+      sejarah: true,
+      bahasa_indonesia: true,
+      bahasa_inggris: true
+    },
+    umum: {
+      logika: true
+    }
+  }
+};
 
-<!-- Audio -->
-<audio id="welcomeSound" src="assets/audio/opening.mp3"></audio>
-<audio id="quizMusic" src="assets/audio/quiz-music.mp3"></audio>
+function saveEnabledCategories() {
+  localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
+}
 
-<!-- Script JS -->
-<script src="js/core/app.js"></script>
-<script src="js/modules/user-manager.js"></script>
-<script src="js/modules/auth.js"></script>
-<script src="js/utils/prayer-times.js"></script>
-<script src="js/utils/helpers.js"></script>
-<script src="admin/admin.js"></script>
+function loadEnabledCategories() {
+  const saved = localStorage.getItem('enabledCategories');
+  if (saved) {
+    try {
+      enabledCategories = JSON.parse(saved);
+    } catch (e) {
+      console.error("Gagal memuat data kategori");
+    }
+  }
+}
+
+function updateCategoryUI() {
+  document.querySelectorAll('.category-tab').forEach(tab => {
+    const category = tab.dataset.category;
+    tab.style.display = enabledCategories[category] ? 'inline-block' : 'none';
+  });
+
+  // Pelajar
+  document.querySelectorAll('#pelajarSubcategories .subcategory-label').forEach(label => {
+    const radio = label.querySelector('input[type="radio"]');
+    const subcategory = radio.value;
+    label.style.display = enabledCategories.subcategories.pelajar[subcategory] ? 'block' : 'none';
+  });
+
+  // Umum
+  document.querySelectorAll('#umumSubcategories .subcategory-label').forEach(label => {
+    const radio = label.querySelector('input[type="radio"]');
+    const subcategory = radio.value;
+    label.style.display = enabledCategories.subcategories.umum[subcategory] ? 'block' : 'none';
+  });
+}
+
+function startQuiz() {
+  const activeTab = document.querySelector('.category-tab.active');
+  const selectedRadio = document.querySelector('input[name="subcategory"]:checked');
+
+  if (!activeTab || !selectedRadio) {
+    alert("Silakan pilih kategori dan subkategori ujian.");
+    return;
+  }
+
+  const currentCategory = activeTab.dataset.category;
+  const currentSubcategory = selectedRadio.value;
+
+  if (!enabledCategories[currentCategory]) {
+    alert("Kategori ini sedang tidak tersedia!");
+    return;
+  }
+
+  if (!enabledCategories.subcategories[currentCategory]?.[currentSubcategory]) {
+    alert("Subkategori ini sedang tidak tersedia!");
+    return;
+  }
+
+  alert("Selamat! Anda dapat mengikuti ujian.");
+}
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  loadEnabledCategories();
+  updateCategoryUI();
+
+  // Tambahkan event click untuk tab kategori
+  document.querySelectorAll('.category-tab').forEach(tab => {
+    tab.addEventListener('click', function () {
+      document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+});
+</script>
 
 </body>
 </html>
