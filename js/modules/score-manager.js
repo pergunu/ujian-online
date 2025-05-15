@@ -1,35 +1,28 @@
-class ScoreManager {
-    static async getHighScores(category, subcategory, limit = 10) {
-        try {
-            if (Config.apiBaseUrl) {
-                const response = await fetch(
-                    `${Config.apiBaseUrl}${Config.endpoints.scores}?category=${category}&subcategory=${subcategory}&limit=${limit}`
-                );
-                return await response.json();
-            }
-            
-            return this.getLocalHighScores(category, subcategory, limit);
-        } catch (error) {
-            console.error("Error fetching high scores:", error);
-            return [];
-        }
-    }
-
-    static getLocalHighScores(category, subcategory, limit) {
-        const allScores = JSON.parse(localStorage.getItem(Config.storageKeys.scores) || "[]");
-        return allScores
-            .filter(score => 
-                score.category === category && 
-                score.subcategory === subcategory
-            )
-            .sort((a, b) => b.percentage - a.percentage)
-            .slice(0, limit);
-    }
-
-    static getUserScores(userId) {
-        const allScores = JSON.parse(localStorage.getItem(Config.storageKeys.scores) || "[]");
-        return allScores.filter(score => score.userId === userId);
-    }
+function calculateScore(correctAnswers, totalQuestions) {
+  return Math.round((correctAnswers / totalQuestions) * 100);
 }
 
-export default ScoreManager;
+function showResults(correctCount, totalQuestions) {
+  const percentage = calculateScore(correctCount, totalQuestions);
+  const resultsContainer = document.getElementById('resultsContainer');
+  const scoreDisplay = document.getElementById('scoreDisplay');
+  const resultsMessage = document.getElementById('resultsMessage');
+
+  scoreDisplay.textContent = `${percentage}%`;
+  resultsMessage.innerHTML = `<strong>${correctCount}</strong> dari <strong>${totalQuestions}</strong> jawaban benar.`;
+
+  resultsContainer.classList.remove('hidden');
+  document.getElementById('quizContainer').classList.add('hidden');
+  document.getElementById('floatingButtons').classList.add('hidden');
+
+  if (percentage >= 80) {
+    playAudio('applauseSound');
+    resultsMessage.innerHTML += '<br><span class="badge badge-success">Lulus dengan sangat baik!</span>';
+  } else if (percentage >= 60) {
+    playAudio('applauseSound');
+    resultsMessage.innerHTML += '<br><span class="badge badge-primary">Lulus dengan baik</span>';
+  } else {
+    playAudio('wrongSound');
+    resultsMessage.innerHTML += '<br><span class="badge badge-danger">Maaf, belum lulus</span>';
+  }
+}
