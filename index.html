@@ -2665,25 +2665,40 @@
 
         // Pengaturan kategori aktif
         let enabledCategories = {
-            pelajar: true,
-            umum: true,
-            subcategories: {
-                pelajar: {
-                    ipa: true,
-                    ips: true,
-                    matematika: true,
-                    agama: true,
-                    ppkn: true,
-                    sejarah: true,
-                    bahasa_indonesia: true,
-                    bahasa_inggris: true
-                },
-                umum: {
-                    logika: true
-                }
-            }
-        };
+    pelajar: true,
+    umum: true,
+    subcategories: {
+        pelajar: {
+            ipa: true,
+            ips: true,
+            matematika: true,
+            agama: true,
+            ppkn: true,
+            sejarah: true,
+            bahasa_indonesia: true,
+            bahasa_inggris: true
+        },
+        umum: {
+            logika: true
+        }
+    }
+};
 
+        function saveEnabledCategories() {
+    localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
+}
+
+function loadEnabledCategories() {
+    const saved = localStorage.getItem('enabledCategories');
+    if (saved) {
+        try {
+            enabledCategories = JSON.parse(saved);
+        } catch (e) {
+            console.error("Gagal memuat data kategori");
+        }
+    }
+}
+        
         function updateCategoryState(category, subcategory, enabled) {
             if (subcategory) {
                 // Update subcategory state
@@ -2706,6 +2721,8 @@
             createStars();
             initAudio();
             initEventListeners();
+            updateCategoryUI();
+            loadEnabledCategories();
             updateCategoryUI();
             
             // Set current date for certificate
@@ -2750,58 +2767,29 @@
             updateSubcategoryUI();
         }
         
-        function updateSubcategoryUI() {
-            // Update pelajar subcategories
-            document.querySelectorAll('#pelajarSubcategories .subcategory-option').forEach(option => {
-                const radio = option.querySelector('.subcategory-radio');
-                const label = option.querySelector('.subcategory-label');
-                const subcategory = radio.value;
-                const isEnabled = enabledCategories.subcategories.pelajar[subcategory];
-                
-                label.classList.toggle('disabled', !isEnabled);
-                radio.disabled = !isEnabled;
-                
-                // If subcategory is disabled and selected, select first enabled subcategory
-                if (!isEnabled && radio.checked) {
-                    const enabledSubcategory = Object.keys(enabledCategories.subcategories.pelajar)
-                        .find(sc => enabledCategories.subcategories.pelajar[sc]);
-                    
-                    if (enabledSubcategory) {
-                        document.querySelector(`input[name="subcategory"][value="${enabledSubcategory}"]`).checked = true;
-                        currentSubcategory = enabledSubcategory;
-                    } else {
-                        // No enabled subcategories - disable main category
-                        enabledCategories.pelajar = false;
-                        updateCategoryUI();
-                    }
-                }
-            });
-            
-            // Update umum subcategories
-            document.querySelectorAll('#umumSubcategories .subcategory-option').forEach(option => {
-                const radio = option.querySelector('.subcategory-radio');
-                const label = option.querySelector('.subcategory-label');
-                const subcategory = radio.value;
-                const isEnabled = enabledCategories.subcategories.umum[subcategory];
-                
-                label.classList.toggle('disabled', !isEnabled);
-                radio.disabled = !isEnabled;
-                
-                // If subcategory is disabled and selected, select first enabled subcategory
-                if (!isEnabled && radio.checked) {
-                    const enabledSubcategory = Object.keys(enabledCategories.subcategories.umum)
-                        .find(sc => enabledCategories.subcategories.umum[sc]);
-                    
-                    if (enabledSubcategory) {
-                        document.querySelector(`input[name="subcategory"][value="${enabledSubcategory}"]`).checked = true;
-                        currentSubcategory = enabledSubcategory;
-                    } else {
-                        // No enabled subcategories - disable main category
-                        enabledCategories.umum = false;
-                        updateCategoryUI();
-                    }
-                }
-            });
+        function updateCategoryUI() {
+    // Sembunyikan tab kategori utama
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        const category = tab.dataset.category;
+        tab.style.display = enabledCategories[category] ? 'inline-block' : 'none';
+    });
+
+    // Sembunyikan subkategori pelajar
+    document.querySelectorAll('#pelajarSubcategories .subcategory-label').forEach(label => {
+        const radio = label.previousElementSibling;
+        const subcategory = radio.value;
+        label.style.display = enabledCategories.subcategories.pelajar[subcategory] ? 'inline-block' : 'none';
+        radio.disabled = !enabledCategories.subcategories.pelajar[subcategory];
+    });
+
+    // Sembunyikan subkategori umum
+    document.querySelectorAll('#umumSubcategories .subcategory-label').forEach(label => {
+        const radio = label.previousElementSibling;
+        const subcategory = radio.value;
+        label.style.display = enabledCategories.subcategories.umum[subcategory] ? 'inline-block' : 'none';
+        radio.disabled = !enabledCategories.subcategories.umum[subcategory];
+    });
+}
             
             // Show/hide subcategory containers based on current category
             if (currentCategory === 'pelajar') {
@@ -3196,92 +3184,90 @@
         }
 
         function startQuiz() {
-            // Get participant data
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const email = document.getElementById('email').value;
-            const profesi = currentCategory === 'umum' ? document.getElementById('profesi').value : '';
-            currentLevel = document.getElementById('level').value;
-            
-            if (!name || !phone) {
-                alert('Silakan isi nama lengkap dan nomor HP terlebih dahulu');
-                return;
-            }
-            
-            // Check if category is enabled
-            if (!enabledCategories[currentCategory]) {
-                alert('Kategori ini sedang tidak tersedia!');
-                return;
-            }
-            
-            // Check if subcategory is enabled
-            if (!enabledCategories.subcategories[currentCategory][currentSubcategory]) {
-                alert('Subkategori ini sedang tidak tersedia!');
-                return;
-            }
-            
-            // Check if there are questions for selected category/subcategory/level
-            const availableQuestions = questions[currentCategory][currentSubcategory][currentLevel];
-            if (!availableQuestions || availableQuestions.length === 0) {
-                alert('Belum ada soal untuk kategori, subkategori, dan level yang dipilih!');
-                return;
-            }
-            
-            // Update participant name in certificate
-            document.getElementById('participantName').textContent = formatName(name);
-            
-            // Update quiz info
-            document.getElementById('categoryDisplay').textContent = currentCategory === 'pelajar' ? 'Pelajar' : 'Umum';
-            
-            // Set subcategory display text
-            let subcategoryText = '';
-            if (currentCategory === 'pelajar') {
-                const subcategoryMap = {
-                    'ipa': 'IPA',
-                    'ips': 'IPS',
-                    'matematika': 'Matematika',
-                    'agama': 'Agama',
-                    'ppkn': 'PPKN',
-                    'sejarah': 'Sejarah',
-                    'bahasa_indonesia': 'Bahasa Indonesia',
-                    'bahasa_inggris': 'Bahasa Inggris'
-                };
-                subcategoryText = subcategoryMap[currentSubcategory];
-            } else {
-                const subcategoryMap = {
-                    'logika': 'Logika'
-                };
-                subcategoryText = subcategoryMap[currentSubcategory];
-            }
-            document.getElementById('subcategoryDisplay').textContent = subcategoryText;
-            
-            document.getElementById('levelDisplay').textContent = 
-                currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1);
-            
-            // Hide form and show quiz
-            document.getElementById('participantForm').style.display = 'none';
-            document.getElementById('quizContainer').style.display = 'block';
-            document.getElementById('resultsContainer').style.display = 'none';
-            
-            // Reset variables
-            currentQuestionIndex = 0;
-            score = 0;
-            quizStartTime = new Date();
-            
-            // Stop welcome and background music
-            document.getElementById('welcomeSound').pause();
-            document.getElementById('backgroundMusic').pause();
-            
-            // Start timer (90 minutes)
-            startTimer(90);
-            
-            // Play quiz music
-            playQuizMusic();
-            
-            // Load first question
-            loadQuestion();
-        }
+    // Get participant data
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const profesi = currentCategory === 'umum' ? document.getElementById('profesi').value : '';
+    currentLevel = document.getElementById('level').value;
 
+    if (!name || !phone) {
+        alert('Silakan isi nama lengkap dan nomor HP terlebih dahulu');
+        return;
+    }
+
+    // Validasi apakah kategori aktif
+    if (!enabledCategories[currentCategory]) {
+        alert('Kategori ini sedang tidak tersedia!');
+        return;
+    }
+
+    // Validasi apakah subkategori aktif
+    if (!enabledCategories.subcategories[currentCategory] || 
+        !enabledCategories.subcategories[currentCategory][currentSubcategory]) {
+        alert('Subkategori ini sedang tidak tersedia!');
+        return;
+    }
+
+    // Validasi soal tersedia
+    const availableQuestions = questions[currentCategory][currentSubcategory][currentLevel];
+    if (!availableQuestions || availableQuestions.length === 0) {
+        alert('Belum ada soal untuk kategori, subkategori, dan level yang dipilih!');
+        return;
+    }
+
+    // Update informasi sertifikat
+    document.getElementById('participantName').textContent = formatName(name);
+    document.getElementById('categoryDisplay').textContent = currentCategory === 'pelajar' ? 'Pelajar' : 'Umum';
+
+    // Set teks subkategori
+    let subcategoryText = '';
+    if (currentCategory === 'pelajar') {
+        const subcategoryMap = {
+            'ipa': 'IPA',
+            'ips': 'IPS',
+            'matematika': 'Matematika',
+            'agama': 'Agama',
+            'ppkn': 'PPKN',
+            'sejarah': 'Sejarah',
+            'bahasa_indonesia': 'Bahasa Indonesia',
+            'bahasa_inggris': 'Bahasa Inggris'
+        };
+        subcategoryText = subcategoryMap[currentSubcategory] || 'Tidak Diketahui';
+    } else {
+        const subcategoryMap = {
+            'logika': 'Logika'
+        };
+        subcategoryText = subcategoryMap[currentSubcategory] || 'Tidak Diketahui';
+    }
+
+    document.getElementById('subcategoryDisplay').textContent = subcategoryText;
+    document.getElementById('levelDisplay').textContent = 
+        currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1);
+
+    // Sembunyikan form dan tampilkan quiz
+    document.getElementById('participantForm').style.display = 'none';
+    document.getElementById('quizContainer').style.display = 'block';
+    document.getElementById('resultsContainer').style.display = 'none';
+
+    // Reset variabel quiz
+    currentQuestionIndex = 0;
+    score = 0;
+    quizStartTime = new Date();
+
+    // Hentikan musik pembuka
+    document.getElementById('welcomeSound').pause();
+    document.getElementById('backgroundMusic').pause();
+
+    // Mulai timer (90 menit)
+    startTimer(90 * 60); // dalam detik
+
+    // Mainkan musik quiz
+    playQuizMusic();
+
+    // Muat pertanyaan pertama
+    loadQuestion();
+}
         function formatName(name) {
             // Format nama dengan kapital di awal setiap kata
             return name.toLowerCase()
