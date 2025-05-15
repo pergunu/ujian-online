@@ -1,5 +1,3 @@
-// admin.js
-
 document.addEventListener('DOMContentLoaded', () => {
     loadEnabledCategories();
     updateCategoryUI();
@@ -27,13 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('disableAllPelajarBtn').addEventListener('click', () => {
-        if (confirm('Apakah Anda yakin ingin menonaktifkan semua subkategori Pelajar?')) {
+        if (confirm('Nonaktifkan semua subkategori pelajar?')) {
             Object.keys(enabledCategories.subcategories.pelajar).forEach(sub => {
                 enabledCategories.subcategories.pelajar[sub] = false;
             });
             updateCategoryUI();
             saveEnabledCategories();
-            alert("Semua subkategori Pelajar telah dinonaktifkan.");
+            alert("Semua subkategori pelajar telah dinonaktifkan.");
         }
     });
 });
