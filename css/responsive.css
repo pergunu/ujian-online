@@ -1,28 +1,19 @@
 @media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
+    .container {
+        padding: 1rem;
+    }
 
-  .btn {
-    width: 100%;
-    margin-bottom: 1rem;
-  }
+    .btn {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
 
-  .category-tab {
-    display: block;
-    margin: 0.5rem 0;
-  }
+    .category-tab {
+        display: block;
+        margin: 0.5rem 0;
+    }
 
-  .subcategory-label {
-    display: block;
-  }
-
-  .certificate-content {
-    padding: 1rem;
-  }
-
-  .floating-buttons {
-    bottom: 1rem;
-    right: 1rem;
-  }
+    .subcategory-label {
+        display: block;
+    }
 }
