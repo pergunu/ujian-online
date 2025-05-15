@@ -1,23 +1,44 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <!-- CSS -->
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/responsive.css">
-<link rel="stylesheet" href="css/animations.css">
-  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ujian Pergunu Situbondo</title>
   <link rel="icon" href="assets/images/logo.png" type="image/png"/>
 
   <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css "/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css " />
+
+  <!-- CSS Internal -->
   <style>
-    /* Gaya dasar disederhanakan untuk fokus pada logika */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    .monitor-frame {
+      width: 80%;
+      max-width: 1000px;
+      margin: 2rem auto;
+      border: 10px double #4361ee;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .screen {
+      background: url('assets/images/monitor-crt.png') no-repeat center center;
+      background-size: cover;
+      min-height: 500px;
+      padding: 2rem;
+      color: white;
+      position: relative;
+    }
+
     .category-tab {
       display: inline-block;
       margin-right: 10px;
@@ -34,6 +55,31 @@
       padding: 8px;
       background: #eee;
       border-radius: 5px;
+    }
+
+    .certificate {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 3rem;
+      background: url('assets/images/background.jpg') no-repeat center center/cover;
+      border: 5px double #4361ee;
+      border-radius: 1rem;
+    }
+
+    .watermark {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      color: rgba(0, 0, 0, 0.2);
+      transform: rotate(-30deg);
+      z-index: -1;
+    }
+
+    .floating-buttons {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
     }
   </style>
 </head>
@@ -52,12 +98,13 @@
 
   <!-- Tab Kategori -->
   <div>
-    <span class="category-tab" data-category="pelajar">Pelajar</span>
+    <span class="category-tab active" data-category="pelajar">Pelajar</span>
     <span class="category-tab" data-category="umum">Umum</span>
   </div>
 
   <!-- Subkategori Pelajar -->
   <div id="pelajarSubcategories">
+    <h3>Mata Pelajaran</h3>
     <label class="subcategory-label">IPA <input type="radio" name="subcategory" value="ipa"></label>
     <label class="subcategory-label">IPS <input type="radio" name="subcategory" value="ips"></label>
     <label class="subcategory-label">Matematika <input type="radio" name="subcategory"
@@ -73,84 +120,92 @@
 
   <!-- Subkategori Umum -->
   <div id="umumSubcategories">
+    <h3>Jenis Ujian</h3>
     <label class="subcategory-label">Logika <input type="radio" name="subcategory" value="logika"></label>
   </div>
 
   <button type="button" onclick="startQuiz()">Mulai Ujian</button>
 </form>
 
-<script>
- <!-- Load konfigurasi dan fungsi -->
-<script src="js/core/app.js"></script>
-<script src="js/core/config.js"></script>
-<script src="js/modules/quiz-engine.js"></script>
-<script src="js/modules/ui-manager.js"></script>
-<script src="js/utils/prayer-times.js"></script>
-<script src="js/utils/helpers.js"></script>
-  
-<!-- Admin Panel -->
-<script src="admin/admin.js"></script>
-  
-// config.js
+<!-- Sertifikat Otomatis -->
+<div id="certificateContainer" class="certificate hidden">
+  <div class="certificate-content">
+    <h1>SERTIFIKAT UJIAN</h1>
+    <p>Diberikan kepada:</p>
+    <h2 id="participantName">Nama Peserta</h2>
+    <p>Kategori: <span id="categoryDisplay">Pelajar</span></p>
+    <p>Subkategori: <span id="subcategoryDisplay">IPA</span></p>
+    <p>Tingkat: <span id="levelDisplay">SD</span></p>
+    <p>Tanggal: <span id="certificateDate">Tanggal</span></p>
+    <p class="watermark" id="watermarkCode">ABCD-1234/PERGUNU-STB</p>
+  </div>
+</div>
 
+<!-- Audio Elements -->
+<audio id="welcomeSound" src="assets/audio/opening.mp3"></audio>
+<audio id="quizMusic" src="assets/audio/quiz-music.mp3"></audio>
+<audio id="correctSound" src="assets/audio/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/audio/wrong.mp3"></audio>
+<audio id="applauseSound" src="assets/audio/applause.mp3"></audio>
+
+<script>
+// Variabel global untuk konfigurasi kategori
 let enabledCategories = {
-    pelajar: true,
-    umum: true,
-    subcategories: {
-        pelajar: {
-            ipa: true,
-            ips: true,
-            matematika: true,
-            agama: true,
-            ppkn: true,
-            sejarah: true,
-            bahasa_indonesia: true,
-            bahasa_inggris: true
-        },
-        umum: {
-            logika: true
-        }
+  pelajar: true,
+  umum: true,
+  subcategories: {
+    pelajar: {
+      ipa: true,
+      ips: true,
+      matematika: true,
+      agama: true,
+      ppkn: true,
+      sejarah: true,
+      bahasa_indonesia: true,
+      bahasa_inggris: true
+    },
+    umum: {
+      logika: true
     }
+  }
 };
 
 function saveEnabledCategories() {
-    localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
+  localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
 }
 
 function loadEnabledCategories() {
-    const saved = localStorage.getItem('enabledCategories');
-    if (saved) {
-        try {
-            enabledCategories = JSON.parse(saved);
-        } catch (e) {
-            console.error("Gagal memuat data kategori");
-        }
+  const saved = localStorage.getItem('enabledCategories');
+  if (saved) {
+    try {
+      enabledCategories = JSON.parse(saved);
+    } catch (e) {
+      console.error("Gagal memuat data kategori");
     }
+  }
 }
-
-// ui-manager.js
 
 function updateCategoryUI() {
-    document.querySelectorAll('.category-tab').forEach(tab => {
-        const category = tab.dataset.category;
-        tab.style.display = enabledCategories[category] ? 'inline-block' : 'none';
-    });
+  document.querySelectorAll('.category-tab').forEach(tab => {
+    const category = tab.dataset.category;
+    tab.style.display = enabledCategories[category] ? 'inline-block' : 'none';
+  });
 
-    // Subkategori Pelajar
-    document.querySelectorAll('#pelajarSubcategories .subcategory-label').forEach(label => {
-        const radio = label.querySelector('input[type="radio"]');
-        const subcategory = radio.value;
-        label.style.display = enabledCategories.subcategories.pelajar[subcategory] ? 'block' : 'none';
-    });
+  document.querySelectorAll('#pelajarSubcategories .subcategory-label').forEach(label => {
+    const radio = label.querySelector('input[type="radio"]');
+    const subcategory = radio.value;
+    label.style.display = enabledCategories.subcategories.pelajar[subcategory] ? 'block' : 'none';
+  });
 
-    // Subkategori Umum
-    document.querySelectorAll('#umumSubcategories .subcategory-label').forEach(label => {
-        const radio = label.querySelector('input[type="radio"]');
-        const subcategory = radio.value;
-        label.style.display = enabledCategories.subcategories.umum[subcategory] ? 'block' : 'none';
-    });
+  document.querySelectorAll('#umumSubcategories .subcategory-label').forEach(label => {
+    const radio = label.querySelector('input[type="radio"]');
+    const subcategory = radio.value;
+    label.style.display = enabledCategories.subcategories.umum[subcategory] ? 'block' : 'none';
+  });
 }
+</script>
 
+<script>
 function startQuiz() {
   const activeTab = document.querySelector('.category-tab.active');
   const selectedRadio = document.querySelector('input[name="subcategory"]:checked');
@@ -163,11 +218,13 @@ function startQuiz() {
   const currentCategory = activeTab.dataset.category;
   const currentSubcategory = selectedRadio.value;
 
+  // Validasi apakah kategori aktif
   if (!enabledCategories[currentCategory]) {
     alert("Kategori ini sedang tidak tersedia!");
     return;
   }
 
+  // Validasi apakah subkategori aktif
   if (!enabledCategories.subcategories[currentCategory]?.[currentSubcategory]) {
     alert("Subkategori ini sedang tidak tersedia!");
     return;
@@ -182,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
   loadEnabledCategories();
   updateCategoryUI();
 
-  // Tambahkan event click untuk tab kategori
+  // Tambahkan event listener untuk tab kategori
   document.querySelectorAll('.category-tab').forEach(tab => {
     tab.addEventListener('click', function () {
       document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
@@ -190,6 +247,65 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+</script>
+
+<!-- Panel Admin Kontrol Kategori -->
+<div id="adminPanel" style="display:none;">
+  <h3>Kontrol Kategori</h3>
+
+  <!-- Toggle Kategori Utama -->
+  <div class="form-group">
+    <label><input type="checkbox" id="togglePelajar" checked onchange="enableCategory('pelajar', this.checked)"> Pelajar</label>
+    <label><input type="checkbox" id="toggleUmum" checked onchange="enableCategory('umum', this.checked)"> Umum</label>
+  </div>
+
+  <hr>
+
+  <!-- Subkategori Pelajar -->
+  <div id="pelajarSubcategoryControls">
+    <h4>Subkategori - Pelajar</h4>
+    <label><input type="checkbox" class="toggle-subcategory" data-category="pelajar" data-subcategory="ipa" onchange="enableSubcategory(this.dataset.category, this.dataset.subcategory, this.checked)" checked> IPA</label>
+    <label><input type="checkbox" class="toggle-subcategory" data-category="pelajar" data-subcategory="ips" onchange="enableSubcategory(this.dataset.category, this.dataset.subcategory, this.checked)" checked> IPS</label>
+    <label><input type="checkbox" class="toggle-subcategory" data-category="pelajar" data-subcategory="matematika" onchange="enableSubcategory(this.dataset.category, this.dataset.subcategory, this.checked)" checked> Matematika</label>
+    <label><input type="checkbox" class="toggle-subcategory" data-category="pelajar" data-subcategory="agama" onchange="enableSubcategory(this.dataset.category, this.dataset.subcategory, this.checked)" checked> Agama</label>
+    <label><input type="checkbox" class="toggle-subcategory" data-category="pelajar" data-subcategory="ppkn" onchange="enableSubcategory(this.dataset.category, this.dataset.subcategory, this.checked)" checked> PPKN</label>
+    <label><input type="checkbox" class="toggle-subcategory" data-category="pelajar" data-subcategory="sejarah" onchange="enableSubcategory(this.dataset.category, this.dataset.subcategory, this.checked)" checked> Sejarah</label>
+    <label><input type="checkbox" class="toggle-subcategory" data-category="pelajar" data-subcategory="bahasa_indonesia" onchange="enableSubcategory(this.dataset.category, this.dataset.subcategory, this.checked)" checked> Bahasa Indonesia</label>
+    <label><input type="checkbox" class="toggle-subcategory" data-category="pelajar" data-subcategory="bahasa_inggris" onchange="enableSubcategory(this.dataset.category, this.dataset.subcategory, this.checked)" checked> Bahasa Inggris</label>
+    <button onclick="disableAllSubcategories('pelajar')">Nonaktifkan Semua</button>
+  </div>
+
+  <!-- Subkategori Umum -->
+  <div id="umumSubcategoryControls">
+    <h4>Subkategori - Umum</h4>
+    <label><input type="checkbox" class="toggle-subcategory" data-category="umum" data-subcategory="logika" onchange="enableSubcategory(this.dataset.category, this.dataset.subcategory, this.checked)" checked> Logika</label>
+    <button onclick="disableAllSubcategories('umum')">Nonaktifkan Semua</button>
+  </div>
+</div>
+
+<script>
+function enableCategory(category, isEnabled) {
+  enabledCategories[category] = isEnabled;
+  updateCategoryUI();
+  saveEnabledCategories();
+}
+
+function enableSubcategory(category, subcategory, isEnabled) {
+  enabledCategories.subcategories[category][subcategory] = isEnabled;
+  updateCategoryUI();
+  saveEnabledCategories();
+}
+
+function disableAllSubcategories(category) {
+  if (confirm(`Apakah Anda yakin ingin menonaktifkan semua subkategori ${category}?`)) {
+    for (const subcat in enabledCategories.subcategories[category]) {
+      enabledCategories.subcategories[category][subcat] = false;
+    }
+    updateCategoryUI();
+    saveEnabledCategories();
+    alert(`Semua subkategori ${category} telah dinonaktifkan.`);
+  }
+}
 </script>
 
 </body>
