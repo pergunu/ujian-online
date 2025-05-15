@@ -1,3 +1,5 @@
+// config.js
+
 let enabledCategories = {
     pelajar: true,
     umum: true,
