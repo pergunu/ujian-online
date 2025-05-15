@@ -1,21 +1,10 @@
 // app.js
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadEnabledCategories();
-  updateCategoryUI();
-
-  // Inisialisasi lainnya seperti stars, audio, event listener
-});
-
 let currentCategory = '';
 let currentSubcategory = '';
 let currentLevel = '';
 let score = 0;
 let quizStartTime = null;
-let musicEnabled = true;
-let soundEffectsEnabled = true;
-let quizMusicEnabled = true;
-let examCodePassword = 'KODEUJIAN12345';
 
 function formatName(name) {
   return name.split(' ')
