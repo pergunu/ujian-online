@@ -1,3 +1,5 @@
+// prayer-times.js
+
 function checkPrayerTime() {
     const now = new Date();
     const hours = now.getHours();
@@ -7,7 +9,7 @@ function checkPrayerTime() {
     if (hours === 6 && minutes === 0) {
         playAdhan();
     }
-    // Tambahkan kondisi lain sesuai jadwal sholat
+    // Tambahkan waktu sholat lainnya
 }
 
 function playAdhan() {
