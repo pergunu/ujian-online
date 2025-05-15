@@ -1,3 +1,5 @@
+// admin.js
+
 document.addEventListener('DOMContentLoaded', () => {
     loadEnabledCategories();
     updateCategoryUI();
@@ -18,7 +20,7 @@ function enableSubcategory(category, subcategory, isChecked) {
 function disableAllSubcategories(category) {
     if (confirm(`Nonaktifkan semua subkategori ${category}?`)) {
         Object.keys(enabledCategories.subcategories[category]).forEach(sub => {
-            enabledCategories.subcategories[category][subcategory] = false;
+            enabledCategories.subcategories[category][sub] = false;
         });
         updateCategoryUI();
         saveEnabledCategories();
