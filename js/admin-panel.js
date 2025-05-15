@@ -1,4 +1,4 @@
-// Toggle kategori utama
+// Event listener untuk toggle kategori utama
 document.getElementById('togglePelajar').addEventListener('change', function () {
   enabledCategories.pelajar = this.checked;
   updateCategoryUI();
@@ -11,7 +11,7 @@ document.getElementById('toggleUmum').addEventListener('change', function () {
   saveEnabledCategories();
 });
 
-// Toggle subkategori
+// Event listener untuk toggle subkategori
 document.querySelectorAll('.toggle-subcategory').forEach(checkbox => {
   checkbox.addEventListener('change', function () {
     const category = this.dataset.category;
@@ -22,9 +22,9 @@ document.querySelectorAll('.toggle-subcategory').forEach(checkbox => {
   });
 });
 
-// Nonaktifkan semua subkategori pelajar
+// Tombol disable semua subkategori pelajar
 document.getElementById('disableAllPelajarBtn').addEventListener('click', () => {
-  if (confirm('Nonaktifkan semua subkategori pelajar?')) {
+  if (confirm('Apakah Anda yakin ingin menonaktifkan semua subkategori pelajar?')) {
     Object.keys(enabledCategories.subcategories.pelajar).forEach(sub => {
       enabledCategories.subcategories.pelajar[sub] = false;
     });
@@ -34,9 +34,9 @@ document.getElementById('disableAllPelajarBtn').addEventListener('click', () => 
   }
 });
 
-// Nonaktifkan semua subkategori umum
+// Tombol disable semua subkategori umum
 document.getElementById('disableAllUmumBtn').addEventListener('click', () => {
-  if (confirm('Nonaktifkan semua subkategori umum?')) {
+  if (confirm('Apakah Anda yakin ingin menonaktifkan semua subkategori umum?')) {
     Object.keys(enabledCategories.subcategories.umum).forEach(sub => {
       enabledCategories.subcategories.umum[sub] = false;
     });
