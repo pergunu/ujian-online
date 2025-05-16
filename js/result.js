@@ -1,4 +1,4 @@
-// Ambil data peserta dari localStorage
+// Ambil data dari localStorage
 const participantData = JSON.parse(localStorage.getItem("participantData"));
 const quizResult = JSON.parse(localStorage.getItem("quizResult")) || { correct: 0, wrong: 0, skipped: 0 };
 
@@ -34,7 +34,8 @@ if (participantData.status === "pelajar") {
   subcategoryText = "UMUM";
 }
 
-const watermarkCode = `${participantData.name.toUpperCase()}/${categoryText}/${subcategoryText}/${dateStr}/${uniqueCode}/PERGUNU-STB`;
+const watermarkCode = `${participantData.name.toUpperCase()}/${categoryText}/${subcategoryText}/${
+  dateStr}/${uniqueCode}/PERGUNU-STB`;
 document.getElementById("watermarkCode").textContent = watermarkCode;
 
 // Set tanggal cetak
@@ -58,7 +59,11 @@ if (percentage >= 80) {
 function playSound(soundId) {
   const sound = document.getElementById(soundId);
   sound.currentTime = 0;
-  sound.play();
+  try {
+    sound.play();
+  } catch (e) {
+    console.error("Gagal memainkan suara:", e);
+  }
 }
 
 // Event listener tombol cetak
