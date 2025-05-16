@@ -6,17 +6,19 @@
     <title>Ujian Pergunu - Sistem Ujian Lengkap</title>
     <link rel="icon" href="assets/images/logo.png" type="image/png">
     
-    <!-- Font & Icons -->
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Great+Vibes&family=Dancing+Script:wght@400;700&family=Alex+Brush&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Library untuk screenshot -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    
     <!-- CSS -->
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/quiz.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- External Libs -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
     <!-- Star Background -->
@@ -24,63 +26,54 @@
 
     <!-- Login Screen -->
     <div class="login-screen" id="loginScreen">
-        <!-- Konten login akan diisi oleh auth.js -->
+        <div class="login-container">
+            <h2 class="login-title">Selamat Datang di Ujian Pergunu</h2>
+            <p class="login-description">
+                Selamat datang di platform ujian kompetensi Pergunu Situbondo...
+            </p>
+            <input type="password" id="examCode" class="login-input" placeholder="Masukkan Kode Login Ujian">
+            <button class="login-btn" id="loginBtn">Masuk</button>
+        </div>
     </div>
 
     <!-- Opening Animation -->
     <div class="opening-screen" id="openingScreen">
-        <!-- Konten opening akan diisi oleh auth.js -->
-    </div>   
+        <!-- Konten opening screen -->
+    </div>
     
     <!-- Main Content -->
     <main class="main-container">
         <!-- Participant Form -->
         <form id="participantForm" class="participant-form">
-            <!-- Form akan diisi oleh quiz.js -->
+            <!-- Form input peserta -->
         </form>
         
         <!-- Quiz Container -->
         <div id="quizContainer" class="quiz-container">
-            <!-- Quiz akan diisi oleh quiz.js -->
+            <!-- Tampilan quiz -->
         </div>
         
         <!-- Results Container -->
         <div id="resultsContainer" class="results-container">
-            <!-- Hasil akan diisi oleh quiz.js -->
+            <!-- Tampilan hasil -->
         </div>
     </main>
     
     <!-- Floating Buttons -->
     <div class="floating-buttons" id="floatingButtons">
-        <!-- Tombol akan diisi oleh ui.js -->
+        <!-- Tombol-tombol floating -->
     </div>
     
-    <!-- Admin Overlay -->
+    <!-- Admin Panels -->
     <div class="admin-overlay" id="adminOverlay"></div>
-    
-    <!-- Admin Login -->
-    <div class="admin-panel" id="adminLogin">
-        <!-- Panel admin akan diisi oleh admin.js -->
-    </div>
-    
-    <!-- Admin Panel -->
-    <div class="admin-panel" id="adminPanel">
-        <!-- Konten admin akan diisi oleh admin.js -->
-    </div>
+    <div class="admin-panel" id="adminLogin"></div>
+    <div class="admin-panel" id="adminPanel"></div>
     
     <!-- Audio Elements -->
-    <audio id="openingSound" preload="auto">
-        <source src="assets/audio/opening.mp3" type="audio/mpeg">
-    </audio>
-    <!-- Audio lainnya akan diisi oleh audio.js -->
+    <audio id="openingSound" preload="auto" src="assets/audio/opening.mp3"></audio>
+    <!-- Audio lainnya -->
     
     <!-- JavaScript -->
-    <script src="js/config.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/audio.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/quiz.js"></script>
-    <script src="js/admin.js"></script>
-    <script src="js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
