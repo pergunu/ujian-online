@@ -187,5 +187,14 @@
 
   <!-- JavaScript -->
   <script src="js/admin.js"></script>
+  <script>
+  window.onload = function () {
+    const currentUser = localStorage.getItem("currentUser");
+
+    if (currentUser !== "admin") {
+      window.location.href = "login.html";
+    }
+  };
+</script>
 </body>
 </html>
