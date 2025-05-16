@@ -1,16 +1,8 @@
-// Konfigurasi Aplikasi
 export const Config = {
-    // Pengaturan Umum
     examCode: "KODEUJIAN12345",
     adminPassword: "65614222",
-    
-    // Pengaturan Waktu
-    examDuration: 90, // menit
-    
-    // Pengaturan Audio
+    examDuration: 90,
     audioVolume: 1.0,
-    
-    // Daftar Kategori
     categories: {
         pelajar: {
             label: "Pelajar",
@@ -28,15 +20,9 @@ export const Config = {
         umum: {
             label: "Umum",
             subcategories: {
-                logika: "Ujian Logika"
+                logika: "Logika"
             }
         }
     },
-    
-    // Level Kesulitan
-    levels: {
-        mudah: "Mudah",
-        sedang: "Sedang",
-        sulit: "Sulit"
-    }
+    levels: ["mudah", "sedang", "sulit"]
 };
