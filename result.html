@@ -207,5 +207,13 @@
 
   <!-- JavaScript -->
   <script src="js/result.js"></script>
+  <script>
+  window.onload = function () {
+    const currentUser = localStorage.getItem("currentUser");
+    if (currentUser !== "peserta") {
+      window.location.href = "login.html";
+    }
+  };
+</script>
 </body>
 </html>
