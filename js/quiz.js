@@ -129,3 +129,5 @@ window.onload = () => {
   loadQuestion();
   startTimer(90);
 };
+
+<script src="js/auth.js"></script>
