@@ -44,6 +44,15 @@
     </label>
     <button id="nextToForm" class="btn btn-primary" disabled><i class="fas fa-arrow-right"></i> Lanjut ke Form Data</button>
   </section>
+  document.getElementById('continueBtn').addEventListener('click', function() {
+    if (!agreeCheckbox.checked) {
+        alert('Anda harus menyetujui syarat dan ketentuan.');
+        return;
+    }
+    // Jika semua validasi lolos, lanjutkan ke form data
+    document.getElementById('openingScreen').style.display = 'none';
+    document.querySelector('.main-container').style.display = 'flex';
+});
 
   <!-- Participant Form -->
   <section class="form-container" id="participantForm" style="display: none;">
