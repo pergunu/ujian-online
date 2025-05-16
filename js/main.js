@@ -4,9 +4,8 @@ document.getElementById("continueBtn").addEventListener("click", function () {
   const loginCodeInput = document.getElementById("loginCode");
   const enteredCode = loginCodeInput.value.trim();
 
-  if (enteredCode === "12345") {
-    document.querySelector(".opening-screen").classList.remove("active");
-    document.querySelector(".opening-screen").style.display = "none";
+  if (enteredCode === "KODEUJIAN12345") {
+    document.getElementById("openingScreen").style.display = "none";
     document.getElementById("termsSection").style.display = "block";
   } else {
     alert("Kode Login salah! Silakan coba lagi.");
