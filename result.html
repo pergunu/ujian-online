@@ -3,56 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <title>Hasil Ujian - PERGUNU SMART</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&family=Playfair+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " />
 
-  <!-- Google Fonts & CSS -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .certificate-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 2rem auto;
+      text-align: center;
+      background-image: url('https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/certificate.png ');
+      background-size: cover;
+      min-height: 1122px;
+      padding: 80px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border-radius: 15px;
+      overflow: hidden;
+      color: black;
+    }
+  </style>
 </head>
-<body onload="checkAuth()"> <!-- Memanggil fungsi dari auth.js -->
+<body onload="checkAuth()">
 
-  <!-- Sertifikat -->
+  <!-- Certificate -->
   <div class="certificate-wrapper">
-    <div id="participantName">Nama Peserta</div>
-    <div id="scoreDisplay">0%</div>
-    <p id="resultsMessage">SEMPURNA! Anda sangat luar biasa...</p>
-    <div id="watermarkCode">NamaPeserta/PELAJAR/SMA/IPA/.../PERGUNU-STB</div>
-    <div id="certificateDate">Ditetapkan di : Situbondo, 09 Mei 2025</div>
+    <div class="certificate-watermark" id="watermarkCode">NamaPeserta/PELAJAR/SMA/IPA/16052025/T9B3-S6M3/PERGUNU-STB</div>
+    
+    <div class="certificate-header">
+      <h2 class="certificate-title">SERTIFIKAT PRESTASI</h2>
+      <p class="certificate-subtitle">Diberikan Kepada</p>
+    </div>
+
+    <div class="certificate-name" id="participantName">Nama Peserta</div>
+    <div class="certificate-text">
+      Atas partisipasi dan pencapaian luar biasa dalam<br/>
+      <strong>Ujian Pergunu Situbondo</strong>
+    </div>
+
+    <div class="certificate-score" id="scoreDisplay">0%</div>
+
+    <div class="certificate-message" id="resultsMessage">
+      <p>SEMPURNA! Anda sangat menguasai materi ini. Pertahankan prestasi ini!</p>
+    </div>
+
+    <div class="certificate-footer">
+      <div class="certificate-date" id="certificateDate">Ditetapkan di : Situbondo, 09 Mei 2025</div>
+      <div class="barcode-container">
+        <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/BARCODE.png " alt="Barcode Elektronik">
+        <div class="barcode-text">KETUA PERGUNU SITUBONDO</div>
+      </div>
+    </div>
   </div>
 
-  <!-- Tombol -->
-  <button id="printBtn" onclick="window.print()">Cetak Sertifikat</button>
-  <a href="index.html" id="restartBtn">Ulangi Ujian</a>
+  <button class="btn-print" id="printBtn" onclick="window.print()"><i class="fas fa-print"></i> Cetak Sertifikat</button>
+  <a href="index.html" class="restart-btn"><i class="fas fa-redo"></i> Ulangi Ujian</a>
 
   <!-- Audio -->
   <audio id="applauseSound" src="assets/audio/applause.mp3" preload="auto"></audio>
 
-  <!-- Script Otentikasi -->
+  <!-- Script -->
   <script src="js/auth.js"></script>
-
-  <!-- Script Hasil Ujian -->
-  <script>
-    window.onload = function () {
-      const currentUser = localStorage.getItem("currentUser");
-      if (currentUser !== "peserta") {
-        window.location.href = "login.html";
-        return;
-      }
-
-      const participantData = JSON.parse(localStorage.getItem("participantData"));
-      const quizResult = JSON.parse(localStorage.getItem("quizResult"));
-
-      if (!participantData || !quizResult) {
-        alert("Tidak ada data ujian. Silakan ikuti ujian terlebih dahulu.");
-        window.location.href = "index.html";
-        return;
-      }
-
-      // Tampilkan hasil ke UI
-      document.getElementById("participantName").textContent = participantData.name.toUpperCase();
-      document.getElementById("scoreDisplay").textContent = `${quizResult.scorePercentage}%`;
-      document.getElementById("watermarkCode").textContent = quizResult.certificateCode;
-      document.getElementById("certificateDate").textContent = `Ditetapkan di : Situbondo, ${new Date().toLocaleDateString("id-ID", { day: 'numeric', month: 'long', year: 'numeric' })}`;
-    };
-  </script>
+  <script src="js/result.js"></script>
 </body>
 </html>
