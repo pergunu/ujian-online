@@ -1,42 +1,42 @@
 // Konfigurasi Aplikasi
-const AppConfig = {
+export const Config = {
     // Pengaturan Umum
-    appName: "Ujian Pergunu",
-    organization: "PERGUNU SITUBONDO",
-    defaultPassword: "65614222",
+    examCode: "KODEUJIAN12345",
+    adminPassword: "65614222",
     
-    // Pengaturan Kategori
-    enabledCategories: {
-        pelajar: true,
-        umum: true,
-        subcategories: {
-            pelajar: {
-                ipa: true,
-                ips: true,
-                matematika: true,
-                agama: true,
-                ppkn: true,
-                sejarah: true,
-                bahasa_indonesia: true,
-                bahasa_inggris: true
-            },
-            umum: {
-                logika: true
+    // Pengaturan Waktu
+    examDuration: 90, // menit
+    
+    // Pengaturan Audio
+    audioVolume: 1.0,
+    
+    // Daftar Kategori
+    categories: {
+        pelajar: {
+            label: "Pelajar",
+            subcategories: {
+                ipa: "IPA",
+                ips: "IPS",
+                matematika: "Matematika",
+                agama: "Agama",
+                ppkn: "PPKN",
+                sejarah: "Sejarah",
+                bahasa_indonesia: "Bahasa Indonesia",
+                bahasa_inggris: "Bahasa Inggris"
+            }
+        },
+        umum: {
+            label: "Umum",
+            subcategories: {
+                logika: "Ujian Logika"
             }
         }
     },
     
-    // Pengaturan Waktu
-    defaultQuizTime: 90, // menit
-    adhanInterval: 2 * 60 * 60 * 1000, // 2 jam (untuk demo)
-    
-    // Pengaturan Audio
-    defaultVolume: 1.0,
-    
-    // API Endpoints (jika ada)
-    apiBaseUrl: "",
-    aiQuestionGeneratorEndpoint: ""
+    // Level Kesulitan
+    levels: {
+        mudah: "Mudah",
+        sedang: "Sedang",
+        sulit: "Sulit"
+    }
 };
-
-// Ekspor konfigurasi
-export default AppConfig;
