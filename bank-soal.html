@@ -234,5 +234,13 @@
 
   <!-- JavaScript -->
   <script src="js/bank.js"></script>
+  <script>
+  window.onload = function () {
+    const currentUser = localStorage.getItem("currentUser");
+    if (currentUser !== "bankSoal") {
+      window.location.href = "login.html";
+    }
+  };
+</script>
 </body>
 </html>
