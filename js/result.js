@@ -1,19 +1,15 @@
-// Ambil data dari localStorage
 const participantData = JSON.parse(localStorage.getItem("participantData"));
 const quizResult = JSON.parse(localStorage.getItem("quizResult")) || { correct: 0, wrong: 0, skipped: 0 };
 
-// Hitung total soal dan persentase
 const totalQuestions = quizResult.correct + quizResult.wrong + quizResult.skipped;
 const percentage = totalQuestions > 0 ? Math.round((quizResult.correct / totalQuestions) * 100) : 0;
 
-// Update UI
 if (participantData) {
   document.getElementById("participantName").textContent = participantData.name.toUpperCase();
 }
 
 document.getElementById("scoreDisplay").textContent = `${percentage}%`;
 
-// Generate kode sertifikat
 const now = new Date();
 const dateStr = now.getDate().toString().padStart(2, '0') +
                 (now.getMonth() + 1).toString().padStart(2, '0') +
@@ -34,14 +30,11 @@ if (participantData.status === "pelajar") {
   subcategoryText = "UMUM";
 }
 
-const watermarkCode = `${participantData.name.toUpperCase()}/${categoryText}/${subcategoryText}/${
-  dateStr}/${uniqueCode}/PERGUNU-STB`;
+const watermarkCode = `${participantData.name.toUpperCase()}/${categoryText}/${subcategoryText}/${dateStr}/${uniqueCode}/PERGUNU-STB`;
 document.getElementById("watermarkCode").textContent = watermarkCode;
 
-// Set tanggal cetak
 document.getElementById("certificateDate").textContent = `Ditetapkan di : Situbondo, ${now.toLocaleDateString("id-ID", { day: 'numeric', month: 'long', year: 'numeric' })}`;
 
-// Kalimat motivasi berdasarkan nilai
 const messageElement = document.getElementById("resultsMessage");
 if (percentage >= 80) {
   messageElement.innerHTML = `<p>SEMPURNA! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini!</p>`;
@@ -55,18 +48,16 @@ if (percentage >= 80) {
   messageElement.innerHTML = `<p>TERUS BERLATIH! Setiap kesalahan adalah kesempatan untuk belajar lebih baik lagi.</p>`;
 }
 
-// Fungsi putar suara
 function playSound(soundId) {
   const sound = document.getElementById(soundId);
-  sound.currentTime = 0;
   try {
+    sound.currentTime = 0;
     sound.play();
   } catch (e) {
     console.error("Gagal memainkan suara:", e);
   }
 }
 
-// Event listener tombol cetak
 document.getElementById("printBtn").addEventListener("click", () => {
   window.print();
 });
