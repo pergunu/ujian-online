@@ -1,35 +1,83 @@
-import { Config } from '../config.js';
-import { Quiz } from './quiz-engine.js';
+.admin-overlay,
+.admin-login,
+.admin-panel {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
 
-export const Admin = (() => {
-    // Elemen DOM
-    const adminOverlay = document.getElementById('adminOverlay');
-    const adminLogin = document.getElementById('adminLogin');
-    const adminPanel = document.getElementById('adminPanel');
-    
-    // Fungsi-fungsi admin
-    const toggleAdminPanel = () => {
-        adminOverlay.style.display = 'block';
-        adminLogin.style.display = 'block';
-    };
-    
-    const handleAdminLogin = (password) => {
-        if (password === Config.adminPassword) {
-            adminLogin.style.display = 'none';
-            adminPanel.style.display = 'block';
-            loadQuestions();
-        }
-    };
-    
-    const loadQuestions = () => {
-        // Implementasi muat pertanyaan untuk admin
-    };
-    
-    // API publik
-    return {
-        init: () => {
-            document.getElementById('adminBtn').addEventListener('click', toggleAdminPanel);
-            // Event listener lainnya
-        }
-    };
-})();
+.admin-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.admin-panel {
+    background: white;
+    padding: 2rem;
+    margin: auto;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.admin-title {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--dark);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 0.8rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+}
+
+.question-list {
+    margin-top: 2rem;
+}
+
+.question-item {
+    background: #fff;
+    border: 1px solid #ced4da;
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+}
+
+.question-item strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--primary-dark);
+}
+
+.delete-question {
+    margin-left: auto;
+    margin-top: 0.5rem;
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+    border-radius: var(--radius-sm);
+}
