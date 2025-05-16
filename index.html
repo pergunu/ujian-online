@@ -2,27 +2,21 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PERGUNU SMART - Ujian Online</title>
-
-  <!-- Favicon -->
-  <link rel="icon" href="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png " type="image/png"/>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome Icons -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&family=Playfair+Display&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " />
 
-  <!-- CSS Styles -->
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-
-  <!-- ✨ Opening Screen -->
+<body onload="checkAuth()">
+  
+  <!-- Opening Screen -->
   <section class="opening-screen active">
-    <div class="stars"></div>
-    <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png " alt="Logo Pergunu" class="opening-logo" />
+    <img src="assets/images/logo.png" alt="Logo Pergunu" class="opening-logo" />
     <h1 class="opening-title">Selamat Datang di PERGUNU SMART</h1>
     <p class="opening-subtitle">Aplikasi Ujian Online Terbaik dari Pergunu Situbondo</p>
     <p class="opening-message">
@@ -33,8 +27,8 @@
     <button id="continueBtn" class="login-btn">Lanjutkan</button>
   </section>
 
-  <!-- 📄 Terms & Conditions -->
-  <section class="terms-container" id="termsSection">
+  <!-- Terms & Conditions -->
+  <section class="terms-container" id="termsSection" style="display: none;">
     <h2 class="form-title">Syarat & Ketentuan</h2>
     <p class="form-subtitle">Harap baca dan centang kotak berikut sebelum melanjutkan:</p>
     <ul class="terms-list">
@@ -51,10 +45,10 @@
     <button id="nextToForm" class="btn btn-primary" disabled><i class="fas fa-arrow-right"></i> Lanjut ke Form Data</button>
   </section>
 
-  <!-- 📝 Participant Data Form -->
+  <!-- Participant Form -->
   <section class="form-container" id="participantForm" style="display: none;">
     <div class="form-header">
-      <img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png " alt="Logo Pergunu" class="form-logo" />
+      <img src="assets/images/logo.png" alt="Logo Pergunu" class="form-logo" />
       <h2 class="form-title">Data Peserta Ujian</h2>
       <p class="form-subtitle">Silakan isi data diri Anda dengan lengkap.</p>
     </div>
@@ -134,9 +128,7 @@
   </section>
 
   <!-- JavaScript -->
+  <script src="js/auth.js"></script>
   <script src="js/main.js"></script>
-  
-<!-- index.html & quiz.html -->
-<script src="js/auth.js"></script>
 </body>
 </html>
