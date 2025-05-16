@@ -21,6 +21,7 @@ function playAdhan() {
   }, 60000); // Durasi adzan (sesuaikan dengan durasi file mp3 Anda)
 }
 
+<script src="js/auth.js"></script>
 // Tutup overlay adzan
 function closeAdhanOverlay() {
   const adhanOverlay = document.getElementById("adhanOverlay");
