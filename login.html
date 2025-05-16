@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - PERGUNU SMART</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " />
+
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .login-container {
+      max-width: 500px;
+      margin: 4rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .login-title {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ced4da;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+    }
+
+    .btn-login {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .btn-login:hover {
+      background: var(--primary-dark);
+    }
+
+    .role-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .role-button {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .role-peserta { background: #4cc9f0; color: white; }
+    .role-admin { background: #f72585; color: white; }
+    .role-bank { background: #4361ee; color: white; }
+
+    .role-button:hover {
+      opacity: 0.9;
+    }
+
+    .logout-btn {
+      display: block;
+      margin-top: 2rem;
+      background: var(--danger);
+      color: white;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: center;
+      width: 100%;
+    }
+
+    .logout-btn:hover {
+      background: #e63946;
+    }
+  </style>
+</head>
+<body class="quiz-body">
+
+  <div class="login-container">
+    <h2 class="login-title">Login ke PERGUNU SMART</h2>
+
+    <div class="form-group">
+      <label for="password-peserta" class="form-label">Masukkan Password</label>
+      <input type="password" id="password-peserta" class="form-control" placeholder="Kode Login" />
+      <button class="btn-login" onclick="login('peserta')"><i class="fas fa-user"></i> Masuk sebagai Peserta</button>
+    </div>
+
+    <hr/>
+
+    <div class="form-group">
+      <label class="form-label">Atau masuk sebagai:</label>
+      <div class="role-buttons">
+        <button class="role-button role-admin" onclick="login('admin')">Admin Panel</button>
+        <button class="role-button role-bank" onclick="login('bankSoal')">Bank Soal</button>
+      </div>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/auth.js"></script>
+</body>
+</html>
