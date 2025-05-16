@@ -195,3 +195,5 @@ document.getElementById("generateQuestionBtn").addEventListener("click", async (
     document.getElementById("generateQuestionBtn").disabled = false;
   }
 });
+
+<script src="js/auth.js"></script>
