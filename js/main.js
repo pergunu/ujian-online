@@ -63,3 +63,5 @@ document.getElementById("dataForm").addEventListener("submit", function (e) {
   localStorage.setItem("participantData", JSON.stringify(participantData));
   window.location.href = "quiz.html";
 });
+
+<script src="js/auth.js"></script>
