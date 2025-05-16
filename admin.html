@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - PERGUNU SMART</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&family=Playfair+Display&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " />
+
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .admin-panel {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .admin-title {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ced4da;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+    }
+
+    .btn-admin {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-admin:hover {
+      background: var(--primary-dark);
+    }
+
+    .password-section {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #f1f3f5;
+      border-radius: var(--radius-sm);
+    }
+
+    .category-toggle {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .toggle-btn {
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: center;
+      font-weight: bold;
+      transition: var(--transition);
+    }
+
+    .toggle-on {
+      background: var(--success);
+      color: white;
+    }
+
+    .toggle-off {
+      background: var(--danger);
+      color: white;
+    }
+  </style>
+</head>
+<body class="quiz-body">
+
+  <!-- Admin Button in Floating Menu -->
+  <div class="floating-btn admin-btn" id="adminBtn">
+    <i class="fas fa-cog"></i><span class="tooltip">Panel Admin</span>
+  </div>
+
+  <!-- Admin Overlay -->
+  <div class="admin-overlay" id="adminOverlay"></div>
+
+  <!-- Admin Login -->
+  <div class="admin-panel" id="adminLogin">
+    <h2 class="admin-title"><i class="fas fa-lock"></i> Admin Login</h2>
+    <div class="form-group">
+      <label for="adminPassword" class="form-label">Masukkan Password Admin</label>
+      <input type="password" id="adminPassword" class="form-control" placeholder="Password Admin" />
+    </div>
+    <button class="btn-admin" id="adminLoginBtn"><i class="fas fa-sign-in-alt"></i> Masuk</button>
+  </div>
+
+  <!-- Admin Main Panel -->
+  <div class="admin-panel" id="adminPanel" style="display: none;">
+    <h2 class="admin-title"><i class="fas fa-cog"></i> Kontrol Panel Admin</h2>
+
+    <!-- Ganti Password -->
+    <div class="password-section">
+      <h3><i class="fas fa-key"></i> Ganti Password</h3>
+      <div class="form-group">
+        <label for="currentPassword" class="form-label">Password Lama</label>
+        <input type="password" id="currentPassword" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="newPassword" class="form-label">Password Baru</label>
+        <input type="password" id="newPassword" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword" class="form-label">Konfirmasi Password</label>
+        <input type="password" id="confirmPassword" class="form-control" />
+      </div>
+      <button class="btn-admin" id="changePasswordBtn"><i class="fas fa-save"></i> Simpan Password</button>
+    </div>
+
+    <!-- Enable/Disable Ujian -->
+    <div class="password-section">
+      <h3><i class="fas fa-toggle-on"></i> Aktifkan/Nonaktifkan Kategori Ujian</h3>
+      <div class="category-toggle">
+        <button class="toggle-btn toggle-on" id="enablePelajarBtn">Aktifkan Pelajar</button>
+        <button class="toggle-btn toggle-off" id="disablePelajarBtn">Nonaktifkan Pelajar</button>
+      </div>
+      <div class="category-toggle">
+        <button class="toggle-btn toggle-on" id="enableUmumBtn">Aktifkan Umum</button>
+        <button class="toggle-btn toggle-off" id="disableUmumBtn">Nonaktifkan Umum</button>
+      </div>
+    </div>
+
+    <!-- Atur Timer -->
+    <div class="password-section">
+      <h3><i class="fas fa-clock"></i> Atur Durasi Timer</h3>
+      <div class="form-group">
+        <label for="timerDuration" class="form-label">Durasi Ujian (menit)</label>
+        <input type="number" id="timerDuration" class="form-control" value="90" min="10" />
+      </div>
+      <button class="btn-admin" id="saveTimerBtn"><i class="fas fa-save"></i> Simpan Durasi</button>
+    </div>
+
+    <!-- Tambah Soal -->
+    <div class="password-section">
+      <h3><i class="fas fa-plus-circle"></i> Tambah Soal Manual</h3>
+      <div class="form-group">
+        <label for="newQuestionText" class="form-label">Pertanyaan</label>
+        <textarea id="newQuestionText" class="form-control" rows="3" placeholder="Tulis pertanyaan di sini..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Pilihan Jawaban</label>
+        <input type="text" id="optionA" class="form-control" placeholder="Pilihan A" />
+        <input type="text" id="optionB" class="form-control" placeholder="Pilihan B" />
+        <input type="text" id="optionC" class="form-control" placeholder="Pilihan C" />
+        <input type="text" id="optionD" class="form-control" placeholder="Pilihan D" />
+        <input type="text" id="optionE" class="form-control" placeholder="Pilihan E" />
+      </div>
+      <div class="form-group">
+        <label>Jawaban Benar (A-E)</label>
+        <input type="text" id="correctAnswer" class="form-control" maxlength="1" />
+      </div>
+      <button class="btn-admin" id="addQuestionBtn"><i class="fas fa-plus"></i> Tambah Soal</button>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/admin.js"></script>
+</body>
+</html>
