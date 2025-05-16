@@ -1,8 +1,8 @@
 // Definisi password default
 const defaultCredentials = {
-  peserta: "12345", // KODE LOGIN
-  admin: "65614222", // KODE ADMIN
-  bankSoal: "BANKSOAL-OPENLOCK" // KODE BANK SOAL
+  peserta: "12345",
+  admin: "65614222",
+  bankSoal: "BANKSOAL-OPENLOCK"
 };
 
 let currentUser = null;
@@ -13,7 +13,6 @@ function login(role) {
   const correctPassword = defaultCredentials[role];
 
   if (inputPassword === correctPassword) {
-    currentUser = role;
     localStorage.setItem("currentUser", role);
     redirectToDashboard(role);
   } else {
@@ -25,24 +24,50 @@ function login(role) {
 function redirectToDashboard(role) {
   switch (role) {
     case "peserta":
-      window.location.href = "index.html"; // Halaman utama peserta
+      window.location.href = "index.html";
       break;
     case "admin":
-      window.location.href = "admin.html"; // Admin panel
+      window.location.href = "admin.html";
       break;
     case "bankSoal":
-      window.location.href = "bank-soal.html"; // Bank soal
+      window.location.href = "bank-soal.html";
       break;
     default:
       alert("Role tidak dikenali.");
   }
 }
 
-// Cek apakah pengguna sudah login
+// Cek otomatis saat halaman dimuat
 function checkAuth() {
   currentUser = localStorage.getItem("currentUser");
-  if (!window.location.pathname.includes("login.html") && !currentUser) {
+  const currentPath = window.location.pathname.split("/").pop();
+
+  // Jika bukan login.html dan belum login → redirect
+  if (!["login.html", ""].includes(currentPath) && !currentUser) {
     window.location.href = "login.html";
+  }
+
+  // Jika sudah login, cek apakah sesuai hak akses
+  if (currentPath === "login.html" && currentUser) {
+    redirectToDashboard(currentUser);
+  }
+
+  // Jika halaman admin dan bukan admin → logout
+  if (currentPath === "admin.html" && currentUser !== "admin") {
+    logout();
+  }
+
+  // Jika halaman bank soal dan bukan bankSoal → logout
+  if ((currentPath === "bank-soal.html" || currentPath === "bank.html") && currentUser !== "bankSoal") {
+    logout();
+  }
+
+  // Jika halaman utama tapi bukan peserta → logout
+  if (
+    ["index.html", "quiz.html", "result.html"].includes(currentPath) &&
+    currentUser !== "peserta"
+  ) {
+    logout();
   }
 }
 
