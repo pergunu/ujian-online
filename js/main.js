@@ -74,7 +74,6 @@ document.getElementById("dataForm").addEventListener("submit", function (e) {
   // Simpan ke localStorage (opsional)
   localStorage.setItem("participantData", JSON.stringify(participantData));
 
-  // Lanjut ke menu kategori soal (akan dibuat nanti)
-  alert("Data berhasil disimpan! Aplikasi siap melanjutkan ke ujian.");
+  // Lanjut ke menu kategori soal
   window.location.href = "quiz.html"; // Redirect ke halaman ujian selanjutnya
 });
