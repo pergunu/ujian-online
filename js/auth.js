@@ -47,22 +47,20 @@ function checkAuth() {
     window.location.href = "login.html";
   }
 
-  // Jika sudah login, cek apakah sesuai hak akses
+  // Jika sudah login dan di login.html → arahkan ke dashboard
   if (currentPath === "login.html" && currentUser) {
     redirectToDashboard(currentUser);
   }
 
-  // Jika halaman admin dan bukan admin → logout
+  // Validasi akses halaman
   if (currentPath === "admin.html" && currentUser !== "admin") {
     logout();
   }
 
-  // Jika halaman bank soal dan bukan bankSoal → logout
-  if ((currentPath === "bank-soal.html" || currentPath === "bank.html") && currentUser !== "bankSoal") {
+  if ((currentPath === "bank-soal.html") && currentUser !== "bankSoal") {
     logout();
   }
 
-  // Jika halaman utama tapi bukan peserta → logout
   if (
     ["index.html", "quiz.html", "result.html"].includes(currentPath) &&
     currentUser !== "peserta"
