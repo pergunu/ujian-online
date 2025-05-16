@@ -2,15 +2,152 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <title>Ujian Online - PERGUNU SMART</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Ujian Online - PERGUNU SMART</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&family=Playfair+Display&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " />
 
-  <!-- CSS -->
+  <!-- CSS Styles -->
   <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    .quiz-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 1rem;
+    }
+
+    .quiz-title {
+      font-size: 1.8rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .quiz-info {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .quiz-info-item {
+      background: #f1f3f5;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .question-box {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      background: #ffffff;
+      border-left: 5px solid var(--primary);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow);
+    }
+
+    .question-text {
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option {
+      padding: 0.75rem 1.25rem;
+      text-align: left;
+      background: #e9ecef;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .option.correct {
+      background: #d1ffd8 !important;
+      color: green;
+    }
+
+    .option.wrong {
+      background: #ffe5e5 !important;
+      color: red;
+    }
+
+    .quiz-controls {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      background: var(--gray);
+    }
+
+    .btn-warning {
+      background: #f72585;
+    }
+
+    .btn-success {
+      background: #4cc9f0;
+    }
+
+    .stats {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      color: var(--dark);
+    }
+
+    /* Floating Buttons */
+    .floating-btn {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(67, 97, 238, 0.3);
+      z-index: 1000;
+    }
+
+    .floating-btn:hover {
+      transform: translateY(-3px);
+      background: var(--primary-dark);
+    }
+  </style>
 </head>
 <body onload="checkAuth()" class="quiz-body">
 
@@ -28,8 +165,10 @@
       </div>
     </div>
 
+    <!-- Question Box -->
     <div class="question-box">
       <p class="question-text" id="questionText">Soal belum dimuat...</p>
+
       <div class="options">
         <button class="option" data-answer="A">A</button>
         <button class="option" data-answer="B">B</button>
@@ -45,17 +184,30 @@
       </div>
     </div>
 
+    <!-- Statistics -->
     <div class="stats">
-      <p>Benar: <span id="correctCount">0</span> | Salah: <span id="wrongCount">0</span> | Alpa: <span id="skippedCount">0</span></p>
+      Benar: <span id="correctCount">0</span> |
+      Salah: <span id="wrongCount">0</span> |
+      Alpa: <span id="skippedCount">0</span>
     </div>
-
-    <!-- Audio -->
-    <audio id="adhanSound" src="assets/audio/adhan.mp3" preload="auto"></audio>
   </section>
+
+  <!-- Tombol Mengambang -->
+  <div class="floating-btn admin-btn" id="adminBtn" title="Bank Soal">
+    <i class="fas fa-book-open"></i>
+  </div>
+
+  <div class="floating-btn bank-btn" id="bankBtn" title="Share Website">
+    <i class="fas fa-share-alt"></i>
+  </div>
+
+  <!-- Audio -->
+  <audio id="applauseSound" src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/audio/applause.mp3 " preload="auto"></audio>
+  <audio id="adhanSound" src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/audio/adhan.mp3 " preload="auto"></audio>
+  <audio id="backgroundMusic" src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/audio/background.mp3 " loop></audio>
 
   <!-- JavaScript -->
   <script src="js/auth.js"></script>
   <script src="js/quiz.js"></script>
-  <script src="js/adhan-realtime.js"></script>
 </body>
 </html>
