@@ -22,6 +22,9 @@ function loadQuestionsFromStorage() {
     }
   };
 
+  localStorage.setItem("quizResult", JSON.stringify(score));
+window.location.href = "result.html";
+
   // Ambil data peserta
   const participantData = JSON.parse(localStorage.getItem("participantData"));
   let category = "pelajar";
