@@ -1,3 +1,4 @@
+// js/config.js
 export const Config = {
     examCode: "KODEUJIAN12345",
     adminPassword: "65614222",
@@ -24,5 +25,28 @@ export const Config = {
             }
         }
     },
-    levels: ["mudah", "sedang", "sulit"]
+    levels: ["mudah", "sedang", "sulit"],
+    questions: {
+        pelajar: {
+            ipa: {
+                mudah: [
+                    {
+                        question: "Organ yang memompa darah adalah...",
+                        options: ["Jantung", "Paru-paru", "Hati", "Ginjal"],
+                        answer: 0,
+                        explanation: "Jantung adalah organ yang bertugas memompa darah."
+                    }
+                ],
+                sedang: [],
+                sulit: []
+            }
+        },
+        umum: {
+            logika: {
+                mudah: [],
+                sedang: [],
+                sulit: []
+            }
+        }
+    }
 };
