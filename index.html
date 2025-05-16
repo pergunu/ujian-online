@@ -1,79 +1,42 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ujian Pergunu - Sistem Ujian Lengkap</title>
-    <link rel="icon" href="assets/images/logo.png" type="image/png">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Great+Vibes&family=Dancing+Script:wght@400;700&family=Alex+Brush&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/quiz.css">
-    <link rel="stylesheet" href="css/admin.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    
-    <!-- External Libs -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ujian Pergunu</title>
+    <link rel="icon" href="assets/images/logo.png" type="image/png"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/quiz.css"/>
+    <link rel="stylesheet" href="css/admin.css"/>
+    <link rel="stylesheet" href="css/responsive.css"/>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js "></script>
 </head>
 <body>
-    <!-- Star Background -->
-    <div class="stars" id="stars"></div>
 
-    <!-- Login Screen -->
-    <div class="login-screen" id="loginScreen">
-        <div class="login-container">
-            <h2 class="login-title">Selamat Datang di Ujian Pergunu</h2>
-            <p class="login-description">
-                Selamat datang di platform ujian kompetensi Pergunu Situbondo...
-            </p>
-            <input type="password" id="examCode" class="login-input" placeholder="Masukkan Kode Login Ujian">
-            <button class="login-btn" id="loginBtn">Masuk</button>
-        </div>
+<!-- HTML Content -->
+<div id="loginScreen" class="login-screen">
+    <div class="login-container">
+        <img src="assets/images/logo.png" alt="Logo Pergunu" class="form-logo"/>
+        <h1 class="form-title">Ujian Online Pergunu Situbondo</h1>
+        <p>Masukkan kode ujian untuk melanjutkan</p>
+        <input type="text" id="examCode" placeholder="KODE UJIAN" required/>
+        <button id="loginBtn" class="btn btn-primary">Masuk</button>
     </div>
+</div>
 
-    <!-- Opening Animation -->
-    <div class="opening-screen" id="openingScreen">
-        <!-- Konten opening screen -->
-    </div>
-    
-    <!-- Main Content -->
-    <main class="main-container">
-        <!-- Participant Form -->
-        <form id="participantForm" class="participant-form">
-            <!-- Form input peserta -->
-        </form>
-        
-        <!-- Quiz Container -->
-        <div id="quizContainer" class="quiz-container">
-            <!-- Tampilan quiz -->
-        </div>
-        
-        <!-- Results Container -->
-        <div id="resultsContainer" class="results-container">
-            <!-- Tampilan hasil -->
-        </div>
-    </main>
-    
-    <!-- Floating Buttons -->
-    <div class="floating-buttons" id="floatingButtons">
-        <!-- Tombol-tombol floating -->
-    </div>
-    
-    <!-- Admin Panels -->
-    <div class="admin-overlay" id="adminOverlay"></div>
-    <div class="admin-panel" id="adminLogin"></div>
-    <div class="admin-panel" id="adminPanel"></div>
-    
-    <!-- Audio Elements -->
-    <audio id="openingSound" preload="auto" src="assets/audio/opening.mp3"></audio>
-    <!-- Audio lainnya -->
-    
-    <!-- JavaScript -->
-    <script type="module" src="js/main.js"></script>
+<!-- HALAMAN UTAMA DAN SETERUSNYA -->
+
+<!-- AUDIO -->
+<audio id="openingSound"><source src="assets/audio/opening.mp3" type="audio/mpeg"/></audio>
+<audio id="welcomeSound"><source src="assets/audio/welcome.mp3" type="audio/mpeg"/></audio>
+<audio id="backgroundMusic" loop><source src="assets/audio/background.mp3" type="audio/mpeg"/></audio>
+<audio id="quizMusic" loop><source src="assets/audio/quiz-music.mp3" type="audio/mpeg"/></audio>
+<audio id="correctSound"><source src="assets/audio/correct.mp3" type="audio/mpeg"/></audio>
+<audio id="wrongSound"><source src="assets/audio/wrong.mp3" type="audio/mpeg"/></audio>
+<audio id="applauseSound"><source src="assets/audio/applause.mp3" type="audio/mpeg"/></audio>
+<audio id="adhanSound"><source src="assets/audio/adhan.mp3" type="audio/mpeg"/></audio>
+
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
