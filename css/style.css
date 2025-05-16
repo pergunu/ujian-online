@@ -5,6 +5,11 @@
   box-sizing: border-box;
 }
 
+window.addEventListener('load', () => {
+    document.getElementById('openingScreen').classList.add('active');
+    playQuizMusic(); // Aktifkan musik latar jika sudah diperbolehkan
+});
+
 :root {
   --primary: #4361ee;
   --primary-light: #4895ef;
