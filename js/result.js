@@ -61,3 +61,5 @@ function playSound(soundId) {
 document.getElementById("printBtn").addEventListener("click", () => {
   window.print();
 });
+
+<script src="js/auth.js"></script>
