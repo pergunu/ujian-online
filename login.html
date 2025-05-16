@@ -2,16 +2,12 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - PERGUNU SMART</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " />
-
-  <!-- CSS Styles -->
   <link rel="stylesheet" href="css/style.css" />
   <style>
     .login-container {
@@ -28,39 +24,6 @@
       margin-bottom: 1.5rem;
       color: var(--primary-dark);
       text-align: center;
-    }
-
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border: 1px solid #ced4da;
-      border-radius: var(--radius-sm);
-      font-size: 1rem;
-    }
-
-    .btn-login {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.75rem 1.25rem;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      width: 100%;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .btn-login:hover {
-      background: var(--primary-dark);
     }
 
     .role-buttons {
@@ -84,10 +47,6 @@
     .role-admin { background: #f72585; color: white; }
     .role-bank { background: #4361ee; color: white; }
 
-    .role-button:hover {
-      opacity: 0.9;
-    }
-
     .logout-btn {
       display: block;
       margin-top: 2rem;
@@ -100,13 +59,9 @@
       text-align: center;
       width: 100%;
     }
-
-    .logout-btn:hover {
-      background: #e63946;
-    }
   </style>
 </head>
-<body class="quiz-body" onload="checkAuth()">
+<body onload="checkAuth()">
   <div class="login-container">
     <h2 class="login-title">Login ke PERGUNU SMART</h2>
 
@@ -129,7 +84,6 @@
     <button class="logout-btn" onclick="logout()">Logout</button>
   </div>
 
-  <!-- JavaScript -->
   <script src="js/auth.js"></script>
 </body>
 </html>
