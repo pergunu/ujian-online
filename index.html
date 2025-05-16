@@ -142,6 +142,15 @@
   <source src="assets/audio/background.mp3" type="audio/mpeg">
 </audio>
 
+document.body.addEventListener('click', function enableAudioOnce() {
+    document.body.removeEventListener('click', enableAudioOnce);
+    const openingSound = document.getElementById('openingSound');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    
+    openingSound.play().catch(() => {});
+    backgroundMusic.play().catch(() => {});
+}, { once: true });
+      
       <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan & Ikuti Ujian</button>
     </form>
   </section>
