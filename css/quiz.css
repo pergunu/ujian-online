@@ -1,0 +1,38 @@
+/* Style khusus untuk halaman quiz */
+.quiz-container {
+    width: 100%;
+    height: 100vh;
+    padding: 2.5rem 1.5rem;
+    background-image: linear-gradient(to bottom right, rgba(248, 249, 250, 0.8), rgba(233, 236, 239, 0.9));
+    position: relative;
+}
+
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.question-container {
+    max-width: 900px;
+    margin: 0 auto 2.5rem;
+}
+
+.option {
+    padding: 1.5rem;
+    border: 1px solid var(--light-gray);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.option.selected {
+    background: var(--primary);
+    color: white;
+}
