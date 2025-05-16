@@ -1,52 +1,57 @@
-// js/modules/results.js
-import { createConfetti } from '../utilities.js';
+// js/modules/audio.js
+export const AudioManager = (() => {
+    let soundEffectsEnabled = true;
 
-export const Results = (() => {
-    const showResults = () => {
-        const scoreElement = document.getElementById('scoreDisplay');
-        const messageElement = document.getElementById('resultsMessage');
-        const participantName = document.getElementById('name').value || 'Peserta';
-        const percentage = calculateScore();
+    const init = () => {
+        const musicToggle = document.getElementById('musicToggle');
+        const quizMusic = document.getElementById('quizMusic');
 
-        scoreElement.textContent = `${percentage}%`;
-
-        let message = '';
-        if (percentage >= 80) {
-            message = `<p>SEMPURNA! ${participantName} sangat luar biasa!</p>`;
-            createConfetti();
-        } else if (percentage >= 60) {
-            message = `<p>BAIK SEKALI! ${participantName} memiliki pemahaman solid.</p>`;
-            createConfetti();
-        } else {
-            message = `<p>TERUS BERLATIH! Setiap kesalahan adalah pelajaran berharga.</p>`;
+        if (musicToggle) {
+            musicToggle.addEventListener('click', () => {
+                soundEffectsEnabled = !soundEffectsEnabled;
+                if (!soundEffectsEnabled) {
+                    quizMusic.pause();
+                } else {
+                    quizMusic.play().catch(() => {});
+                }
+            });
         }
 
-        messageElement.innerHTML = message;
-        document.getElementById('quizContainer').style.display = 'none';
-        document.getElementById('resultsContainer').style.display = 'block';
-        document.getElementById('floatingButtons').style.display = 'none';
+        // Aktifkan autoplay suara saat klik pertama kali
+        document.body.addEventListener('click', enableAudio, { once: true });
     };
 
-    const calculateScore = () => {
-        const questions = Quiz.getQuestions();
-        const total = questions.length;
-        const correctCount = questions.filter(q => q.isCorrect).length;
-        return Math.round((correctCount / total) * 100);
+    const enableAudio = () => {
+        if (soundEffectsEnabled) {
+            playSound('openingSound');
+        }
     };
 
-    const printCertificate = () => {
-        window.print();
+    const playSound = (soundId) => {
+        if (!soundEffectsEnabled) return;
+        const sound = document.getElementById(soundId);
+        try {
+            const promise = sound.play();
+            if (promise !== undefined) {
+                promise.catch(error => {
+                    console.log("Autoplay prevented:", error);
+                });
+            }
+        } catch (error) {
+            console.log("Error playing sound:", error);
+        }
     };
 
-    const restartQuiz = () => {
-        location.reload();
+    const playQuizMusic = () => {
+        const quizMusic = document.getElementById('quizMusic');
+        quizMusic.loop = true;
+        quizMusic.volume = 0.5;
+        quizMusic.play().catch(() => {});
     };
 
     return {
-        init: () => {
-            document.getElementById('printBtn')?.addEventListener('click', printCertificate);
-            document.getElementById('restartBtn')?.addEventListener('click', restartQuiz);
-        },
-        showResults
+        init,
+        playSound,
+        playQuizMusic
     };
 })();
