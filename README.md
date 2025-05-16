@@ -4,37 +4,116 @@
 
 Quiz interaktif dengan desain elegan berbasis monitor virtual untuk kebutuhan edukasi, kini dengan fitur lebih lengkap dan konten lebih kaya.
 
-## 🌟 Fitur Utama
+Aplikasi Ujian Interaktif Modern untuk Pendidikan Berkualitas
 
-### 💻 Tampilan Inovatif
-- **"Layar Monitor Profesional"** dengan efek CRT yang disempurnakan
-- **Desain Responsif** (PC/Tablet/Mobile)
-- **Ikon Kategori** eksklusif untuk semua mata pelajaran
+🌟 Fitur Utama
+💻 Tampilan Inovatif
+Virtual Monitor CRT dengan efek retro yang disempurnakan
 
-### 🎯 Sistem Kuis
-- **5 Opsi Jawaban** (A-E) + Auto-Koreksi cerdas
-- **3 Tingkat Kesulitan**: Mudah, Sedang, Sulit
-- **Timer 60 menit** dengan peringatan waktu
-- **Notifikasi Waktu Sholat** otomatis
-- **Efek Suara & Animasi** interaktif
+Desain Responsif sempurna untuk PC/Tablet/Smartphone
 
-### 📚 Konten Lengkap
-- **12 Kategori**:
-  - Umum (SD/SMP/SMA/Umum)
-  - Pelajar (IPA, IPS, Matematika, Bahasa Indonesia, Bahasa Inggris, Sejarah, PPKN, Agama)
-  - Logika
-  - Pemerintah
-  - Swasta
+Ikon Kategori Eksklusif untuk semua mata pelajaran
 
-### 🔧 Admin Panel
-- **Manajemen Soal** mudah (Password: `PERGUNU2025`)
-- **Import/Export** data soal
-- **Statistik Penggunaan**
+Animasi Partikel & Transisi yang smooth
 
-🎯 Sistem Kuis
-5 Opsi Jawaban (A-E) + Auto-Koreksi cerdas
-3 Tingkat Kesulitan : Mudah, Sedang, Sulit
-Timer 60 menit dengan peringatan waktu
-Notifikasi Waktu Sholat otomatis
-Efek Suara & Animasi interaktif
+🎯 Sistem Kuis Canggih
+✔ 5 Opsi Jawaban (A-E) dengan sistem penilaian cerdas
+✔ 3 Level Kesulitan:
 
+🟢 Mudah (Pemula)
+
+🟡 Sedang (Menengah)
+
+🔴 Sulit (Expert)
+✔ Timer 90 menit dengan:
+
+⏰ Countdown progresif
+
+🔔 Peringatan waktu 15 menit terakhir
+
+🕌 Integrasi waktu sholat otomatis
+
+📚 Konten Super Lengkap
+12 Kategori Unggulan:
+
+Pelajar:
+
+🔬 IPA (Fisika, Kimia, Biologi)
+
+🌍 IPS (Ekonomi, Geografi, Sosiologi)
+
+➗ Matematika (Aljabar, Geometri, Kalkulus)
+
+📜 Bahasa & Sastra (Indonesia/Inggris)
+
+🕌 Pendidikan Agama
+
+🏛 PPKN & Sejarah Nasional
+
+Umum:
+
+🧠 Tes Logika & Penalaran
+
+🏛 Pengetahuan Pemerintahan
+
+💼 Dunia Kerja & Profesi
+
+🔧 Admin Panel Professional
+🔐 Login Admin (Password: PERGUNU2025) dengan:
+
+📊 Dashboard Statistik Real-time
+
+✏️ Editor Soal WYSIWYG
+
+📥 Import/Export Excel (Format .xlsx)
+
+📈 Analisis Hasil Ujian
+
+🎚 Pengaturan Sistem Lengkap
+
+🎧 Immersive Experience
+🔊 Efek Suara HD (Benar/Salah/Notifikasi)
+
+🎼 Musik Latar Tematik
+
+✨ Animasi Konfetti saat nilai sempurna
+
+🖨 Cetak Sertifikat profesional
+🚀 Cara Menggunakan
+Login Peserta:
+
+Masukkan kode ujian yang diberikan
+
+Isi data diri lengkap
+
+Pilih Mode Ujian:
+
+Tentukan kategori dan tingkat kesulitan
+
+Mulai Ujian:
+
+Baca soal dengan teliti
+
+Pilih jawaban paling tepat
+
+Manfaatkan waktu dengan baik
+
+Hasil & Sertifikat:
+
+Dapatkan analisis performa
+
+Unduh sertifikat digital
+
+📜 Lisensi
+Proyek ini dilisensikan dibawah MIT License
+
+✨ Tips Pro:
+
+"Gunakan mode layar penuh (F11) untuk pengalaman ujian yang lebih imersif!"
+
+Kontak Developer:
+📧 pergunusitubondo@gmail.com atau pergunuhelp@gmail.com
+📞 +6285647709114
+
+"Membangun Generasi Cerdas Berakhlak Mulia"
+#PergunuMendidikBangsa
