@@ -1,55 +1,27 @@
-import AppConfig from './config.js';
-import { initQuiz, startQuiz } from './quiz.js';
-import { initAdminPanel } from './admin.js';
-import { createStars, renderCertificate } from './ui.js';
-import { initAudio, playSound, toggleBackgroundMusic } from './audio.js';
+import { Config } from './config.js';
+import { Auth } from './modules/auth.js';
+import { Quiz } from './modules/quiz-engine.js';
+import { QuizUI } from './modules/quiz-ui.js';
+import { Admin } from './modules/admin.js';
+import { AudioManager } from './modules/audio.js';
+import { Results } from './modules/results.js';
+import { initStars } from './modules/utilities.js';
 
-// Inisialisasi aplikasi saat DOM siap
-document.addEventListener('DOMContentLoaded', function() {
+// Inisialisasi Aplikasi
+document.addEventListener('DOMContentLoaded', () => {
     // Inisialisasi komponen
-    createStars();
-    initAudio();
-    initQuiz();
-    initAdminPanel();
+    initStars();
+    AudioManager.init();
     
-    // Setup event listeners global
-    setupGlobalEventListeners();
+    // Inisialisasi modul
+    Auth.init();
+    Quiz.init();
+    QuizUI.init();
+    Admin.init();
+    Results.init();
     
-    // Set tanggal sertifikat
-    setCertificateDate();
+    // Set default category
+    Quiz.setCategory('pelajar');
+    
+    console.log('Aplikasi Ujian Pergunu telah diinisialisasi');
 });
-
-// Setup event listeners global
-function setupGlobalEventListeners() {
-    // Toggle music
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('#musicToggle')) {
-            toggleBackgroundMusic();
-        }
-    });
-    
-    // Tombol cetak sertifikat
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('#printBtn')) {
-            window.print();
-        }
-    });
-    
-    // Tombol call center
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('#callCenterBtn')) {
-            window.open('https://wa.me/6285647709114', '_blank');
-        }
-    });
-}
-
-// Set tanggal sertifikat
-function setCertificateDate() {
-    const now = new Date();
-    const options = { day: '2-digit', month: 'long', year: 'numeric' };
-    document.getElementById('certificateDate').textContent = 
-        `Ditetapkan di: Situbondo, ${now.toLocaleDateString('id-ID', options)}`;
-}
-
-// Ekspor fungsi yang diperlukan oleh modul lain
-export { playSound, renderCertificate, startQuiz };
