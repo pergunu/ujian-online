@@ -140,3 +140,4 @@ window.onload = () => {
   loadQuestion();
   startTimer(90); // 90 menit
 };
+<img src="https://raw.githubusercontent.com/pergunu/quiz-pergunu/main/assets/images/logo.png " />
