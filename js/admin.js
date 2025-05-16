@@ -130,3 +130,4 @@ document.getElementById("addQuestionBtn").addEventListener("click", () => {
   document.getElementById("optionE").value = "";
   document.getElementById("correctAnswer").value = "";
 });
+<script src="js/auth.js"></script>
