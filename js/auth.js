@@ -61,10 +61,7 @@ function checkAuth() {
     logout();
   }
 
-  if (
-    ["index.html", "quiz.html", "result.html"].includes(currentPath) &&
-    currentUser !== "peserta"
-  ) {
+  if (["index.html", "quiz.html", "result.html"].includes(currentPath) && currentUser !== "peserta") {
     logout();
   }
 }
