@@ -1,31 +1,26 @@
+// js/modules/auth.js
 import { Config } from '../config.js';
-import { AudioManager } from './audio.js';
-import { Quiz } from './quiz-engine.js';
+import { Quiz } from '../quiz-engine.js';
+import { AudioManager } from '../audio.js';
 
 export const Auth = (() => {
-    // Elemen DOM
-    const loginScreen = document.getElementById('loginScreen');
-    const examCodeInput = document.getElementById('examCode');
     const loginBtn = document.getElementById('loginBtn');
-    
-    // Fungsi privat
+    const examCodeInput = document.getElementById('examCode');
+
     const handleLogin = () => {
-        const enteredCode = examCodeInput.value.trim();
-        
-        if (enteredCode === Config.examCode) {
-            AudioManager.play('openingSound');
-            loginScreen.style.display = 'none';
-            Quiz.showOpeningScreen();
+        if (examCodeInput.value === Config.examCode) {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('openingScreen').style.display = 'flex';
+            AudioManager.playSound('openingSound');
         } else {
-            alert('Kode ujian salah! Silakan coba lagi.');
+            alert("Kode ujian salah!");
         }
     };
-    
-    // API publik
+
     return {
         init: () => {
             loginBtn.addEventListener('click', handleLogin);
-            examCodeInput.addEventListener('keypress', (e) => {
+            examCodeInput.addEventListener('keypress', e => {
                 if (e.key === 'Enter') handleLogin();
             });
         }
