@@ -55,6 +55,22 @@
     </div>
   </section>
 
+  <!-- Di dalam <body> -->
+<audio id="adhanSound" src="assets/audio/adhan.mp3" preload="auto"></audio>
+<audio id="quizMusic" src="assets/audio/quiz-music.mp3" preload="auto" loop></audio>
+
+<!-- Overlay Notifikasi Adzan -->
+<div class="adhan-overlay" id="adhanOverlay">
+  <div class="adhan-box">
+    <h3><i class="fas fa-mosque"></i> Waktu Sholat Telah Tiba</h3>
+    <p>Silakan istirahat sejenak untuk melaksanakan ibadah sholat.</p>
+    <button onclick="closeAdhanOverlay()">Lanjutkan Ujian</button>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<script src="js/adhan.js"></script>
+
   <!-- JavaScript -->
   <script src="js/quiz.js"></script>
  
