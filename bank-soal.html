@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bank Soal - PERGUNU SMART</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&family=Playfair+Display&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " />
+
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .bank-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .bank-title {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ced4da;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+    }
+
+    .btn-bank {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-bank:hover {
+      background: #e63946;
+    }
+
+    .question-list {
+      margin-top: 2rem;
+    }
+
+    .question-item {
+      background: #f8f9fa;
+      border-left: 4px solid var(--primary);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .question-meta {
+      font-size: 0.9rem;
+      color: var(--gray);
+      margin-bottom: 0.5rem;
+    }
+
+    .question-text {
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .question-options {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .question-options li {
+      margin-bottom: 0.25rem;
+    }
+
+    .question-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .action-btn {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.9rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      border: none;
+    }
+
+    .edit-question {
+      background: var(--success);
+      color: white;
+    }
+
+    .delete-question {
+      background: var(--danger);
+      color: white;
+    }
+  </style>
+</head>
+<body class="quiz-body">
+
+  <!-- Floating Button to access Bank Soal -->
+  <div class="floating-btn bank-btn" id="bankBtn">
+    <i class="fas fa-book"></i><span class="tooltip">Bank Soal</span>
+  </div>
+
+  <!-- Overlay -->
+  <div class="admin-overlay" id="bankOverlay"></div>
+
+  <!-- Login Modal -->
+  <div class="admin-panel" id="bankLogin">
+    <h2 class="admin-title"><i class="fas fa-key"></i> Masuk ke Bank Soal</h2>
+    <div class="form-group">
+      <label for="bankPassword" class="form-label">Masukkan Kode Bank Soal</label>
+      <input type="password" id="bankPassword" class="form-control" placeholder="KODE BANK SOAL" />
+    </div>
+    <button class="btn-admin" id="bankLoginBtn"><i class="fas fa-sign-in-alt"></i> Masuk</button>
+  </div>
+
+  <!-- Main Bank Soal Panel -->
+  <div class="admin-panel" id="bankPanel" style="display: none;">
+    <h2 class="admin-title"><i class="fas fa-book-open"></i> Bank Soal</h2>
+
+    <!-- Generator AI Section -->
+    <div class="password-section">
+      <h3><i class="fas fa-robot"></i> Generator Soal dengan AI</h3>
+      <div class="form-group">
+        <label for="aiPromptInput" class="form-label">Masukkan Prompt untuk Membuat Soal</label>
+        <input type="text" id="aiPromptInput" class="form-control" placeholder="Contoh: Soal matematika dasar tentang aljabar untuk pelajar SMP" />
+      </div>
+      <div class="form-group">
+        <label for="newCategory" class="form-label">Kategori</label>
+        <select id="newCategory" class="form-control">
+          <option value="pelajar">Pelajar</option>
+          <option value="umum">Umum</option>
+        </select>
+      </div>
+      <div class="form-group" id="subcategoryGroup">
+        <label for="newSubcategory" class="form-label">Subkategori</label>
+        <select id="newSubcategory" class="form-control">
+          <option value="ipa">IPA</option>
+          <option value="ips">IPS</option>
+          <option value="matematika">Matematika</option>
+          <option value="agama">Agama</option>
+          <option value="ppkn">PPKN</option>
+          <option value="sejarah">Sejarah</option>
+          <option value="bahasa_indonesia">Bahasa Indonesia</option>
+          <option value="bahasa_inggris">Bahasa Inggris</option>
+        </select>
+      </div>
+      <div class="form-group" id="umumSubcategoryGroup" style="display: none;">
+        <label for="newUmumSubcategory" class="form-label">Subkategori</label>
+        <select id="newUmumSubcategory" class="form-control">
+          <option value="logika">Logika</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="newLevel" class="form-label">Tingkat Kesulitan</label>
+        <select id="newLevel" class="form-control">
+          <option value="mudah">Mudah</option>
+          <option value="sedang">Sedang</option>
+          <option value="sulit">Sulit</option>
+        </select>
+      </div>
+      <div class="form-group" id="aiLoading" style="display: none;">
+        <i class="fas fa-spinner fa-spin"></i> Menghasilkan soal...
+      </div>
+      <button class="btn-admin" id="generateQuestionBtn"><i class="fas fa-magic"></i> Generate Soal</button>
+    </div>
+
+    <!-- Tambah Soal Manual -->
+    <div class="password-section">
+      <h3><i class="fas fa-plus-circle"></i> Tambah Soal Manual</h3>
+      <div class="form-group">
+        <label for="newQuestion" class="form-label">Pertanyaan</label>
+        <textarea id="newQuestion" class="form-control" rows="3" placeholder="Tulis pertanyaan di sini..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Pilihan Jawaban</label>
+        <input type="text" id="optionA" class="form-control" placeholder="Pilihan A" />
+        <input type="text" id="optionB" class="form-control" placeholder="Pilihan B" />
+        <input type="text" id="optionC" class="form-control" placeholder="Pilihan C" />
+        <input type="text" id="optionD" class="form-control" placeholder="Pilihan D" />
+        <input type="text" id="optionE" class="form-control" placeholder="Pilihan E" />
+      </div>
+      <div class="form-group">
+        <label>Jawaban Benar (A-E)</label>
+        <input type="text" id="correctAnswer" class="form-control" maxlength="1" />
+      </div>
+      <button class="btn-admin" id="addQuestionBtn"><i class="fas fa-plus"></i> Tambah Soal</button>
+    </div>
+
+    <!-- Preview Soal -->
+    <div class="password-section">
+      <h3><i class="fas fa-eye"></i> Preview Soal</h3>
+      <div class="form-group">
+        <label for="filterCategory" class="form-label">Filter Berdasarkan Kategori</label>
+        <select id="filterCategory" class="form-control">
+          <option value="">Semua</option>
+          <option value="pelajar">Pelajar</option>
+          <option value="umum">Umum</option>
+        </select>
+      </div>
+      <div id="questionList" class="question-list">
+        <!-- Soal akan ditampilkan di sini -->
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/bank.js"></script>
+</body>
+</html>
