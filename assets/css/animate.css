@@ -1,0 +1,93 @@
+/* Animate.css - Custom version for the project */
+.animate__animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.animate__fadeIn {
+    animation-name: fadeIn;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 20px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+.animate__fadeInUp {
+    animation-name: fadeInUp;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+.animate__pulse {
+    animation-name: pulse;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+
+/* Button animations */
+@keyframes buttonPop {
+    0% { transform: scale(0.95); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+.button-pop {
+    animation: buttonPop 0.3s ease;
+}
+
+/* Correct answer animation */
+@keyframes correctAnswer {
+    0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(76, 175, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+}
+.correct-answer {
+    animation: correctAnswer 1s ease;
+}
+
+/* Wrong answer animation */
+@keyframes wrongAnswer {
+    0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(244, 67, 54, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); }
+}
+.wrong-answer {
+    animation: wrongAnswer 1s ease;
+}
+
+/* Timer warning animation */
+@keyframes timerWarning {
+    0% { transform: scale(1); color: inherit; }
+    50% { transform: scale(1.2); color: #ff9800; }
+    100% { transform: scale(1); color: inherit; }
+}
+.timer-warning {
+    animation: timerWarning 1s infinite;
+}
+
+/* Certificate entrance animation */
+@keyframes certificateEntrance {
+    from {
+        opacity: 0;
+        transform: perspective(1000px) rotateX(-30deg) translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: perspective(1000px) rotateX(0) translateY(0);
+    }
+}
+.certificate-entrance {
+    animation: certificateEntrance 1.5s ease-out;
+}
