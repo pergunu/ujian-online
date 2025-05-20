@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Peserta - PERGUNU SITUBONDO</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="gradient-bg">
+    <div id="particles-js"></div>
+    
+    <div class="container">
+        <div class="logo-container">
+            <img src="assets/images/logo.png" alt="PERGUNU SITUBONDO" class="logo">
+        </div>
+        
+        <div class="registration-box animate__animated animate__fadeIn">
+            <h2>Formulir Data Peserta</h2>
+            <p class="subtitle">Silakan isi data diri dengan benar untuk verifikasi</p>
+            
+            <form id="registration-form">
+                <div class="form-group">
+                    <label for="fullname">Nama Lengkap:</label>
+                    <input type="text" id="fullname" name="fullname" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Status:</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="status" value="pelajar" checked> Pelajar
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="status" value="umum"> Umum
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Pelajar Fields -->
+                <div id="pelajar-fields">
+                    <div class="form-group">
+                        <label for="school">Nama Sekolah:</label>
+                        <input type="text" id="school" name="school" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nis">NIS (Nomor Induk Siswa):</label>
+                        <input type="number" id="nis" name="nis" class="form-input" pattern="\d*">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="purpose-student">Tujuan Ikut Ujian:</label>
+                        <select id="purpose-student" name="purpose-student" class="form-input">
+                            <option value="tugas-sekolah">Tugas Sekolah</option>
+                            <option value="tugas-ulangan">Tugas Ulangan</option>
+                            <option value="tes-belajar">Tes dan Belajar</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="education-level">Tingkat Sekolah:</label>
+                        <select id="education-level" name="education-level" class="form-input">
+                            <option value="sd">SD</option>
+                            <option value="smp">SMP</option>
+                            <option value="sma">SMA/SMK</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Umum Fields (initially hidden) -->
+                <div id="umum-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="address">Alamat:</label>
+                        <div class="input-with-button">
+                            <input type="text" id="address" name="address" class="form-input">
+                            <button type="button" id="get-location" class="btn-secondary">
+                                <i class="fas fa-map-marker-alt"></i> Gunakan GPS
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="whatsapp">Nomor WhatsApp Aktif:</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" class="form-input" pattern="[0-9]*">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Alamat Email:</label>
+                        <input type="email" id="email" name="email" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="purpose-general">Tujuan Ikut Ujian:</label>
+                        <select id="purpose-general" name="purpose-general" class="form-input">
+                            <option value="tes-iq">Tes IQ</option>
+                            <option value="ujian-cpns">Ujian CPNS/P3K</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Simpan & Ikut Ujian
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="assets/js/particles.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Toggle between pelajar and umum fields
+        document.querySelectorAll('input[name="status"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'pelajar') {
+                    document.getElementById('pelajar-fields').style.display = 'block';
+                    document.getElementById('umum-fields').style.display = 'none';
+                } else {
+                    document.getElementById('pelajar-fields').style.display = 'none';
+                    document.getElementById('umum-fields').style.display = 'block';
+                }
+            });
+        });
+        
+        // Get GPS location
+        document.getElementById('get-location').addEventListener('click', function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                const address = data.display_name || `${lat}, ${lng}`;
+                                document.getElementById('address').value = address;
+                            });
+                    },
+                    error => {
+                        alert('Gagal mendapatkan lokasi: ' + error.message);
+                    }
+                );
+            } else {
+                alert('GPS tidak didukung di browser Anda');
+            }
+        });
+        
+        // Form submission
+        document.getElementById('registration-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            playSound('assets/audio/audiotombol.mp3');
+            
+            // Save participant data to localStorage
+            const formData = new FormData(this);
+            const participantData = {};
+            formData.forEach((value, key) => {
+                participantData[key] = value;
+            });
+            
+            localStorage.setItem('participantData', JSON.stringify(participantData));
+            
+            // Redirect to exam selection
+            window.location.href = 'exam-selection.html';
+        });
+    </script>
+</body>
+</html>
