@@ -1,162 +1,57 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>PERGUNU SMART - Ujian Online</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins :wght@300;400;500;600;700&family=Playfair+Display&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " />
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Online - PERGUNU SITUBONDO</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body onload="checkAuth()">
-  
-  <!-- Opening Screen -->
-  <section class="opening-screen active">
-    <img src="assets/images/logo.png" alt="Logo Pergunu" class="opening-logo" />
-    <h1 class="opening-title">Selamat Datang di PERGUNU SMART</h1>
-    <p class="opening-subtitle">Aplikasi Ujian Online Terbaik dari Pergunu Situbondo</p>
-    <p class="opening-message">
-      Silakan masukkan <strong>KODE LOGIN</strong> untuk melanjutkan.<br/>
-      Kode Login Default: <code>12345</code>
-    </p>
-    <input type="text" id="loginCode" placeholder="Masukkan Kode Login" class="login-input" maxlength="5" />
-    <button id="continueBtn" disabled>Lanjutkan</button>
-  </section>
-
-  <!-- Terms & Conditions -->
-  <section class="terms-container" id="termsSection" style="display: none;">
-    <h2 class="form-title">Syarat & Ketentuan</h2>
-    <p class="form-subtitle">Harap baca dan centang kotak berikut sebelum melanjutkan:</p>
-    <ul class="terms-list">
-      <li>Anda harus mengisi data diri secara jujur dan benar.</li>
-      <li>Waktu ujian adalah 90 menit dan tidak bisa diperpanjang.</li>
-      <li>Jawaban kosong akan dihitung sebagai jawaban salah.</li>
-      <li>Tidak diperbolehkan membuka tab atau halaman lain selama ujian.</li>
-      <li>Pastikan perangkat Anda terhubung dengan internet stabil.</li>
-    </ul>
-    <label class="checkbox-label">
-      <input type="checkbox" id="agreeTerms" />
-      Saya setuju dengan syarat dan ketentuan di atas.
-    </label>
-    <button id="nextToForm" class="btn btn-primary" disabled><i class="fas fa-arrow-right"></i> Lanjut ke Form Data</button>
-  </section>
-  document.getElementById('continueBtn').addEventListener('click', function() {
-    if (!agreeCheckbox.checked) {
-        alert('Anda harus menyetujui syarat dan ketentuan.');
-        return;
-    }
-    // Jika semua validasi lolos, lanjutkan ke form data
-    document.getElementById('openingScreen').style.display = 'none';
-    document.querySelector('.main-container').style.display = 'flex';
-});
-
-  <!-- Participant Form -->
-  <section class="form-container" id="participantForm" style="display: none;">
-    <div class="form-header">
-      <img src="assets/images/logo.png" alt="Logo Pergunu" class="form-logo" />
-      <h2 class="form-title">Data Peserta Ujian</h2>
-      <p class="form-subtitle">Silakan isi data diri Anda dengan lengkap.</p>
-    </div>
-
-    <form id="dataForm">
-      <div class="form-group">
-        <label for="name" class="form-label">Nama Lengkap</label>
-        <input type="text" id="name" name="name" class="form-control" required />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Status</label>
-        <select id="status" class="form-control" required>
-          <option value="">Pilih Status</option>
-          <option value="pelajar">Pelajar</option>
-          <option value="umum">Umum</option>
-        </select>
-      </div>
-
-      <!-- Pelajar Fields -->
-      <div id="pelajarFields" style="display: none;">
-        <div class="form-group">
-          <label for="pendidikan" class="form-label">Tingkat Pendidikan</label>
-          <select id="pendidikan" class="form-control">
-            <option value="">Pilih Tingkat</option>
-            <option value="SD">SD</option>
-            <option value="SMP">SMP</option>
-            <option value="SMA">SMA</option>
-            <option value="SMK">SMK</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="sekolah" class="form-label">Nama Sekolah</label>
-          <input type="text" id="sekolah" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label for="nis" class="form-label">NIS</label>
-          <input type="text" id="nis" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label for="tujuan_pelajar" class="form-label">Tujuan Ikut Ujian</label>
-          <select id="tujuan_pelajar" class="form-control">
-            <option value="">Pilih Tujuan</option>
-            <option value="tugas_sekolah">Tugas Sekolah</option>
-            <option value="ulangan">Ulangan</option>
-            <option value="tes_belajar">Tes Belajar</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Umum Fields -->
-      <div id="umumFields" style="display: none;">
-        <div class="form-group">
-          <label for="alamat" class="form-label">Alamat</label>
-          <input type="text" id="alamat" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label for="wa" class="form-label">Nomor WhatsApp</label>
-          <input type="tel" id="wa" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label for="tujuan_umum" class="form-label">Tujuan Ikut Ujian</label>
-          <select id="tujuan_umum" class="form-control">
-            <option value="">Pilih Tujuan</option>
-            <option value="tes_iq">Tes IQ</option>
-            <option value="cpns_p3k">CPNS/P3K</option>
-          </select>
-        </div>
-      </div>
-
-      <audio id="openingSound" preload="auto">
-  <source src="assets/audio/opening.mp3" type="audio/mpeg">
-</audio>
-<audio id="welcomeSound" preload="auto">
-  <source src="assets/audio/welcome.mp3" type="audio/mpeg">
-</audio>
-<audio id="backgroundMusic" loop preload="auto">
-  <source src="assets/audio/background.mp3" type="audio/mpeg">
-</audio>
-
-document.body.addEventListener('click', function enableAudioOnce() {
-    document.body.removeEventListener('click', enableAudioOnce);
-    const openingSound = document.getElementById('openingSound');
-    const backgroundMusic = document.getElementById('backgroundMusic');
+<body class="gradient-bg">
+    <div id="particles-js"></div>
     
-    openingSound.play().catch(() => {});
-    backgroundMusic.play().catch(() => {});
-}, { once: true });
-      
-      <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan & Ikuti Ujian</button>
-    </form>
-  </section>
-
-  <!-- JavaScript -->
-  <script src="js/auth.js"></script>
-  <script src="js/main.js"></script>
+    <div class="container">
+        <div class="logo-container">
+            <img src="assets/images/logo.png" alt="PERGUNU SITUBONDO" class="logo">
+        </div>
+        
+        <div class="welcome-box animate__animated animate__fadeIn">
+            <h1 id="greeting-text">Selamat Datang di Ujian Online PERGUNU SITUBONDO</h1>
+            <p id="sub-greeting">Silakan masukkan Kode Login untuk memulai</p>
+            
+            <div class="input-group">
+                <input type="password" id="login-code" placeholder="Masukkan Kode Login" class="form-input">
+                <button id="login-btn" class="btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+            </div>
+            
+            <div class="notification" id="login-notification"></div>
+        </div>
+        
+        <div class="info-box animate__animated animate__fadeInUp">
+            <p>Sistem Ujian Online Resmi PERGUNU Kabupaten Situbondo</p>
+            <p>© 2024 Tim Kreatif PERGUNU SITUBONDO</p>
+        </div>
+    </div>
+    
+    <!-- Floating buttons -->
+    <div class="floating-buttons">
+        <button class="floating-btn share-btn" title="Bagikan">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <button class="floating-btn whatsapp-btn" title="Chat Admin">
+            <i class="fab fa-whatsapp"></i>
+        </button>
+        <button class="floating-btn admin-btn" title="Admin Panel">
+            <i class="fas fa-cog"></i>
+        </button>
+    </div>
+    
+    <audio id="opening-audio" src="assets/audio/opening.mp3" preload="auto"></audio>
+    
+    <script src="assets/js/particles.min.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
