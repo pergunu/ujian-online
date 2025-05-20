@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilihan Ujian - PERGUNU SITUBONDO</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .exam-selection-box {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            border-bottom-color: #4e54c8;
+            color: #4e54c8;
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .level-buttons, .grade-buttons, .subject-buttons, .exam-type-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .level-btn, .grade-btn, .subject-btn, .exam-type-btn {
+            padding: 12px 20px;
+            background-color: #f5f7fa;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .level-btn:hover, .grade-btn:hover, .subject-btn:hover, .exam-type-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .level-btn.active, .grade-btn.active, .subject-btn.active, .exam-type-btn.active {
+            background-color: #4e54c8;
+            color: white;
+        }
+        
+        .grade-btn {
+            font-family: 'Times New Roman', serif;
+        }
+        
+        .info-section {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+        }
+        
+        #start-exam-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+        }
+        
+        @media (max-width: 768px) {
+            .level-buttons, .grade-buttons, .subject-buttons, .exam-type-buttons {
+                flex-direction: column;
+            }
+            
+            .level-btn, .grade-btn, .subject-btn, .exam-type-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+    <div id="particles-js"></div>
+    
+    <div class="container">
+        <div class="logo-container">
+            <img src="assets/images/logo.png" alt="PERGUNU SITUBONDO" class="logo">
+        </div>
+        
+        <div class="exam-selection-box animate__animated animate__fadeIn">
+            <h2>Pilih Jenis Ujian</h2>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="pelajar">Pelajar</button>
+                <button class="tab-btn" data-tab="umum">Umum</button>
+            </div>
+            
+            <!-- Pelajar Tab -->
+            <div id="pelajar-tab" class="tab-content active">
+                <h3>Tingkat Pendidikan</h3>
+                <div class="level-buttons">
+                    <button class="level-btn active" data-level="sd">SD</button>
+                    <button class="level-btn" data-level="smp">SMP</button>
+                    <button class="level-btn" data-level="sma">SMA/SMK</button>
+                </div>
+                
+                <div id="sd-options" class="grade-options">
+                    <h3>Kelas</h3>
+                    <div class="grade-buttons">
+                        <button class="grade-btn active" data-grade="iv">Kelas IV</button>
+                        <button class="grade-btn" data-grade="v">Kelas V</button>
+                        <button class="grade-btn" data-grade="vi">Kelas VI</button>
+                    </div>
+                    
+                    <h3>Mata Pelajaran</h3>
+                    <div class="subject-buttons">
+                        <button class="subject-btn active" data-subject="agama">Agama</button>
+                        <button class="subject-btn" data-subject="ppkn">PPKN</button>
+                        <button class="subject-btn" data-subject="matematika">Matematika</button>
+                        <button class="subject-btn" data-subject="ipa">IPA</button>
+                        <button class="subject-btn" data-subject="ips">IPS</button>
+                        <button class="subject-btn" data-subject="bahasa-indonesia">Bahasa Indonesia</button>
+                        <button class="subject-btn" data-subject="bahasa-inggris">Bahasa Inggris</button>
+                    </div>
+                </div>
+                
+                <div id="smp-options" class="grade-options" style="display: none;">
+                    <h3>Kelas</h3>
+                    <div class="grade-buttons">
+                        <button class="grade-btn active" data-grade="vii">Kelas VII</button>
+                        <button class="grade-btn" data-grade="viii">Kelas VIII</button>
+                        <button class="grade-btn" data-grade="ix">Kelas IX</button>
+                    </div>
+                    
+                    <h3>Mata Pelajaran</h3>
+                    <div class="subject-buttons">
+                        <button class="subject-btn active" data-subject="agama">Agama</button>
+                        <button class="subject-btn" data-subject="ppkn">PPKN</button>
+                        <button class="subject-btn" data-subject="matematika">Matematika</button>
+                        <button class="subject-btn" data-subject="ipa">IPA</button>
+                        <button class="subject-btn" data-subject="ips">IPS</button>
+                        <button class="subject-btn" data-subject="bahasa-indonesia">Bahasa Indonesia</button>
+                        <button class="subject-btn" data-subject="bahasa-inggris">Bahasa Inggris</button>
+                    </div>
+                </div>
+                
+                <div id="sma-options" class="grade-options" style="display: none;">
+                    <h3>Kelas</h3>
+                    <div class="grade-buttons">
+                        <button class="grade-btn active" data-grade="x">Kelas X</button>
+                        <button class="grade-btn" data-grade="xi">Kelas XI</button>
+                        <button class="grade-btn" data-grade="xii">Kelas XII</button>
+                    </div>
+                    
+                    <h3>Mata Pelajaran</h3>
+                    <div class="subject-buttons">
+                        <button class="subject-btn active" data-subject="agama">Agama</button>
+                        <button class="subject-btn" data-subject="ppkn">PPKN</button>
+                        <button class="subject-btn" data-subject="matematika">Matematika</button>
+                        <button class="subject-btn" data-subject="fisika">Fisika</button>
+                        <button class="subject-btn" data-subject="kimia">Kimia</button>
+                        <button class="subject-btn" data-subject="biologi">Biologi</button>
+                        <button class="subject-btn" data-subject="bahasa-indonesia">Bahasa Indonesia</button>
+                        <button class="subject-btn" data-subject="bahasa-inggris">Bahasa Inggris</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Umum Tab -->
+            <div id="umum-tab" class="tab-content">
+                <h3>Jenis Ujian</h3>
+                <div class="exam-type-buttons">
+                    <button class="exam-type-btn active" data-type="tes-iq">Tes IQ</button>
+                    <button class="exam-type-btn" data-type="cpns">CPNS/P3K</button>
+                </div>
+                
+                <div id="cpns-options" style="display: none;">
+                    <div class="form-group">
+                        <label for="license-code">Kode Lisensi Ujian:</label>
+                        <input type="password" id="license-code" class="form-input" placeholder="Masukkan Kode Lisensi">
+                        <small>Default: OPENLOCK-1926</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <h3>Informasi Ujian</h3>
+                <p>Durasi ujian: 120 menit</p>
+                <p>Jumlah soal: 50 (untuk pelajar) / 100 (untuk umum)</p>
+                <p>Sistem akan mencatat waktu pengerjaan Anda</p>
+            </div>
+            
+            <button id="start-exam-btn" class="btn-primary">
+                <i class="fas fa-play"></i> Mulai Ujian Sekarang
+            </button>
+        </div>
+    </div>
+    
+    <script src="assets/js/particles.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/questions.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab functionality
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(`${this.dataset.tab}-tab`).classList.add('active');
+                    updateStartButtonState();
+                });
+            });
+            
+            // Level selection for pelajar
+            document.querySelectorAll('.level-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.grade-options').forEach(opt => opt.style.display = 'none');
+                    
+                    this.classList.add('active');
+                    document.getElementById(`${this.dataset.level}-options`).style.display = 'block';
+                    updateStartButtonState();
+                });
+            });
+            
+            // Grade selection
+            document.querySelectorAll('.grade-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.grade-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    updateStartButtonState();
+                });
+            });
+            
+            // Subject selection
+            document.querySelectorAll('.subject-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    updateStartButtonState();
+                });
+            });
+            
+            // Exam type selection for umum
+            document.querySelectorAll('.exam-type-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.exam-type-btn').forEach(b => b.classList.remove('active'));
+                    document.getElementById('cpns-options').style.display = 'none';
+                    
+                    this.classList.add('active');
+                    if (this.dataset.type === 'cpns') {
+                        document.getElementById('cpns-options').style.display = 'block';
+                    }
+                    updateStartButtonState();
+                });
+            });
+            
+            // License code validation for CPNS exam
+            document.getElementById('license-code').addEventListener('input', function() {
+                updateStartButtonState();
+            });
+            
+            function updateStartButtonState() {
+                const startBtn = document.getElementById('start-exam-btn');
+                let isValid = false;
+                
+                // Check which tab is active
+                const activeTab = document.querySelector('.tab-btn.active').dataset.tab;
+                
+                if (activeTab === 'pelajar') {
+                    const levelSelected = document.querySelector('.level-btn.active');
+                    const gradeSelected = document.querySelector('.grade-btn.active');
+                    const subjectSelected = document.querySelector('.subject-btn.active');
+                    
+                    isValid = levelSelected && gradeSelected && subjectSelected;
+                } else {
+                    const examTypeSelected = document.querySelector('.exam-type-btn.active');
+                    
+                    if (examTypeSelected && examTypeSelected.dataset.type === 'cpns') {
+                        const licenseCode = document.getElementById('license-code').value;
+                        isValid = licenseCode === 'OPENLOCK-1926';
+                    } else {
+                        isValid = examTypeSelected !== null;
+                    }
+                }
+                
+                startBtn.disabled = !isValid;
+            }
+            
+            // Start exam button
+            document.getElementById('start-exam-btn').addEventListener('click', function() {
+                // Save exam selection and redirect to exam page
+                const participantData = JSON.parse(localStorage.getItem('participantData'));
+                
+                const activeTab = document.querySelector('.tab-btn.active').dataset.tab;
+                let examData = {};
+                
+                if (activeTab === 'pelajar') {
+                    examData = {
+                        type: 'pelajar',
+                        level: document.querySelector('.level-btn.active').dataset.level,
+                        grade: document.querySelector('.grade-btn.active').dataset.grade,
+                        subject: document.querySelector('.subject-btn.active').dataset.subject
+                    };
+                } else {
+                    examData = {
+                        type: 'umum',
+                        examType: document.querySelector('.exam-type-btn.active').dataset.type
+                    };
+                }
+                
+                // Get questions for the selected exam
+                const questions = getRandomQuestions(
+                    examData.subject || examData.examType, 
+                    examData.type === 'pelajar' ? 50 : 100
+                );
+                
+                localStorage.setItem('examData', JSON.stringify(examData));
+                localStorage.setItem('currentExamQuestions', JSON.stringify(questions));
+                window.location.href = 'exam.html';
+            });
+        });
+    </script>
+</body>
+</html>
