@@ -411,6 +411,84 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Floating buttons functionality
+// Fungsi inisialisasi tombol melayang
+function initFloatingButtons() {
+  const floatingBtns = [
+    {
+      id: 'shareBtn',
+      icon: 'fas fa-share-alt',
+      tooltip: 'Bagikan Aplikasi',
+      action: () => {
+        document.getElementById('shareModal').classList.remove('hidden');
+        playButtonSound();
+      }
+    },
+    {
+      id: 'whatsappBtn',
+      icon: 'fab fa-whatsapp',
+      tooltip: 'Chat WhatsApp Admin',
+      action: () => {
+        const message = "Assalamualaikum admin, saya mau tanya...";
+        window.open(`https://wa.me/6285647709114?text=${encodeURIComponent(message)}`, '_blank');
+        playButtonSound();
+      }
+    },
+    {
+      id: 'questionBankBtn',
+      icon: 'fas fa-book',
+      tooltip: 'Bank Soal',
+      action: () => {
+        const code = prompt("Masukkan kode bank soal:");
+        if (code === "OPENLOCK-1926") {
+          document.getElementById('questionBank').classList.remove('hidden');
+          playButtonSound();
+        } else {
+          alert("Kode bank soal salah!");
+        }
+      }
+    },
+    {
+      id: 'adminPanelBtn',
+      icon: 'fas fa-cog',
+      tooltip: 'Panel Admin',
+      action: () => {
+        const code = prompt("Masukkan kode admin:");
+        if (code === "65614222") {
+          document.getElementById('adminPanel').classList.remove('hidden');
+          playButtonSound();
+        } else {
+          alert("Kode admin salah!");
+        }
+      }
+    }
+  ];
+
+  const container = document.querySelector('.floating-buttons');
+  container.innerHTML = '';
+
+  floatingBtns.forEach(btn => {
+    const button = document.createElement('button');
+    button.className = 'float-btn';
+    button.id = btn.id;
+    button.setAttribute('data-tooltip', btn.tooltip);
+    button.innerHTML = `<i class="${btn.icon}"></i>`;
+    button.addEventListener('click', btn.action);
+    container.appendChild(button);
+  });
+}
+
+// Panggil fungsi inisialisasi saat halaman dimuat
+document.addEventListener('DOMContentLoaded', () => {
+  initFloatingButtons();
+  playButtonSound(); // Untuk testing
+});
+
+// Fungsi suara tombol
+function playButtonSound() {
+  const audio = new Audio('assets/audio/audiotombol.mp3');
+  audio.play().catch(e => console.log("Autoplay prevented:", e));
+}
+    
     adminPanelBtn.addEventListener('click', function() {
         const buttonAudio = document.getElementById('buttonAudio');
         buttonAudio.play();
