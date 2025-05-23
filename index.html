@@ -3,704 +3,587 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ujian Online - PERGUNU Situbondo</title>
+    <title>Ujian Online PERGUNU SITUBONDO</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/particles.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Background Particles -->
+    <!-- Efek Partikel -->
     <div id="particles-js"></div>
-
-    <!-- Opening Notification -->
-    <div class="opening-modal">
-        <div class="opening-content">
+    
+    <!-- Overlay Pembuka -->
+    <div id="opening-overlay" class="overlay">
+        <div class="opening-container">
             <img src="assets/images/logo.png" alt="Logo PERGUNU" class="logo">
-            <h1 class="welcome-text">Selamat Datang di Ujian Online PERGUNU Situbondo</h1>
-            <p class="welcome-message">Silakan masukkan kode login untuk melanjutkan</p>
-            <input type="password" id="login-code" placeholder="Masukkan Kode Login">
-            <button id="login-btn" class="btn-gradient">Masuk</button>
+            <h1 id="greeting-text">Selamat Datang di Ujian Online PERGUNU SITUBONDO</h1>
+            <p id="greeting-subtext">Silakan masukkan kode login untuk melanjutkan</p>
+            <div class="login-form">
+                <input type="password" id="login-code" placeholder="Masukkan Kode Login" autocomplete="off">
+                <button id="login-btn" class="btn-grad">Masuk</button>
+            </div>
             <audio id="opening-audio" src="assets/audio/opening.mp3" autoplay></audio>
         </div>
     </div>
 
-    <!-- Main Container (initially hidden) -->
-    <div class="main-container" style="display: none;">
-        <!-- Header -->
-        <header class="exam-header">
-            <div class="header-left">
-                <img src="assets/images/logo.png" alt="Logo PERGUNU" class="header-logo">
-                <h1>Ujian Online <span>PERGUNU Situbondo</span></h1>
+    <!-- Halaman Persyaratan -->
+    <div id="terms-page" class="page hidden">
+        <div class="container">
+            <h2>Persyaratan & Kebijakan Ujian</h2>
+            <div class="terms-content">
+                <p>Dikembangkan oleh Cendhanu Tim Kreator PERGUNU SITUBONDO</p>
+                <ol>
+                    <li>Peserta wajib mengisi data dengan benar dan valid.</li>
+                    <li>Dilarang keras melakukan kecurangan selama ujian berlangsung.</li>
+                    <li>Waktu ujian tidak dapat diulang setelah selesai.</li>
+                    <li>Hasil ujian akan dicetak dalam bentuk sertifikat digital.</li>
+                    <li>Data peserta akan disimpan untuk keperluan administrasi.</li>
+                </ol>
             </div>
-            <div class="header-right">
-                <div class="timer-container">
-                    <span id="exam-timer">120:00</span>
-                </div>
+            <div class="terms-checkbox">
+                <input type="checkbox" id="agree-terms">
+                <label for="agree-terms">Saya menyetujui semua persyaratan di atas</label>
             </div>
-        </header>
+            <button id="continue-btn" class="btn-grad" disabled>Lanjut Ikut Ujian</button>
+        </div>
+    </div>
 
-        <!-- Content Area -->
-        <div class="content-area">
-            <!-- Rules Page -->
-            <div class="rules-page active-page">
-                <h2>Peraturan Ujian Online</h2>
-                <div class="rules-content">
-                    <p>Dikembangkan oleh Cendhanu Tim Kreator PERGUNU Situbondo</p>
-                    <ol>
-                        <li>Peserta wajib mengisi data diri dengan benar dan lengkap.</li>
-                        <li>Dilarang keras melakukan kecurangan selama ujian berlangsung.</li>
-                        <li>Waktu ujian adalah 120 menit (2 jam) untuk semua jenis ujian.</li>
-                        <li>Soal yang tidak dijawab akan dianggap salah.</li>
-                        <li>Jawaban yang sudah dipilih tidak dapat diubah.</li>
-                        <li>Dilarang mengakses sumber lain selama ujian berlangsung.</li>
-                        <li>Pastikan koneksi internet stabil selama ujian.</li>
-                        <li>Hasil ujian akan langsung ditampilkan setelah selesai.</li>
-                        <li>Sertifikat akan diberikan kepada semua peserta.</li>
-                    </ol>
-                    <div class="agree-checkbox">
-                        <input type="checkbox" id="agree-rules">
-                        <label for="agree-rules">Saya telah membaca dan menyetujui semua peraturan di atas</label>
+    <!-- Form Data Peserta -->
+    <div id="participant-form-page" class="page hidden">
+        <div class="container">
+            <h2>Form Data Peserta</h2>
+            <form id="participant-form">
+                <div class="form-group">
+                    <label for="fullname">Nama Lengkap:</label>
+                    <input type="text" id="fullname" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Status:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="student" name="status" value="pelajar" checked>
+                        <label for="student">Pelajar</label>
+                        <input type="radio" id="general" name="status" value="umum">
+                        <label for="general">Umum</label>
                     </div>
-                    <button id="next-to-form" class="btn-gradient" disabled>Lanjut Ikut Ujian</button>
                 </div>
-            </div>
-
-            <!-- Participant Form -->
-            <div class="participant-form">
-                <h2>Formulir Data Peserta</h2>
-                <form id="participant-data">
+                
+                <!-- Form Pelajar -->
+                <div id="student-form" class="status-form">
                     <div class="form-group">
-                        <label for="fullname">Nama Lengkap:</label>
-                        <input type="text" id="fullname" required>
+                        <label for="school">Nama Sekolah:</label>
+                        <input type="text" id="school" required>
                     </div>
-                    
                     <div class="form-group">
-                        <label>Status:</label>
-                        <div class="radio-group">
-                            <input type="radio" id="student" name="status" value="pelajar" checked>
-                            <label for="student">Pelajar</label>
-                            <input type="radio" id="general" name="status" value="umum">
-                            <label for="general">Umum</label>
-                        </div>
+                        <label for="nis">NIS (Nomor Induk Siswa):</label>
+                        <input type="number" id="nis" required>
                     </div>
-                    
-                    <!-- Student Fields -->
-                    <div class="student-fields">
-                        <div class="form-group">
-                            <label for="school">Nama Sekolah:</label>
-                            <input type="text" id="school" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nis">NIS (Nomor Induk Siswa):</label>
-                            <input type="number" id="nis" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="student-purpose">Tujuan Ikut Ujian:</label>
-                            <select id="student-purpose" required>
-                                <option value="">Pilih Tujuan</option>
-                                <option value="tugas-sekolah">Tugas Sekolah</option>
-                                <option value="tugas-ulangan">Tugas Ulangan</option>
-                                <option value="tes-belajar">Tes dan Belajar</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="student-level">Tingkat Sekolah:</label>
-                            <select id="student-level" required>
-                                <option value="">Pilih Tingkat</option>
-                                <option value="sd">SD</option>
-                                <option value="smp">SMP</option>
-                                <option value="sma">SMA/SMK</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <!-- General Fields -->
-                    <div class="general-fields" style="display: none;">
-                        <div class="form-group">
-                            <label for="address">Alamat:</label>
-                            <input type="text" id="address" required>
-                            <button type="button" id="get-location" class="btn-small">Dapatkan Lokasi Otomatis</button>
-                            <small id="location-status"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="whatsapp">Nomor WhatsApp Aktif:</label>
-                            <input type="tel" id="whatsapp" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Alamat Email:</label>
-                            <input type="email" id="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="general-purpose">Tujuan Ikut Ujian:</label>
-                            <select id="general-purpose" required>
-                                <option value="">Pilih Tujuan</option>
-                                <option value="tes-iq">Tes IQ</option>
-                                <option value="cpns">Ujian CPNS/P3K</option>
-                            </select>
-                        </div>
-                    </div>
-                    
                     <div class="form-group">
-                        <button type="submit" class="btn-gradient">Simpan & Ikut Ujian</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Exam Selection -->
-            <div class="exam-selection">
-                <h2>Pilih Jenis Ujian</h2>
-                
-                <!-- Student Exam Options -->
-                <div class="student-exam-options">
-                    <h3>Tingkat Pelajar</h3>
-                    <div class="grade-options" id="sd-grades" style="display: none;">
-                        <button class="grade-btn" data-grade="iv">Kelas IV</button>
-                        <button class="grade-btn" data-grade="v">Kelas V</button>
-                        <button class="grade-btn" data-grade="vi">Kelas VI</button>
-                    </div>
-                    <div class="grade-options" id="smp-grades" style="display: none;">
-                        <button class="grade-btn" data-grade="vii">Kelas VII</button>
-                        <button class="grade-btn" data-grade="viii">Kelas VIII</button>
-                        <button class="grade-btn" data-grade="ix">Kelas IX</button>
-                    </div>
-                    <div class="grade-options" id="sma-grades" style="display: none;">
-                        <button class="grade-btn" data-grade="x">Kelas X</button>
-                        <button class="grade-btn" data-grade="xi">Kelas XI</button>
-                        <button class="grade-btn" data-grade="xii">Kelas XII</button>
-                    </div>
-                    
-                    <h3>Mata Pelajaran</h3>
-                    <div class="subject-buttons">
-                        <button class="subject-btn" data-subject="agama">AGAMA</button>
-                        <button class="subject-btn" data-subject="ppkn">PPKN</button>
-                        <button class="subject-btn" data-subject="sejarah">SEJARAH</button>
-                        <button class="subject-btn" data-subject="ipa">IPA</button>
-                        <button class="subject-btn" data-subject="ips">IPS</button>
-                        <button class="subject-btn" data-subject="matematika">MATEMATIKA</button>
-                        <button class="subject-btn" data-subject="bahasa-indonesia">BAHASA INDONESIA</button>
-                        <button class="subject-btn" data-subject="bahasa-inggris">BAHASA INGGRIS</button>
-                        <button class="subject-btn" data-subject="materi-extra">MATERI EXTRA</button>
-                        <button class="subject-btn" data-subject="materi-khusus">MATERI KHUSUS</button>
-                    </div>
-                </div>
-                
-                <!-- General Exam Options -->
-                <div class="general-exam-options" style="display: none;">
-                    <h3>Tingkat Umum</h3>
-                    <div class="general-buttons">
-                        <button class="general-exam-btn" data-exam="tes-iq">Tes IQ</button>
-                        <button class="general-exam-btn" data-exam="cpns">Ujian CPNS/P3K</button>
-                    </div>
-                    
-                    <!-- CPNS License Code -->
-                    <div class="license-code" id="cpns-license" style="display: none;">
-                        <h4>Masukkan Kode Lisensi Ujian CPNS/P3K</h4>
-                        <input type="password" id="cpns-code" placeholder="Masukkan Kode Lisensi">
-                        <button id="verify-cpns" class="btn-small">Verifikasi</button>
-                        <p id="cpns-code-status"></p>
-                    </div>
-                </div>
-                
-                <!-- Information Panel -->
-                <div class="info-panel">
-                    <h3>Informasi Berkala</h3>
-                    <div class="info-content">
-                        <p>Ujian online ini diselenggarakan oleh PERGUNU Situbondo untuk meningkatkan kompetensi peserta dalam berbagai bidang pengetahuan.</p>
-                        <p>Hasil ujian akan menentukan tingkat pemahaman Anda terhadap materi yang diujikan.</p>
-                    </div>
-                </div>
-                
-                <button id="start-exam-btn" class="btn-gradient" disabled>Mulai Ujian Sekarang</button>
-            </div>
-
-            <!-- Exam Page -->
-            <div class="exam-page">
-                <div class="exam-header-info">
-                    <h2 id="exam-title">Ujian Online</h2>
-                    <div class="exam-progress">
-                        <span id="current-question">1</span> dari <span id="total-questions">10</span> soal
-                    </div>
-                </div>
-                
-                <div class="question-container">
-                    <div class="question-text" id="question-text">
-                        Memuat soal...
-                    </div>
-                    
-                    <div class="options-container">
-                        <div class="option" data-option="a">
-                            <span class="option-letter">A</span>
-                            <span class="option-text" id="option-a">Memuat pilihan...</span>
-                        </div>
-                        <div class="option" data-option="b">
-                            <span class="option-letter">B</span>
-                            <span class="option-text" id="option-b">Memuat pilihan...</span>
-                        </div>
-                        <div class="option" data-option="c">
-                            <span class="option-letter">C</span>
-                            <span class="option-text" id="option-c">Memuat pilihan...</span>
-                        </div>
-                        <div class="option" data-option="d">
-                            <span class="option-letter">D</span>
-                            <span class="option-text" id="option-d">Memuat pilihan...</span>
-                        </div>
-                        <div class="option" data-option="e">
-                            <span class="option-letter">E</span>
-                            <span class="option-text" id="option-e">Memuat pilihan...</span>
-                        </div>
-                    </div>
-                    
-                    <div class="answer-explanation" id="answer-explanation" style="display: none;">
-                        <h4>Penjelasan Jawaban:</h4>
-                        <p id="explanation-text"></p>
-                    </div>
-                </div>
-                
-                <div class="exam-controls">
-                    <button id="finish-exam-btn" class="btn-danger">Selesaikan Ujian Sekarang</button>
-                    <button id="skip-question-btn" class="btn-secondary">Lewati Soal</button>
-                    <button id="unanswered-btn" class="btn-secondary">Soal Belum Dijawab</button>
-                </div>
-                
-                <!-- Time Warning -->
-                <div class="time-warning" id="time-warning" style="display: none;">
-                    <p>Perhatian! Ujian akan berakhir dalam waktu 10 menit. Mohon pastikan semua jawaban telah diselesaikan dan diperiksa sebelum waktu habis. Terima kasih atas partisipasi Anda.</p>
-                </div>
-            </div>
-
-            <!-- Results Page -->
-            <div class="results-page">
-                <h2>Hasil Ujian Anda</h2>
-                
-                <div class="results-summary">
-                    <div class="result-card">
-                        <h3>Total Soal</h3>
-                        <span id="total-answered">0</span>
-                    </div>
-                    <div class="result-card correct">
-                        <h3>Jawaban Benar</h3>
-                        <span id="correct-answers">0</span>
-                    </div>
-                    <div class="result-card wrong">
-                        <h3>Jawaban Salah</h3>
-                        <span id="wrong-answers">0</span>
-                    </div>
-                    <div class="result-card score">
-                        <h3>Nilai</h3>
-                        <span id="exam-score">0</span>
-                    </div>
-                </div>
-                
-                <div class="results-actions">
-                    <button id="view-certificate-btn" class="btn-gradient">Lihat Sertifikat</button>
-                    <button id="retake-exam-btn" class="btn-secondary">Ulangi Ujian</button>
-                </div>
-            </div>
-
-            <!-- Certificate Page -->
-            <div class="certificate-page">
-                <div class="certificate-container" id="certificate-container">
-                    <img src="assets/images/certificate.png" alt="Sertifikat" class="certificate-bg">
-                    
-                    <div class="certificate-content">
-                        <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
-                        <p class="certificate-given">Diberikan Kepada:</p>
-                        <h2 class="recipient-name" id="certificate-name">NAMA PESERTA</h2>
-                        
-                        <p class="certificate-achievement">
-                            Atas Partisipasi & Pencapaian Luar Biasa dalam <strong>Ujian PERGUNU Situbondo</strong>
-                        </p>
-                        
-                        <p class="certificate-description">
-                            Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, sertifikat ini diberikan sebagai motivasi untuk terus berkembang.
-                        </p>
-                        
-                        <div class="certificate-score">
-                            <span id="certificate-score">0</span>
-                        </div>
-                        
-                        <p class="certificate-motivation" id="certificate-motivation">
-                            Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.
-                        </p>
-                        
-                        <div class="certificate-footer">
-                            <p class="certificate-date" id="certificate-date">Ditetapkan di: Situbondo, 16 Mei 2025</p>
-                            <p class="certificate-code" id="certificate-code">Kode: USWATUN-HASANAH/PELAJAR/SMA/IPS/16052025/T9B3-S6M3/PERGUNU-STB</p>
-                            
-                            <div class="certificate-signature">
-                                <p>Ketua PERGUNU Situbondo</p>
-                                <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
-                                <p class="chairman-name">Moh. Nuril Hudha, S.Pd., M.Si.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="certificate-actions">
-                    <button id="print-certificate-btn" class="btn-gradient"><i class="fas fa-print"></i> Cetak Sertifikat</button>
-                    <button id="back-to-results-btn" class="btn-secondary"><i class="fas fa-arrow-left"></i> Kembali ke Hasil</button>
-                </div>
-                
-                <audio id="applause-audio" src="assets/audio/applause.mp3"></audio>
-            </div>
-        </div>
-    </div>
-
-    <!-- Floating Buttons -->
-    <div class="floating-buttons">
-        <button class="floating-btn share-btn" title="Bagikan"><i class="fas fa-share-alt"></i></button>
-        <button class="floating-btn whatsapp-btn" title="Chat Admin"><i class="fab fa-whatsapp"></i></button>
-        <button class="floating-btn question-bank-btn" title="Bank Soal"><i class="fas fa-book"></i></button>
-        <button class="floating-btn admin-panel-btn" title="Admin Panel"><i class="fas fa-cog"></i></button>
-        <button onclick="window.location.href='pages/registration.html'" class="floating-btn">
-        <i class="fas fa-user-plus"></i>
-    </button>
-        <button onclick="window.location.href='pages/bank-soal.html'" class="floating-btn bank-soal-btn">
-        <i class="fas fa-book"></i>
-    </button>
-    </div>
-
-    <!-- Share Modal -->
-    <div class="share-modal">
-        <div class="share-content">
-            <h3>Bagikan Ujian Ini</h3>
-            <div class="social-links">
-                <a href="#" class="social-link facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
-                <a href="#" class="social-link twitter"><i class="fab fa-twitter"></i> Twitter</a>
-                <a href="#" class="social-link whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                <a href="#" class="social-link telegram"><i class="fab fa-telegram"></i> Telegram</a>
-                <a href="#" class="social-link link"><i class="fas fa-link"></i> Salin Link</a>
-            </div>
-            <button class="close-share">Tutup</button>
-        </div>
-    </div>
-
-    <!-- Question Bank Modal -->
-    <div class="question-bank-modal">
-        <div class="question-bank-content">
-            <h3>Bank Soal - Masukkan Kode Akses</h3>
-            <input type="password" id="question-bank-code" placeholder="Masukkan Kode Bank Soal">
-            <button id="verify-question-bank" class="btn-small">Masuk</button>
-            <p id="question-bank-status"></p>
-        </div>
-    </div>
-
-    <!-- Admin Panel Modal -->
-    <div class="admin-panel-modal">
-        <div class="admin-panel-content">
-            <h3>Kontrol Panel Admin - Masukkan Kode</h3>
-            <input type="password" id="admin-panel-code" placeholder="Masukkan Kode Admin">
-            <button id="verify-admin-panel" class="btn-small">Masuk</button>
-            <p id="admin-panel-status"></p>
-        </div>
-    </div>
-
-    <!-- Admin Panel (after login) -->
-    <div class="admin-panel" style="display: none;">
-        <div class="admin-header">
-            <h2>Kontrol Panel Admin</h2>
-            <button id="close-admin-panel" class="btn-small"><i class="fas fa-times"></i></button>
-        </div>
-        
-        <div class="admin-tabs">
-            <button class="admin-tab active" data-tab="codes">Pengaturan Kode</button>
-            <button class="admin-tab" data-tab="questions">Kelola Soal</button>
-            <button class="admin-tab" data-tab="settings">Pengaturan Umum</button>
-            <button class="admin-tab" data-tab="participants">Data Peserta</button>
-        </div>
-        
-        <div class="admin-tab-content active" id="codes-tab">
-            <div class="code-section">
-                <h4>Kode Login</h4>
-                <p>Kode default: 12345</p>
-                <div class="code-inputs">
-                    <input type="password" id="new-login-code" placeholder="Kode Login Baru">
-                    <input type="password" id="current-login-code" placeholder="Kode Login Lama">
-                    <button id="save-login-code" class="btn-small">Simpan Kode</button>
-                </div>
-            </div>
-            
-            <div class="code-section">
-                <h4>Kode Ujian CPNS/P3K</h4>
-                <p>Kode default: OPENLOCK-1945</p>
-                <div class="code-inputs">
-                    <input type="password" id="new-cpns-code" placeholder="Kode Ujian Baru">
-                    <input type="password" id="current-cpns-code" placeholder="Kode Ujian Lama">
-                    <button id="save-cpns-code" class="btn-small">Simpan Kode</button>
-                </div>
-            </div>
-            
-            <div class="code-section">
-                <h4>Kode Bank Soal</h4>
-                <p>Kode default: OPENLOCK-1926</p>
-                <div class="code-inputs">
-                    <input type="password" id="new-bank-code" placeholder="Kode Soal Baru">
-                    <input type="password" id="current-bank-code" placeholder="Kode Soal Lama">
-                    <button id="save-bank-code" class="btn-small">Simpan Kode</button>
-                </div>
-            </div>
-            
-            <div class="code-section">
-                <h4>Kode Kontrol Panel Admin</h4>
-                <p>Kode default: 65614222</p>
-                <div class="code-inputs">
-                    <input type="password" id="new-admin-code" placeholder="Kode Admin Baru">
-                    <input type="password" id="current-admin-code" placeholder="Kode Admin Lama">
-                    <button id="save-admin-code" class="btn-small">Simpan Kode Admin</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="admin-tab-content" id="questions-tab">
-            <div class="question-management">
-                <div class="question-tools">
-                    <button id="add-question-btn" class="btn-small"><i class="fas fa-plus"></i> Tambah Soal</button>
-                    <button id="ai-generate-btn" class="btn-small"><i class="fas fa-robot"></i> Generate dengan AI</button>
-                    <button id="upload-image-btn" class="btn-small"><i class="fas fa-image"></i> Upload Gambar</button>
-                </div>
-                
-                <div class="question-form" style="display: none;">
-                    <div class="form-group">
-                        <label for="question-type">Jenis Soal:</label>
-                        <select id="question-type">
-                            <option value="pelajar">Pelajar</option>
-                            <option value="umum">Umum</option>
+                        <label>Tujuan Ikut Ujian:</label>
+                        <select id="student-purpose" required>
+                            <option value="">Pilih Tujuan</option>
+                            <option value="tugas-sekolah">Tugas Sekolah</option>
+                            <option value="tugas-ulangan">Tugas Ulangan</option>
+                            <option value="tes-belajar">Tes dan Belajar</option>
                         </select>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="question-category">Kategori:</label>
-                        <select id="question-category">
-                            <option value="agama">AGAMA</option>
-                            <option value="ppkn">PPKN</option>
-                            <option value="sejarah">SEJARAH</option>
-                            <option value="ipa">IPA</option>
-                            <option value="ips">IPS</option>
-                            <option value="matematika">MATEMATIKA</option>
-                            <option value="bahasa-indonesia">BAHASA INDONESIA</option>
-                            <option value="bahasa-inggris">BAHASA INGGRIS</option>
-                            <option value="materi-extra">MATERI EXTRA</option>
-                            <option value="materi-khusus">MATERI KHUSUS</option>
-                            <option value="tes-iq">Tes IQ</option>
-                            <option value="cpns">Ujian CPNS/P3K</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="question-grade">Tingkat (untuk pelajar):</label>
-                        <select id="question-grade">
+                        <label>Tingkat Sekolah:</label>
+                        <select id="school-level" required>
+                            <option value="">Pilih Tingkat</option>
                             <option value="sd">SD</option>
                             <option value="smp">SMP</option>
                             <option value="sma">SMA/SMK</option>
                         </select>
                     </div>
-                    
+                </div>
+                
+                <!-- Form Umum -->
+                <div id="general-form" class="status-form hidden">
                     <div class="form-group">
-                        <label for="question-text">Pertanyaan:</label>
-                        <textarea id="question-text" rows="3"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Pilihan Jawaban:</label>
-                        <div class="option-input">
-                            <span>A.</span>
-                            <input type="text" id="option-a-input">
-                        </div>
-                        <div class="option-input">
-                            <span>B.</span>
-                            <input type="text" id="option-b-input">
-                        </div>
-                        <div class="option-input">
-                            <span>C.</span>
-                            <input type="text" id="option-c-input">
-                        </div>
-                        <div class="option-input">
-                            <span>D.</span>
-                            <input type="text" id="option-d-input">
-                        </div>
-                        <div class="option-input">
-                            <span>E.</span>
-                            <input type="text" id="option-e-input">
+                        <label for="address">Alamat:</label>
+                        <div class="address-input">
+                            <input type="text" id="address" required>
+                            <button type="button" id="get-location" class="btn-small">
+                                <i class="fas fa-map-marker-alt"></i> Gunakan GPS
+                            </button>
                         </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="correct-answer">Jawaban Benar:</label>
-                        <select id="correct-answer">
-                            <option value="a">A</option>
-                            <option value="b">B</option>
-                            <option value="c">C</option>
-                            <option value="d">D</option>
-                            <option value="e">E</option>
+                        <label for="whatsapp">Nomor WhatsApp Aktif:</label>
+                        <input type="tel" id="whatsapp" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tujuan Ikut Ujian:</label>
+                        <select id="general-purpose" required>
+                            <option value="">Pilih Tujuan</option>
+                            <option value="tes-iq">Tes IQ</option>
+                            <option value="ujian-cpns">Ujian CPNS/P3K</option>
                         </select>
                     </div>
-                    
+                </div>
+                
+                <div class="info-box" id="periodic-info">
+                    <p>Informasi penting akan ditampilkan di sini oleh admin.</p>
+                </div>
+                
+                <button type="submit" class="btn-grad">Simpan & Ikut Ujian</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pilihan Ujian -->
+    <div id="exam-options-page" class="page hidden">
+        <div class="container">
+            <h2>Pilih Jenis Ujian</h2>
+            
+            <!-- Untuk Pelajar -->
+            <div id="student-options" class="options-container">
+                <h3>Tingkat Pelajar</h3>
+                <div id="class-levels" class="level-buttons">
+                    <!-- Tombol kelas akan diisi oleh JavaScript -->
+                </div>
+                
+                <h3>Jenis Ujian</h3>
+                <div class="subject-buttons">
+                    <button class="subject-btn" data-subject="agama">AGAMA</button>
+                    <button class="subject-btn" data-subject="ppkn">PPKN</button>
+                    <button class="subject-btn" data-subject="sejarah">SEJARAH</button>
+                    <button class="subject-btn" data-subject="ipa">IPA</button>
+                    <button class="subject-btn" data-subject="ips">IPS</button>
+                    <button class="subject-btn" data-subject="matematika">MATEMATIKA</button>
+                    <button class="subject-btn" data-subject="bahasa-indonesia">BAHASA INDONESIA</button>
+                    <button class="subject-btn" data-subject="bahasa-inggris">BAHASA INGGRIS</button>
+                    <button class="subject-btn" data-subject="materi-extra">MATERI EXTRA</button>
+                    <button class="subject-btn" data-subject="materi-khusus">MATERI KHUSUS</button>
+                </div>
+            </div>
+            
+            <!-- Untuk Umum -->
+            <div id="general-options" class="options-container hidden">
+                <h3>Tingkat Umum</h3>
+                <div class="subject-buttons">
+                    <button class="subject-btn" data-subject="ujian-logika">Ujian Logika</button>
+                    <button class="subject-btn" data-subject="ujian-cpns">Ujian CPNS/P3K</button>
+                </div>
+                
+                <!-- Form Lisensi CPNS -->
+                <div id="cpns-license-form" class="hidden">
                     <div class="form-group">
-                        <label for="explanation">Penjelasan Jawaban:</label>
-                        <textarea id="explanation" rows="3"></textarea>
+                        <label for="license-code">Masukkan Kode Lisensi Ujian CPNS/P3K:</label>
+                        <input type="password" id="license-code" placeholder="Kode Lisensi">
+                        <button id="submit-license" class="btn-small">Submit</button>
                     </div>
-                    
-                    <div class="form-actions">
-                        <button id="save-question-btn" class="btn-small">Simpan Soal</button>
-                        <button id="cancel-question-btn" class="btn-small btn-secondary">Batal</button>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <p>Pilih jenis ujian sesuai dengan kebutuhan Anda. Waktu ujian adalah 120 menit.</p>
+            </div>
+            
+            <button id="start-exam-btn" class="btn-grad hidden">Mulai Ujian Sekarang</button>
+        </div>
+    </div>
+
+    <!-- Halaman Ujian -->
+    <div id="exam-page" class="page hidden">
+        <div class="container">
+            <div class="exam-header">
+                <div class="exam-timer">
+                    <span id="timer">120:00</span>
+                </div>
+                <div class="exam-progress">
+                    <span id="current-question">1</span> dari <span id="total-questions">10</span>
+                </div>
+            </div>
+            
+            <div class="exam-content">
+                <div class="question-container">
+                    <h3 id="question-text">Memuat soal...</h3>
+                </div>
+                
+                <div class="options-container">
+                    <div class="option" data-option="A">
+                        <span class="option-letter">A</span>
+                        <span class="option-text" id="optionA">Memuat pilihan A...</span>
+                    </div>
+                    <div class="option" data-option="B">
+                        <span class="option-letter">B</span>
+                        <span class="option-text" id="optionB">Memuat pilihan B...</span>
+                    </div>
+                    <div class="option" data-option="C">
+                        <span class="option-letter">C</span>
+                        <span class="option-text" id="optionC">Memuat pilihan C...</span>
+                    </div>
+                    <div class="option" data-option="D">
+                        <span class="option-letter">D</span>
+                        <span class="option-text" id="optionD">Memuat pilihan D...</span>
+                    </div>
+                    <div class="option" data-option="E">
+                        <span class="option-letter">E</span>
+                        <span class="option-text" id="optionE">Memuat pilihan E...</span>
                     </div>
                 </div>
                 
-                <div class="questions-list">
-                    <h4>Daftar Soal</h4>
-                    <div class="search-box">
-                        <input type="text" id="search-question" placeholder="Cari soal...">
-                        <button id="search-btn"><i class="fas fa-search"></i></button>
+                <div class="answer-explanation hidden" id="explanation">
+                    <h4>Penjelasan:</h4>
+                    <p id="explanation-text">Penjelasan akan muncul setelah Anda memilih jawaban.</p>
+                </div>
+            </div>
+            
+            <div class="exam-footer">
+                <button id="finish-exam-btn" class="btn-grad">Selesaikan Ujian Sekarang</button>
+                <button id="skip-question-btn" class="btn-outline">Lewati Soal</button>
+                <button id="unanswered-btn" class="btn-outline">Soal Belum Dijawab</button>
+            </div>
+            
+            <div id="time-warning" class="hidden">
+                <p>Perhatian! Ujian akan berakhir dalam waktu <span id="remaining-time">10</span> menit. Mohon pastikan semua jawaban telah diselesaikan dan diperiksa sebelum waktu habis. Terima kasih atas partisipasi Anda.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Halaman Hasil Ujian -->
+    <div id="result-page" class="page hidden">
+        <div class="container">
+            <h2>Hasil Ujian Anda</h2>
+            
+            <div class="result-summary">
+                <div class="result-card">
+                    <h3>Total Soal</h3>
+                    <p id="total-answered">0</p>
+                </div>
+                <div class="result-card correct">
+                    <h3>Jawaban Benar</h3>
+                    <p id="correct-answers">0</p>
+                </div>
+                <div class="result-card wrong">
+                    <h3>Jawaban Salah</h3>
+                    <p id="wrong-answers">0</p>
+                </div>
+                <div class="result-card">
+                    <h3>Nilai</h3>
+                    <p id="final-score">0</p>
+                </div>
+            </div>
+            
+            <div class="result-actions">
+                <button id="print-certificate-btn" class="btn-grad">Cetak Sertifikat</button>
+                <button id="retake-exam-btn" class="btn-outline">Ulangi Ujian</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sertifikat (tersembunyi untuk dicetak) -->
+    <div id="certificate" class="hidden">
+        <div class="certificate-container">
+            <img src="assets/images/certificate.png" alt="Background Sertifikat" class="certificate-bg">
+            <div class="certificate-content">
+                <h1>SERTIFIKAT PRESTASI</h1>
+                <p class="given-to">Diberikan Kepada</p>
+                <h2 id="certificate-name">NAMA PESERTA</h2>
+                <p class="certificate-text">Atas Partisipasi & Pencapaian Luar Biasa dalam <strong>Ujian Pergunu Situbondo</strong></p>
+                <p class="certificate-desc">Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, sertifikat ini diberikan sebagai motivasi untuk terus berkembang.</p>
+                <div class="score-container">
+                    <p>Nilai: <span id="certificate-score">0</span></p>
+                </div>
+                <p class="motivation-text" id="certificate-motivation">Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.</p>
+                <div class="certificate-footer">
+                    <p>Ditetapkan di: Situbondo, <span id="certificate-date">16 Mei 2025</span></p>
+                    <p class="signature-title">Ketua Pergunu Situbondo</p>
+                    <p class="signature-name" id="chairman-name">Moh. Nuril Hudha, S.Pd., M.Si.</p>
+                    <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
+                </div>
+                <p class="certificate-code" id="certificate-code">USWATUN HASANAH/PELAJAR/SMA/IPS/16052025/T9B3-S6M3/PERGUNU-STB</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tombol Melayang -->
+    <div class="floating-buttons">
+        <button id="share-btn" class="floating-btn" title="Bagikan">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <button id="whatsapp-btn" class="floating-btn" title="Chat WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </button>
+        <button id="question-bank-btn" class="floating-btn" title="Bank Soal">
+            <i class="fas fa-book"></i>
+        </button>
+        <button id="admin-panel-btn" class="floating-btn" title="Admin Panel">
+            <i class="fas fa-cog"></i>
+        </button>
+    </div>
+
+    <!-- Modal Bank Soal -->
+    <div id="question-bank-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Bank Soal</h2>
+            
+            <div class="modal-tabs">
+                <button class="tab-btn active" data-tab="manual-tab">Manual</button>
+                <button class="tab-btn" data-tab="ai-tab">AI Prompt</button>
+                <button class="tab-btn" data-tab="review-tab">Review Soal</button>
+            </div>
+            
+            <div id="manual-tab" class="tab-content active">
+                <div class="form-group">
+                    <label for="bank-subject">Mata Pelajaran:</label>
+                    <select id="bank-subject">
+                        <option value="agama">AGAMA</option>
+                        <option value="ppkn">PPKN</option>
+                        <option value="sejarah">SEJARAH</option>
+                        <option value="ipa">IPA</option>
+                        <option value="ips">IPS</option>
+                        <option value="matematika">MATEMATIKA</option>
+                        <option value="bahasa-indonesia">BAHASA INDONESIA</option>
+                        <option value="bahasa-inggris">BAHASA INGGRIS</option>
+                        <option value="materi-extra">MATERI EXTRA</option>
+                        <option value="materi-khusus">MATERI KHUSUS</option>
+                        <option value="ujian-logika">UJIAN LOGIKA</option>
+                        <option value="ujian-cpns">UJIAN CPNS/P3K</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="question-text">Pertanyaan:</label>
+                    <textarea id="question-text" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Pilihan Jawaban:</label>
+                    <div class="option-input">
+                        <span>A.</span>
+                        <input type="text" id="option-a" placeholder="Pilihan A">
                     </div>
-                    
-                    <div class="question-items">
-                        <!-- Questions will be listed here -->
+                    <div class="option-input">
+                        <span>B.</span>
+                        <input type="text" id="option-b" placeholder="Pilihan B">
                     </div>
+                    <div class="option-input">
+                        <span>C.</span>
+                        <input type="text" id="option-c" placeholder="Pilihan C">
+                    </div>
+                    <div class="option-input">
+                        <span>D.</span>
+                        <input type="text" id="option-d" placeholder="Pilihan D">
+                    </div>
+                    <div class="option-input">
+                        <span>E.</span>
+                        <input type="text" id="option-e" placeholder="Pilihan E">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="correct-answer">Jawaban Benar:</label>
+                    <select id="correct-answer">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="explanation-text">Penjelasan Jawaban:</label>
+                    <textarea id="explanation-text" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="question-image">Gambar (Opsional):</label>
+                    <input type="file" id="question-image" accept="image/*">
+                </div>
+                
+                <div class="form-actions">
+                    <button id="save-question-btn" class="btn-grad">Simpan Soal</button>
+                    <button id="reset-question-btn" class="btn-outline">Reset</button>
+                </div>
+            </div>
+            
+            <div id="ai-tab" class="tab-content">
+                <div class="form-group">
+                    <label for="ai-prompt">Prompt AI:</label>
+                    <textarea id="ai-prompt" rows="5" placeholder="Contoh: Buatkan 5 soal pilihan ganda tentang sejarah kemerdekaan Indonesia dengan tingkat kesulitan SMP"></textarea>
+                </div>
+                <button id="generate-questions-btn" class="btn-grad">Generate Soal</button>
+                <div id="ai-results" class="hidden">
+                    <h3>Hasil Generate:</h3>
+                    <div id="generated-questions"></div>
+                    <button id="save-generated-btn" class="btn-grad">Simpan Soal</button>
+                </div>
+            </div>
+            
+            <div id="review-tab" class="tab-content">
+                <div class="form-group">
+                    <label for="review-subject">Filter Mata Pelajaran:</label>
+                    <select id="review-subject">
+                        <option value="all">Semua Mata Pelajaran</option>
+                        <option value="agama">AGAMA</option>
+                        <option value="ppkn">PPKN</option>
+                        <!-- Opsi lainnya -->
+                    </select>
+                </div>
+                
+                <div class="question-list" id="question-list">
+                    <!-- Daftar soal akan diisi oleh JavaScript -->
                 </div>
             </div>
         </div>
-        
-        <div class="admin-tab-content" id="settings-tab">
-            <div class="settings-section">
-                <h4>Pengaturan Timer Ujian</h4>
-                <div class="setting-input">
-                    <label for="exam-timer-setting">Waktu Ujian (menit):</label>
-                    <input type="number" id="exam-timer-setting" value="120" min="5" max="180">
-                    <button id="save-timer-setting" class="btn-small">Simpan</button>
-                </div>
+    </div>
+
+    <!-- Modal Admin Panel -->
+    <div id="admin-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Kontrol Panel Admin</h2>
+            
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="login-code-tab">Kode Login</button>
+                <button class="tab-btn" data-tab="exam-code-tab">Kode Ujian CPNS</button>
+                <button class="tab-btn" data-tab="question-code-tab">Kode Bank Soal</button>
+                <button class="tab-btn" data-tab="admin-code-tab">Kode Admin</button>
+                <button class="tab-btn" data-tab="settings-tab">Pengaturan</button>
+                <button class="tab-btn" data-tab="participants-tab">Data Peserta</button>
             </div>
             
-            <div class="settings-section">
-                <h4>Pengaturan Nama Ketua</h4>
-                <div class="setting-input">
-                    <label for="chairman-name-setting">Nama Ketua PERGUNU:</label>
-                    <input type="text" id="chairman-name-setting" value="Moh. Nuril Hudha, S.Pd., M.Si.">
-                    <button id="save-chairman-name" class="btn-small">Simpan</button>
+            <div id="login-code-tab" class="tab-content active">
+                <div class="form-group">
+                    <label for="new-login-code">Kode Login Baru:</label>
+                    <input type="password" id="new-login-code">
                 </div>
+                <div class="form-group">
+                    <label for="current-login-code">Kode Login Lama:</label>
+                    <input type="password" id="current-login-code" value="12345" readonly>
+                </div>
+                <button id="save-login-code" class="btn-grad">Simpan Kode</button>
             </div>
             
-            <div class="settings-section">
-                <h4>Pengaturan Teks Motivasi Sertifikat</h4>
-                <div class="setting-input">
-                    <label for="motivation-text-setting">Teks Motivasi:</label>
-                    <textarea id="motivation-text-setting" rows="3">Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.</textarea>
-                    <button id="save-motivation-text" class="btn-small">Simpan</button>
+            <div id="exam-code-tab" class="tab-content">
+                <div class="form-group">
+                    <label for="new-exam-code">Kode Ujian Baru:</label>
+                    <input type="password" id="new-exam-code">
                 </div>
+                <div class="form-group">
+                    <label for="current-exam-code">Kode Ujian Lama:</label>
+                    <input type="password" id="current-exam-code" value="OPENLOCK-1945" readonly>
+                </div>
+                <button id="save-exam-code" class="btn-grad">Simpan Kode</button>
             </div>
             
-            <div class="settings-section">
-                <h4>Pengaturan Teks Pembuka</h4>
-                <div class="setting-input">
-                    <label for="welcome-text-setting">Teks Sambutan:</label>
-                    <textarea id="welcome-text-setting" rows="3">Selamat Datang di Ujian Online PERGUNU Situbondo</textarea>
-                    <button id="save-welcome-text" class="btn-small">Simpan</button>
+            <div id="question-code-tab" class="tab-content">
+                <div class="form-group">
+                    <label for="new-question-code">Kode Soal Baru:</label>
+                    <input type="password" id="new-question-code">
                 </div>
+                <div class="form-group">
+                    <label for="current-question-code">Kode Soal Lama:</label>
+                    <input type="password" id="current-question-code" value="OPENLOCK-1926" readonly>
+                </div>
+                <button id="save-question-code" class="btn-grad">Simpan Kode</button>
             </div>
             
-            <div class="settings-section">
-                <h4>Pengaturan Teks Informasi Berkala</h4>
-                <div class="setting-input">
-                    <label for="info-text-setting">Teks Informasi:</label>
-                    <textarea id="info-text-setting" rows="3">Ujian online ini diselenggarakan oleh PERGUNU Situbondo untuk meningkatkan kompetensi peserta dalam berbagai bidang pengetahuan.</textarea>
-                    <button id="save-info-text" class="btn-small">Simpan</button>
+            <div id="admin-code-tab" class="tab-content">
+                <div class="form-group">
+                    <label for="new-admin-code">Kode Admin Baru:</label>
+                    <input type="password" id="new-admin-code">
                 </div>
+                <div class="form-group">
+                    <label for="current-admin-code">Kode Admin Lama:</label>
+                    <input type="password" id="current-admin-code" value="65614222" readonly>
+                </div>
+                <button id="save-admin-code" class="btn-grad">Simpan Kode Admin</button>
             </div>
             
-            <div class="settings-section">
-                <h4>Pengaturan Point Nilai</h4>
-                <div class="setting-input">
-                    <label for="point-setting">Point per Jawaban Benar:</label>
-                    <select id="point-setting">
-                        <option value="1">1 Point</option>
-                        <option value="2">2 Points</option>
-                        <option value="3">3 Points</option>
-                        <option value="4">4 Points</option>
-                        <option value="5">5 Points</option>
-                        <option value="6">6 Points</option>
-                        <option value="7">7 Points</option>
-                        <option value="8">8 Points</option>
-                        <option value="9">9 Points</option>
-                        <option value="10">10 Points</option>
-                    </select>
-                    <button id="save-point-setting" class="btn-small">Simpan</button>
-                </div>
-            </div>
-            
-            <div class="settings-section">
-                <h4>Pengaturan Soal</h4>
-                <div class="setting-input">
-                    <label for="randomize-setting">Acak Urutan Soal:</label>
-                    <input type="checkbox" id="randomize-setting" checked>
-                    <button id="save-randomize-setting" class="btn-small">Simpan</button>
+            <div id="settings-tab" class="tab-content">
+                <div class="form-group">
+                    <label for="chairman-name-input">Nama Ketua PERGUNU:</label>
+                    <input type="text" id="chairman-name-input" value="Moh. Nuril Hudha, S.Pd., M.Si.">
                 </div>
                 
-                <div class="setting-input">
-                    <label for="question-count-setting">Jumlah Soal (kelipatan 5):</label>
-                    <select id="question-count-setting">
+                <div class="form-group">
+                    <label for="greeting-text-input">Teks Sambutan Pembuka:</label>
+                    <textarea id="greeting-text-input" rows="3">Selamat Datang di Ujian Online PERGUNU SITUBONDO</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="periodic-info-input">Informasi Berkala:</label>
+                    <textarea id="periodic-info-input" rows="3">Informasi penting akan ditampilkan di sini oleh admin.</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="exam-timer-input">Timer Ujian (menit):</label>
+                    <input type="number" id="exam-timer-input" value="120" min="5">
+                </div>
+                
+                <div class="form-group">
+                    <label for="question-points">Point per Soal:</label>
+                    <select id="question-points">
+                        <option value="1">1 Point</option>
+                        <option value="2">2 Point</option>
+                        <!-- Opsi lainnya hingga 10 -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="randomize-questions">Acak Urutan Soal:</label>
+                    <input type="checkbox" id="randomize-questions" checked>
+                </div>
+                
+                <div class="form-group">
+                    <label for="max-questions">Jumlah Maksimal Soal:</label>
+                    <select id="max-questions">
                         <option value="5">5 Soal</option>
                         <option value="10">10 Soal</option>
-                        <option value="15">15 Soal</option>
-                        <option value="20">20 Soal</option>
-                        <option value="25">25 Soal</option>
-                        <option value="30">30 Soal</option>
-                        <option value="35">35 Soal</option>
-                        <option value="40">40 Soal</option>
-                        <option value="45">45 Soal</option>
-                        <option value="50">50 Soal</option>
-                        <option value="100">100 Soal</option>
-                        <option value="150">150 Soal</option>
+                        <!-- Opsi lainnya hingga 150 -->
                     </select>
-                    <button id="save-question-count" class="btn-small">Simpan</button>
                 </div>
+                
+                <div class="form-group">
+                    <label>Enable/Disable Ujian:</label>
+                    <div class="toggle-container">
+                        <label class="toggle-label">
+                            <input type="checkbox" class="exam-toggle" data-exam="agama" checked> AGAMA
+                        </label>
+                        <!-- Toggle untuk semua mata pelajaran -->
+                    </div>
+                </div>
+                
+                <button id="save-settings" class="btn-grad">Simpan Pengaturan</button>
             </div>
             
-            <div class="settings-section">
-                <h4>Pengaturan Jenis Ujian</h4>
-                <div class="exam-toggle">
-                    <label>Pelajar:</label>
-                    <input type="checkbox" id="student-exam-toggle" checked>
-                </div>
-                <div class="exam-toggle">
-                    <label>Umum:</label>
-                    <input type="checkbox" id="general-exam-toggle" checked>
-                </div>
-                <button id="save-exam-toggle" class="btn-small">Simpan Pengaturan</button>
-            </div>
-        </div>
-        
-        <div class="admin-tab-content" id="participants-tab">
-            <div class="participants-management">
-                <h4>Data Peserta Ujian</h4>
-                
-                <div class="participant-tools">
-                    <div class="search-box">
-                        <input type="text" id="search-participant" placeholder="Cari peserta...">
-                        <button id="search-participant-btn"><i class="fas fa-search"></i></button>
-                    </div>
-                    
-                    <div class="export-buttons">
-                        <button id="export-excel" class="btn-small"><i class="fas fa-file-excel"></i> Export Excel</button>
-                        <button id="export-word" class="btn-small"><i class="fas fa-file-word"></i> Export Word</button>
-                        <button id="export-pdf" class="btn-small"><i class="fas fa-file-pdf"></i> Export PDF</button>
-                    </div>
+            <div id="participants-tab" class="tab-content">
+                <div class="participant-actions">
+                    <button id="export-participants" class="btn-grad">Export Data</button>
+                    <select id="export-format">
+                        <option value="excel">Excel</option>
+                        <option value="csv">CSV</option>
+                        <option value="pdf">PDF</option>
+                    </select>
                 </div>
                 
-                <div class="participants-list">
-                    <table>
+                <div class="participant-list-container">
+                    <table id="participant-list">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Status</th>
-                                <th>Ujian</th>
+                                <th>Tujuan</th>
+                                <th>Mata Ujian</th>
                                 <th>Nilai</th>
                                 <th>Tanggal</th>
-                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Participants will be listed here -->
+                            <!-- Data peserta akan diisi oleh JavaScript -->
                         </tbody>
                     </table>
                 </div>
@@ -708,16 +591,57 @@
         </div>
     </div>
 
+    <!-- Modal Share -->
+    <div id="share-modal" class="modal hidden">
+        <div class="modal-content small">
+            <span class="close-modal">&times;</span>
+            <h2>Bagikan Website</h2>
+            <div class="social-links" id="social-links">
+                <!-- Link sosial media akan diisi oleh JavaScript -->
+            </div>
+            <div class="copy-link">
+                <input type="text" id="website-link" value="https://pergunu.github.io/pergunusmart/" readonly>
+                <button id="copy-link-btn" class="btn-small">Salin Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Kode Bank Soal -->
+    <div id="bank-code-modal" class="modal hidden">
+        <div class="modal-content small">
+            <span class="close-modal">&times;</span>
+            <h2>Masukkan Kode Bank Soal</h2>
+            <div class="form-group">
+                <input type="password" id="bank-code-input" placeholder="Masukkan Kode">
+                <button id="submit-bank-code" class="btn-grad">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Kode Admin -->
+    <div id="admin-code-modal" class="modal hidden">
+        <div class="modal-content small">
+            <span class="close-modal">&times;</span>
+            <h2>Masukkan Kode Admin</h2>
+            <div class="form-group">
+                <input type="password" id="admin-code-input" placeholder="Masukkan Kode">
+                <button id="submit-admin-code" class="btn-grad">Submit</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Audio Elements -->
     <audio id="correct-audio" src="assets/audio/jawabanbenar.mp3"></audio>
-    <audio id="wrong-audio" src="assets/audio/jawabansalah.mp3"></audio>
+    <audio id="wrong-audio" src="assets/audio/jawbansalah.mp3"></audio>
     <audio id="button-audio" src="assets/audio/audiotombol.mp3"></audio>
+    <audio id="applause-audio" src="assets/audio/applause.mp3"></audio>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script src="assets/js/questions.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="assets/js/particles.js"></script>
+    <script src="assets/js/form-validation.js"></script>
+    <script src="assets/js/quiz.js"></script>
+    <script src="assets/js/admin.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
