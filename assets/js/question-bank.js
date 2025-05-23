@@ -1,3 +1,115 @@
+// Konfigurasi API
+const AI_API_KEY = "API_KEY_ANDA"; // Ganti dengan API key Anda
+const AI_API_URL = "https://api.openai.com/v1/chat/completions"; // Contoh endpoint OpenAI
+
+class QuestionBank {
+    constructor() {
+        this.questions = JSON.parse(localStorage.getItem('questions')) || [];
+    }
+
+    // Fungsi untuk generate soal dengan AI
+    async generateWithAI(topic, subject, level, count) {
+        try {
+            const prompt = `Buatkan ${count} soal pilihan ganda tentang ${topic} untuk mata pelajaran ${subject} tingkat kesulitan ${level}. Format setiap soal:
+            
+            Pertanyaan: [pertanyaan]
+            A. [opsi A]
+            B. [opsi B] 
+            C. [opsi C]
+            D. [opsi D]
+            Jawaban: [huruf jawaban benar]
+            Penjelasan: [penjelasan singkat]`;
+
+            const response = await fetch(AI_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${AI_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: "gpt-3.5-turbo",
+                    messages: [{ role: "user", content: prompt }],
+                    temperature: 0.7
+                })
+            });
+
+            const data = await response.json();
+            return this.parseAIResponse(data.choices[0].message.content);
+        } catch (error) {
+            console.error("Error generating questions:", error);
+            return [];
+        }
+    }
+
+    // Parsing response AI ke format aplikasi
+    parseAIResponse(text) {
+        const questions = [];
+        const questionBlocks = text.split('\n\n').filter(block => block.includes('Pertanyaan:'));
+        
+        questionBlocks.forEach(block => {
+            const lines = block.split('\n');
+            const question = {
+                text: lines[0].replace('Pertanyaan: ', ''),
+                options: [],
+                explanation: ''
+            };
+
+            // Parse options
+            for (let i = 1; i <= 4; i++) {
+                if (lines[i] && lines[i].match(/^[A-D]\./)) {
+                    question.options.push({
+                        id: lines[i].charAt(0),
+                        text: lines[i].substring(3).trim()
+                    });
+                }
+            }
+
+            // Parse correct answer
+            const answerLine = lines.find(line => line.startsWith('Jawaban:'));
+            if (answerLine) {
+                const correctId = answerLine.split(': ')[1].trim();
+                question.options.forEach(opt => {
+                    if (opt.id === correctId) opt.correct = true;
+                });
+            }
+
+            // Parse explanation
+            const explanationLine = lines.find(line => line.startsWith('Penjelasan:'));
+            if (explanationLine) {
+                question.explanation = explanationLine.replace('Penjelasan: ', '');
+            }
+
+            questions.push(question);
+        });
+
+        return questions;
+    }
+
+    // Fungsi lainnya (save, load, dll)...
+}
+
+// Inisialisasi
+const questionBank = new QuestionBank();
+
+// Fungsi global untuk dipanggil dari UI
+window.generateAIQuestions = async function() {
+    const subject = document.getElementById('aiSubject').value;
+    const level = document.getElementById('aiLevel').value;
+    const topic = document.getElementById('aiTopic').value;
+    const count = document.getElementById('aiCount').value;
+
+    const loadingElement = document.getElementById('aiResults');
+    loadingElement.innerHTML = '<div class="loading-spinner"></div><p>Sedang generate soal...</p>';
+
+    const generatedQuestions = await questionBank.generateWithAI(topic, subject, level, count);
+    
+    if (generatedQuestions.length > 0) {
+        displayGeneratedQuestions(generatedQuestions);
+    } else {
+        loadingElement.innerHTML = '<p class="error">Gagal generate soal. Silakan coba lagi.</p>';
+    }
+};
+
 // Question bank functionality
 document.addEventListener('DOMContentLoaded', function() {
     // Load questions from localStorage
