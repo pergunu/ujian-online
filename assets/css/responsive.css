@@ -1,0 +1,205 @@
+/* Responsive adjustments for different screen sizes */
+
+/* Large devices (desktops, less than 1200px) */
+@media (max-width: 1199.98px) {
+    .opening-content {
+        padding: 30px;
+    }
+    
+    .terms-content, .form-content {
+        max-width: 600px;
+    }
+}
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {
+    .opening-content h1 {
+        font-size: 22px;
+    }
+    
+    .terms-content, .form-content {
+        padding: 25px;
+    }
+    
+    .grade-buttons, .subject-buttons {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+    .opening-content {
+        padding: 20px;
+    }
+    
+    .opening-content h1 {
+        font-size: 20px;
+    }
+    
+    .terms-content, .form-content, .selection-content {
+        padding: 20px;
+        width: 95%;
+    }
+    
+    .radio-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .exam-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .progress-container {
+        width: 100%;
+    }
+    
+    .floating-buttons {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .float-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+    .opening-content {
+        padding: 15px;
+    }
+    
+    .opening-content h1 {
+        font-size: 18px;
+    }
+    
+    .btn-grad {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .terms-content, .form-content {
+        padding: 15px;
+    }
+    
+    .terms-text ol {
+        padding-left: 15px;
+    }
+    
+    .form-group input, 
+    .form-group select, 
+    .form-group textarea {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .grade-buttons, .subject-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .exam-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .btn-exam {
+        width: 100%;
+    }
+    
+    .certificate-content {
+        padding: 20px;
+    }
+    
+    .certificate-content h1 {
+        font-size: 24px;
+    }
+    
+    .certificate-content h2 {
+        font-size: 18px;
+    }
+    
+    .floating-buttons {
+        flex-direction: row;
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .float-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .float-btn::after {
+        display: none;
+    }
+}
+
+/* Very small devices (small phones, less than 400px) */
+@media (max-width: 399.98px) {
+    .opening-content {
+        padding: 10px;
+    }
+    
+    .terms-content, .form-content {
+        padding: 10px;
+    }
+    
+    .grade-buttons, .subject-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .certificate-content {
+        padding: 15px;
+    }
+    
+    .certificate-content h1 {
+        font-size: 20px;
+    }
+    
+    .floating-buttons {
+        gap: 8px;
+    }
+    
+    .float-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+}
+
+/* Orientation adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+    .opening-screen, 
+    .terms-container, 
+    .form-container,
+    .exam-selection {
+        align-items: flex-start;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        overflow-y: auto;
+    }
+    
+    .opening-content,
+    .terms-content,
+    .form-content,
+    .selection-content {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+/* High DPI devices */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .particle {
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .js-particles-connection {
+        stroke-width: 0.5px;
+    }
+}
