@@ -1,5 +1,5 @@
 // Konfigurasi API
-const AI_API_KEY = "API_KEY_ANDA"; // Ganti dengan API key Anda
+const AI_API_KEY = "sk-8837b24327bd4db99e36688951ceaea8"; // Ganti dengan API key Anda
 const AI_API_URL = "https://api.openai.com/v1/chat/completions"; // Contoh endpoint OpenAI
 
 class QuestionBank {
