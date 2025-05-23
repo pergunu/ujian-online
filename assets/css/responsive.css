@@ -122,21 +122,36 @@
         font-size: 18px;
     }
     
-    .floating-buttons {
-        flex-direction: row;
-        bottom: 10px;
-        right: 10px;
-    }
-    
-    .float-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-    }
-    
-    .float-btn::after {
-        display: none;
-    }
+    @media (max-width: 768px) {
+  .floating-buttons {
+    bottom: 20px;
+    right: 20px;
+    flex-direction: row;
+    gap: 10px;
+  }
+  
+  .float-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+  }
+  
+  .float-btn::after {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .floating-buttons {
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .float-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
 }
 
 /* Very small devices (small phones, less than 400px) */
