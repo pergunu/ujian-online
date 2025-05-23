@@ -531,9 +531,9 @@
                 <button class="bank-tab-btn" data-bank-tab="ai-generate">Generate dengan AI</button>
             </div>
             
-            <div class="bank-tab-content active" id="add-question">
+            <div class="bank-tab-content" id="ai-generate">
                 <div class="bank-form">
-                    <div class="form-group">
+                     <div class="ai-results" id="aiResults">
                         <label for="questionSubject">Mata Pelajaran/Jenis Ujian:</label>
                         <select id="questionSubject">
                             <option value="agama">AGAMA</option>
@@ -550,6 +550,9 @@
                             <option value="cpns">UJIAN CPNS/P3K</option>
                         </select>
                     </div>
+
+                    <div class="ai-status hidden" id="aiStatus"></div>
+                </div>
                     
                     <div class="form-group">
                         <label for="questionLevel">Tingkat Kesulitan:</label>
