@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <!-- Meta dan CSS sama seperti index.html -->
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2>Formulir Data Peserta</h2>
+            
+            <form id="form-peserta">
+                <!-- Form lengkap sesuai kebutuhan -->
+                <div class="form-group">
+                    <label>Status:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="pelajar" name="status" value="pelajar" checked>
+                        <label for="pelajar">Pelajar</label>
+                        <input type="radio" id="umum" name="status" value="umum">
+                        <label for="umum">Umum</label>
+                    </div>
+                </div>
+                
+                <!-- Field dinamis berdasarkan status -->
+                <div id="field-pelajar">
+                    <!-- Field khusus pelajar -->
+                </div>
+                
+                <div id="field-umum" class="hidden">
+                    <!-- Field khusus umum -->
+                </div>
+                
+                <button type="submit" class="btn-primary">Simpan & Lanjut</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
