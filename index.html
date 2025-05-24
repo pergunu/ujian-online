@@ -7,95 +7,28 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Background Particle -->
     <div id="particles-js"></div>
     
-    <!-- Opening Screen -->
-    <div class="opening-screen animate__animated animate__fadeIn">
-        <div class="opening-content">
+    <div class="container">
+        <div class="login-card animate__animated animate__fadeIn">
             <img src="assets/images/logo.png" alt="Logo Pergunu" class="logo">
-            <h1 id="greeting-text">Selamat Datang di Ujian Online Pergunu Situbondo</h1>
-            <div class="login-form animate__animated animate__fadeInUp">
-                <input type="password" id="login-code" placeholder="Masukkan Kode Ujian" class="input-field">
-                <button id="login-btn" class="btn-gradient pulse-on-hover">
+            <h1>Ujian Online Pergunu Situbondo</h1>
+            
+            <div class="form-group">
+                <input type="password" id="kode-ujian" placeholder="Masukkan Kode Ujian" class="input-field">
+                <button id="btn-masuk" class="btn-primary">
                     <span class="btn-text">Masuk</span>
-                    <span class="btn-loader hidden">
+                    <span class="btn-loading hidden">
                         <i class="fas fa-spinner fa-spin"></i>
                     </span>
                 </button>
             </div>
-            <audio id="opening-audio" src="assets/audio/opening.mp3" autoplay></audio>
         </div>
     </div>
 
-    <!-- Terms and Conditions -->
-    <div class="terms-screen hidden animate__animated">
-        <div class="terms-content">
-            <h2>Peraturan & Kebijakan Ujian Online</h2>
-            <div class="terms-text">
-                <p>Dikembangkan oleh Cendhanu Tim Kreator PERGUNU SITUBONDO</p>
-                <ol>
-                    <li>Peserta wajib mengisi data diri dengan benar dan valid.</li>
-                    <li>Dilarang keras melakukan kecurangan selama ujian berlangsung.</li>
-                    <li>Setiap peserta hanya diperbolehkan mengikuti ujian sekali dalam satu periode.</li>
-                    <li>Waktu ujian tidak dapat diulang atau diperpanjang setelah habis.</li>
-                    <li>Hasil ujian akan langsung tercetak dalam bentuk sertifikat digital.</li>
-                </ol>
-            </div>
-            <div class="terms-agree">
-                <input type="checkbox" id="agree-checkbox">
-                <label for="agree-checkbox">Saya menyetujui semua peraturan dan kebijakan di atas</label>
-            </div>
-            <button id="terms-agree-btn" class="btn-gradient" disabled>Lanjut Ikut Ujian</button>
-        </div>
-    </div>
-
-    <!-- Participant Form -->
-    <div class="participant-form hidden animate__animated">
-        <div class="form-container">
-            <h2>Formulir Data Peserta</h2>
-            <form id="participant-data">
-                <div class="form-group">
-                    <label for="fullname">Nama Lengkap:</label>
-                    <input type="text" id="fullname" required class="input-field">
-                </div>
-                
-                <!-- Sisanya sesuai kode awal -->
-                <!-- ... -->
-                
-            </form>
-        </div>
-    </div>
-
-    <!-- Floating Buttons (Versi Final) -->
-    <div class="floating-buttons">
-        <button class="fab-btn" id="share-btn" title="Bagikan">
-            <i class="fas fa-share-alt"></i>
-            <span class="ripple-effect"></span>
-        </button>
-        <button class="fab-btn" id="whatsapp-btn" title="Chat WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-            <span class="ripple-effect"></span>
-        </button>
-        <button class="fab-btn" id="question-bank-btn" title="Bank Soal">
-            <i class="fas fa-book"></i>
-            <span class="ripple-effect"></span>
-        </button>
-        <button class="fab-btn" id="admin-btn" title="Admin Panel">
-            <i class="fas fa-cog"></i>
-            <span class="ripple-effect"></span>
-        </button>
-    </div>
-
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="assets/js/particles.js"></script>
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/admin.js"></script>
 </body>
 </html>
