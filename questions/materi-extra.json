@@ -1,0 +1,20 @@
+[
+    {
+        "question": "Apa nama ibukota Provinsi Jawa Timur?",
+        "options": ["Surabaya", "Malang", "Sidoarjo", "Kediri", "Madiun"],
+        "answer": 0,
+        "explanation": "Ibukota Provinsi Jawa Timur adalah Surabaya."
+    },
+    {
+        "question": "Pulau terbesar di Indonesia adalah?",
+        "options": ["Jawa", "Sumatera", "Kalimantan", "Sulawesi", "Papua"],
+        "answer": 4,
+        "explanation": "Pulau Papua adalah pulau terbesar di Indonesia."
+    },
+    {
+        "question": "Tari Kecak berasal dari daerah?",
+        "options": ["Jawa Barat", "Jawa Timur", "Bali", "Sumatera Barat", "Sulawesi Selatan"],
+        "answer": 2,
+        "explanation": "Tari Kecak adalah tarian tradisional yang berasal dari Bali."
+    }
+]
