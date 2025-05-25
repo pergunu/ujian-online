@@ -1,0 +1,26 @@
+[
+    {
+        "question": "What is the past tense of 'go'?",
+        "options": ["Goed", "Gone", "Went", "Going", "Goes"],
+        "answer": 2,
+        "explanation": "The past tense of 'go' is 'went'."
+    },
+    {
+        "question": "The opposite of 'happy' is?",
+        "options": ["Angry", "Sad", "Excited", "Tired", "Bored"],
+        "answer": 1,
+        "explanation": "The opposite of 'happy' is 'sad'."
+    },
+    {
+        "question": "Which sentence is correct?",
+        "options": [
+            "She don't like apples",
+            "She doesn't likes apples",
+            "She doesn't like apples",
+            "She not like apples",
+            "She no like apples"
+        ],
+        "answer": 2,
+        "explanation": "The correct sentence is 'She doesn't like apples'."
+    }
+]
