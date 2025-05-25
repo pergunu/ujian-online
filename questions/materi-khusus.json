@@ -1,0 +1,26 @@
+[
+    {
+        "question": "Siapa pendiri organisasi Nahdlatul Ulama?",
+        "options": [
+            "KH. Hasyim Asy'ari",
+            "KH. Ahmad Dahlan",
+            "KH. Wahab Chasbullah",
+            "KH. Zainudin MZ",
+            "KH. Abdurrahman Wahid"
+        ],
+        "answer": 0,
+        "explanation": "Nahdlatul Ulama (NU) didirikan oleh KH. Hasyim Asy'ari bersama ulama lainnya pada tahun 1926."
+    },
+    {
+        "question": "Apa nama kitab kuning yang membahas tentang fiqh?",
+        "options": ["Fathul Qorib", "Alala", "Safinah", "Aqidatul Awam", "Ta'lim Muta'allim"],
+        "answer": 0,
+        "explanation": "Fathul Qorib adalah kitab kuning yang membahas tentang fiqh dasar."
+    },
+    {
+        "question": "Sholat sunnah yang dilakukan sebelum sholat Jumat disebut?",
+        "options": ["Tahiyatul Masjid", "Dhuha", "Rawatib", "Tahajud", "Istikharah"],
+        "answer": 0,
+        "explanation": "Sholat sunnah sebelum Jumat disebut Tahiyatul Masjid."
+    }
+]
