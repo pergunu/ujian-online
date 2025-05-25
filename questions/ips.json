@@ -1,0 +1,20 @@
+[
+    {
+        "question": "Aktivitas ekonomi yang menghasilkan barang disebut?",
+        "options": ["Distribusi", "Konsumsi", "Produksi", "Ekspor", "Impor"],
+        "answer": 2,
+        "explanation": "Produksi adalah kegiatan ekonomi yang menghasilkan barang atau jasa."
+    },
+    {
+        "question": "Mata uang resmi Jepang adalah?",
+        "options": ["Dollar", "Euro", "Yen", "Won", "Ringgit"],
+        "answer": 2,
+        "explanation": "Yen adalah mata uang resmi negara Jepang."
+    },
+    {
+        "question": "Negara dengan penduduk terpadat di dunia adalah?",
+        "options": ["India", "Amerika Serikat", "Indonesia", "China", "Brazil"],
+        "answer": 3,
+        "explanation": "China adalah negara dengan penduduk terpadat di dunia saat ini."
+    }
+]
