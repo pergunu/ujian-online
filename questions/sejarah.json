@@ -1,0 +1,26 @@
+[
+    {
+        "question": "Kapan proklamasi kemerdekaan Indonesia dibacakan?",
+        "options": ["1 Juni 1945", "17 Agustus 1945", "28 Oktober 1928", "27 Desember 1949", "10 November 1945"],
+        "answer": 1,
+        "explanation": "Proklamasi kemerdekaan Indonesia dibacakan pada 17 Agustus 1945."
+    },
+    {
+        "question": "Siapa yang mengetik naskah proklamasi?",
+        "options": ["Sayuti Melik", "B.M. Diah", "Sukarni", "Latief Hendraningrat", "Sudiro"],
+        "answer": 0,
+        "explanation": "Sayuti Melik adalah tokoh yang mengetik naskah proklamasi."
+    },
+    {
+        "question": "Peristiwa Rengasdengklok terjadi karena?",
+        "options": [
+            "Perbedaan pendapat tentang waktu proklamasi",
+            "Pertempuran melawan Jepang",
+            "Persiapan pembentukan BPUPKI",
+            "Pembentukan kabinet pertama",
+            "Penandatanganan pengakuan kedaulatan"
+        ],
+        "answer": 0,
+        "explanation": "Peristiwa Rengasdengklok terjadi karena perbedaan pendapat antara golongan muda dan tua tentang waktu proklamasi."
+    }
+]
