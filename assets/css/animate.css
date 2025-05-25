@@ -1,74 +1,74 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-/* Animasi Dasar */
-.animate {
-    animation-duration: 0.5s;
-    animation-fill-mode: both;
+/* animate.css - Animasi untuk transisi */
+.animate__animated {
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
 }
 
-/* Fade In */
+.animate__fadeIn {
+  animation-name: fadeIn;
+}
+
+.animate__zoomIn {
+  animation-name: zoomIn;
+}
+
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-.fade-in {
-    animation-name: fadeIn;
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-/* Slide In */
-@keyframes slideInUp {
-    from {
-        transform: translateY(50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-.slide-in-up {
-    animation-name: slideInUp;
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
-/* Bounce */
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-20px); }
-    60% { transform: translateY(-10px); }
-}
-.bounce {
-    animation-name: bounce;
-}
-
-/* Pulse */
+/* Animasi untuk jawaban */
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-.pulse {
-    animation-name: pulse;
-    animation-iteration-count: infinite;
-}
-
-/* Ripple Effect */
-@keyframes ripple {
-    to {
-        transform: scale(4);
-        opacity: 0;
-    }
-}
-.ripple {
-    position: absolute;
-    background: rgba(255,255,255,0.5);
-    border-radius: 50%;
-    transform: scale(0);
-    animation: ripple 0.6s linear;
-    pointer-events: none;
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-/* Responsive Animations */
-@media (max-width: 768px) {
-    .slide-in-up {
-        animation-name: fadeIn;
-    }
+.animate__pulse {
+  animation-name: pulse;
+}
+
+/* Animasi untuk salah */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  60% {
+    transform: translateX(-10px);
+  }
+  80% {
+    transform: translateX(10px);
+  }
+}
+
+.animate__shake {
+  animation-name: shake;
 }
