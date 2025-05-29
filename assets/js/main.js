@@ -111,6 +111,31 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Admin access modal
     setupAdminAccessModal();
+
+    function resetSensitiveFields() {
+    // Daftar semua field sensitif
+    const sensitiveFields = [
+        'login-code',
+        'cpns-code',
+        'bank-access-code',
+        'admin-access-code',
+        'new-login-code',
+        'new-exam-code',
+        'new-bank-code',
+        'new-admin-code'
+    ];
+    
+    // Reset nilai setiap field
+    sensitiveFields.forEach(id => {
+        const field = document.getElementById(id);
+        if (field) field.value = '';
+    });
+    
+    // Hapus dari localStorage
+    ['loginCode', 'cpnsCode', 'bankCode', 'adminCode'].forEach(key => {
+        localStorage.removeItem(key);
+    });
+}
     
     // Functions
     function handleLogin() {
