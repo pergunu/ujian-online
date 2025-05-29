@@ -45,8 +45,28 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const termsAgreeBtn = document.getElementById('terms-agree-btn');
     termsAgreeBtn.addEventListener('click', function() {
-        transitionScreen('terms', 'participant-form');
-    });
+    // Validasi checkbox tercentang
+    if (!document.getElementById('agree-checkbox').checked) {
+        alert('Anda harus menyetujui peraturan terlebih dahulu');
+        return;
+    }
+
+    // Animasi keluar
+    document.querySelector('.terms-screen').classList.add('animate__animated', 'animate__fadeOut');
+    
+    // Reset form peserta
+    document.getElementById('participant-data').reset();
+    
+    setTimeout(() => {
+        // Sembunyikan terms, tampilkan form peserta
+        document.querySelector('.terms-screen').classList.add('hidden');
+        document.querySelector('.participant-form').classList.remove('hidden');
+        document.querySelector('.participant-form').classList.add('animate__animated', 'animate__fadeIn');
+        
+        // Scroll ke atas form
+        window.scrollTo(0, 0);
+    }, 500);
+});
     
     // Participant form
     const participantForm = document.getElementById('participant-data');
