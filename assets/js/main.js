@@ -114,28 +114,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function resetSensitiveFields() {
     // Daftar semua field sensitif
-    const sensitiveFields = [
-        'login-code',
-        'cpns-code',
-        'bank-access-code',
-        'admin-access-code',
-        'new-login-code',
-        'new-exam-code',
-        'new-bank-code',
-        'new-admin-code'
-    ];
-    
-    // Reset nilai setiap field
+   const sensitiveFields = [
+    'login-code',
+    'cpns-code',
+    'bank-access-code',
+    'admin-access-code'
+];
+
+function resetSensitiveFields() {
     sensitiveFields.forEach(id => {
         const field = document.getElementById(id);
-        if (field) field.value = '';
+        if (field) {
+            field.value = '';
+            field.blur(); // Hilangkan fokus dari field
+        }
     });
     
-    // Hapus dari localStorage
-    ['loginCode', 'cpnsCode', 'bankCode', 'adminCode'].forEach(key => {
-        localStorage.removeItem(key);
-    });
+    // Clear clipboard
+    navigator.clipboard.writeText('');
+    
+    // Clear memory
+    if (window.crypto && crypto.getRandomValues) {
+        const clearArray = new Uint32Array(1);
+        crypto.getRandomValues(clearArray);
+    }
 }
+
+// Auto reset saat modal ditutup
+document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('hidden.bs.modal', resetSensitiveFields);
+});
+
+// Auto reset saat pindah halaman
+window.addEventListener('beforeunload', resetSensitiveFields);
     
     // Functions
    function handleLogin() {
