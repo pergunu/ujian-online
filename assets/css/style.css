@@ -77,14 +77,67 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+body {
+    font-family: var(--font-sans);
+    background: linear-gradient(135deg, var(--primary-100), var(--gray-50));
+    color: var(--gray-800);
+    line-height: 1.6;
+    min-height: 100vh;
 }
 
-body {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), #6a11cb);
-    color: var(--light-color);
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
+/* ===== BUTTONS ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background-color: var(--primary-600);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-700);
+    box-shadow: var(--shadow);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-500);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-600);
+}
+
+.btn-danger {
+    background-color: var(--danger-500);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-600);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--gray-300);
+    color: var(--gray-700);
+}
+
+.btn-outline:hover {
+    background-color: var(--gray-50);
+    border-color: var(--gray-400);
 }
 
 .hidden {
