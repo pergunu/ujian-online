@@ -1,16 +1,38 @@
 /* Global Styles */
 :root {
+    /* Warna Primer */
     --primary-color: #3498db;  /* Biru profesional */
-    --secondary-color: #2ecc71; /* Hijau segar */
-    --accent-color: #e74c3c;    /* Merah aksen */
-    --dark-color: #2c3e50;      /* Biru tua */
-    --light-color: #ecf0f1;     /* Abu-abu muda */
+    --primary-dark: #2980b9;   /* Biru tua */
+    --primary-light: #5dade2;  /* Biru muda */
+    
+    /* Warna Sekunder */
+    --secondary-color: #2ecc71; /* Hijau */
+    --secondary-dark: #27ae60;  /* Hijau tua */
+    
+    /* Warna Aksen */
+    --accent-color: #e74c3c;    /* Merah */
+    --accent-dark: #c0392b;     /* Merah tua */
+    
+    /* Warna Netral */
+    --dark-color: #2c3e50;      /* Biru tua untuk teks */
+    --light-color: #ecf0f1;     /* Abu muda untuk background */
+    --gray-color: #bdc3c7;      /* Abu-abu */
+    
+    /* Warna Status */
     --success-color: #27ae60;   /* Hijau sukses */
-    --danger-color: #e74c3c;    /* Merah danger */
-    --warning-color: #f39c12;   /* Oranye warning */
+    --danger-color: #e74c3c;    /* Merah error */
+    --warning-color: #f39c12;   /* Kuning warning */
     --info-color: #3498db;      /* Biru info */
+    
+    /* Border Radius */
+    --border-radius: 8px;
+    --border-radius-lg: 12px;
+    
+    /* Shadow */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 8px rgba(0,0,0,0.15);
+    --shadow-lg: 0 8px 16px rgba(0,0,0,0.2);
 }
-
 * {
     margin: 0;
     padding: 0;
