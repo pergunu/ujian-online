@@ -4,11 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ujian Online - PERGUNU Situbondo</title>
+    <!-- Load CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/animations.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Fallback jika CSS tidak terload */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #4a6bff, #6c5ce7, #00cec9);
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
     <!-- Particle Background -->
@@ -31,7 +46,7 @@
     </div>
 
     <!-- Main Container -->
-    <div class="container">
+   <div class="container">
         <!-- Welcome Screen -->
         <div id="welcome-screen" class="screen active">
             <div class="logo-container">
@@ -49,6 +64,35 @@
                 <p>Dikembangkan oleh Cendhanu Tim Kreator PERGUNU Situbondo</p>
             </div>
         </div>
+
+         <!-- Load JavaScript -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="assets/js/particles-config.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+    <!-- Fallback JS jika file tidak terload -->
+    <script>
+        // Fungsi dasar jika main.js gagal load
+        document.addEventListener('DOMContentLoaded', function() {
+            const enterBtn = document.getElementById('enter-btn');
+            if (enterBtn) {
+                enterBtn.addEventListener('click', function() {
+                    const code = document.getElementById('exam-code').value;
+                    if (code === '12345') {
+                        alert('Kode benar! Aplikasi berfungsi normal.');
+                    } else {
+                        alert('Kode salah! Coba lagi.');
+                    }
+                });
+            }
+            
+            // Inisialisasi particles.js
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS.load('particles-js', 'assets/js/particles-config.json', function() {
+                    console.log('Particles loaded');
+                });
+            }
+        });
 
         <!-- Terms and Conditions -->
         <div id="terms-screen" class="screen">
