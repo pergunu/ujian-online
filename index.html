@@ -4,13 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ujian Online - Pergunu Situbondo</title>
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="assets/images/logo.png" type="image/png">
+    <link rel="stylesheet" href="assets/css/reboot.css"> <!-- File reset/normalize -->
+    <link rel="stylesheet" href="assets/css/main.css"> <!-- Style utama -->
+    <link rel="stylesheet" href="assets/css/responsive.css"> <!-- Responsive -->
+    <link rel="icon" href="assets/images/logo.png">
 </head>
 <body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <img src="assets/images/logo.png" alt="Logo Pergunu" class="logo">
+            <h1>Ujian Online Pergunu Situbondo</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <div class="login-container">
+                <h2>Masuk ke Sistem Ujian</h2>
+                <div class="form-group">
+                    <label for="login-code">Kode Ujian</label>
+                    <input type="password" id="login-code" placeholder="Masukkan kode akses">
+                    <button id="login-btn" class="btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Masuk
+                    </button>
+                </div>
+            </div>
+        </main>
+
+
     <!-- Background Particle -->
     <div id="particles-js"></div>
     
