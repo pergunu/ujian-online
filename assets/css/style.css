@@ -1525,3 +1525,56 @@ body {
         font-size: 36px;
     }
 }
+
+    /* ===== AI GENERATOR STYLES ===== */
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+    border-width: 0.25em;
+}
+
+.alert {
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1rem;
+}
+
+.alert-danger {
+    background-color: var(--danger-50);
+    color: var(--danger-700);
+    border: 1px solid var(--danger-200);
+}
+
+.generated-question {
+    background-color: white;
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+}
+
+.generated-question h4 {
+    margin-top: 0;
+    color: var(--primary-700);
+}
+
+.generated-question .options {
+    margin: 1rem 0;
+}
+
+.generated-question .options p {
+    margin: 0.5rem 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--gray-200);
+}
