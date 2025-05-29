@@ -350,31 +350,18 @@
 
     <!-- Admin Modals -->
     <div class="modal hidden" id="admin-modal">
-     <div class="tab-content" id="links-tab">
-    <h3>Manajemen Link Sharing</h3>
-    <div class="form-group">
-        <label>Tambah Link Baru:</label>
-        <input type="url" id="admin-new-link" placeholder="https://example.com" class="full-width">
-        <button id="admin-add-link" class="btn-gradient">Tambah Link</button>
-    </div>
-    
-    <div class="form-group">
-        <h4>Daftar Link Tersimpan:</h4>
-        <div id="admin-links-container" class="links-container">
-            <!-- Link akan muncul di sini -->
-        </div>
-    </div>
-</div>
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Kontrol Panel Admin</h2>
             
             <div class="admin-tabs">
-                <button class="tab-btn" data-tab="links">Manajemen Link</button>
                 <button class="tab-btn active" data-tab="login-code">Kode Login</button>
                 <button class="tab-btn" data-tab="exam-code">Kode Ujian CPNS</button>
                 <button class="tab-btn" data-tab="bank-code">Kode Bank Soal</button>
                 <button class="tab-btn" data-tab="admin-code">Kode Admin</button>
                 <button class="tab-btn" data-tab="settings">Pengaturan</button>
             </div>
-            
+    
             <div class="tab-content active" id="login-code-tab">
                 <div class="form-group">
                     <label>Kode Login Baru:</label>
@@ -471,9 +458,21 @@
                     </div>
                 </div>
                 <button id="save-settings" class="btn-gradient">Simpan Pengaturan</button>
-            </div>
+            <div class="tab-content" id="links-tab">
+    <h3>Manajemen Link Sharing</h3>
+    <div class="form-group">
+        <label>Tambah Link Baru:</label>
+        <input type="url" id="admin-new-link" placeholder="https://example.com" class="full-width">
+        <button id="admin-add-link" class="btn-gradient">Tambah Link</button>
+    </div>
+    
+    <div class="form-group">
+        <h4>Daftar Link Tersimpan:</h4>
+        <div id="admin-links-container" class="links-container">
+            <!-- Link akan muncul di sini -->
         </div>
     </div>
+</div>
 
     <!-- Question Bank Modal -->
     <div class="modal hidden" id="question-bank-modal">
@@ -575,7 +574,7 @@
                 <div class="method-content" id="ai-method">
                     <div class="form-group">
                         <label>API Key:</label>
-                        <input type="password" id="api-key" placeholder="sk-8837b24327bd4db99e36688951ceaea8">
+                        <input type="password" id="api-key" placeholder="Masukkan API Key AI Anda">
                         <!-- NOTE: Tempat untuk memasukkan API Key -->
                     </div>
                     <div class="form-group">
@@ -722,12 +721,6 @@
                 <label>Link Ujian:</label>
                 <input type="text" id="share-link" value="https://pergunu.github.io/ujian-online/" readonly>
                 <button id="copy-link-btn" class="btn-small">Salin Link</button>
-            </div>
-            
-            <div class="form-group">
-                <label>Tambah Link Baru:</label>
-                <input type="text" id="new-share-link" placeholder="Masukkan URL">
-                <button id="add-share-link" class="btn-small">Tambah</button>
             </div>
             
             <div class="links-list" id="links-list">
