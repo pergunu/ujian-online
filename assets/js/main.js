@@ -812,6 +812,76 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Initial display of links
+        // Fungsi tampilkan link
+function loadAdminLinks() {
+    const links = JSON.parse(localStorage.getItem('shareLinks')) || [];
+    const container = document.getElementById('admin-links-container');
+    
+    container.innerHTML = '';
+    
+    if (links.length === 0) {
+        container.innerHTML = '<p>Belum ada link yang tersimpan</p>';
+        return;
+    }
+    
+    links.forEach((link, index) => {
+        const linkItem = document.createElement('div');
+        linkItem.className = 'link-item';
+        linkItem.innerHTML = `
+            <a href="${link}" target="_blank" class="link-url">${link}</a>
+            <button class="btn-small btn-danger delete-link" data-index="${index}">
+                <i class="fas fa-trash"></i>
+            </button>
+        `;
+        container.appendChild(linkItem);
+    });
+    
+    // Tambahkan event listener untuk tombol delete
+    document.querySelectorAll('.delete-link').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            deleteLink(index);
+        });
+    });
+}
+
+// Fungsi hapus link
+function deleteLink(index) {
+    let links = JSON.parse(localStorage.getItem('shareLinks')) || [];
+    links.splice(index, 1);
+    localStorage.setItem('shareLinks', JSON.stringify(links));
+    loadAdminLinks();
+}
+
+// Fungsi tambah link
+document.getElementById('admin-add-link').addEventListener('click', function() {
+    const urlInput = document.getElementById('admin-new-link');
+    const url = urlInput.value.trim();
+    
+    if (!url) {
+        alert('URL tidak boleh kosong');
+        return;
+    }
+    
+    // Validasi URL
+    try {
+        new URL(url);
+    } catch (e) {
+        alert('URL tidak valid. Harus dimulai dengan http:// atau https://');
+        return;
+    }
+    
+    let links = JSON.parse(localStorage.getItem('shareLinks')) || [];
+    links.push(url);
+    localStorage.setItem('shareLinks', JSON.stringify(links));
+    
+    urlInput.value = '';
+    loadAdminLinks();
+});
+
+// Panggil saat modal admin dibuka
+document.getElementById('admin-btn').addEventListener('click', loadAdminLinks);
+        
         displayShareLinks();
     }
     
