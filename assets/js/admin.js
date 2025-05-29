@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const prompt = aiPromptInput.value.trim();
         
         if (!apiKey) {
-            alert('Masukkan API Key AI Anda');
+            alert('sk-8837b24327bd4db99e36688951ceaea8');
             return;
         }
         
