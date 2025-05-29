@@ -1,14 +1,41 @@
-// Inisialisasi Aplikasi
+// assets/js/main.js
 document.addEventListener('DOMContentLoaded', function() {
-    // Inisialisasi partikel background
-    particlesJS.load('particles-js', 'assets/js/particles-config.json', function() {
-        console.log('Particles.js loaded');
-    });
-    
-    // Main App Logic
-    initApp();
-});
+    // Inisialisasi partikel
+    if (typeof particlesJS !== 'undefined') {
+        particlesJS.load('particles-js', 'assets/js/particles-config.json', function() {
+            console.log('Particles.js loaded');
+        });
+    }
 
+// Fungsi tombol masuk
+    const enterBtn = document.getElementById('enter-btn');
+    if (enterBtn) {
+        enterBtn.addEventListener('click', function() {
+            const code = document.getElementById('exam-code').value;
+            if (code === '12345') {
+                alert('Kode benar! Lanjut ke halaman berikutnya...');
+                // Lanjut ke halaman berikutnya
+                document.getElementById('welcome-screen').classList.remove('active');
+                document.getElementById('terms-screen').classList.add('active');
+            } else {
+                alert('Kode salah! Coba lagi.');
+            }
+        });
+    }
+
+    // Fungsi tombol melayang
+    const floatingBtns = document.querySelectorAll('.floating-btn');
+    floatingBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const type = this.classList.contains('share-btn') ? 'share' : 
+                        this.classList.contains('whatsapp-btn') ? 'whatsapp' :
+                        this.classList.contains('admin-btn') ? 'admin' : 'question';
+            
+            alert(`Tombol ${type} diklik!`);
+        });
+    });
+});
+    
 function initApp() {
     // Main Variables
     const screens = {
