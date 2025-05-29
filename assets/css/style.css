@@ -1,14 +1,14 @@
 /* Global Styles */
 :root {
-    --primary-color: #4e54c8;
-    --secondary-color: #8f94fb;
-    --accent-color: #ff7e5f;
-    --dark-color: #1a1a2e;
-    --light-color: #f8f9fa;
-    --success-color: #28a745;
-    --danger-color: #dc3545;
-    --warning-color: #ffc107;
-    --info-color: #17a2b8;
+    --primary-color: #3498db;  /* Biru profesional */
+    --secondary-color: #2ecc71; /* Hijau segar */
+    --accent-color: #e74c3c;    /* Merah aksen */
+    --dark-color: #2c3e50;      /* Biru tua */
+    --light-color: #ecf0f1;     /* Abu-abu muda */
+    --success-color: #27ae60;   /* Hijau sukses */
+    --danger-color: #e74c3c;    /* Merah danger */
+    --warning-color: #f39c12;   /* Oranye warning */
+    --info-color: #3498db;      /* Biru info */
 }
 
 * {
