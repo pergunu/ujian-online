@@ -1,243 +1,126 @@
+// Main Application Controller
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize database
-    initDatabase();
-    
-    // Play opening audio
-    const openingAudio = document.getElementById('openingAudio');
-    openingAudio.volume = 0.5;
-    openingAudio.play().catch(e => console.log('Autoplay prevented:', e));
-    
-    // Set default codes if not exists
-    if (!localStorage.getItem('loginCode')) {
-        localStorage.setItem('loginCode', '12345');
-    }
-    if (!localStorage.getItem('cpnsCode')) {
-        localStorage.setItem('cpnsCode', 'OPENLOCK-1945');
-    }
-    if (!localStorage.getItem('questionBankCode')) {
-        localStorage.setItem('questionBankCode', 'OPENLOCK-1926');
-    }
-    if (!localStorage.getItem('adminCode')) {
-        localStorage.setItem('adminCode', '65614222');
-    }
-    
-    // Set welcome text from localStorage or default
-    const welcomeTitle = document.getElementById('welcomeTitle');
-    const savedWelcome = localStorage.getItem('welcomeText') || 'Selamat Datang di Ujian Online Pergunu Situbondo';
-    welcomeTitle.textContent = savedWelcome;
-    
-    // Enter button click event
-    document.getElementById('enterBtn').addEventListener('click', function() {
-        const accessCode = document.getElementById('accessCode').value;
-        const savedCode = localStorage.getItem('loginCode');
-        
-        if (accessCode === savedCode) {
-            playSound('click');
-            switchScreen('welcome-screen', 'terms-screen');
-        } else {
-            alert('Kode akses salah! Silakan coba lagi.');
-        }
+  // Initialize particles
+  particlesJS.load('particles-js', 'assets/js/particles.json', function() {
+    console.log('Particles loaded');
+  });
+
+  // Play opening audio
+  const openingAudio = document.getElementById('openingAudio');
+  openingAudio.play().catch(e => console.log('Autoplay prevented:', e));
+
+  // Screen management
+  const screens = {
+    welcome: document.getElementById('welcome-screen'),
+    terms: document.getElementById('terms-screen'),
+    participant: document.getElementById('participant-form-screen'),
+    examLevel: document.getElementById('exam-level-screen'),
+    exam: document.getElementById('exam-screen'),
+    results: document.getElementById('results-screen'),
+    certificate: document.getElementById('certificate-screen')
+  };
+
+  // Login functionality
+  const loginBtn = document.getElementById('login-btn');
+  if (loginBtn) {
+    loginBtn.addEventListener('click', function() {
+      const loginCode = document.getElementById('login-code').value;
+      if (loginCode === '12345') {
+        switchScreen(screens.welcome, screens.terms);
+      } else {
+        alert('Kode login salah! Silakan coba lagi.');
+      }
     });
-    
-    // Terms checkbox change event
-    document.getElementById('agreeCheckbox').addEventListener('change', function() {
-        document.getElementById('continueBtn').disabled = !this.checked;
+  }
+
+  // Terms agreement
+  const agreeTerms = document.getElementById('agree-terms');
+  const continueBtn = document.getElementById('continue-btn');
+  
+  if (agreeTerms && continueBtn) {
+    agreeTerms.addEventListener('change', function() {
+      continueBtn.disabled = !this.checked;
     });
-    
-    // Continue button click event
-    document.getElementById('continueBtn').addEventListener('click', function() {
-        playSound('click');
-        switchScreen('terms-screen', 'participant-form');
-        loadParticipantForm();
+
+    continueBtn.addEventListener('click', function() {
+      switchScreen(screens.terms, screens.participant);
     });
-    
-    // Floating buttons events
-    document.getElementById('shareBtn').addEventListener('click', function() {
-        playSound('click');
-        shareApp();
+  }
+
+  // Participant form
+  const participantForm = document.getElementById('participant-form');
+  if (participantForm) {
+    participantForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Validate form
+      if (validateParticipantForm()) {
+        switchScreen(screens.participant, screens.examLevel);
+      }
     });
+  }
+
+  // Helper function to switch screens
+  function switchScreen(from, to) {
+    from.classList.remove('active');
+    from.classList.add('animate__fadeOut');
     
-    document.getElementById('whatsappBtn').addEventListener('click', function() {
-        playSound('click');
-        window.open('https://wa.me/6285647709114?text=Assalamualaikum%20admin,%20saya%20mau%20tanya%20tentang%20ujian%20online...', '_blank');
-    });
-    
-    document.getElementById('adminBtn').addEventListener('click', function() {
-        playSound('click');
-        showAdminLogin();
-    });
+    setTimeout(() => {
+      from.classList.remove('animate__fadeOut');
+      to.classList.add('active', 'animate__fadeIn');
+      
+      setTimeout(() => {
+        to.classList.remove('animate__fadeIn');
+      }, 500);
+    }, 500);
+  }
+
+  // Initialize floating buttons
+  initFloatingButtons();
 });
 
-function initDatabase() {
-    // Initialize all required data in localStorage
-    if (!localStorage.getItem('questionBank')) {
-        const sampleQuestions = [
-            // Sample questions would be here
-            // Same as in the previous example
-        ];
-        localStorage.setItem('questionBank', JSON.stringify(sampleQuestions));
-    }
-    
-    if (!localStorage.getItem('examHistory')) {
-        localStorage.setItem('examHistory', JSON.stringify([]));
-    }
-    
-    if (!localStorage.getItem('welcomeText')) {
-        localStorage.setItem('welcomeText', 'Selamat Datang di Ujian Online Pergunu Situbondo');
-    }
-    
-    if (!localStorage.getItem('chairmanName')) {
-        localStorage.setItem('chairmanName', 'Moh. Nuril Hudha, S.Pd., M.Si.');
-    }
-    
-    if (!localStorage.getItem('motivationMessages')) {
-        localStorage.setItem('motivationMessages', JSON.stringify([
-            'Sempurna! Anda sangat luar biasa dalam menguasai materi ini.',
-            'Kerja bagus! Anda telah menunjukkan pemahaman yang baik.',
-            'Hasil yang cukup baik. Tingkatkan lagi belajar Anda!',
-            'Anda perlu belajar lebih giat lagi. Jangan menyerah!'
-        ]));
-    }
-    
-    if (!localStorage.getItem('examSettings')) {
-        localStorage.setItem('examSettings', JSON.stringify({
-            timer: 120,
-            questionPoints: 1,
-            questionCount: 10,
-            randomize: true
-        }));
-    }
+function validateParticipantForm() {
+  // Implement form validation logic
+  return true;
 }
 
-function switchScreen(from, to) {
-    const fromScreen = document.querySelector(`.${from}`);
-    const toScreen = document.querySelector(`.${to}`);
-    
-    fromScreen.classList.remove('active');
-    toScreen.classList.add('active');
-}
-
-function playSound(type) {
-    const audio = document.getElementById(`${type}Audio`);
-    if (audio) {
-        audio.currentTime = 0;
-        audio.play().catch(e => console.log('Audio play prevented:', e));
-    }
-}
-
-function loadParticipantForm() {
-    // Implementation would load the participant form dynamically
-    // based on the user type (student/general)
-}
-
-function shareApp() {
-    if (navigator.share) {
-        navigator.share({
-            title: 'Ujian Online Pergunu Situbondo',
-            text: 'Ikuti ujian online profesional dari Pergunu Situbondo',
-            url: window.location.href
-        }).catch(err => {
-            console.log('Error sharing:', err);
-            fallbackShare();
-        });
-    } else {
-        fallbackShare();
-    }
-}
-
-function fallbackShare() {
-    // Implementation for browsers that don't support Web Share API
-    alert('Silakan salin tautan ini: ' + window.location.href);
-}
-
-function showAdminLogin() {
-    // Implementation for admin login modal
-    const modal = document.getElementById('adminModal');
-    modal.style.display = 'block';
-    
-    // Close modal when clicking X
-    modal.querySelector('.close-modal').addEventListener('click', function() {
-        modal.style.display = 'none';
+function initFloatingButtons() {
+  // Share button
+  const shareBtn = document.querySelector('.share-btn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', () => {
+      document.getElementById('share-modal').style.display = 'block';
     });
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
-    
-    // Load admin panel if code is correct
-    const adminContent = modal.querySelector('.admin-content');
-    adminContent.innerHTML = `
-        <div class="admin-login">
-            <p>Masukkan kode admin:</p>
-            <input type="password" id="adminCodeInput" placeholder="Kode Admin">
-            <button id="adminLoginBtn" class="btn btn-primary">Masuk</button>
-        </div>
-    `;
-    
-    document.getElementById('adminLoginBtn').addEventListener('click', function() {
-        const enteredCode = document.getElementById('adminCodeInput').value;
-        const savedCode = localStorage.getItem('adminCode');
-        
-        if (enteredCode === savedCode) {
-            playSound('click');
-            loadAdminPanel();
-        } else {
-            alert('Kode admin salah!');
-        }
-    });
-}
+  }
 
-function loadAdminPanel() {
-    // Implementation for loading the full admin panel
-    const adminContent = document.querySelector('.admin-content');
-    adminContent.innerHTML = `
-        <div class="admin-tabs">
-            <button class="tab-btn active" data-tab="settings">Pengaturan</button>
-            <button class="tab-btn" data-tab="questions">Bank Soal</button>
-            <button class="tab-btn" data-tab="participants">Peserta</button>
-        </div>
-        
-        <div class="tab-content active" id="settings">
-            <!-- Settings content would be here -->
-        </div>
-        
-        <div class="tab-content" id="questions">
-            <!-- Questions content would be here -->
-        </div>
-        
-        <div class="tab-content" id="participants">
-            <!-- Participants content would be here -->
-        </div>
-    `;
-    
-    // Tab switching functionality
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const tabId = this.dataset.tab;
-            
-            // Update active tab button
-            document.querySelectorAll('.tab-btn').forEach(tabBtn => {
-                tabBtn.classList.remove('active');
-            });
-            this.classList.add('active');
-            
-            // Update active tab content
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById(tabId).classList.add('active');
-        });
+  // WhatsApp button
+  const whatsappBtn = document.querySelector('.whatsapp-btn');
+  if (whatsappBtn) {
+    whatsappBtn.addEventListener('click', () => {
+      window.open('https://wa.me/6285647709114?text=Assalamualaikum%20mas%20admin,%20saya%20mau%20tanya%20sesuatu%20nih...');
     });
-    
-    // Load each tab content
-    loadSettingsTab();
-    loadQuestionsTab();
-    loadParticipantsTab();
-}
+  }
 
-// Additional functions for admin panel and other features would follow
-// including loadSettingsTab(), loadQuestionsTab(), loadParticipantsTab()
-// and all other necessary functions for the complete application
+  // Bank soal button
+  const bankSoalBtn = document.querySelector('.bank-soal-btn');
+  if (bankSoalBtn) {
+    bankSoalBtn.addEventListener('click', () => {
+      document.getElementById('bank-soal-modal').style.display = 'block';
+    });
+  }
+
+  // Admin button
+  const adminBtn = document.querySelector('.admin-btn');
+  if (adminBtn) {
+    adminBtn.addEventListener('click', () => {
+      document.getElementById('admin-modal').style.display = 'block';
+    });
+  }
+
+  // Close modals
+  const closeModals = document.querySelectorAll('.close-modal');
+  closeModals.forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.closest('.modal').style.display = 'none';
+    });
+  });
+}
