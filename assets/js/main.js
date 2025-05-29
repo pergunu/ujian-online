@@ -138,15 +138,17 @@ document.addEventListener('DOMContentLoaded', function() {
 }
     
     // Functions
-    function handleLogin() {
-        const loginCode = document.getElementById('login-code').value;
-        
-        if (loginCode === defaultCodes.login) {
-            transitionScreen('opening', 'terms');
-        } else {
-            alert('Kode login salah. Silakan coba lagi.');
-        }
+   function handleLogin() {
+    const loginCode = document.getElementById('login-code').value;
+    
+    if (loginCode === defaultCodes.login) {
+        resetSensitiveFields(); // Panggil fungsi reset
+        transitionScreen('opening', 'terms');
+    } else {
+        alert('Kode login salah. Silakan coba lagi.');
+        document.getElementById('login-code').value = ''; // Clear field
     }
+}
     
     function transitionScreen(from, to) {
         const fromElement = document.querySelector(`.${from}-screen`);
