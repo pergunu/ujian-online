@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
+     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ujian Online - Pergunu Situbondo</title>
+    <title>Ujian Online - Pergunu Situbondo</title>>
     
     <!-- Favicon -->
     <link rel="icon" href="assets/images/logo.png" type="image/png">
     
     <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="assets/css/particles.css">
@@ -17,7 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Particle Background -->
@@ -49,13 +51,12 @@
     <!-- Main Container -->
     <div class="container">
         <!-- Welcome Screen -->
-        <div id="welcome-screen" class="screen active animate__animated animate__fadeIn">
-            <div class="logo-container">
-                <img src="assets/images/logo.png" alt="Pergunu Situbondo" class="logo">
-            </div>
-            <h1 class="welcome-title">Selamat Datang di Ujian Online</h1>
-            <p class="welcome-message" id="welcome-message">Selamat datang peserta ujian online Pergunu Situbondo. Silakan masukkan kode login untuk melanjutkan.</p>
-            
+        <div id="welcome-screen" class="screen active">
+            <div class="content-box">
+                <img src="assets/images/logo.png" alt="Logo Pergunu" class="logo">
+                <h1 class="title">Ujian Online Pergunu</h1>
+                <p id="welcome-message" class="subtitle">Selamat datang di sistem ujian online Pergunu Situbondo</p>
+        
             <div class="login-form animate__animated animate__zoomIn">
                 <input type="password" id="login-code" placeholder="Masukkan Kode Login" class="form-input">
                 <button id="login-btn" class="primary-btn">Masuk <i class="fas fa-arrow-right"></i></button>
@@ -124,7 +125,14 @@
                     <input type="text" id="fullname" name="fullname" required class="form-input">
                 </div>
                 
-                <div class="form-group">
+                div class="form-group">
+                    <input type="password" id="login-code" placeholder="Masukkan Kode Login" class="form-input">
+                    <button id="login-btn" class="btn-primary">
+                        <i class="fas fa-arrow-right"></i> Masuk
+                    </button>
+                </div>
+            </div>
+        </div>
                     <label>Status:</label>
                     <div class="radio-group">
                         <label class="radio-container">
@@ -516,6 +524,7 @@
     </div>
     
     <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/form-validation.js"></script>
