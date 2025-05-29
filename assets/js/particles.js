@@ -1,5 +1,5 @@
-// Konfigurasi partikel
-particlesJS("particles-js", {
+// particles.json configuration
+{
   "particles": {
     "number": {
       "value": 80,
@@ -103,4 +103,4 @@ particlesJS("particles-js", {
     }
   },
   "retina_detect": true
-});
+}
