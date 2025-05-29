@@ -1,5 +1,28 @@
-// Main Application Script
 document.addEventListener('DOMContentLoaded', function() {
+    const loginBtn = document.getElementById('login-btn');
+    const loginCode = document.getElementById('login-code');
+    
+    // Default login code
+    const DEFAULT_CODE = "12345";
+    
+    loginBtn.addEventListener('click', function() {
+        if(loginCode.value.trim() === DEFAULT_CODE) {
+            // Simulate successful login
+            alert("Login berhasil! Akan dialihkan ke halaman ujian.");
+            // window.location.href = "exam.html"; // Uncomment ini di production
+        } else {
+            alert("Kode ujian salah. Silakan coba lagi.");
+            loginCode.focus();
+        }
+    });
+    
+    // Press Enter to login
+    loginCode.addEventListener('keypress', function(e) {
+        if(e.key === "Enter") {
+            loginBtn.click();
+        }
+    });
+});
     // Initialize particles.js
     particlesJS.load('particles-js', 'assets/js/particles.json', function() {
         console.log('Particles.js loaded');
