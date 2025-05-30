@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sertifikat Ujian - PERGUNU Situbondo</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Certificate specific styles */
+        .certificate-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .certificate-border {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 3px solid #4a6bff;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .certificate-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 40px;
+            background: url('assets/images/certificate.png') no-repeat center center;
+            background-size: cover;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .certificate-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #4a6bff;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .certificate-awarded {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .certificate-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #222;
+            margin: 1rem 0;
+            padding: 1rem 0;
+            border-top: 2px solid #4a6bff;
+            border-bottom: 2px solid #4a6bff;
+            width: 80%;
+        }
+        
+        .certificate-description {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            line-height: 1.6;
+            max-width: 80%;
+        }
+        
+        .certificate-for {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .certificate-score {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4a6bff;
+            margin: 1rem 0;
+        }
+        
+        .certificate-message {
+            font-size: 1.1rem;
+            margin: 1rem 0 2rem;
+            font-style: italic;
+            max-width: 80%;
+        }
+        
+        .certificate-footer {
+            margin-top: 2rem;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+        }
+        
+        .certificate-date {
+            font-size: 1.1rem;
+        }
+        
+        .certificate-signature {
+            text-align: center;
+        }
+        
+        .signature-name {
+            font-weight: 700;
+            margin-top: 1rem;
+            border-top: 1px solid #333;
+            padding-top: 0.5rem;
+            display: inline-block;
+        }
+        
+        .certificate-barcode {
+            margin-top: 2rem;
+        }
+        
+        .certificate-barcode img {
+            height: 80px;
+        }
+        
+        .certificate-actions {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .certificate-container, .certificate-container * {
+                visibility: visible;
+            }
+            .certificate-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+            }
+            .certificate-actions {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <div class="certificate-container">
+        <div class="certificate-border"></div>
+        <div class="certificate-content">
+            <div class="certificate-title">Sertifikat Prestasi</div>
+            <div class="certificate-awarded">Diberikan Kepada:</div>
+            <div class="certificate-name" id="certificate-name"></div>
+            
+            <div class="certificate-for">Atas Partisipasi & Pencapaian Luar Biasa dalam <strong>Ujian Pergunu Situbondo</strong></div>
+            
+            <div class="certificate-description">
+                Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, 
+                sertifikat ini diberikan sebagai motivasi untuk terus berkembang.
+            </div>
+            
+            <div class="certificate-score" id="certificate-score"></div>
+            
+            <div class="certificate-message" id="certificate-message"></div>
+            
+            <div class="certificate-barcode">
+                <img src="assets/images/BARCODE.png" alt="Barcode Sertifikat">
+            </div>
+            
+            <div class="certificate-footer">
+                <div class="certificate-date" id="certificate-date"></div>
+                <div class="certificate-signature">
+                    <div>Ketua Pergunu Situbondo</div>
+                    <div class="signature-name">Moh. Nuril Hudha, S.Pd., M.Si.</div>
+                </div>
+                <div class="certificate-code" id="certificate-code"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="certificate-actions">
+        <button id="print-certificate"><i class="fas fa-print"></i> Cetak Sertifikat</button>
+        <button id="back-to-results"><i class="fas fa-arrow-left"></i> Kembali ke Hasil</button>
+    </div>
+
+    <audio id="applause-audio" src="assets/audio/applause.mp3"></audio>
+
+    <script src="assets/js/particles.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize particles with minimal configuration
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 30, density: { enable: true, value_area: 800 } },
+                    color: { value: "#ffffff" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.3, random: true },
+                    size: { value: 2, random: true },
+                    line_linked: { enable: false },
+                    move: { enable: true, speed: 1, direction: "none", random: true }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: false },
+                        onclick: { enable: false },
+                        resize: true
+                    }
+                },
+                retina_detect: true
+            });
+            
+            // Load exam results
+            const examResults = JSON.parse(localStorage.getItem('examResults'));
+            
+            if(!examResults) {
+                alert('Data sertifikat tidak ditemukan. Silakan ikuti ujian terlebih dahulu.');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Play applause sound
+            document.getElementById('applause-audio').play();
+            
+            // Generate certificate code
+            function generateCertificateCode() {
+                const namePart = examResults.participant.fullname.split(' ')[0].toUpperCase();
+                const statusPart = examResults.examData.type === 'pelajar' ? 'PELAJAR' : 'UMUM';
+                const levelPart = examResults.examData.type === 'pelajar' ? 
+                    examResults.examData.schoolLevel.toUpperCase() : 
+                    examResults.examData.examType.toUpperCase().replace('-', '');
+                
+                const subjectPart = examResults.examData.type === 'pelajar' ? 
+                    examResults.examData.subject.toUpperCase().replace('-', '') : 
+                    examResults.examData.examType.toUpperCase().replace('-', '');
+                
+                const date = new Date(examResults.timestamp);
+                const datePart = `${date.getDate()}${date.getMonth() + 1}${date.getFullYear()}`;
+                
+                const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
+                
+                return `${namePart}/${statusPart}/${levelPart}/${subjectPart}/${datePart}/${randomPart}/PERGUNU-STB`;
+            }
+            
+            // Display certificate data
+            document.getElementById('certificate-name').textContent = examResults.participant.fullname;
+            document.getElementById('certificate-score').textContent = `Nilai: ${examResults.score}`;
+            
+            // Set motivational message based on score
+            let message = '';
+            if(examResults.score >= 90) {
+                message = 'Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.';
+            } else if(examResults.score >= 75) {
+                message = 'Hasil yang sangat baik! Anda telah memahami sebagian besar materi dengan baik.';
+            } else if(examResults.score >= 60) {
+                message = 'Hasil yang cukup baik. Tingkatkan lagi pemahaman Anda untuk hasil yang lebih maksimal.';
+            } else if(examResults.score >= 40) {
+                message = 'Anda sudah memulai dengan baik. Pelajari lagi materinya dan coba lagi.';
+            } else {
+                message = 'Jangan menyerah! Setiap kegagalan adalah pelajaran untuk kesuksesan di masa depan.';
+            }
+            
+            document.getElementById('certificate-message').textContent = message;
+            
+            const examDate = new Date(examResults.timestamp);
+            document.getElementById('certificate-date').textContent = 
+                `Ditetapkan di: Situbondo, ${examDate.toLocaleDateString('id-ID', { 
+                    day: 'numeric', month: 'long', year: 'numeric' 
+                })}`;
+            
+            document.getElementById('certificate-code').textContent = generateCertificateCode();
+            
+            // Button actions
+            document.getElementById('print-certificate').addEventListener('click', function() {
+                window.print();
+            });
+            
+            document.getElementById('back-to-results').addEventListener('click', function() {
+                window.location.href = 'result.html';
+            });
+        });
+    </script>
+</body>
+</html>
