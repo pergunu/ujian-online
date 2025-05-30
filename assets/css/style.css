@@ -1,13 +1,14 @@
 /* Base Styles */
 :root {
-    --primary-color: #3498db;
-    --secondary-color: #2ecc71;
-    --accent-color: #e74c3c;
-    --dark-color: #2c3e50;
-    --light-color: #ecf0f1;
-    --background-dark: #1a252f;
-    --background-light: #2c3e50;
-    --text-color: #333;
+    --primary: #2563eb;       /* Biru yang lebih soft */
+    --primary-dark: #1e40af;
+    --secondary: #059669;     /* Hijau */
+    --danger: #dc2626;        /* Merah */
+    --warning: #d97706;       /* Kuning */
+    --light: #f8fafc;         /* Light grey */
+    --dark: #1e293b;          /* Dark grey */
+    --text: #334155;          /* Text color */
+    --bg: #f1f5f9;           /* Background */
     --text-light: #ecf0f1;
     --success-color: #27ae60;
     --warning-color: #f39c12;
@@ -21,12 +22,10 @@
 }
 
 body {
-    background: linear-gradient(135deg, var(--background-dark), var(--background-light));
-    color: var(--text-light);
+    background-color: var(--bg);
+    color: var(--text);
     min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
 }
 
 /* Partikel lebih sederhana */
@@ -41,15 +40,45 @@ body {
 }
 
 .container {
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 2rem;
-    margin: 1rem auto;
-    max-width: 1000px;
-    position: relative;
-    z-index: 1;
+}
+
+/* Tombol Utama */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: white;
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    color: white;
 }
 
 .container.active {
@@ -89,20 +118,17 @@ p {
 
 .form-control {
     width: 100%;
-    padding: 12px 15px;
-    border-radius: 8px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--light-color);
-    font-size: 16px;
-    transition: all 0.3s ease;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    background-color: white;
+    transition: border-color 0.2s ease;
 }
 
 .form-control:focus {
     outline: none;
-    border-color: rgba(255, 255, 255, 0.5);
-    background-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .input-group {
@@ -1130,4 +1156,42 @@ p {
     .exam-toggle-grid {
         grid-template-columns: repeat(2, 1fr));
     }
+
+    }
+
+.floating-btn {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    color: white;
+    font-size: 1.25rem;
+}
+
+.floating-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+}
+
+.floating-btn.admin {
+    background-color: var(--primary);
+}
+
+.floating-btn.questions {
+    background-color: var(--secondary);
+}
+
+.floating-btn.whatsapp {
+    background-color: #25D366;
+}
+
+.floating-btn.share {
+    background-color: var(--dark);
+}
 }
