@@ -34,6 +34,47 @@ document.getElementById('login-code').addEventListener('keypress', function(e) {
   if (e.key === 'Enter') handleLogin();
 });
 
+// Fungsi tombol melayang yang diperbaiki
+function initFloatingButtons() {
+  // Tombol Share
+  document.getElementById('share-btn').addEventListener('click', function() {
+    new Audio('assets/audio/audiotombol.mp3').play();
+    alert('Fitur share akan membuka dialog sharing');
+    // Implementasi share API sesuai kebutuhan
+  });
+
+  // Tombol WhatsApp
+  document.getElementById('whatsapp-btn').addEventListener('click', function() {
+    new Audio('assets/audio/audiotombol.mp3').play();
+    window.open('https://wa.me/6285647709114?text=Assalamualaikum%20admin,%20saya%20mau%20tanya...', '_blank');
+  });
+
+  // Tombol Bank Soal
+  document.getElementById('question-bank-btn').addEventListener('click', function() {
+    new Audio('assets/audio/audiotombol.mp3').play();
+    const code = prompt("Masukkan kode bank soal:", "");
+    if (code === "OPENLOCK-1926") {
+      window.location.href = "admin/control-panel.html";
+    } else {
+      alert("Kode bank soal salah!");
+    }
+  });
+
+  // Tombol Admin
+  document.getElementById('admin-panel-btn').addEventListener('click', function() {
+    new Audio('assets/audio/audiotombol.mp3').play();
+    const code = prompt("Masukkan kode admin:", "");
+    if (code === "65614222") {
+      window.location.href = "admin/";
+    } else {
+      alert("Kode admin salah!");
+    }
+  });
+}
+
+// Panggil saat halaman dimuat
+document.addEventListener('DOMContentLoaded', initFloatingButtons);
+
 // Default Configuration
 const config = {
     loginCode: "12345",
