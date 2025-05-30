@@ -960,29 +960,30 @@ document.addEventListener('DOMContentLoaded', function() {
         },
 
         saveQuestion: function() {
-            // Validasi form
-            const form = document.getElementById('question-modal');
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
-            }
-            
-            // Buat objek soal baru
-            const newQuestion = {
-                id: Date.now(), // ID unik
-                subject: document.getElementById('modal-subject').value,
-                level: document.getElementById('modal-level').value,
-                question: document.getElementById('modal-question').value,
-                options: {
-                    A: document.getElementById('modal-option-a').value,
-                    B: document.getElementById('modal-option-b').value,
-                    C: document.getElementById('modal-option-c').value,
-                    D: document.getElementById('modal-option-d').value,
-                    E: document.getElementById('modal-option-e').value
-                },
-                correctAnswer: document.getElementById('modal-correct-answer').value,
-                explanation: document.getElementById('modal-explanation').value
-            };
+    // Validasi form
+    const form = document.getElementById('question-modal');
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+    
+    // Buat objek soal baru
+    const newQuestion = {
+        id: Date.now(), // ID unik
+        subject: document.getElementById('modal-subject').value,
+        level: document.getElementById('modal-level').value,
+        question: document.getElementById('modal-question').value,
+        options: {
+            A: document.getElementById('modal-option-a').value,
+            B: document.getElementById('modal-option-b').value,
+            C: document.getElementById('modal-option-c').value,
+            D: document.getElementById('modal-option-d').value,
+            E: document.getElementById('modal-option-e').value
+        },
+        correctAnswer: document.getElementById('modal-correct-answer').value,
+        explanation: document.getElementById('modal-explanation').value,
+        createdAt: new Date().toISOString()
+    };
             
             // Handle gambar jika ada
             const imageInput = document.getElementById('modal-image');
@@ -993,23 +994,54 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Tambahkan ke daftar soal
             this.questions.push(newQuestion);
+            let questions = JSON.parse(localStorage.getItem('questions')) || [];
+
+            // Tambahkan soal baru
+            questions.push(newQuestion);
             
             // Simpan ke localStorage (simulasi database)
-            localStorage.setItem('questions', JSON.stringify(this.questions));
+           localStorage.setItem('questions', JSON.stringify(questions));
             
             // Refresh daftar soal
             this.loadQuestionsTable();
             
             // Tutup modal
             this.closeModal('question-modal');
+            form.reset();
             
             alert('Soal berhasil disimpan!');
         },
 
         loadQuestionsTable: function() {
-            // Implementasi loading questions table
-            // Ini akan memuat dan menampilkan daftar soal di admin panel
-        },
+    const questions = JSON.parse(localStorage.getItem('questions')) || [];
+    const tableBody = document.querySelector('#bank-questions-table tbody');
+    tableBody.innerHTML = '';
+
+    questions.forEach((question, index) => {
+        const row = document.createElement('tr');
+        
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${question.question.substring(0, 50)}${question.question.length > 50 ? '...' : ''}</td>
+            <td>${question.subject.toUpperCase()}</td>
+            <td>
+                <button class="action-btn edit" data-id="${question.id}"><i class="fas fa-edit"></i></button>
+                <button class="action-btn delete" data-id="${question.id}"><i class="fas fa-trash"></i></button>
+            </td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+
+    // Tambahkan event listener untuk tombol aksi
+    document.querySelectorAll('.action-btn.edit').forEach(btn => {
+        btn.addEventListener('click', (e) => this.editQuestion(e));
+    });
+    
+    document.querySelectorAll('.action-btn.delete').forEach(btn => {
+        btn.addEventListener('click', (e) => this.deleteQuestion(e));
+    });
+},
 
         openAIModal: function() {
             this.openModal('ai-modal');
