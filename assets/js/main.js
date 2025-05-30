@@ -3,6 +3,37 @@ document.addEventListener('DOMContentLoaded', function() {
     // Play opening audio
     const openingAudio = document.getElementById('opening-audio');
     openingAudio.play().catch(e => console.log("Autoplay prevented: ", e));
+
+    // Load CSS dinamis untuk modul
+function loadCSS(href) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+}
+
+// Pemisahan modul admin dan bank soal
+function openAdminPanel() {
+    loadCSS('assets/css/admin.css');
+    // Load admin.js secara dinamis
+    const script = document.createElement('script');
+    script.src = 'assets/js/admin.js';
+    document.body.appendChild(script);
+}
+
+function openQuestionBank() {
+    loadCSS('assets/css/questions.css');
+    // Load questions.js secara dinamis
+    const script = document.createElement('script');
+    script.src = 'assets/js/questions.js';
+    document.body.appendChild(script);
+}
+
+// Event listener untuk tombol
+document.querySelector('.admin-btn').addEventListener('click', openAdminPanel);
+document.querySelector('.question-bank-btn').addEventListener('click', openQuestionBank);
+
+// Sisanya tetap sama...
     
     // Initialize app state
     const appState = {
