@@ -1,122 +1,80 @@
-// Admin Panel Functionality
+// Admin panel functionality
 document.addEventListener('DOMContentLoaded', function() {
-    const adminApp = {
-        init: function() {
-            this.loadParticipants();
-            this.setupEventListeners();
-        },
-
-        loadParticipants: function() {
-            const participants = JSON.parse(localStorage.getItem('participants')) || [];
-            const results = JSON.parse(localStorage.getItem('examResults')) || [];
-            
-            // Gabungkan data peserta dengan hasil ujian
-            const participantData = participants.map(participant => {
-                const result = results.find(r => r.timestamp === participant.timestamp);
-                return {...participant, ...result};
-            });
-
-            this.renderParticipantsTable(participantData);
-        },
-
-        renderParticipantsTable: function(data) {
-            const tableBody = document.querySelector('#participants-table tbody');
-            tableBody.innerHTML = '';
-
-            data.forEach((participant, index) => {
-                const row = document.createElement('tr');
-                
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${participant.fullname || '-'}</td>
-                    <td>${participant.status ? participant.status.charAt(0).toUpperCase() + participant.status.slice(1) : '-'}</td>
-                    <td>${participant.subject ? participant.subject.toUpperCase() : '-'}</td>
-                    <td>${participant.score || '0'}</td>
-                    <td>${participant.timestamp ? new Date(participant.timestamp).toLocaleDateString() : '-'}</td>
-                    <td>${participant.certificateCode ? '✅' : '❌'}</td>
-                `;
-
-                tableBody.appendChild(row);
-            });
-        },
-
-        setupEventListeners: function() {
-            // Filter peserta
-            document.getElementById('apply-participant-filter').addEventListener('click', () => {
-                this.filterParticipants();
-            });
-
-            document.getElementById('reset-participant-filter').addEventListener('click', () => {
-                document.getElementById('filter-participant-status').value = 'all';
-                document.getElementById('filter-participant-date').value = '';
-                this.loadParticipants();
-            });
-
-            // Export data
-            document.getElementById('export-participants-btn').addEventListener('click', () => {
-                this.exportParticipants();
-            });
-        },
-
-        filterParticipants: function() {
-            const statusFilter = document.getElementById('filter-participant-status').value;
-            const dateFilter = document.getElementById('filter-participant-date').value;
-            
-            let participants = JSON.parse(localStorage.getItem('participants')) || [];
-            const results = JSON.parse(localStorage.getItem('examResults')) || [];
-            
-            // Gabungkan data
-            let filteredData = participants.map(participant => {
-                const result = results.find(r => r.timestamp === participant.timestamp);
-                return {...participant, ...result};
-            });
-
-            // Apply filters
-            if (statusFilter !== 'all') {
-                filteredData = filteredData.filter(p => p.status === statusFilter);
-            }
-
-            if (dateFilter) {
-                const filterDate = new Date(dateFilter).toDateString();
-                filteredData = filteredData.filter(p => {
-                    const participantDate = new Date(p.timestamp).toDateString();
-                    return participantDate === filterDate;
-                });
-            }
-
-            this.renderParticipantsTable(filteredData);
-        },
-
-        exportParticipants: function() {
-            const format = document.getElementById('export-format').value;
-            let participants = JSON.parse(localStorage.getItem('participants')) || [];
-            const results = JSON.parse(localStorage.getItem('examResults')) || [];
-            
-            // Gabungkan data
-            const exportData = participants.map(participant => {
-                const result = results.find(r => r.timestamp === participant.timestamp);
-                return {...participant, ...result};
-            });
-
-            // Format data untuk ekspor
-            const formattedData = exportData.map(p => ({
-                'Nama Lengkap': p.fullname || '-',
-                'Status': p.status ? p.status.charAt(0).toUpperCase() + p.status.slice(1) : '-',
-                'Sekolah/Instansi': p.school || p.address || '-',
-                'Nomor Induk': p.nis || '-',
-                'WhatsApp': p.whatsapp || '-',
-                'Email': p.email || '-',
-                'Jenis Ujian': p.subject ? p.subject.toUpperCase() : '-',
-                'Nilai': p.score || '0',
-                'Tanggal Ujian': p.timestamp ? new Date(p.timestamp).toLocaleString() : '-',
-                'Kode Sertifikat': p.certificateCode || '-'
-            }));
-
-            // Simulasikan ekspor (dalam aplikasi nyata, ini akan mengunduh file)
-            console.log(`Exporting data in ${format} format:`, formattedData);
-            alert(`Data peserta berhasil diekspor dalam format ${format.toUpperCase()} (simulasi)`);
+    // Check admin code
+    const adminCode = localStorage.getItem('adminCode') || '65614222';
+    
+    // Admin control functions
+    function updateLoginCode(newCode) {
+        // Update login code in localStorage
+        localStorage.setItem('loginCode', newCode);
+        alert('Kode login berhasil diperbarui!');
+    }
+    
+    function updateExamCode(newCode) {
+        // Update exam code in localStorage
+        localStorage.setItem('examCode', newCode);
+        alert('Kode ujian CPNS berhasil diperbarui!');
+    }
+    
+    function updateQuestionBankCode(newCode) {
+        // Update question bank code in localStorage
+        localStorage.setItem('questionBankCode', newCode);
+        alert('Kode bank soal berhasil diperbarui!');
+    }
+    
+    function updateAdminCode(newCode) {
+        // Update admin code in localStorage
+        localStorage.setItem('adminCode', newCode);
+        alert('Kode admin berhasil diperbarui!');
+    }
+    
+    // API key configuration
+    const apiKey = localStorage.getItem('apiKey') || '';
+    
+    function saveApiKey() {
+        const newApiKey = document.getElementById('api-key-input').value;
+        localStorage.setItem('apiKey', newApiKey);
+        alert('API Key berhasil disimpan!');
+    }
+    
+    // Initialize admin panel if on admin page
+    if (document.getElementById('admin-panel')) {
+        // Verify admin code
+        const enteredCode = prompt('Masukkan Kode Admin:');
+        if (enteredCode !== adminCode) {
+            alert('Kode admin salah!');
+            window.location.href = 'index.html';
+            return;
         }
-    };
-
-    adminApp.init();
+        
+        // Set current values in form
+        document.getElementById('login-code-new').value = localStorage.getItem('loginCode') || '12345';
+        document.getElementById('exam-code-new').value = localStorage.getItem('examCode') || 'OPENLOCK-1945';
+        document.getElementById('question-bank-code-new').value = localStorage.getItem('questionBankCode') || 'OPENLOCK-1926';
+        document.getElementById('admin-code-new').value = adminCode;
+        document.getElementById('api-key-input').value = apiKey;
+        
+        // Set up event listeners for save buttons
+        document.getElementById('save-login-code').addEventListener('click', function() {
+            const newCode = document.getElementById('login-code-new').value;
+            updateLoginCode(newCode);
+        });
+        
+        document.getElementById('save-exam-code').addEventListener('click', function() {
+            const newCode = document.getElementById('exam-code-new').value;
+            updateExamCode(newCode);
+        });
+        
+        document.getElementById('save-question-bank-code').addEventListener('click', function() {
+            const newCode = document.getElementById('question-bank-code-new').value;
+            updateQuestionBankCode(newCode);
+        });
+        
+        document.getElementById('save-admin-code').addEventListener('click', function() {
+            const newCode = document.getElementById('admin-code-new').value;
+            updateAdminCode(newCode);
+        });
+        
+        document.getElementById('save-api-key').addEventListener('click', saveApiKey);
+    }
 });
