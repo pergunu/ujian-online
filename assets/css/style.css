@@ -14,6 +14,12 @@
     --gradient-1: #4e54c8;
     --gradient-2: #8f94fb;
     --gradient-3: #6a3093;
+    --animate-duration: 0.5s; /* Ubah durasi global */
+}
+
+/* Atau untuk elemen tertentu */
+.element {
+  --animate-duration: 0.3s;
 }
 
 * {
