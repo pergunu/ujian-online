@@ -1,294 +1,525 @@
-// Admin Panel Script
-class AdminPanel {
-    constructor() {
-        this.adminCode = '65614222';
-        this.loginCode = '12345';
-        this.cpnsCode = 'OPENLOCK-1945';
-        this.bankCode = 'OPENLOCK-1926';
-        
-        this.init();
+// Admin Panel Functions
+
+// Initialize admin panel
+function initAdminPanel() {
+    // Load settings
+    loadAdminSettings();
+    
+    // Setup event listeners
+    setupAdminEventListeners();
+}
+
+// Load admin settings from localStorage
+function loadAdminSettings() {
+    const savedSettings = localStorage.getItem('adminSettings');
+    if(savedSettings) {
+        adminSettings = JSON.parse(savedSettings);
     }
     
-    init() {
-        this.setupEventListeners();
-        this.loadSettings();
+    // Update UI with loaded settings
+    updateAdminUI();
+}
+
+// Save admin settings to localStorage
+function saveAdminSettings() {
+    localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
+    alert('Pengaturan berhasil disimpan.');
+}
+
+// Update UI with current admin settings
+function updateAdminUI() {
+    // Code settings
+    document.getElementById('currentLoginCode').placeholder = `Current: ${adminSettings.loginCode}`;
+    document.getElementById('currentCPNSCode').placeholder = `Current: ${adminSettings.cpnsCode}`;
+    document.getElementById('currentQuestionCode').placeholder = `Current: ${adminSettings.questionBankCode}`;
+    document.getElementById('currentAdminCode').placeholder = `Current: ${adminSettings.adminCode}`;
+    
+    // Exam settings
+    document.getElementById('examTimerSetting').value = adminSettings.examTimer;
+    document.getElementById('questionCountSetting').value = adminSettings.questionCount;
+    document.getElementById('pointSystemSetting').value = adminSettings.pointSystem;
+    document.getElementById('randomizeQuestions').checked = adminSettings.randomizeQuestions;
+    document.getElementById('randomizeStatus').textContent = 
+        adminSettings.randomizeQuestions ? 'Aktif' : 'Nonaktif';
+    
+    // Update exam toggles
+    const toggleContainer = document.getElementById('examToggleContainer');
+    toggleContainer.innerHTML = '';
+    
+    Object.entries(adminSettings.activeExams).forEach(([exam, isActive]) => {
+        const toggleDiv = document.createElement('div');
+        toggleDiv.className = 'exam-toggle';
+        
+        const toggle = document.createElement('input');
+        toggle.type = 'checkbox';
+        toggle.id = `toggle_${exam}`;
+        toggle.checked = isActive;
+        
+        const label = document.createElement('label');
+        label.htmlFor = `toggle_${exam}`;
+        label.textContent = exam.replace(/_/g, ' ');
+        
+        toggleDiv.appendChild(toggle);
+        toggleDiv.appendChild(label);
+        toggleContainer.appendChild(toggleDiv);
+    });
+    
+    // Content settings
+    document.getElementById('greetingTextSetting').value = adminSettings.greetingText;
+    document.getElementById('chairmanNameSetting').value = adminSettings.chairmanName;
+    document.getElementById('motivationTextSetting').value = adminSettings.motivationText;
+    document.getElementById('periodicInfoSetting').value = adminSettings.periodicInfo;
+    
+    // Social links
+    const socialContainer = document.getElementById('socialLinksContainer');
+    socialContainer.innerHTML = '';
+    
+    adminSettings.socialLinks.forEach((link, index) => {
+        const linkItem = document.createElement('div');
+        linkItem.className = 'social-link-item';
+        
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.placeholder = 'Nama Platform';
+        nameInput.value = link.name;
+        nameInput.dataset.index = index;
+        nameInput.dataset.field = 'name';
+        
+        const urlInput = document.createElement('input');
+        urlInput.type = 'text';
+        urlInput.placeholder = 'URL';
+        urlInput.value = link.url;
+        urlInput.dataset.index = index;
+        urlInput.dataset.field = 'url';
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML = '&times;';
+        deleteBtn.dataset.index = index;
+        deleteBtn.addEventListener('click', removeSocialLink);
+        
+        linkItem.appendChild(nameInput);
+        linkItem.appendChild(urlInput);
+        linkItem.appendChild(deleteBtn);
+        socialContainer.appendChild(linkItem);
+    });
+}
+
+// Setup admin panel event listeners
+function setupAdminEventListeners() {
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', switchAdminTab);
+    });
+    
+    // Save buttons
+    document.querySelectorAll('.save-code').forEach(btn => {
+        btn.addEventListener('click', saveCode);
+    });
+    
+    document.querySelectorAll('.save-setting').forEach(btn => {
+        btn.addEventListener('click', saveSetting);
+    });
+    
+    // Randomize toggle
+    document.getElementById('randomizeQuestions').addEventListener('change', function() {
+        document.getElementById('randomizeStatus').textContent = 
+            this.checked ? 'Aktif' : 'Nonaktif';
+    });
+    
+    // Social links
+    document.getElementById('addSocialLinkBtn').addEventListener('click', addSocialLink);
+    
+    // Question bank
+    document.getElementById('addQuestionBtn').addEventListener('click', openQuestionModal);
+    document.getElementById('aiGenerateBtn').addEventListener('click', openAIModal);
+    document.getElementById('generateQuestionsBtn').addEventListener('click', generateQuestionsWithAI);
+    document.getElementById('saveGeneratedBtn').addEventListener('click', saveGeneratedQuestions);
+    
+    // Data export
+    document.getElementById('exportDataBtn').addEventListener('click', exportParticipantData);
+    document.getElementById('viewParticipantsBtn').addEventListener('click', viewParticipants);
+    
+    // Logout
+    document.getElementById('logoutAdminBtn').addEventListener('click', logoutAdmin);
+    
+    // Modal close buttons
+    document.querySelectorAll('.close-modal').forEach(btn => {
+        btn.addEventListener('click', closeModal);
+    });
+}
+
+// Switch admin tabs
+function switchAdminTab(e) {
+    const tabName = e.target.dataset.tab;
+    
+    // Update tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    e.target.classList.add('active');
+    
+    // Update tab content
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    document.getElementById(tabName).classList.add('active');
+}
+
+// Save code settings
+function saveCode(e) {
+    const codeType = e.target.dataset.codeType;
+    let newCode, currentCode;
+    
+    switch(codeType) {
+        case 'login':
+            newCode = document.getElementById('newLoginCode').value;
+            currentCode = document.getElementById('currentLoginCode').value;
+            if(currentCode === adminSettings.loginCode) {
+                adminSettings.loginCode = newCode;
+                alert('Kode login berhasil diubah.');
+            } else {
+                alert('Kode login lama salah.');
+            }
+            break;
+            
+        case 'cpns':
+            newCode = document.getElementById('newCPNSCode').value;
+            currentCode = document.getElementById('currentCPNSCode').value;
+            if(currentCode === adminSettings.cpnsCode) {
+                adminSettings.cpnsCode = newCode;
+                alert('Kode ujian CPNS berhasil diubah.');
+            } else {
+                alert('Kode ujian CPNS lama salah.');
+            }
+            break;
+            
+        case 'question':
+            newCode = document.getElementById('newQuestionCode').value;
+            currentCode = document.getElementById('currentQuestionCode').value;
+            if(currentCode === adminSettings.questionBankCode) {
+                adminSettings.questionBankCode = newCode;
+                alert('Kode bank soal berhasil diubah.');
+            } else {
+                alert('Kode bank soal lama salah.');
+            }
+            break;
+            
+        case 'admin':
+            newCode = document.getElementById('newAdminCode').value;
+            currentCode = document.getElementById('currentAdminCode').value;
+            if(currentCode === adminSettings.adminCode) {
+                adminSettings.adminCode = newCode;
+                alert('Kode admin berhasil diubah.');
+            } else {
+                alert('Kode admin lama salah.');
+            }
+            break;
     }
     
-    setupEventListeners() {
-        // Code saving
-        document.getElementById('save-login-code').addEventListener('click', () => this.saveCode('login'));
-        document.getElementById('save-cpns-code').addEventListener('click', () => this.saveCode('cpns'));
-        document.getElementById('save-bank-code').addEventListener('click', () => this.saveCode('bank'));
-        document.getElementById('save-admin-code').addEventListener('click', () => this.saveCode('admin'));
-        
-        // Question management
-        document.getElementById('add-question').addEventListener('click', () => this.showQuestionForm());
-        document.getElementById('cancel-question').addEventListener('click', () => this.hideQuestionForm());
-        document.getElementById('save-question').addEventListener('click', () => this.saveQuestion());
-        document.getElementById('ai-generate').addEventListener('click', () => this.toggleAIForm());
-        
-        // Settings
-        document.getElementById('save-settings').addEventListener('click', () => this.saveSettings());
-        document.getElementById('save-texts').addEventListener('click', () => this.saveTexts());
-        
-        // Export
-        document.getElementById('export-excel').addEventListener('click', () => this.exportData('excel'));
-        document.getElementById('export-word').addEventListener('click', () => this.exportData('word'));
-        document.getElementById('export-pdf').addEventListener('click', () => this.exportData('pdf'));
-    }
+    // Save settings
+    saveAdminSettings();
     
-    loadSettings() {
-        // Load greeting text
-        document.getElementById('greeting-text-editor').value = 
-            localStorage.getItem('greetingText') || 'Selamat Datang di Ujian Online Pergunu Situbondo';
-        
-        // Load terms text
-        document.getElementById('terms-text-editor').value = 
-            localStorage.getItem('termsText') || `1. Peserta wajib mengisi data diri dengan benar.
-2. Dilarang keras melakukan kecurangan selama ujian.
-3. Waktu ujian tidak dapat diperpanjang setelah habis.
-4. Hasil ujian bersifat final dan tidak dapat diganggu gugat.
-5. Sertifikat hanya diberikan kepada peserta yang menyelesaikan ujian.`;
-        
-        // Load periodic info
-        document.getElementById('periodic-text-editor').value = 
-            localStorage.getItem('periodicText') || 'Ujian online ini diselenggarakan oleh Pergunu Situbondo. Pastikan data yang Anda isi benar.';
-        
-        // Load chairman name
-        document.getElementById('chairman-text').value = 
-            localStorage.getItem('chairmanName') || 'Moh. Nuril Hudha, S.Pd., M.Si.';
-        
-        // Load motivation texts
-        document.getElementById('motivation-texts').value = 
-            localStorage.getItem('motivationTexts') || `Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.;
-Bagus! Anda memiliki pemahaman yang baik tentang materi ini. Terus tingkatkan kemampuan Anda.;
-Cukup baik. Masih ada ruang untuk meningkatkan pemahaman Anda. Terus belajar!;
-Jangan menyerah! Gunakan hasil ini sebagai motivasi untuk belajar lebih giat lagi.`;
-    }
+    // Clear fields
+    document.getElementById(`new${codeType.charAt(0).toUpperCase() + codeType.slice(1)}Code`).value = '';
+    document.getElementById(`current${codeType.charAt(0).toUpperCase() + codeType.slice(1)}Code`).value = '';
+}
+
+// Save admin settings
+function saveSetting(e) {
+    const settingType = e.target.dataset.setting;
     
-    saveCode(type) {
-        let newCode, currentCode;
-        
-        switch(type) {
-            case 'login':
-                newCode = document.getElementById('new-login-code').value;
-                currentCode = document.getElementById('current-login-code').value;
+    switch(settingType) {
+        case 'timer':
+            adminSettings.examTimer = parseInt(document.getElementById('examTimerSetting').value) || 120;
+            break;
+            
+        case 'questionCount':
+            adminSettings.questionCount = parseInt(document.getElementById('questionCountSetting').value) || 10;
+            break;
+            
+        case 'pointSystem':
+            adminSettings.pointSystem = parseInt(document.getElementById('pointSystemSetting').value) || 1;
+            break;
+            
+        case 'randomize':
+            adminSettings.randomizeQuestions = document.getElementById('randomizeQuestions').checked;
+            break;
+            
+        case 'examToggles':
+            const toggles = document.querySelectorAll('#examToggleContainer input[type="checkbox"]');
+            toggles.forEach(toggle => {
+                const examName = toggle.id.replace('toggle_', '');
+                adminSettings.activeExams[examName] = toggle.checked;
+            });
+            break;
+            
+        case 'greetingText':
+            adminSettings.greetingText = document.getElementById('greetingTextSetting').value;
+            break;
+            
+        case 'chairmanName':
+            adminSettings.chairmanName = document.getElementById('chairmanNameSetting').value;
+            break;
+            
+        case 'motivationText':
+            adminSettings.motivationText = document.getElementById('motivationTextSetting').value;
+            break;
+            
+        case 'periodicInfo':
+            adminSettings.periodicInfo = document.getElementById('periodicInfoSetting').value;
+            break;
+            
+        case 'socialLinks':
+            const linkItems = document.querySelectorAll('.social-link-item');
+            adminSettings.socialLinks = [];
+            
+            linkItems.forEach(item => {
+                const nameInput = item.querySelector('input[data-field="name"]');
+                const urlInput = item.querySelector('input[data-field="url"]');
                 
-                if (currentCode !== this.loginCode) {
-                    alert('Kode login lama tidak valid!');
-                    return;
+                if(nameInput.value && urlInput.value) {
+                    adminSettings.socialLinks.push({
+                        name: nameInput.value,
+                        url: urlInput.value
+                    });
                 }
-                
-                this.loginCode = newCode;
-                break;
-                
-            case 'cpns':
-                newCode = document.getElementById('new-cpns-code').value;
-                currentCode = document.getElementById('current-cpns-code').value;
-                
-                if (currentCode !== this.cpnsCode) {
-                    alert('Kode CPNS lama tidak valid!');
-                    return;
-                }
-                
-                this.cpnsCode = newCode;
-                break;
-                
-            case 'bank':
-                newCode = document.getElementById('new-bank-code').value;
-                currentCode = document.getElementById('current-bank-code').value;
-                
-                if (currentCode !== this.bankCode) {
-                    alert('Kode bank soal lama tidak valid!');
-                    return;
-                }
-                
-                this.bankCode = newCode;
-                break;
-                
-            case 'admin':
-                newCode = document.getElementById('new-admin-code').value;
-                currentCode = document.getElementById('current-admin-code').value;
-                
-                if (currentCode !== this.adminCode) {
-                    alert('Kode admin lama tidak valid!');
-                    return;
-                }
-                
-                this.adminCode = newCode;
-                break;
-        }
-        
-        alert(`Kode ${type} berhasil diperbarui!`);
-        
-        // Clear input fields
-        document.getElementById(`new-${type}-code`).value = '';
-        document.getElementById(`current-${type}-code`).value = '';
+            });
+            break;
     }
     
-    showQuestionForm() {
-        const category = document.getElementById('question-category').value;
-        const subject = document.getElementById('question-subject').value;
-        
-        if (!category || !subject) {
-            alert('Pilih kategori dan jenis ujian terlebih dahulu!');
-            return;
-        }
-        
-        document.getElementById('question-form').classList.remove('hidden');
+    saveAdminSettings();
+}
+
+// Social links management
+function addSocialLink() {
+    const socialContainer = document.getElementById('socialLinksContainer');
+    
+    const linkItem = document.createElement('div');
+    linkItem.className = 'social-link-item';
+    
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.placeholder = 'Nama Platform';
+    nameInput.dataset.field = 'name';
+    
+    const urlInput = document.createElement('input');
+    urlInput.type = 'text';
+    urlInput.placeholder = 'URL';
+    urlInput.dataset.field = 'url';
+    
+    const deleteBtn = document.createElement('button');
+    deleteBtn.innerHTML = '&times;';
+    deleteBtn.addEventListener('click', removeSocialLink);
+    
+    linkItem.appendChild(nameInput);
+    linkItem.appendChild(urlInput);
+    linkItem.appendChild(deleteBtn);
+    socialContainer.appendChild(linkItem);
+}
+
+function removeSocialLink(e) {
+    e.target.parentElement.remove();
+}
+
+// Question bank management
+function openQuestionModal() {
+    const modal = document.getElementById('questionModal');
+    modal.style.display = 'block';
+    
+    // Reset form
+    document.getElementById('modalTitle').textContent = 'Tambah Soal Baru';
+    document.getElementById('questionForm').reset();
+    document.getElementById('modalQuestionId').value = '';
+}
+
+function editQuestion(id) {
+    const question = examQuestions[id];
+    if(!question) return;
+    
+    const modal = document.getElementById('questionModal');
+    modal.style.display = 'block';
+    
+    // Set form values
+    document.getElementById('modalTitle').textContent = 'Edit Soal';
+    document.getElementById('modalQuestionId').value = id;
+    document.getElementById('modalCategory').value = question.category;
+    document.getElementById('modalQuestion').value = question.question;
+    
+    // Set options
+    document.getElementById('optionA').value = question.optionA || '';
+    document.getElementById('optionB').value = question.optionB || '';
+    document.getElementById('optionC').value = question.optionC || '';
+    document.getElementById('optionD').value = question.optionD || '';
+    document.getElementById('optionE').value = question.optionE || '';
+    
+    // Set correct answer
+    document.querySelector(`input[name="correctOption"][value="${question.correctAnswer}"]`).checked = true;
+    
+    // Set explanation
+    document.getElementById('modalExplanation').value = question.explanation || '';
+    
+    // Set difficulty
+    document.getElementById('modalDifficulty').value = question.difficulty || 'medium';
+}
+
+function deleteQuestion(id) {
+    if(confirm('Apakah Anda yakin ingin menghapus soal ini?')) {
+        examQuestions.splice(id, 1);
+        saveAdminSettings();
+        loadQuestionBank();
+    }
+}
+
+function openAIModal() {
+    const modal = document.getElementById('aiModal');
+    modal.style.display = 'block';
+    
+    // Reset form
+    document.getElementById('aiTopic').value = '';
+    document.getElementById('aiCount').value = 5;
+    document.getElementById('aiLoading').style.display = 'none';
+    document.getElementById('aiResults').style.display = 'none';
+    document.getElementById('generatedQuestions').innerHTML = '';
+}
+
+function generateQuestionsWithAI() {
+    const topic = document.getElementById('aiTopic').value.trim();
+    const category = document.getElementById('aiCategory').value;
+    const count = parseInt(document.getElementById('aiCount').value);
+    const difficulty = document.getElementById('aiDifficulty').value;
+    const apiKey = document.getElementById('aiApiKey').value.trim();
+    
+    if(!topic) {
+        alert('Silakan masukkan topik/materi untuk generate soal.');
+        return;
     }
     
-    hideQuestionForm() {
-        document.getElementById('question-form').classList.add('hidden');
+    if(!apiKey || apiKey === 'GANTI_DENGAN_API_KEY_ANDA') {
+        alert('Silakan masukkan API Key AI yang valid.');
+        return;
     }
     
-    saveQuestion() {
-        const questionText = document.getElementById('question-text-editor').value.trim();
-        const options = Array.from(document.querySelectorAll('.option')).map(opt => opt.value.trim());
-        const correctAnswer = document.getElementById('correct-answer').value;
-        const explanation = document.getElementById('explanation-text').value.trim();
-        const category = document.getElementById('question-category').value;
-        const subject = document.getElementById('question-subject').value;
+    // Show loading
+    document.getElementById('aiLoading').style.display = 'block';
+    
+    // In a real implementation, you would call your AI API here
+    // This is a mock implementation that returns sample questions after a delay
+    setTimeout(() => {
+        // Mock AI response
+        const mockQuestions = generateMockAIQuestions(topic, category, count, difficulty);
         
-        if (!questionText || options.some(opt => !opt) || !correctAnswer) {
-            alert('Harap isi semua field yang diperlukan!');
-            return;
-        }
+        // Display results
+        document.getElementById('aiLoading').style.display = 'none';
+        document.getElementById('aiResults').style.display = 'block';
         
-        // Create question object
-        const question = {
-            id: Date.now(),
-            category,
-            subject,
-            question: questionText,
-            options,
-            correctAnswer,
-            explanation
-        };
+        const resultsContainer = document.getElementById('generatedQuestions');
+        resultsContainer.innerHTML = '';
         
-        // Save to localStorage (in a real app, you would save to a database)
-        let questions = JSON.parse(localStorage.getItem('questions') || []);
-        questions.push(question);
-        localStorage.setItem('questions', JSON.stringify(questions));
-        
-        // Add to UI
-        this.addQuestionToUI(question);
-        
-        // Hide form and reset fields
-        this.hideQuestionForm();
-        document.getElementById('question-text-editor').value = '';
-        document.querySelectorAll('.option').forEach(opt => opt.value = '');
-        document.getElementById('correct-answer').value = '';
-        document.getElementById('explanation-text').value = '';
-        
-        alert('Soal berhasil disimpan!');
+        mockQuestions.forEach((q, i) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'generated-question';
+            questionDiv.innerHTML = `
+                <p><strong>Soal ${i + 1}:</strong> ${q.question}</p>
+                <p><strong>Jawaban benar:</strong> ${q.correctAnswer}. ${q[q.correctAnswer]}</p>
+                <p><strong>Penjelasan:</strong> ${q.explanation}</p>
+            `;
+            resultsContainer.appendChild(questionDiv);
+        });
+    }, 2000);
+}
+
+function generateMockAIQuestions(topic, category, count, difficulty) {
+    const mockQuestions = [];
+    
+    for(let i = 0; i < count; i++) {
+        mockQuestions.push({
+            question: `Contoh soal tentang ${topic} (${difficulty}) - ${i + 1}`,
+            optionA: `Pilihan A untuk soal ${i + 1}`,
+            optionB: `Pilihan B untuk soal ${i + 1}`,
+            optionC: `Pilihan C untuk soal ${i + 1}`,
+            optionD: `Pilihan D untuk soal ${i + 1}`,
+            correctAnswer: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)],
+            explanation: `Ini adalah penjelasan untuk soal tentang ${topic} (${difficulty}) - ${i + 1}`,
+            category: category,
+            difficulty: difficulty
+        });
     }
     
-    addQuestionToUI(question) {
-        const questionsList = document.getElementById('questions-list');
+    return mockQuestions;
+}
+
+function saveGeneratedQuestions() {
+    const questions = document.querySelectorAll('.generated-question');
+    
+    questions.forEach(q => {
+        // In a real implementation, you would parse the generated questions
+        // and add them to the examQuestions array
+        // This is just a mock implementation
+        examQuestions.push({
+            question: `Soal baru ${examQuestions.length + 1}`,
+            optionA: 'Pilihan A',
+            optionB: 'Pilihan B',
+            optionC: 'Pilihan C',
+            optionD: 'Pilihan D',
+            correctAnswer: 'A',
+            explanation: 'Penjelasan soal baru',
+            category: document.getElementById('aiCategory').value,
+            difficulty: document.getElementById('aiDifficulty').value
+        });
+    });
+    
+    saveAdminSettings();
+    loadQuestionBank();
+    closeModal();
+    alert(`${questions.length} soal baru berhasil ditambahkan ke bank soal.`);
+}
+
+// Participant data management
+function exportParticipantData() {
+    // In a real implementation, you would generate Excel/PDF here
+    alert('Fitur export data peserta akan menghasilkan file Excel/PDF dengan semua data peserta.');
+}
+
+function viewParticipants() {
+    const modal = document.getElementById('participantsModal');
+    modal.style.display = 'block';
+    
+    // Load participants data
+    const tableBody = document.getElementById('participantTableBody');
+    tableBody.innerHTML = '';
+    
+    participants.forEach((participant, index) => {
+        const row = document.createElement('tr');
         
-        const questionItem = document.createElement('div');
-        questionItem.className = 'question-item';
-        questionItem.dataset.id = question.id;
-        
-        questionItem.innerHTML = `
-            <h4>${question.question}</h4>
-            <div class="options">
-                ${question.options.map((opt, i) => 
-                    `<p class="${String.fromCharCode(97 + i) === question.correctAnswer ? 'correct-option' : ''}">
-                        ${String.fromCharCode(65 + i)}. ${opt}
-                    </p>`
-                ).join('')}
-            </div>
-            <div class="explanation">
-                <strong>Penjelasan:</strong> ${question.explanation || 'Tidak ada penjelasan'}
-            </div>
-            <div class="actions">
-                <button class="btn-small edit-btn">Edit</button>
-                <button class="btn-small delete-btn">Hapus</button>
-            </div>
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${participant.fullName}</td>
+            <td>${participant.status}</td>
+            <td>${participant.isStudent ? participant.schoolLevel || '-' : 'Umum'}</td>
+            <td>${participant.examCategory ? participant.examCategory.replace(/_/g, ' ') : '-'}</td>
+            <td>${participant.score || '-'}</td>
+            <td>${new Date(participant.completedAt || participant.date).toLocaleDateString('id-ID')}</td>
+            <td>
+                <button class="btn-secondary small" data-id="${index}"><i class="fas fa-eye"></i></button>
+            </td>
         `;
         
-        questionsList.appendChild(questionItem);
-        
-        // Add event listeners to new buttons
-        questionItem.querySelector('.edit-btn').addEventListener('click', () => this.editQuestion(question.id));
-        questionItem.querySelector('.delete-btn').addEventListener('click', () => this.deleteQuestion(question.id));
-    }
-    
-    editQuestion(id) {
-        // In a real implementation, you would load the question and populate the form
-        alert(`Edit question with ID: ${id}`);
-    }
-    
-    deleteQuestion(id) {
-        if (confirm('Apakah Anda yakin ingin menghapus soal ini?')) {
-            // Remove from localStorage
-            let questions = JSON.parse(localStorage.getItem('questions') || '[]');
-            questions = questions.filter(q => q.id !== id);
-            localStorage.setItem('questions', JSON.stringify(questions));
-            
-            // Remove from UI
-            document.querySelector(`.question-item[data-id="${id}"]`).remove();
-            alert('Soal berhasil dihapus!');
-        }
-    }
-    
-    toggleAIForm() {
-        const apiKeySection = document.getElementById('ai-key-section');
-        apiKeySection.classList.toggle('hidden');
-        
-        if (!apiKeySection.classList.contains('hidden')) {
-            // Focus on API key input
-            document.getElementById('api-key').focus();
-        }
-    }
-    
-    saveSettings() {
-        const timer = document.getElementById('exam-timer').value;
-        const questionCount = document.getElementById('question-count').value;
-        const pointValue = document.getElementById('point-value').value;
-        const randomize = document.getElementById('randomize-questions').checked;
-        
-        // Save to localStorage
-        localStorage.setItem('examTimer', timer);
-        localStorage.setItem('questionCount', questionCount);
-        localStorage.setItem('pointValue', pointValue);
-        localStorage.setItem('randomizeQuestions', randomize);
-        
-        alert('Pengaturan ujian berhasil disimpan!');
-    }
-    
-    saveTexts() {
-        const greetingText = document.getElementById('greeting-text-editor').value;
-        const termsText = document.getElementById('terms-text-editor').value;
-        const periodicText = document.getElementById('periodic-text-editor').value;
-        const chairmanName = document.getElementById('chairman-text').value;
-        const motivationTexts = document.getElementById('motivation-texts').value;
-        
-        // Save to localStorage
-        localStorage.setItem('greetingText', greetingText);
-        localStorage.setItem('termsText', termsText);
-        localStorage.setItem('periodicText', periodicText);
-        localStorage.setItem('chairmanName', chairmanName);
-        localStorage.setItem('motivationTexts', motivationTexts);
-        
-        // Update UI
-        document.getElementById('greeting-text').textContent = greetingText;
-        document.getElementById('terms-text').innerHTML = termsText.split('\n').map(p => `<p>${p}</p>`).join('');
-        document.getElementById('periodic-text').textContent = periodicText;
-        document.getElementById('periodic-text-bottom').textContent = periodicText;
-        
-        alert('Teks berhasil diperbarui!');
-    }
-    
-    exportData(format) {
-        // In a real implementation, you would generate and download the file
-        alert(`Data peserta akan diekspor ke format ${format.toUpperCase()}`);
+        tableBody.appendChild(row);
+    });
+}
+
+// Utility functions
+function closeModal() {
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.style.display = 'none';
+    });
+}
+
+function logoutAdmin() {
+    if(confirm('Apakah Anda yakin ingin keluar dari kontrol panel admin?')) {
+        showScreen('opening');
     }
 }
 
 // Initialize admin panel when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    const adminPanel = new AdminPanel();
-});
+document.addEventListener('DOMContentLoaded', initAdminPanel);
