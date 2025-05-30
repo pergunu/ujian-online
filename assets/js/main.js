@@ -1,3 +1,39 @@
+// Fungsi tombol masuk yang diperbaiki
+function handleLogin() {
+  const loginCode = document.getElementById('login-code').value;
+  
+  // Validasi kode login
+  if (loginCode === "12345") {
+    // Animasi transisi
+    document.querySelector('.opening-notification').classList.add('animate__fadeOut');
+    
+    setTimeout(() => {
+      document.querySelector('.opening-notification').style.display = 'none';
+      document.querySelector('.terms-container').style.display = 'block';
+      document.querySelector('.terms-container').classList.add('animate__fadeIn');
+    }, 500);
+    
+    // Play sound effect
+    new Audio('assets/audio/audiotombol.mp3').play();
+  } else {
+    // Animasi error
+    const loginForm = document.querySelector('.login-form');
+    loginForm.classList.add('animate__shakeX');
+    setTimeout(() => loginForm.classList.remove('animate__shakeX'), 1000);
+    
+    // Error sound
+    new Audio('assets/audio/jawbansalah.mp3').play();
+  }
+}
+
+// Event listener untuk tombol masuk
+document.getElementById('login-btn').addEventListener('click', handleLogin);
+
+// Juga bekerja dengan tekan Enter
+document.getElementById('login-code').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') handleLogin();
+});
+
 // Default Configuration
 const config = {
     loginCode: "12345",
