@@ -1,102 +1,216 @@
-/*!
- * animate.css - https://animate.style/
- * Version - 4.1.1
- * Licensed under the MIT license - http://opensource.org/licenses/MIT
- *
- * Copyright (c) 2020 Animate.css
- */
+/* Animate.css - https://animate.style */
 :root {
   --animate-duration: 1s;
   --animate-delay: 1s;
   --animate-repeat: 1;
 }
+
 .animate__animated {
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-duration: var(--animate-duration);
   animation-duration: var(--animate-duration);
-  -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
 
-/* Fade In */
-.animate__fadeIn {
-  -webkit-animation-name: fadeIn;
-  animation-name: fadeIn;
-}
+/* Fading entrances */
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
 
-/* Fade In Up */
-.animate__fadeInUp {
-  -webkit-animation-name: fadeInUp;
-  animation-name: fadeInUp;
+.animate__fadeIn {
+  animation-name: fadeIn;
 }
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate__fadeInDown {
+  animation-name: fadeInDown;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    -webkit-transform: translate3d(0, 100%, 0);
     transform: translate3d(0, 100%, 0);
   }
+
   to {
     opacity: 1;
-    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
 }
 
-/* Slide In Right */
-.animate__slideInRight {
-  -webkit-animation-name: slideInRight;
-  animation-name: slideInRight;
-}
-@keyframes slideInRight {
-  from {
-    -webkit-transform: translate3d(100%, 0, 0);
-    transform: translate3d(100%, 0, 0);
-    visibility: visible;
-  }
-  to {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
+.animate__fadeInUp {
+  animation-name: fadeInUp;
 }
 
-/* Slide In Left */
-.animate__slideInLeft {
-  -webkit-animation-name: slideInLeft;
-  animation-name: slideInLeft;
-}
-@keyframes slideInLeft {
-  from {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-    visibility: visible;
-  }
-  to {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-/* Zoom In */
-.animate__zoomIn {
-  -webkit-animation-name: zoomIn;
-  animation-name: zoomIn;
-}
+/* Zoom entrances */
 @keyframes zoomIn {
   from {
     opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
     transform: scale3d(0.3, 0.3, 0.3);
   }
+
   50% {
     opacity: 1;
   }
+}
+
+.animate__zoomIn {
+  animation-name: zoomIn;
+}
+
+/* Slide entrances */
+@keyframes slideInLeft {
+  from {
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate__slideInLeft {
+  animation-name: slideInLeft;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate__slideInRight {
+  animation-name: slideInRight;
+}
+
+/* Bouncing entrances */
+@keyframes bounceIn {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.animate__bounceIn {
+  animation-name: bounceIn;
+}
+
+/* Attention seekers */
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.animate__pulse {
+  animation-name: pulse;
+  animation-timing-function: ease-in-out;
+}
+
+/* Fast animations */
+.animate__fast {
+  animation-duration: calc(var(--animate-duration) * 0.7);
+}
+
+/* Slow animations */
+.animate__slow {
+  animation-duration: calc(var(--animate-duration) * 2);
+}
+
+/* Delay classes */
+.animate__delay-1s {
+  animation-delay: var(--animate-delay);
+}
+
+.animate__delay-2s {
+  animation-delay: calc(var(--animate-delay) * 2);
+}
+
+.animate__delay-3s {
+  animation-delay: calc(var(--animate-delay) * 3);
+}
+
+.animate__delay-4s {
+  animation-delay: calc(var(--animate-delay) * 4);
+}
+
+.animate__delay-5s {
+  animation-delay: calc(var(--animate-delay) * 5);
+}
+
+/* Repeat classes */
+.animate__repeat-1 {
+  animation-iteration-count: var(--animate-repeat);
+}
+
+.animate__repeat-2 {
+  animation-iteration-count: calc(var(--animate-repeat) * 2);
+}
+
+.animate__repeat-3 {
+  animation-iteration-count: calc(var(--animate-repeat) * 3);
+}
+
+.animate__infinite {
+  animation-iteration-count: infinite;
 }
