@@ -1,14 +1,12 @@
-/* Global Styles */
 :root {
-    --primary-color: #4e54c8;
-    --secondary-color: #8f94fb;
-    --accent-color: #6a11cb;
-    --text-color: #333;
-    --light-text: #fff;
-    --success-color: #4CAF50;
-    --error-color: #f44336;
-    --warning-color: #ff9800;
-    --info-color: #2196F3;
+    --primary-color: #4a6bff;
+    --secondary-color: #6a11cb;
+    --tertiary-color: #2575fc;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
 }
 
 * {
@@ -19,14 +17,20 @@
 }
 
 body {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-    color: var(--text-color);
-    min-height: 100vh;
     overflow-x: hidden;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color), var(--tertiary-color));
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    min-height: 100vh;
     position: relative;
 }
 
-/* Particle Background */
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 #particles-js {
     position: absolute;
     width: 100%;
@@ -36,234 +40,133 @@ body {
     z-index: 0;
 }
 
-/* Main Container */
-.main-container {
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Header Styles */
-header {
-    text-align: center;
-    margin-bottom: 2rem;
-    width: 100%;
-}
-
-.logo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.logo {
-    width: 100px;
-    height: auto;
-    margin-bottom: 1rem;
-}
-
-header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--light-text);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-header h1 span {
-    display: block;
-    font-size: 1.5rem;
-    font-weight: 300;
-    margin-top: 0.5rem;
-}
-
-/* Welcome Notification */
-.welcome-notification {
+.notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    width: 100%;
-    max-width: 800px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    width: 90%;
+    max-width: 500px;
+    animation: slideIn 0.5s ease-out forwards;
+    backdrop-filter: blur(10px);
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translate(-50%, -60%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.notification-content {
     text-align: center;
+}
+
+.notification-content h2 {
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+    font-weight: 600;
 }
 
 .notification-content p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: var(--text-color);
-}
-
-/* Login Form */
-.login-form-container {
-    width: 100%;
-    max-width: 500px;
-}
-
-.login-form {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
-}
-
-.login-form:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-}
-
-.form-group {
+    color: #555;
     margin-bottom: 1.5rem;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--text-color);
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-.form-group input {
-    width: 100%;
+.input-group input {
     padding: 0.8rem 1rem;
     border: 2px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1rem;
     transition: all 0.3s;
 }
 
-.form-group input:focus {
+.input-group input:focus {
     border-color: var(--primary-color);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(78, 84, 200, 0.2);
+    box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
 }
 
-/* Button Styles */
-.btn-gradient {
-    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+.input-group button {
+    padding: 0.8rem;
+    background: var(--primary-color);
     color: white;
     border: none;
-    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
     font-size: 1rem;
     font-weight: 500;
-    border-radius: 50px;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
-    width: 100%;
+    transition: all 0.3s;
 }
 
-.btn-gradient:hover {
+.input-group button:hover {
+    background: #3a5bef;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(106, 17, 203, 0.4);
-    background: linear-gradient(to right, var(--accent-color), var(--primary-color));
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.btn-gradient span {
-    margin-right: 0.5rem;
-}
-
-/* Footer */
-footer {
-    margin-top: 2rem;
-    text-align: center;
-    color: var(--light-text);
+.error-message {
+    color: var(--danger-color);
+    margin-top: 1rem;
     font-size: 0.9rem;
-    opacity: 0.8;
+    display: none;
 }
 
-/* Floating Buttons */
-.floating-buttons {
+/* Floating buttons */
+.floating-btns {
     position: fixed;
     bottom: 2rem;
     right: 2rem;
     display: flex;
     flex-direction: column;
-    z-index: 100;
+    gap: 1rem;
+    z-index: 99;
 }
 
 .floating-btn {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: linear-gradient(to bottom right, var(--primary-color), var(--accent-color));
+    background: var(--primary-color);
     color: white;
-    border: none;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
 .floating-btn:hover {
-    transform: scale(1.1) translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+.floating-btn i {
+    font-size: 1.2rem;
 }
 
-@keyframes fadeOut {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(20px); }
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-    20%, 40%, 60%, 80% { transform: translateX(5px); }
-}
-
-.fadeIn {
-    animation: fadeIn 0.5s ease forwards;
-}
-
-.fadeOut {
-    animation: fadeOut 0.5s ease forwards;
-}
-
-.shake {
-    animation: shake 0.5s ease;
-}
-
-/* Responsive Styles */
+/* Responsive design */
 @media (max-width: 768px) {
-    .main-container {
-        padding: 1rem;
-    }
-    
-    header h1 {
-        font-size: 2rem;
-    }
-    
-    header h1 span {
-        font-size: 1.2rem;
-    }
-    
-    .welcome-notification, .login-form {
+    .notification {
+        width: 95%;
         padding: 1.5rem;
     }
     
-    .floating-buttons {
+    .notification-content h2 {
+        font-size: 1.3rem;
+    }
+    
+    .floating-btns {
         bottom: 1rem;
         right: 1rem;
     }
@@ -271,25 +174,5 @@ footer {
     .floating-btn {
         width: 45px;
         height: 45px;
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 1.8rem;
-    }
-    
-    header h1 span {
-        font-size: 1rem;
-    }
-    
-    .welcome-notification, .login-form {
-        padding: 1rem;
-    }
-    
-    .btn-gradient {
-        padding: 0.7rem 1rem;
-        font-size: 0.9rem;
     }
 }
