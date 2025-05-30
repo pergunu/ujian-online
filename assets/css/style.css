@@ -175,4 +175,914 @@ body {
         width: 45px;
         height: 45px;
     }
+
+    /* Additional styles for all pages */
+
+/* Terms page styles */
+.terms-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.terms-content {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.terms-content h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.terms-text {
+    max-height: 50vh;
+    overflow-y: auto;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.terms-text h3 {
+    color: var(--secondary-color);
+    margin: 1rem 0 0.5rem;
+}
+
+.terms-text ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.terms-text ol li {
+    margin-bottom: 0.5rem;
+}
+
+.terms-agreement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    user-select: none;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: var(--primary-color);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 7px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+#continue-btn {
+    padding: 0.8rem 2rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#continue-btn:hover {
+    background: #3a5bef;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#continue-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Register page styles */
+.register-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.register-form {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.register-form h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.form-info {
+    text-align: center;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+}
+
+.radio-group {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.radio-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.radiomark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+.radio-container:hover input ~ .radiomark {
+    background-color: #ccc;
+}
+
+.radio-container input:checked ~ .radiomark {
+    background-color: var(--primary-color);
+}
+
+.radiomark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.radio-container input:checked ~ .radiomark:after {
+    display: block;
+}
+
+.radio-container .radiomark:after {
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+.address-input {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.gps-btn {
+    padding: 0 1rem;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.gps-btn:hover {
+    background: #5a0fcb;
+}
+
+.gps-btn:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+#submit-btn {
+    padding: 0.8rem 2rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#submit-btn:hover {
+    background: #3a5bef;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Exam selection page styles */
+.exam-selection-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.exam-selection-content {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.exam-selection-content h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.participant-info {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.participant-info p {
+    margin: 0.5rem 0;
+    color: #555;
+}
+
+.exam-options {
+    margin-bottom: 2rem;
+}
+
+.exam-options h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.exam-options h4 {
+    color: #555;
+    margin: 1.5rem 0 0.5rem;
+    text-align: center;
+}
+
+.grade-buttons,
+.subject-buttons,
+.exam-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin: 1rem 0;
+}
+
+.grade-btn,
+.subject-btn,
+.exam-btn {
+    padding: 0.8rem 1.5rem;
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.grade-btn:hover,
+.subject-btn:hover,
+.exam-btn:hover {
+    background: #ddd;
+}
+
+.grade-btn.active,
+.subject-btn.active,
+.exam-btn.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.license-input {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem auto;
+    max-width: 500px;
+}
+
+.license-input input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.license-input button {
+    padding: 0 1.5rem;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.license-info {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 0.5rem;
+}
+
+.start-exam-btn {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+#start-exam {
+    padding: 0.8rem 2rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#start-exam:hover {
+    background: #3a5bef;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#start-exam:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.exam-info {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+.exam-info h4 {
+    color: var(--secondary-color);
+    margin-top: 0;
+    text-align: center;
+}
+
+.exam-info ul {
+    padding-left: 1.5rem;
+}
+
+.exam-info li {
+    margin-bottom: 0.5rem;
+}
+
+/* Test page styles */
+.exam-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+    position: relative;
+    z-index: 10;
+}
+
+.exam-header {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px 15px 0 0;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.exam-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.exam-info h2 {
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.timer-container {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.participant-info {
+    text-align: right;
+}
+
+.participant-info p {
+    margin: 0.2rem 0;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.exam-content {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.question-container {
+    margin-bottom: 2rem;
+}
+
+.question-number {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 1rem;
+}
+
+.question-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.question-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.option:hover {
+    background: #eee;
+}
+
+.option.selected {
+    background: #e0e0e0;
+}
+
+.option.correct {
+    background: #d4edda;
+    border-left: 4px solid #28a745;
+}
+
+.option.wrong {
+    background: #f8d7da;
+    border-left: 4px solid #dc3545;
+}
+
+.option-letter {
+    font-weight: 700;
+    margin-right: 1rem;
+    color: var(--primary-color);
+    min-width: 20px;
+}
+
+.exam-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.exam-controls button {
+    padding: 0.8rem 1.5rem;
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.exam-controls button:hover {
+    background: #ddd;
+}
+
+#finish-exam {
+    background: var(--primary-color);
+    color: white;
+}
+
+#finish-exam:hover {
+    background: #3a5bef;
+}
+
+.exam-footer {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 0 0 15px 15px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.progress-container {
+    width: 100%;
+    background: #f0f0f0;
+    border-radius: 8px;
+    height: 10px;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 8px;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+.progress-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.time-warning {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffc107;
+    color: #333;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    max-width: 90%;
+    text-align: center;
+}
+
+.time-warning p {
+    margin: 0;
+}
+
+/* Results page styles */
+.results-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.results-content {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.results-content h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.participant-info {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.participant-info p {
+    margin: 0.5rem 0;
+    color: #555;
+}
+
+.score-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    margin: 2rem 0;
+}
+
+.score-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: conic-gradient(var(--primary-color) 0%, var(--secondary-color) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.score-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+.score-label {
+    font-size: 1rem;
+    color: white;
+    margin-top: -0.5rem;
+}
+
+.score-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.detail-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.detail-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.motivational-message {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.result-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.result-actions button {
+    padding: 0.8rem 2rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.result-actions button:hover {
+    background: #3a5bef;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#retake-exam {
+    background: var(--secondary-color);
+}
+
+#retake-exam:hover {
+    background: #5a0fcb;
+}
+
+/* Login page styles */
+.login-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    max-width: 200px;
+    height: auto;
+}
+
+/* Common styles for all pages */
+.logo-container {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.logo {
+    max-width: 180px;
+    height: auto;
+}
+
+/* Animation for page transitions */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+body {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .terms-container,
+    .register-container,
+    .exam-selection-container,
+    .exam-container,
+    .results-container {
+        padding: 1rem;
+    }
+    
+    .terms-content,
+    .register-form,
+    .exam-selection-content,
+    .exam-header,
+    .exam-content,
+    .exam-footer,
+    .results-content {
+        padding: 1.5rem;
+    }
+    
+    .score-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .grade-buttons,
+    .subject-buttons,
+    .exam-buttons {
+        gap: 0.5rem;
+    }
+    
+    .grade-btn,
+    .subject-btn,
+    .exam-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .exam-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .exam-controls button {
+        width: 100%;
+    }
+    
+    .result-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .result-actions button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .radio-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .address-input {
+        flex-direction: column;
+    }
+    
+    .gps-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.5rem;
+    }
+    
+    .license-input {
+        flex-direction: column;
+    }
+    
+    .license-input button {
+        width: 100%;
+        padding: 0.8rem;
+    }
+}
 }
