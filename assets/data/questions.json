@@ -1,0 +1,30 @@
+{
+  "agama": [
+    {
+      "question": "Apa nama kitab suci umat Islam?",
+      "options": {
+        "a": "Injil",
+        "b": "Taurat",
+        "c": "Al-Quran",
+        "d": "Zabur",
+        "e": "Weda"
+      },
+      "correctAnswer": "c",
+      "explanation": "Al-Quran adalah kitab suci umat Islam yang diturunkan kepada Nabi Muhammad SAW."
+    }
+  ],
+  "ppkn": [
+    {
+      "question": "Pancasila sebagai dasar negara tercantum dalam?",
+      "options": {
+        "a": "Pembukaan UUD 1945",
+        "b": "Batang Tubuh UUD 1945",
+        "c": "Penjelasan UUD 1945",
+        "d": "Keputusan Presiden",
+        "e": "Keputusan MPR"
+      },
+      "correctAnswer": "a",
+      "explanation": "Pancasila sebagai dasar negara tercantum dalam Pembukaan UUD 1945 alinea keempat."
+    }
+  ]
+}
