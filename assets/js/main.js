@@ -154,56 +154,116 @@ document.addEventListener('DOMContentLoaded', function() {
         },
 
         loadQuestions: function() {
-            // Contoh soal (dalam aplikasi nyata, ini akan diambil dari database)
-            this.questions = [
-                // Soal Agama
-                {
-                    id: 1,
-                    subject: 'agama',
-                    level: 'sd',
-                    question: 'Berapa jumlah Rukun Islam?',
-                    options: {
-                        A: '4',
-                        B: '5',
-                        C: '6',
-                        D: '7',
-                        E: '8'
-                    },
-                    correctAnswer: 'B',
-                    explanation: 'Rukun Islam ada 5 yaitu: Syahadat, Shalat, Zakat, Puasa, dan Haji.'
-                },
-                // Soal PPKN
-                {
-                    id: 2,
-                    subject: 'ppkn',
-                    level: 'smp',
-                    question: 'Pancasila sebagai dasar negara tercantum dalam pembukaan UUD 1945 alinea keberapa?',
-                    options: {
-                        A: '1',
-                        B: '2',
-                        C: '3',
-                        D: '4',
-                        E: 'Tidak tercantum'
-                    },
-                    correctAnswer: 'D',
-                    explanation: 'Pancasila sebagai dasar negara tercantum dalam Pembukaan UUD 1945 alinea keempat.'
-                },
-                // Soal IPA
-                {
-                    id: 3,
-                    subject: 'ipa',
-                    level: 'sma',
-                    question: 'Proses fotosintesis pada tumbuhan menghasilkan?',
-                    options: {
-                        A: 'Oksigen dan air',
-                        B: 'Karbondioksida dan glukosa',
-                        C: 'Oksigen dan glukosa',
-                        D: 'Air dan karbondioksida',
-                        E: 'Glukosa dan protein'
-                    },
-                    correctAnswer: 'C',
-                    explanation: 'Fotosintesis mengubah karbondioksida dan air menjadi glukosa dan oksigen dengan bantuan sinar matahari.'
-                },
+    // Contoh soal untuk semua kategori
+    this.questions = [
+        // Soal Agama SD
+        {
+            id: 1,
+            subject: 'agama',
+            level: 'sd',
+            question: 'Berapa jumlah Rukun Islam?',
+            options: {
+                A: '4',
+                B: '5',
+                C: '6',
+                D: '7',
+                E: '8'
+            },
+            correctAnswer: 'B',
+            explanation: 'Rukun Islam ada 5 yaitu: Syahadat, Shalat, Zakat, Puasa, dan Haji.'
+        },
+        
+        // Soal PPKN SMP
+        {
+            id: 2,
+            subject: 'ppkn',
+            level: 'smp',
+            question: 'Pancasila sebagai dasar negara tercantum dalam pembukaan UUD 1945 alinea keberapa?',
+            options: {
+                A: '1',
+                B: '2',
+                C: '3',
+                D: '4',
+                E: 'Tidak tercantum'
+            },
+            correctAnswer: 'D',
+            explanation: 'Pancasila sebagai dasar negara tercantum dalam Pembukaan UUD 1945 alinea keempat.'
+        },
+        
+        // Soal IPA SMA
+        {
+            id: 3,
+            subject: 'ipa',
+            level: 'sma',
+            question: 'Proses fotosintesis pada tumbuhan menghasilkan?',
+            options: {
+                A: 'Oksigen dan air',
+                B: 'Karbondioksida dan glukosa',
+                C: 'Oksigen dan glukosa',
+                D: 'Air dan karbondioksida',
+                E: 'Glukosa dan protein'
+            },
+            correctAnswer: 'C',
+            explanation: 'Fotosintesis mengubah karbondioksida dan air menjadi glukosa dan oksigen dengan bantuan sinar matahari.'
+        },
+        
+        // Soal Matematika SD
+        {
+            id: 4,
+            subject: 'matematika',
+            level: 'sd',
+            question: 'Hasil dari 125 + 75 adalah?',
+            options: {
+                A: '175',
+                B: '185',
+                C: '195',
+                D: '200',
+                E: '210'
+            },
+            correctAnswer: 'D',
+            explanation: '125 + 75 = 200'
+        },
+        
+        // Soal Ujian Logika Umum
+        {
+            id: 5,
+            subject: 'ujian-logika',
+            level: 'umum',
+            question: 'Jika semua A adalah B dan beberapa B adalah C, maka:',
+            options: {
+                A: 'Semua A adalah C',
+                B: 'Beberapa A adalah C',
+                C: 'Tidak ada A yang C',
+                D: 'Beberapa C adalah A',
+                E: 'Tidak dapat disimpulkan'
+            },
+            correctAnswer: 'B',
+            explanation: 'Karena beberapa B adalah C dan semua A adalah B, maka beberapa A pasti adalah C.'
+        },
+        
+        // Soal Ujian CPNS
+        {
+            id: 6,
+            subject: 'ujian-cpns',
+            level: 'umum',
+            question: 'Yang bukan termasuk asas-asas umum pemerintahan yang baik adalah:',
+            options: {
+                A: 'Asas kepastian hukum',
+                B: 'Asas keseimbangan',
+                C: 'Asas kesopanan',
+                D: 'Asas ketidakberpihakan',
+                E: 'Asas kecurangan'
+            },
+            correctAnswer: 'E',
+            explanation: 'Asas kecurangan bukan termasuk asas-asas umum pemerintahan yang baik.'
+        }
+    ];
+    
+    // Simpan ke localStorage untuk pertama kali
+    if (!localStorage.getItem('questions')) {
+        localStorage.setItem('questions', JSON.stringify(this.questions));
+    }
+},
                 // Soal Ujian Logika
                 {
                     id: 4,
