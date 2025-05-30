@@ -1,4 +1,4 @@
-// Particles.js configuration
+// particles.js configuration
 particlesJS("particles-js", {
   "particles": {
     "number": {
@@ -57,7 +57,7 @@ particlesJS("particles-js", {
       "out_mode": "out",
       "bounce": false,
       "attract": {
-        "enable": false,
+        "enable": true,
         "rotateX": 600,
         "rotateY": 1200
       }
