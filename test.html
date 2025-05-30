@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Berlangsung - PERGUNU Situbondo</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <div class="exam-container">
+        <div class="exam-header">
+            <div class="exam-info">
+                <h2 id="exam-title">Ujian Online</h2>
+                <div class="timer-container">
+                    <span id="timer">120:00</span>
+                </div>
+            </div>
+            
+            <div class="participant-info">
+                <p id="exam-participant"></p>
+                <p id="exam-subject"></p>
+            </div>
+        </div>
+        
+        <div class="exam-content">
+            <div class="question-container">
+                <div class="question-number">
+                    Soal <span id="current-question">1</span> dari <span id="total-questions">50</span>
+                </div>
+                
+                <div class="question-text" id="question-text">
+                    Memuat soal...
+                </div>
+                
+                <div class="question-options" id="question-options">
+                    <!-- Options will be inserted here by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="exam-controls">
+                <button id="skip-question">Lewati Soal</button>
+                <button id="unanswered-questions">Soal Belum Dijawab</button>
+                <button id="finish-exam">Selesaikan Ujian Sekarang</button>
+            </div>
+        </div>
+        
+        <div class="exam-footer">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-text">
+                    <span id="answered-count">0</span> terjawab dari <span id="total-count">50</span> soal
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="time-warning" id="time-warning" style="display: none;">
+        <p>Perhatian! Ujian akan berakhir dalam waktu <span id="remaining-time">10</span> menit. Mohon pastikan semua jawaban telah diselesaikan dan diperiksa sebelum waktu habis. Terima kasih atas partisipasi Anda.</p>
+    </div>
+
+    <script src="assets/js/particles.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize particles with minimal configuration for performance
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 30, density: { enable: true, value_area: 800 } },
+                    color: { value: "#ffffff" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.3, random: true },
+                    size: { value: 2, random: true },
+                    line_linked: { enable: false },
+                    move: { enable: true, speed: 1, direction: "none", random: true }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: false },
+                        onclick: { enable: false },
+                        resize: true
+                    }
+                },
+                retina_detect: true
+            });
+            
+            // Load participant and exam data
+            const participantData = JSON.parse(localStorage.getItem('participantData'));
+            const examData = JSON.parse(localStorage.getItem('examData'));
+            
+            if(!participantData || !examData) {
+                alert('Data ujian tidak ditemukan. Silakan mulai dari awal.');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Display participant and exam info
+            document.getElementById('exam-participant').textContent = `Peserta: ${participantData.fullname}`;
+            
+            if(examData.type === 'pelajar') {
+                document.getElementById('exam-title').textContent = 'Ujian Pelajar';
+                document.getElementById('exam-subject').textContent = `Mata Pelajaran: ${getSubjectName(examData.subject)} - Kelas ${examData.grade.toUpperCase()}`;
+            } else {
+                document.getElementById('exam-title').textContent = 'Ujian Umum';
+                document.getElementById('exam-subject').textContent = `Jenis Ujian: ${getExamTypeName(examData.examType)}`;
+            }
+            
+            // Exam variables
+            const questions = generateQuestions(examData); // Generate sample questions
+            const totalQuestions = questions.length;
+            let currentQuestionIndex = 0;
+            let answeredQuestions = 0;
+            let userAnswers = new Array(totalQuestions).fill(null);
+            let timerInterval;
+            let timeLeft = 120 * 60; // 120 minutes in seconds
+            
+            // Initialize exam
+            document.getElementById('total-questions').textContent = totalQuestions;
+            document.getElementById('total-count').textContent = totalQuestions;
+            displayQuestion(currentQuestionIndex);
+            startTimer();
+            
+            // Timer functions
+            function startTimer() {
+                updateTimerDisplay();
+                timerInterval = setInterval(function() {
+                    timeLeft--;
+                    updateTimerDisplay();
+                    
+                    // Show warning when 10 minutes left
+                    if(timeLeft === 10 * 60) {
+                        showTimeWarning(10);
+                    }
+                    
+                    // Show warning when 5 minutes left
+                    if(timeLeft === 5 * 60) {
+                        showTimeWarning(5);
+                    }
+                    
+                    // Show warning when 1 minute left
+                    if(timeLeft === 60) {
+                        showTimeWarning(1);
+                        document.getElementById('time-warning').style.display = 'none';
+                    }
+                    
+                    // End exam when time is up
+                    if(timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        endExam();
+                    }
+                }, 1000);
+            }
+            
+            function updateTimerDisplay() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Make timer bigger when 10 minutes left
+                if(timeLeft <= 10 * 60) {
+                    document.getElementById('timer').style.fontSize = '2rem';
+                    document.getElementById('timer').style.color = '#ff5252';
+                }
+            }
+            
+            function showTimeWarning(minutes) {
+                document.getElementById('remaining-time').textContent = minutes;
+                const warning = document.getElementById('time-warning');
+                warning.style.display = 'block';
+                
+                // Hide warning after 10 seconds
+                setTimeout(() => {
+                    warning.style.display = 'none';
+                }, 10000);
+            }
+            
+            // Question functions
+            function displayQuestion(index) {
+                const question = questions[index];
+                document.getElementById('current-question').textContent = index + 1;
+                document.getElementById('question-text').textContent = question.text;
+                
+                const optionsContainer = document.getElementById('question-options');
+                optionsContainer.innerHTML = '';
+                
+                question.options.forEach((option, i) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option';
+                    if(userAnswers[index] === i) {
+                        optionElement.classList.add('selected');
+                    }
+                    
+                    optionElement.innerHTML = `
+                        <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+                        <span class="option-text">${option.text}</span>
+                    `;
+                    
+                    optionElement.addEventListener('click', function() {
+                        selectAnswer(index, i);
+                    });
+                    
+                    optionsContainer.appendChild(optionElement);
+                });
+                
+                updateProgress();
+            }
+            
+            function selectAnswer(questionIndex, optionIndex) {
+                if(userAnswers[questionIndex] === null) {
+                    answeredQuestions++;
+                }
+                
+                userAnswers[questionIndex] = optionIndex;
+                
+                // Play sound effect
+                const isCorrect = questions[questionIndex].correctAnswer === optionIndex;
+                const audio = new Audio(isCorrect ? 
+                    'assets/audio/jawabanbenar.mp3' : 'assets/audio/jawbansalah.mp3');
+                audio.play();
+                
+                // Visual feedback
+                const options = document.querySelectorAll('.option');
+                options.forEach((opt, i) => {
+                    opt.classList.remove('selected', 'correct', 'wrong');
+                    
+                    if(i === optionIndex) {
+                        opt.classList.add('selected');
+                        opt.classList.add(isCorrect ? 'correct' : 'wrong');
+                    }
+                    
+                    if(i === questions[questionIndex].correctAnswer) {
+                        opt.classList.add('correct');
+                    }
+                });
+                
+                updateProgress();
+                
+                // Auto-advance to next question after delay if answer is correct
+                if(isCorrect) {
+                    setTimeout(() => {
+                        if(currentQuestionIndex < totalQuestions - 1) {
+                            currentQuestionIndex++;
+                            displayQuestion(currentQuestionIndex);
+                        }
+                    }, 1000);
+                }
+            }
+            
+            function updateProgress() {
+                document.getElementById('answered-count').textContent = answeredQuestions;
+                const progressPercent = (answeredQuestions / totalQuestions) * 100;
+                document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+            }
+            
+            // Navigation functions
+            document.getElementById('skip-question').addEventListener('click', function() {
+                if(currentQuestionIndex < totalQuestions - 1) {
+                    currentQuestionIndex++;
+                    displayQuestion(currentQuestionIndex);
+                }
+            });
+            
+            document.getElementById('unanswered-questions').addEventListener('click', function() {
+                // Find first unanswered question
+                const unansweredIndex = userAnswers.findIndex(answer => answer === null);
+                if(unansweredIndex !== -1) {
+                    currentQuestionIndex = unansweredIndex;
+                    displayQuestion(currentQuestionIndex);
+                } else {
+                    alert('Semua soal sudah terjawab!');
+                }
+            });
+            
+            document.getElementById('finish-exam').addEventListener('click', function() {
+                if(confirm('Apakah Anda yakin ingin menyelesaikan ujian sekarang? Soal yang belum terjawab akan dianggap salah.')) {
+                    endExam();
+                }
+            });
+            
+            function endExam() {
+                clearInterval(timerInterval);
+                
+                // Calculate score
+                let correctAnswers = 0;
+                userAnswers.forEach((answer, index) => {
+                    if(answer !== null && answer === questions[index].correctAnswer) {
+                        correctAnswers++;
+                    }
+                });
+                
+                const score = Math.round((correctAnswers / totalQuestions) * 100);
+                
+                // Save results
+                const examResults = {
+                    participant: participantData,
+                    examData: examData,
+                    answers: userAnswers,
+                    correctAnswers: correctAnswers,
+                    totalQuestions: totalQuestions,
+                    score: score,
+                    timestamp: new Date().toISOString()
+                };
+                
+                localStorage.setItem('examResults', JSON.stringify(examResults));
+                
+                // Redirect to results page
+                window.location.href = 'result.html';
+            }
+            
+            // Helper functions
+            function getSubjectName(subject) {
+                const subjects = {
+                    'agama': 'Agama',
+                    'ppkn': 'PPKN',
+                    'sejarah': 'Sejarah',
+                    'ipa': 'IPA',
+                    'ips': 'IPS',
+                    'matematika': 'Matematika',
+                    'bahasa-indonesia': 'Bahasa Indonesia',
+                    'bahasa-inggris': 'Bahasa Inggris',
+                    'materi-extra': 'Materi Extra',
+                    'materi-khusus': 'Materi Khusus'
+                };
+                return subjects[subject] || subject;
+            }
+            
+            function getExamTypeName(examType) {
+                const types = {
+                    'tes-iq': 'Tes IQ',
+                    'ujian-cpns': 'Ujian CPNS/P3K'
+                };
+                return types[examType] || examType;
+            }
+            
+            function generateQuestions(examData) {
+                // In a real app, this would fetch questions from a server based on exam type
+                // For demo purposes, we'll generate sample questions
+                const questions = [];
+                const totalQuestions = 10; // Reduced for demo
+                
+                for(let i = 0; i < totalQuestions; i++) {
+                    const question = {
+                        text: `Ini adalah contoh soal nomor ${i + 1} untuk ujian ${examData.type === 'pelajar' ? 
+                            getSubjectName(examData.subject) : getExamTypeName(examData.examType)}. 
+                            Manakah jawaban yang benar?`,
+                        options: [],
+                        correctAnswer: Math.floor(Math.random() * 5) // Random correct answer (A-E)
+                    };
+                    
+                    // Generate options
+                    for(let j = 0; j < 5; j++) {
+                        question.options.push({
+                            text: `Pilihan jawaban ${String.fromCharCode(65 + j)} untuk soal nomor ${i + 1}`
+                        });
+                    }
+                    
+                    questions.push(question);
+                }
+                
+                return questions;
+            }
+        });
+    </script>
+</body>
+</html>
