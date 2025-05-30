@@ -529,219 +529,46 @@
                 </div>
                 
                 <!-- Add/Edit Question Modal -->
-                <div class="modal hidden" id="question-modal">
-                    <div class="modal-content">
-                        <span class="close-modal">&times;</span>
-                        <h3 id="modal-title">Tambah Soal Baru</h3>
-                        
-                        <div class="form-group">
-                            <label for="modal-subject">Mata Pelajaran:</label>
-                            <select id="modal-subject" required>
-                                <option value="">Pilih Mata Pelajaran</option>
-                                <option value="agama">AGAMA</option>
-                                <option value="ppkn">PPKN</option>
-                                <option value="sejarah">SEJARAH</option>
-                                <option value="ipa">IPA</option>
-                                <option value="ips">IPS</option>
-                                <option value="matematika">MATEMATIKA</option>
-                                <option value="bahasa-indonesia">BAHASA INDONESIA</option>
-                                <option value="bahasa-inggris">BAHASA INGGRIS</option>
-                                <option value="materi-extra">MATERI EXTRA</option>
-                                <option value="materi-khusus">MATERI KHUSUS</option>
-                                <option value="ujian-logika">Ujian Logika</option>
-                                <option value="ujian-cpns">Ujian CPNS/P3K</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="modal-level">Tingkat:</label>
-                            <select id="modal-level" required>
-                                <option value="">Pilih Tingkat</option>
-                                <option value="sd">SD</option>
-                                <option value="smp">SMP</option>
-                                <option value="sma">SMA/SMK</option>
-                                <option value="umum">Umum</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="modal-question">Pertanyaan:</label>
-                            <textarea id="modal-question" rows="3" required></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Pilihan Jawaban:</label>
-                            <div class="option-input">
-                                <span>A)</span>
-                                <input type="text" id="modal-option-a" required>
-                            </div>
-                            <div class="option-input">
-                                <span>B)</span>
-                                <input type="text" id="modal-option-b" required>
-                            </div>
-                            <div class="option-input">
-                                <span>C)</span>
-                                <input type="text" id="modal-option-c" required>
-                            </div>
-                            <div class="option-input">
-                                <span>D)</span>
-                                <input type="text" id="modal-option-d" required>
-                            </div>
-                            <div class="option-input">
-                                <span>E)</span>
-                                <input type="text" id="modal-option-e" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="modal-correct-answer">Jawaban Benar:</label>
-                            <select id="modal-correct-answer" required>
-                                <option value="">Pilih Jawaban Benar</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                                <option value="E">E</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="modal-explanation">Penjelasan Jawaban:</label>
-                            <textarea id="modal-explanation" rows="3" required></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="modal-image">Gambar (opsional):</label>
-                            <input type="file" id="modal-image" accept="image/*">
-                        </div>
-                        
-                        <div class="modal-actions">
-                            <button id="save-question-btn" class="btn-admin">Simpan Soal</button>
-                            <button id="cancel-question-btn" class="btn-outline">Batal</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- AI Question Generator Modal -->
-                <div class="modal hidden" id="ai-modal">
-                    <div class="modal-content">
-                        <span class="close-modal">&times;</span>
-                        <h3>Generate Soal dengan AI</h3>
-                        
-                        <div class="form-group">
-                            <label for="ai-subject">Mata Pelajaran:</label>
-                            <select id="ai-subject" required>
-                                <option value="">Pilih Mata Pelajaran</option>
-                                <option value="agama">AGAMA</option>
-                                <option value="ppkn">PPKN</option>
-                                <option value="sejarah">SEJARAH</option>
-                                <option value="ipa">IPA</option>
-                                <option value="ips">IPS</option>
-                                <option value="matematika">MATEMATIKA</option>
-                                <option value="bahasa-indonesia">BAHASA INDONESIA</option>
-                                <option value="bahasa-inggris">BAHASA INGGRIS</option>
-                                <option value="materi-extra">MATERI EXTRA</option>
-                                <option value="materi-khusus">MATERI KHUSUS</option>
-                                <option value="ujian-logika">Ujian Logika</option>
-                                <option value="ujian-cpns">Ujian CPNS/P3K</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="ai-level">Tingkat:</label>
-                            <select id="ai-level" required>
-                                <option value="">Pilih Tingkat</option>
-                                <option value="sd">SD</option>
-                                <option value="smp">SMP</option>
-                                <option value="sma">SMA/SMK</option>
-                                <option value="umum">Umum</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="ai-topic">Topik:</label>
-                            <input type="text" id="ai-topic" placeholder="Misal: Trigonometri, Sejarah Kemerdekaan, dll." required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="ai-difficulty">Tingkat Kesulitan:</label>
-                            <select id="ai-difficulty">
-                                <option value="mudah">Mudah</option>
-                                <option value="sedang" selected>Sedang</option>
-                                <option value="sulit">Sulit</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="ai-count">Jumlah Soal:</label>
-                            <input type="number" id="ai-count" min="1" max="10" value="5">
-                        </div>
-                        
-                        <!-- API Key Input -->
-                        <div class="form-group">
-                            <label for="ai-api-key">API Key:</label>
-                            <input type="password" id="ai-api-key" placeholder="Masukkan API Key AI Anda">
-                            <small>Anda perlu memasukkan API Key yang valid untuk menggunakan fitur ini</small>
-                        </div>
-                        
-                        <div class="modal-actions">
-                            <button id="generate-questions-btn" class="btn-admin">Generate Soal</button>
-                            <button id="cancel-ai-btn" class="btn-outline">Batal</button>
-                        </div>
-                    </div>
-                </div>
+                <div class="modal hidden" id="questions-bank-modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>Bank Soal</h3>
+        
+        <div class="question-actions">
+            <button id="add-question-btn" class="btn-admin"><i class="fas fa-plus"></i> Tambah Soal Baru</button>
+            <button id="ai-question-btn" class="btn-admin"><i class="fas fa-robot"></i> Generate dengan AI</button>
+        </div>
+        
+        <div class="question-filter">
+            <div class="form-group">
+                <label for="bank-filter-subject">Filter Mata Pelajaran:</label>
+                <select id="bank-filter-subject">
+                    <option value="all">Semua Mata Pelajaran</option>
+                    <option value="agama">AGAMA</option>
+                    <option value="ppkn">PPKN</option>
+                    <!-- Tambahkan opsi lainnya -->
+                </select>
             </div>
-            
-            <!-- Participants Tab -->
-            <div class="admin-tab-content" id="participants-tab">
-                <div class="participant-actions">
-                    <button id="export-participants-btn" class="btn-admin"><i class="fas fa-file-export"></i> Export Data</button>
-                    <select id="export-format">
-                        <option value="excel">Excel (.xlsx)</option>
-                        <option value="csv">CSV (.csv)</option>
-                        <option value="pdf">PDF (.pdf)</option>
-                        <option value="word">Word (.docx)</option>
-                    </select>
-                </div>
-                
-                <div class="participant-filter">
-                    <div class="form-group">
-                        <label for="filter-participant-status">Filter Status:</label>
-                        <select id="filter-participant-status">
-                            <option value="all">Semua Status</option>
-                            <option value="pelajar">Pelajar</option>
-                            <option value="umum">Umum</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="filter-participant-date">Filter Tanggal:</label>
-                        <input type="date" id="filter-participant-date">
-                    </div>
-                    <button id="apply-participant-filter" class="btn-admin">Terapkan Filter</button>
-                    <button id="reset-participant-filter" class="btn-outline">Reset</button>
-                </div>
-                
-                <div class="participants-list">
-                    <table id="participants-table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Status</th>
-                                <th>Ujian</th>
-                                <th>Nilai</th>
-                                <th>Tanggal</th>
-                                <th>Sertifikat</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Participants will be loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <button id="apply-bank-filter" class="btn-admin">Terapkan Filter</button>
+        </div>
+        
+        <div class="questions-list">
+            <table id="bank-questions-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Pertanyaan</th>
+                        <th>Mata Pelajaran</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Questions will be loaded here -->
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 
     <!-- Floating Buttons -->
     <div class="floating-buttons">
