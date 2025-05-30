@@ -1,33 +1,51 @@
-// Main Application Script
+// Inisialisasi Aplikasi
 document.addEventListener('DOMContentLoaded', function() {
-    // Play opening audio
-    const openingAudio = document.getElementById('opening-audio');
-    openingAudio.play().catch(e => console.log("Autoplay prevented: ", e));
+    // Inisialisasi partikel
+    particlesJS('particles-js', {
+        // Config partikel yang lebih sederhana
+        particles: {
+            number: { value: 30, density: { enable: true, value_area: 800 } },
+            color: { value: "#2563eb" },
+            shape: { type: "circle" },
+            opacity: { value: 0.5, random: true },
+            size: { value: 3, random: true },
+            line_linked: { enable: true, distance: 150, color: "#2563eb", opacity: 0.2, width: 1 },
+            move: { enable: true, speed: 1, direction: "none", random: true, straight: false }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: { onhover: { enable: false }, onclick: { enable: false }, resize: true }
+        }
+    });
 
-    // Load CSS dinamis untuk modul
-function loadCSS(href) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = href;
-    document.head.appendChild(link);
-}
+    // Event Listeners untuk tombol mengambang
+    document.querySelector('.floating-btn.admin').addEventListener('click', openAdminPanel);
+    document.querySelector('.floating-btn.questions').addEventListener('click', openQuestionBank);
+    document.querySelector('.floating-btn.whatsapp').addEventListener('click', openWhatsapp);
+    document.querySelector('.floating-btn.share').addEventListener('click', openShareMenu);
+});
 
-// Pemisahan modul admin dan bank soal
+// Fungsi untuk membuka Admin Panel
 function openAdminPanel() {
-    loadCSS('assets/css/admin.css');
-    // Load admin.js secara dinamis
-    const script = document.createElement('script');
-    script.src = 'assets/js/admin.js';
-    document.body.appendChild(script);
+    const password = prompt("Masukkan Password Admin:");
+    if (password === "65614222") {
+        window.location.href = "admin.html"; // Pisahkan ke file terpisah
+    } else {
+        alert("Password salah!");
+    }
 }
 
+// Fungsi untuk membuka Bank Soal
 function openQuestionBank() {
-    loadCSS('assets/css/questions.css');
-    // Load questions.js secara dinamis
-    const script = document.createElement('script');
-    script.src = 'assets/js/questions.js';
-    document.body.appendChild(script);
+    const password = prompt("Masukkan Password Bank Soal:");
+    if (password === "OPENLOCK-1926") {
+        window.location.href = "questions.html"; // Pisahkan ke file terpisah
+    } else {
+        alert("Password salah!");
+    }
 }
+
+// Fungsi lainnya tetap sama...
 
 // Event listener untuk tombol
 document.querySelector('.admin-btn').addEventListener('click', openAdminPanel);
