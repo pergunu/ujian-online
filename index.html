@@ -23,9 +23,105 @@
         </div>
     </div>
 
-    <audio id="opening-audio" src="assets/audio/opening.mp3" autoplay></audio>
+    <audio id="opening-audio" src="assets/audio/opening.mp3"></audio>
+
+    <!-- Floating Buttons -->
+    <div class="floating-btns">
+        <div class="floating-btn" id="whatsapp-btn" title="Hubungi Admin">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+        <div class="floating-btn" id="share-btn" title="Bagikan">
+            <i class="fas fa-share-alt"></i>
+        </div>
+        <div class="floating-btn" id="admin-btn" title="Admin">
+            <i class="fas fa-user-cog"></i>
+        </div>
+    </div>
 
     <script src="assets/js/particles.js"></script>
     <script src="assets/js/main.js"></script>
+    <script>
+        // Inisialisasi partikel
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
+        // Fungsi login
+        document.getElementById('login-btn').addEventListener('click', function() {
+            const loginCode = document.getElementById('login-code').value;
+            const errorElement = document.getElementById('login-error');
+            const defaultCode = '12345'; // Kode default
+            
+            if(loginCode === defaultCode) {
+                // Play audio tombol
+                const audio = new Audio('assets/audio/audiotombol.mp3');
+                audio.play();
+                
+                // Redirect setelah 500ms
+                setTimeout(() => {
+                    window.location.href = 'terms.html';
+                }, 500);
+            } else {
+                errorElement.textContent = 'Kode login salah. Silakan coba lagi.';
+                errorElement.style.display = 'block';
+                
+                // Animasi shake
+                document.getElementById('login-code').style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    document.getElementById('login-code').style.animation = '';
+                }, 500);
+            }
+        });
+
+        // Fungsi untuk tombol melayang
+        document.getElementById('whatsapp-btn').addEventListener('click', function() {
+            window.open('https://wa.me/6285647709114?text=Assalamualaikum%20mas%20admin,%20saya%20mau%20tanya%20sesuatu%20nih...', '_blank');
+        });
+
+        document.getElementById('share-btn').addEventListener('click', function() {
+            if(navigator.share) {
+                navigator.share({
+                    title: 'Ujian Online PERGUNU Situbondo',
+                    text: 'Ikuti ujian online dari PERGUNU Situbondo',
+                    url: window.location.href
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                });
+            } else {
+                alert('Fitur berbagi tidak didukung di browser ini. Anda bisa menyalin link secara manual.');
+            }
+        });
+
+        document.getElementById('admin-btn').addEventListener('click', function() {
+            const adminCode = prompt('Masukkan Kode Admin:');
+            const defaultAdminCode = '65614222';
+            
+            if(adminCode === defaultAdminCode) {
+                window.location.href = 'admin/index.html';
+            } else if(adminCode !== null) {
+                alert('Kode admin salah!');
+            }
+        });
+
+        // Play audio opening
+        document.getElementById('opening-audio').play();
+    </script>
 </body>
 </html>
