@@ -1,136 +1,74 @@
-// Admin JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-    // Check admin authentication
-    checkAdminAuth();
-    
-    // Admin login functionality
-    const adminLoginForm = document.getElementById('admin-login-form');
-    if (adminLoginForm) {
-        adminLoginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const adminCode = document.getElementById('admin-code-input').value;
-            const storedAdminCode = localStorage.getItem('adminCode') || '65614222';
-            
-            if (adminCode === storedAdminCode) {
-                sessionStorage.setItem('isAdmin', 'true');
-                window.location.href = 'admin/index.html';
-            } else {
-                alert('Kode admin salah. Silakan coba lagi.');
-            }
-        });
-    }
-});
-
-function checkAdminAuth() {
-    // Skip check for login page
-    if (window.location.pathname.includes('admin-login.html')) return;
-    
-    // Check if admin is authenticated
-    const isAdmin = sessionStorage.getItem('isAdmin');
-    
-    if (!isAdmin) {
-        window.location.href = 'admin-login.html';
-    }
+// Fungsi untuk mengakses panel admin
+function accessAdminPanel() {
+  const adminCode = document.getElementById('adminAccessCode').value;
+  const defaultAdminCode = "65614222";
+  const storedAdminCode = localStorage.getItem('adminCode') || defaultAdminCode;
+  
+  if (adminCode === storedAdminCode) {
+    document.getElementById('bankContent').classList.add('hidden');
+    document.getElementById('adminContent').classList.remove('hidden');
+    loadAdminPanel();
+    playSound('buttonAudio');
+  } else {
+    showMessage("Error", "Kode admin salah. Silakan coba lagi.");
+    playSound('wrongAudio');
+  }
 }
 
-// Function to generate sample data for demonstration
-function generateSampleData() {
-    if (!localStorage.getItem('questions')) {
-        const sampleQuestions = [
-            {
-                id: '1',
-                category: 'pelajar',
-                subject: 'sejarah',
-                level: 'smp',
-                text: 'Apa ibukota Indonesia?',
-                options: ['Jakarta', 'Bandung', 'Surabaya', 'Medan', 'Yogyakarta'],
-                correctAnswer: 0,
-                explanation: 'Jakarta adalah ibukota Indonesia sejak tahun 1945.'
-            },
-            {
-                id: '2',
-                category: 'pelajar',
-                subject: 'ppkn',
-                level: 'sma',
-                text: 'Siapa presiden pertama Indonesia?',
-                options: ['Soeharto', 'Joko Widodo', 'Soekarno', 'BJ Habibie', 'Susilo Bambang Yudhoyono'],
-                correctAnswer: 2,
-                explanation: 'Ir. Soekarno adalah presiden pertama Indonesia yang menjabat dari tahun 1945 hingga 1967.'
-            },
-            {
-                id: '3',
-                category: 'umum',
-                subject: 'logika',
-                level: 'umum',
-                text: 'Jika semua manusia adalah makhluk hidup, dan Andi adalah manusia, maka:',
-                options: [
-                    'Andi adalah makhluk hidup',
-                    'Andi bukan makhluk hidup',
-                    'Makhluk hidup adalah Andi',
-                    'Tidak dapat disimpulkan',
-                    'Semua salah'
-                ],
-                correctAnswer: 0,
-                explanation: 'Berdasarkan premis, jika semua manusia adalah makhluk hidup dan Andi adalah manusia, maka Andi adalah makhluk hidup.'
-            },
-            {
-                id: '4',
-                category: 'cpns',
-                subject: 'cpns',
-                level: 'umum',
-                text: 'Pancasila sebagai dasar negara tercantum dalam:',
-                options: [
-                    'Pembukaan UUD 1945',
-                    'Batang Tubuh UUD 1945',
-                    'Penjelasan UUD 1945',
-                    'Keputusan Presiden',
-                    'Tap MPR'
-                ],
-                correctAnswer: 0,
-                explanation: 'Pancasila sebagai dasar negara tercantum dalam alinea keempat Pembukaan UUD 1945.'
-            }
-        ];
-        
-        localStorage.setItem('questions', JSON.stringify(sampleQuestions));
-    }
+// Fungsi untuk memuat panel admin
+function loadAdminPanel() {
+  // Load current settings
+  document.getElementById('currentLoginCode').value = 
+    localStorage.getItem('accessCode') || "12345";
+  document.getElementById('currentExamCode').value = 
+    localStorage.getItem('cpnsCode') || "OPENLOCK-1945";
+  document.getElementById('currentBankCode').value = 
+    localStorage.getItem('bankCode') || "OPENLOCK-1926";
+  document.getElementById('currentAdminCode').value = 
+    localStorage.getItem('adminCode') || "65614222";
     
-    if (!localStorage.getItem('participants')) {
-        const sampleParticipants = [
-            {
-                id: '1',
-                name: 'Uswatun Hasanah',
-                status: 'completed',
-                examType: 'pelajar',
-                examSubject: 'SEJARAH',
-                score: 85,
-                date: '2023-05-15'
-            },
-            {
-                id: '2',
-                name: 'Budi Santoso',
-                status: 'inprogress',
-                examType: 'umum',
-                examSubject: 'Ujian Logika',
-                score: null,
-                date: '2023-05-16'
-            },
-            {
-                id: '3',
-                name: 'Ani Wijaya',
-                status: 'failed',
-                examType: 'cpns',
-                examSubject: 'Ujian CPNS/P3K',
-                score: 45,
-                date: '2023-05-14'
-            }
-        ];
-        
-        localStorage.setItem('participants', JSON.stringify(sampleParticipants));
-    }
+  // Load other settings
+  document.getElementById('greetingTextInput').value = 
+    localStorage.getItem('greetingText') || "Sistem Ujian Online oleh Pergunu Situbondo";
+  document.getElementById('chairmanNameInput').value = 
+    localStorage.getItem('chairmanName') || "Moh. Nuril Hudha, S.Pd., M.Si.";
+  
+  // Load exam settings
+  document.getElementById('examTimerInput').value = 
+    localStorage.getItem('examDuration') || "120";
+  document.getElementById('questionLimitInput').value = 
+    localStorage.getItem('questionLimit') || "10";
+  document.getElementById('pointSystemInput').value = 
+    localStorage.getItem('pointSystem') || "1";
+  
+  // Load motivation texts
+  const motivationTexts = JSON.parse(localStorage.getItem('motivationTexts')) || {
+    perfect: "Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.",
+    excellent: "Luar biasa! Anda telah menunjukkan pemahaman yang mendalam.",
+    good: "Bagus! Hasil yang cukup memuaskan, tetap semangat belajar!",
+    average: "Cukup baik. Masih ada ruang untuk peningkatan.",
+    poor: "Perlu peningkatan. Silakan pelajari kembali materinya."
+  };
+  
+  document.getElementById('motivationPerfect').value = motivationTexts.perfect;
+  document.getElementById('motivationExcellent').value = motivationTexts.excellent;
+  document.getElementById('motivationGood').value = motivationTexts.good;
+  document.getElementById('motivationAverage').value = motivationTexts.average;
+  document.getElementById('motivationPoor').value = motivationTexts.poor;
 }
 
-// Initialize sample data if the admin page is loaded
-if (window.location.pathname.includes('admin/')) {
-    generateSampleData();
+// Fungsi untuk menyimpan pengaturan admin
+function saveAdminSettings(section) {
+  switch(section) {
+    case 'login':
+      localStorage.setItem('accessCode', document.getElementById('newLoginCode').value);
+      break;
+    case 'exam':
+      localStorage.setItem('cpnsCode', document.getElementById('newExamCode').value);
+      break;
+    // Dan seterusnya untuk semua pengaturan
+  }
+  
+  showMessage("Sukses", "Pengaturan berhasil disimpan");
+  playSound('correctAudio');
 }
