@@ -1,294 +1,134 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Inisialisasi partikel dengan konfigurasi lebih kaya
-    if (typeof particlesJS !== 'undefined') {
-        initParticles();
-    } else {
-        loadParticlesJS().then(initParticles);
-    }
+/* Global Styles */
+:root {
+  --primary: #6a11cb;
+  --secondary: #2575fc;
+  --accent: #ff8a00;
+  --light: #f8f9fa;
+  --dark: #212529;
+  --success: #28a745;
+  --danger: #dc3545;
+  --warning: #ffc107;
+  --info: #17a2b8;
+}
 
-    // Main Logic
-    const examCodeInput = document.getElementById('exam-code');
-    const enterBtn = document.getElementById('enter-btn');
-    const openingAudio = document.getElementById('opening-audio');
-    const buttonAudio = document.getElementById('button-audio');
-    
-    // Inisialisasi tombol melayang
-    initFloatingButtons();
-    
-    // Load pengaturan
-    loadSettings();
-    
-    // Audio handling
-    handleAudio();
-    
-    // Event listeners
-    setupEventListeners();
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
 
-    // Fungsi untuk inisialisasi partikel
-    function initParticles() {
-        particlesJS('particles-js', {
-            particles: {
-                number: { 
-                    value: 120, 
-                    density: { 
-                        enable: true, 
-                        value_area: 800 
-                    } 
-                },
-                color: { 
-                    value: "#ffffff" 
-                },
-                shape: { 
-                    type: "circle",
-                    stroke: {
-                        width: 0,
-                        color: "#000000"
-                    },
-                    polygon: {
-                        nb_sides: 5
-                    }
-                },
-                opacity: {
-                    value: 0.7,
-                    random: true,
-                    anim: {
-                        enable: true,
-                        speed: 1,
-                        opacity_min: 0.1,
-                        sync: false
-                    }
-                },
-                size: {
-                    value: 3,
-                    random: true,
-                    anim: {
-                        enable: true,
-                        speed: 2,
-                        size_min: 0.1,
-                        sync: false
-                    }
-                },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: "#ffffff",
-                    opacity: 0.4,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 2,
-                    direction: "none",
-                    random: true,
-                    straight: false,
-                    out_mode: "out",
-                    bounce: false,
-                    attract: {
-                        enable: true,
-                        rotateX: 600,
-                        rotateY: 1200
-                    }
-                }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: {
-                    onhover: {
-                        enable: true,
-                        mode: "repulse"
-                    },
-                    onclick: {
-                        enable: true,
-                        mode: "push"
-                    },
-                    resize: true
-                },
-                modes: {
-                    grab: {
-                        distance: 400,
-                        line_linked: {
-                            opacity: 1
-                        }
-                    },
-                    repulse: {
-                        distance: 100,
-                        duration: 0.4
-                    },
-                    push: {
-                        particles_nb: 4
-                    }
-                }
-            },
-            retina_detect: true
-        });
-    }
+body {
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--light);
+}
 
-    // Fungsi untuk load library particles.js jika belum ada
-    function loadParticlesJS() {
-        return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
-            script.onload = resolve;
-            script.onerror = reject;
-            document.head.appendChild(script);
-        });
-    }
+/* Particle Background */
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
 
-    // Fungsi untuk inisialisasi tombol melayang
-    function initFloatingButtons() {
-        const floatingButtons = [
-            {
-                icon: 'fa-share-alt',
-                title: 'Bagikan',
-                action: shareApp
-            },
-            {
-                icon: 'fab fa-whatsapp',
-                title: 'Chat Admin',
-                action: contactAdmin
-            },
-            {
-                icon: 'fa-book',
-                title: 'Bank Soal',
-                action: openQuestionBank,
-                adminOnly: true
-            },
-            {
-                icon: 'fa-cog',
-                title: 'Admin Panel',
-                action: openAdminPanel,
-                adminOnly: true
-            }
-        ];
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
 
-        const floatingContainer = document.querySelector('.floating-buttons');
-        if (floatingContainer) {
-            floatingButtons.forEach(button => {
-                if (button.adminOnly && !sessionStorage.getItem('isAdmin')) return;
-                
-                const btn = document.createElement('button');
-                btn.className = `floating-btn ${button.title.toLowerCase().replace(' ', '-')}-btn`;
-                btn.innerHTML = `
-                    <i class="${button.icon}"></i>
-                    <span class="tooltip">${button.title}</span>
-                `;
-                btn.addEventListener('click', button.action);
-                floatingContainer.appendChild(btn);
-            });
-        }
-    }
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
 
-    // Fungsi untuk load pengaturan
-    function loadSettings() {
-        const greetingText = localStorage.getItem('greetingText') || 'Selamat Datang di Ujian Online PERGUNU SITUBONDO';
-        const welcomeMessage = localStorage.getItem('welcomeMessage') || 'Silakan masukkan kode ujian untuk melanjutkan';
-        
-        if (document.getElementById('greeting-text')) {
-            document.getElementById('greeting-text').textContent = greetingText;
-        }
-        
-        if (document.getElementById('welcome-message')) {
-            document.getElementById('welcome-message').textContent = welcomeMessage;
-        }
-    }
+/* Layout Components */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
 
-    // Fungsi untuk handle audio
-    function handleAudio() {
-        if (openingAudio) {
-            openingAudio.volume = 0.3;
-            openingAudio.play().catch(e => console.log("Autoplay prevented:", e));
-        }
-    }
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
 
-    // Fungsi untuk setup event listeners
-    function setupEventListeners() {
-        if (enterBtn && examCodeInput) {
-            enterBtn.addEventListener('click', validateExamCode);
-            examCodeInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    validateExamCode();
-                }
-            });
-        }
-    }
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
 
-    // Fungsi untuk validasi kode ujian
-    function validateExamCode() {
-        playButtonSound();
-        const examCode = examCodeInput.value.trim();
-        const validCode = '12345';
-        const savedCode = localStorage.getItem('loginCode') || validCode;
-        
-        if (!examCode) {
-            alert('Silakan masukkan kode ujian');
-            return;
-        }
-        
-        if (examCode === savedCode) {
-            sessionStorage.setItem('examCode', examCode);
-            window.location.href = 'terms.html';
-        } else {
-            alert('Kode ujian salah. Silakan coba lagi.');
-            examCodeInput.value = '';
-            examCodeInput.focus();
-        }
-    }
+/* Buttons */
+.btn-gradient {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  border: none;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
 
-    // Fungsi untuk tombol berbagi
-    function shareApp() {
-        playButtonSound();
-        if (navigator.share) {
-            navigator.share({
-                title: 'Ujian Online PERGUNU',
-                text: 'Ikuti ujian online dari PERGUNU SITUBONDO',
-                url: window.location.href
-            }).catch(err => {
-                console.log('Error sharing:', err);
-                fallbackShare();
-            });
-        } else {
-            fallbackShare();
-        }
-    }
+.btn-gradient:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to right, var(--secondary), var(--primary));
+}
 
-    // Fallback untuk share
-    function fallbackShare() {
-        alert('Salin link berikut untuk berbagi:\n' + window.location.href);
-    }
+/* Form Elements */
+.form-group {
+  margin-bottom: 1.5rem;
+}
 
-    // Fungsi untuk kontak admin
-    function contactAdmin() {
-        playButtonSound();
-        window.open('https://wa.me/6285647709114?text=Assalamualaikum%20mas%20admin,%20saya%20mau%20tanya%20sesuatu%20nih...', '_blank');
-    }
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
 
-    // Fungsi untuk buka bank soal
-    function openQuestionBank() {
-        playButtonSound();
-        const questionCode = prompt('Masukkan Kode Bank Soal:', 'OPENLOCK-1926');
-        if (questionCode === 'OPENLOCK-1926' || questionCode === localStorage.getItem('questionCode')) {
-            window.location.href = 'admin/questions.html';
-        } else {
-            alert('Kode Bank Soal salah!');
-        }
-    }
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 16px;
+}
 
-    // Fungsi untuk buka admin panel
-    function openAdminPanel() {
-        playButtonSound();
-        const adminCode = prompt('Masukkan Kode Admin:', '65614222');
-        if (adminCode === '65614222' || adminCode === localStorage.getItem('adminCode')) {
-            window.location.href = 'admin/index.html';
-        } else {
-            alert('Kode Admin salah!');
-        }
-    }
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: 1rem 0;
+  }
+  
+  .card {
+    padding: 1.5rem;
+  }
+  
+  .btn-gradient {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
 
-    // Fungsi untuk play sound tombol
-    function playButtonSound() {
-        if (buttonAudio) {
-            buttonAudio.currentTime = 0;
-            buttonAudio.play().catch(e => console.log("Button sound prevented:", e));
-        }
-    }
-});
+/* Tambahkan style untuk komponen lainnya sesuai kebutuhan */
