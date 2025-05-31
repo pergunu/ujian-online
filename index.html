@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Canvas untuk animasi partikel -->
@@ -22,10 +23,10 @@
 
     <!-- Floating Buttons -->
     <div class="floating-buttons">
-        <button class="floating-btn" id="shareBtn"><i class="fas fa-share-alt"></i></button>
-        <button class="floating-btn" id="whatsappBtn"><i class="fab fa-whatsapp"></i></button>
-        <button class="floating-btn" id="bankSoalBtn"><i class="fas fa-book"></i></button>
-        <button class="floating-btn" id="adminBtn"><i class="fas fa-cog"></i></button>
+        <button class="floating-btn" id="shareBtn" title="Bagikan"><i class="fas fa-share-alt"></i></button>
+        <button class="floating-btn" id="whatsappBtn" title="WhatsApp Admin"><i class="fab fa-whatsapp"></i></button>
+        <button class="floating-btn" id="bankSoalBtn" title="Bank Soal"><i class="fas fa-book"></i></button>
+        <button class="floating-btn" id="adminBtn" title="Admin Panel"><i class="fas fa-cog"></i></button>
     </div>
 
     <!-- Main Container -->
@@ -260,40 +261,40 @@
             </div>
         </div>
 
-       <!-- Certificate Screen -->
-<div class="screen" id="certificateScreen">
-    <div class="certificate-container" id="certificatePrint">
-        <img src="assets/images/certificate.png" alt="Certificate Background" class="certificate-bg">
-        <div class="certificate-content">
-            <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
-            <p class="certificate-given">Diberikan Kepada:</p>
-            <h2 class="recipient-name" id="certificateName"></h2>
-            <p class="certificate-description">
-                Atas Partisipasi & Pencapaian Luar Biasa dalam <strong>Ujian Pergunu Situbondo</strong>
-            </p>
-            <p class="certificate-text">
-                Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, sertifikat ini diberikan sebagai motivasi untuk terus berkembang.
-            </p>
-            <div class="score-container">
-                <span class="score-label">Nilai:</span>
-                <span class="score-value" id="certificateScore"></span>
+        <!-- Certificate Screen -->
+        <div class="screen" id="certificateScreen">
+            <div class="certificate-container" id="certificatePrint">
+                <img src="assets/images/certificate.png" alt="Certificate Background" class="certificate-bg">
+                <div class="certificate-content">
+                    <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
+                    <p class="certificate-given">Diberikan Kepada:</p>
+                    <h2 class="recipient-name" id="certificateName"></h2>
+                    <p class="participation-text">
+                        Atas Partisipasi & Pencapaian Luar Biasa dalam <strong>Ujian Pergunu Situbondo</strong>
+                    </p>
+                    <p class="certificate-text">
+                        Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, sertifikat ini diberikan sebagai motivasi untuk terus berkembang.
+                    </p>
+                    <div class="score-container">
+                        <span class="score-label">Nilai:</span>
+                        <span class="score-value" id="certificateScore"></span>
+                    </div>
+                    <p class="motivation-text" id="motivationText"></p>
+                    <div class="certificate-footer">
+                        <p class="period">Ditetapkan di: Situbondo, <span id="certificateDate"></span></p>
+                        <p class="signature-title">Ketua Pergunu Situbondo</p>
+                        <p class="signature-name" id="chairmanName">Moh. Nuril Hudha, S.Pd., M.Si.</p>
+                        <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
+                    </div>
+                    <div class="certificate-code" id="certificateCode"></div>
+                </div>
             </div>
-            <p class="motivation-text" id="motivationText"></p>
-            <div class="certificate-footer">
-                <p class="period">Ditetapkan di: Situbondo, <span id="certificateDate"></span></p>
-                <p class="signature-title">Ketua Pergunu Situbondo</p>
-                <p class="signature-name" id="chairmanName">Moh. Nuril Hudha, S.Pd., M.Si.</p>
-                <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
+            
+            <div class="certificate-actions">
+                <button id="printCertificateBtn">Cetak Sertifikat</button>
+                <button id="backToResultsBtn">Kembali ke Hasil</button>
             </div>
-            <div class="certificate-code" id="certificateCode"></div>
         </div>
-    </div>
-    
-    <div class="certificate-actions">
-        <button id="printCertificateBtn">Cetak Sertifikat</button>
-        <button id="backToResultsBtn">Kembali ke Hasil</button>
-    </div>
-</div>
 
         <!-- Bank Soal Modal -->
         <div class="modal" id="bankSoalModal">
