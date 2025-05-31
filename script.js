@@ -945,7 +945,10 @@ function generateCertificateCode(score) {
     const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
     const scorePart = score.toString().padStart(3, '0');
     
-    return `${participantData.fullName.substring(0, 3).toUpperCase()}/${participantData.status.toUpperCase()}/${
+    // Use full name without truncation
+    const namePart = participantData.fullName.toUpperCase().replace(/\s+/g, '_');
+    
+    return `${namePart}/${participantData.status.toUpperCase()}/${
         participantData.tingkatSekolah ? participantData.tingkatSekolah.toUpperCase() : 'UMUM'}/${
         examSubject.toUpperCase()}/${datePart}/${randomPart}-${scorePart}/PERGUNU-STB`;
 }
