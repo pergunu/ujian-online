@@ -1,74 +1,86 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ujian Online - Pergunu Situbondo</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ujian Online - Pergunu Situbondo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/animate.css">
 </head>
 <body>
     <!-- Background Particle -->
     <div id="particles-js"></div>
     
     <!-- Opening Screen -->
-    <div class="opening-screen animate__animated animate__fadeIn">
-        <div class="opening-content">
-            <img src="assets/images/logo.png" alt="Logo Pergunu" class="logo">
-            <h1 id="greeting-text">Selamat Datang di Ujian Online Pergunu Situbondo</h1>
-            <div class="login-form animate__animated animate__fadeInUp">
-                <input type="password" id="login-code" placeholder="Masukkan Kode Ujian">
-                <button id="login-btn" class="btn-gradient">Masuk</button>
-                <audio id="opening-audio" src="assets/audio/opening.mp3"></audio>
-            </div>
+  <div class="opening-screen" style="display: flex;">
+    <div class="container">
+      <div class="card text-center">
+        <img src="assets/images/logo.png" alt="Logo Pergunu" style="max-width: 150px; margin-bottom: 1rem;">
+        <h1 style="margin-bottom: 1.5rem;">Selamat Datang di Ujian Online Pergunu Situbondo</h1>
+        
+        <div class="form-group" style="max-width: 400px; margin: 0 auto;">
+          <input type="password" id="login-code" class="form-control" placeholder="Masukkan Kode Ujian" style="margin-bottom: 1rem;">
+          <button id="login-btn" class="btn btn-primary" style="width: 100%;">
+            <i class="fas fa-sign-in-alt"></i> Masuk
+          </button>
         </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Terms and Conditions -->
-    <div class="terms-container hidden animate__animated">
-        <div class="terms-content">
-            <h2>Peraturan & Kebijakan Ujian</h2>
-            <div class="terms-text">
-                <p>Dikembangkan oleh Cendhanu Tim Kreator PERGUNU SITUBONDO</p>
-                <ol>
-                    <li>Peserta wajib mengisi data diri dengan benar dan valid.</li>
-                    <li>Dilarang keras melakukan kecurangan selama ujian berlangsung.</li>
-                    <li>Setiap peserta hanya diperbolehkan mengikuti ujian sekali dalam satu periode.</li>
-                    <li>Waktu ujian tidak dapat diulang setelah selesai atau waktu habis.</li>
-                    <li>Hasil ujian akan langsung tercetak dalam bentuk sertifikat digital.</li>
-                    <li>Dilarang menyebarkan soal ujian kepada pihak lain.</li>
-                    <li>Peserta yang melanggar akan didiskualifikasi secara otomatis oleh sistem.</li>
-                </ol>
-            </div>
-            <div class="terms-agreement">
-                <input type="checkbox" id="agree-terms">
-                <label for="agree-terms">Saya menyetujui semua peraturan dan kebijakan ujian ini</label>
-            </div>
-            <button id="continue-btn" class="btn-gradient" disabled>Lanjut Ikut Ujian</button>
+  <!-- Terms and Conditions -->
+  <div class="terms-container" style="display: none;">
+    <div class="container">
+      <div class="card">
+        <h2 style="text-align: center; margin-bottom: 1.5rem;">Peraturan & Kebijakan Ujian</h2>
+        
+        <div style="margin-bottom: 2rem;">
+          <p style="text-align: center; font-weight: 500; margin-bottom: 1rem;">
+            Dikembangkan oleh Cendhanu Tim Kreator PERGUNU SITUBONDO
+          </p>
+          
+          <ol style="line-height: 1.6; padding-left: 1.2rem;">
+            <li style="margin-bottom: 0.5rem;">Peserta wajib mengisi data diri dengan benar dan valid</li>
+            <li style="margin-bottom: 0.5rem;">Dilarang keras melakukan kecurangan selama ujian berlangsung</li>
+            <li style="margin-bottom: 0.5rem;">Setiap peserta hanya diperbolehkan mengikuti ujian sekali dalam satu periode</li>
+          </ol>
         </div>
+        
+        <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+          <input type="checkbox" id="agree-terms" style="margin-right: 0.5rem;">
+          <label for="agree-terms">Saya menyetujui semua peraturan dan kebijakan ujian ini</label>
+        </div>
+        
+        <button id="continue-btn" class="btn btn-primary" style="width: 100%;" disabled>
+          <i class="fas fa-arrow-right"></i> Lanjut Ikut Ujian
+        </button>
+      </div>
     </div>
+  </div>
 
-    <!-- Participant Form -->
-    <div class="participant-form hidden animate__animated">
-        <div class="form-container">
-            <h2>Formulir Data Peserta</h2>
-            <form id="participant-data">
-                <div class="form-group">
-                    <label for="fullname">Nama Lengkap:</label>
-                    <input type="text" id="fullname" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Status:</label>
-                    <div class="radio-group">
-                        <input type="radio" id="student" name="status" value="pelajar" checked>
-                        <label for="student">Pelajar</label>
-                        <input type="radio" id="general" name="status" value="umum">
-                        <label for="general">Umum</label>
-                    </div>
-                </div>
+  <!-- Participant Form -->
+  <div class="participant-form" style="display: none;">
+    <div class="container">
+      <div class="card">
+        <h2 style="text-align: center; margin-bottom: 1.5rem;">Formulir Data Peserta</h2>
+        
+        <form id="participant-data">
+          <div style="margin-bottom: 1.5rem;">
+            <label for="fullname" style="display: block; margin-bottom: 0.5rem;">Nama Lengkap:</label>
+            <input type="text" id="fullname" class="form-control" required>
+          </div>
+          
+          <!-- Tambahkan field lainnya sesuai kebutuhan -->
+          
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            <i class="fas fa-save"></i> Simpan & Ikut Ujian
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
                 
                 <!-- Student Fields -->
                 <div class="form-group student-fields">
@@ -395,6 +407,7 @@
     </div>
 
     <script src="assets/js/particles.min.js"></script>
+    <script src="assets/js/main.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/quiz-engine.js"></script>
     <script src="assets/js/admin-panel.js"></script>
