@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syarat & Ketentuan - Ujian Online PERGUNU</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="container">
+        <div class="terms-box slide-in">
+            <h1>Syarat & Ketentuan Ujian</h1>
+            <div class="terms-content">
+                <p>Dikembangkan oleh <strong>Cendhanu Tim Kreator PERGUNU SITUBONDO</strong></p>
+                
+                <h2>Peraturan Ujian Online:</h2>
+                <ol>
+                    <li>Peserta wajib mengisi data diri dengan benar dan valid.</li>
+                    <li>Peserta tidak diperbolehkan melakukan kecurangan selama ujian berlangsung.</li>
+                    <li>Peserta dilarang menggunakan bantuan pihak ketiga atau alat bantu lainnya.</li>
+                    <li>Waktu ujian akan terus berjalan dan tidak dapat dihentikan.</li>
+                    <li>Soal yang sudah dijawab tidak dapat diubah kembali.</li>
+                    <li>Ujian akan berakhir secara otomatis ketika waktu habis.</li>
+                    <li>Hasil ujian akan ditampilkan setelah selesai mengerjakan semua soal.</li>
+                    <li>Sertifikat hanya diberikan kepada peserta yang menyelesaikan ujian.</li>
+                </ol>
+                
+                <div class="checkbox-container">
+                    <input type="checkbox" id="agree-terms">
+                    <label for="agree-terms">Saya telah membaca dan menyetujui semua syarat & ketentuan di atas</label>
+                </div>
+                
+                <button id="continue-btn" class="btn-gradient" disabled>
+                    <i class="fas fa-arrow-right"></i> Lanjut Ikut Ujian
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating Buttons -->
+    <div class="floating-buttons">
+        <button class="floating-btn share-btn" title="Bagikan">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <button class="floating-btn whatsapp-btn" title="Chat Admin">
+            <i class="fab fa-whatsapp"></i>
+        </button>
+    </div>
+    
+    <script src="../assets/js/particles.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const agreeCheckbox = document.getElementById('agree-terms');
+            const continueBtn = document.getElementById('continue-btn');
+            
+            agreeCheckbox.addEventListener('change', function() {
+                continueBtn.disabled = !this.checked;
+            });
+            
+            continueBtn.addEventListener('click', function() {
+                if (agreeCheckbox.checked) {
+                    window.location.href = 'registration.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
