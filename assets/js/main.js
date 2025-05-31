@@ -140,7 +140,26 @@ const MOTIVATIONAL_MESSAGES = [
 ];
 
 // Initialize the app
+// Di dalam fungsi init():
 function init() {
+    // Pasang event listener untuk tombol melayang
+    document.querySelector('.share-btn').addEventListener('click', showShareModal);
+    document.querySelector('.whatsapp-btn').addEventListener('click', contactAdmin);
+    document.querySelector('.bank-soal-btn').addEventListener('click', showBankSoalModal);
+    document.querySelector('.admin-btn').addEventListener('click', showAdminModal);
+
+    // Fungsi tombol masuk
+    document.getElementById('login-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        const code = document.getElementById('exam-code').value;
+        if (code === "12345") {
+            document.getElementById('welcome-screen').classList.remove('active');
+            document.getElementById('terms-screen').classList.add('active');
+        } else {
+            alert("Kode salah! Coba lagi.");
+        }
+    });
+}
     // Play opening audio
     openingAudio.play();
     
