@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Ujian Online PERGUNU</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .admin-sidebar {
+            width: 250px;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            color: white;
+            padding: 1.5rem 1rem;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .admin-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .admin-logo img {
+            max-width: 150px;
+        }
+        
+        .admin-menu {
+            list-style: none;
+        }
+        
+        .admin-menu li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .admin-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-menu a:hover, .admin-menu a.active {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .admin-menu a i {
+            margin-right: 0.5rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .admin-content {
+            flex: 1;
+            padding: 2rem;
+            background: #f5f7fa;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .admin-title {
+            font-size: 1.5rem;
+            color: #4e54c8;
+        }
+        
+        .admin-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .admin-card h3 {
+            margin-bottom: 1rem;
+            color: #4e54c8;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .btn-admin {
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-admin:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .code-management {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .code-management input {
+            flex: 1;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+        
+        .toggle-label {
+            margin-left: 1rem;
+            font-weight: 500;
+        }
+        
+        .exam-status {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .participants-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .participants-table th, .participants-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .participants-table th {
+            background: #f5f7fa;
+            font-weight: 600;
+        }
+        
+        .participants-table tr:hover {
+            background: #f5f7fa;
+        }
+        
+        .export-buttons {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-sidebar">
+            <div class="admin-logo">
+                <img src="../../assets/images/logo.png" alt="PERGUNU SITUBONDO">
+            </div>
+            
+            <ul class="admin-menu">
+                <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="../questions.html"><i class="fas fa-book"></i> Bank Soal</a></li>
+                <li><a href="../participants.html"><i class="fas fa-users"></i> Peserta Ujian</a></li>
+                <li><a href="#code-settings"><i class="fas fa-lock"></i> Pengaturan Kode</a></li>
+                <li><a href="#exam-settings"><i class="fas fa-cog"></i> Pengaturan Ujian</a></li>
+                <li><a href="#certificate-settings"><i class="fas fa-certificate"></i> Pengaturan Sertifikat</a></li>
+                <li><a href="#content-settings"><i class="fas fa-edit"></i> Konten Website</a></li>
+                <li><a href="../../index.html"><i class="fas fa-sign-out-alt"></i> Keluar</a></li>
+            </ul>
+        </div>
+        
+        <div class="admin-content">
+            <div class="admin-header">
+                <h1 class="admin-title">Panel Admin</h1>
+                <div class="admin-actions">
+                    <button class="btn-admin"><i class="fas fa-sync-alt"></i> Refresh</button>
+                </div>
+            </div>
+            
+            <div class="admin-card">
+                <h3>Pengaturan Kode Akses</h3>
+                
+                <div class="form-group">
+                    <label>Kode Login Peserta</label>
+                    <div class="code-management">
+                        <input type="password" id="login-code" placeholder="Kode saat ini: 12345">
+                        <button class="btn-admin" id="save-login-code"><i class="fas fa-save"></i> Simpan</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Kode Ujian CPNS/P3K</label>
+                    <div class="code-management">
+                        <input type="password" id="cpns-code" placeholder="Kode saat ini: OPENLOCK-1945">
+                        <button class="btn-admin" id="save-cpns-code"><i class="fas fa-save"></i> Simpan</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Kode Bank Soal</label>
+                    <div class="code-management">
+                        <input type="password" id="question-code" placeholder="Kode saat ini: OPENLOCK-1926">
+                        <button class="btn-admin" id="save-question-code"><i class="fas fa-save"></i> Simpan</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Kode Kontrol Panel Admin</label>
+                    <div class="code-management">
+                        <input type="password" id="admin-code" placeholder="Kode saat ini: 65614222">
+                        <button class="btn-admin" id="save-admin-code"><i class="fas fa-save"></i> Simpan</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="admin-card" id="exam-settings">
+                <h3>Pengaturan Ujian</h3>
+                
+                <div class="form-group">
+                    <label>Durasi Ujian (menit)</label>
+                    <input type="number" id="exam-duration" value="120" min="5" max="300">
+                </div>
+                
+                <div class="form-group">
+                    <label>Jumlah Soal</label>
+                    <input type="number" id="question-count" value="10" min="5" max="150" step="5">
+                </div>
+                
+                <div class="form-group">
+                    <label>Point per Soal</label>
+                    <select id="question-point">
+                        <option value="1">1 Point</option>
+                        <option value="2">2 Point</option>
+                        <option value="3">3 Point</option>
+                        <option value="4">4 Point</option>
+                        <option value="5">5 Point</option>
+                        <option value="10">10 Point</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Acak Urutan Soal</label>
+                    <div class="exam-status">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="randomize-questions" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <span class="toggle-label" id="randomize-label">Aktif</span>
+                    </div>
+                </div>
+                
+                <button class="btn-admin" id="save-exam-settings"><i class="fas fa-save"></i> Simpan Pengaturan</button>
+            </div>
+            
+            <div class="admin-card" id="certificate-settings">
+                <h3>Pengaturan Sertifikat</h3>
+                
+                <div class="form-group">
+                    <label>Nama Ketua Pergunu</label>
+                    <input type="text" id="chairman-name" value="Moh. Nuril Hudha, S.Pd., M.Si.">
+                </div>
+                
+                <div class="form-group">
+                    <label>Pesan Motivasi</label>
+                    <textarea id="motivational-messages" placeholder="Format JSON: [{'min':0,'max':40,'message':'Pesan'},...]"></textarea>
+                    <small>Gunakan format JSON dengan properti min, max, dan message</small>
+                </div>
+                
+                <button class="btn-admin" id="save-certificate-settings"><i class="fas fa-save"></i> Simpan Pengaturan</button>
+            </div>
+            
+            <div class="admin-card" id="content-settings">
+                <h3>Pengaturan Konten Website</h3>
+                
+                <div class="form-group">
+                    <label>Teks Sambutan</label>
+                    <input type="text" id="greeting-text" value="Selamat Datang di Ujian Online PERGUNU SITUBONDO">
+                </div>
+                
+                <div class="form-group">
+                    <label>Pesan Pembuka</label>
+                    <input type="text" id="welcome-message" value="Silakan masukkan kode ujian untuk melanjutkan">
+                </div>
+                
+                <div class="form-group">
+                    <label>Informasi Berkala</label>
+                    <textarea id="periodic-info">Sistem ujian online ini dikembangkan oleh Tim Kreator PERGUNU SITUBONDO untuk memudahkan proses evaluasi belajar.</textarea>
+                </div>
+                
+                <button class="btn-admin" id="save-content-settings"><i class="fas fa-save"></i> Simpan Pengaturan</button>
+            </div>
+            
+            <div class="admin-card" id="exam-status">
+                <h3>Status Jenis Ujian</h3>
+                
+                <div class="form-group">
+                    <h4>Ujian Pelajar</h4>
+                    <div class="exam-status">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="student-exam-status" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <span class="toggle-label" id="student-exam-label">Aktif</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h4>Ujian Umum</h4>
+                    <div class="exam-status">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="general-exam-status" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <span class="toggle-label" id="general-exam-label">Aktif</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h4>Ujian CPNS/P3K</h4>
+                    <div class="exam-status">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="cpns-exam-status" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <span class="toggle-label" id="cpns-exam-label">Aktif</span>
+                    </div>
+                </div>
+                
+                <button class="btn-admin" id="save-exam-status"><i class="fas fa-save"></i> Simpan Status</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../../assets/js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load current settings
+            loadSettings();
+            
+            // Toggle switches
+            document.getElementById('randomize-questions').addEventListener('change', function() {
+                document.getElementById('randomize-label').textContent = this.checked ? 'Aktif' : 'Nonaktif';
+            });
+            
+            document.getElementById('student-exam-status').addEventListener('change', function() {
+                document.getElementById('student-exam-label').textContent = this.checked ? 'Aktif' : 'Nonaktif';
+            });
+            
+            document.getElementById('general-exam-status').addEventListener('change', function() {
+                document.getElementById('general-exam-label').textContent = this.checked ? 'Aktif' : 'Nonaktif';
+            });
+            
+            document.getElementById('cpns-exam-status').addEventListener('change', function() {
+                document.getElementById('cpns-exam-label').textContent = this.checked ? 'Aktif' : 'Nonaktif';
+            });
+            
+            // Save buttons
+            document.getElementById('save-login-code').addEventListener('click', function() {
+                const code = document.getElementById('login-code').value;
+                if (code) {
+                    localStorage.setItem('loginCode', code);
+                    alert('Kode login berhasil disimpan');
+                } else {
+                    alert('Silakan masukkan kode login');
+                }
+            });
+            
+            document.getElementById('save-cpns-code').addEventListener('click', function() {
+                const code = document.getElementById('cpns-code').value;
+                if (code) {
+                    localStorage.setItem('cpnsCode', code);
+                    alert('Kode CPNS berhasil disimpan');
+                } else {
+                    alert('Silakan masukkan kode CPNS');
+                }
+            });
+            
+            document.getElementById('save-question-code').addEventListener('click', function() {
+                const code = document.getElementById('question-code').value;
+                if (code) {
+                    localStorage.setItem('questionCode', code);
+                    alert('Kode bank soal berhasil disimpan');
+                } else {
+                    alert('Silakan masukkan kode bank soal');
+                }
+            });
+            
+            document.getElementById('save-admin-code').addEventListener('click', function() {
+                const code = document.getElementById('admin-code').value;
+                if (code) {
+                    localStorage.setItem('adminCode', code);
+                    alert('Kode admin berhasil disimpan');
+                } else {
+                    alert('Silakan masukkan kode admin');
+                }
+            });
+            
+            document.getElementById('save-exam-settings').addEventListener('click', function() {
+                const duration = document.getElementById('exam-duration').value;
+                const count = document.getElementById('question-count').value;
+                const point = document.getElementById('question-point').value;
+                const randomize = document.getElementById('randomize-questions').checked;
+                
+                localStorage.setItem('examDuration', duration);
+                localStorage.setItem('questionCount', count);
+                localStorage.setItem('questionPoint', point);
+                localStorage.setItem('randomizeQuestions', randomize);
+                
+                alert('Pengaturan ujian berhasil disimpan');
+            });
+            
+            document.getElementById('save-certificate-settings').addEventListener('click', function() {
+                const chairman = document.getElementById('chairman-name').value;
+                const messages = document.getElementById('motivational-messages').value;
+                
+                localStorage.setItem('chairmanName', chairman);
+                
+                try {
+                    if (messages) {
+                        JSON.parse(messages); // Validate JSON
+                        localStorage.setItem('motivationalMessages', messages);
+                    }
+                    alert('Pengaturan sertifikat berhasil disimpan');
+                } catch (e) {
+                    alert('Format pesan motivasi tidak valid. Harus berupa JSON.');
+                }
+            });
+            
+            document.getElementById('save-content-settings').addEventListener('click', function() {
+                const greeting = document.getElementById('greeting-text').value;
+                const welcome = document.getElementById('welcome-message').value;
+                const info = document.getElementById('periodic-info').value;
+                
+                localStorage.setItem('greetingText', greeting);
+                localStorage.setItem('welcomeMessage', welcome);
+                localStorage.setItem('periodicInfo', info);
+                
+                alert('Pengaturan konten berhasil disimpan');
+            });
+            
+            document.getElementById('save-exam-status').addEventListener('click', function() {
+                const studentStatus = document.getElementById('student-exam-status').checked;
+                const generalStatus = document.getElementById('general-exam-status').checked;
+                const cpnsStatus = document.getElementById('cpns-exam-status').checked;
+                
+                localStorage.setItem('studentExamStatus', studentStatus);
+                localStorage.setItem('generalExamStatus', generalStatus);
+                localStorage.setItem('cpnsExamStatus', cpnsStatus);
+                
+                alert('Status ujian berhasil disimpan');
+            });
+            
+            // Load settings function
+            function loadSettings() {
+                // Load codes
+                document.getElementById('login-code').value = localStorage.getItem('loginCode') || '12345';
+                document.getElementById('cpns-code').value = localStorage.getItem('cpnsCode') || 'OPENLOCK-1945';
+                document.getElementById('question-code').value = localStorage.getItem('questionCode') || 'OPENLOCK-1926';
+                document.getElementById('admin-code').value = localStorage.getItem('adminCode') || '65614222';
+                
+                // Load exam settings
+                document.getElementById('exam-duration').value = localStorage.getItem('examDuration') || '120';
+                document.getElementById('question-count').value = localStorage.getItem('questionCount') || '10';
+                document.getElementById('question-point').value = localStorage.getItem('questionPoint') || '1';
+                
+                const randomize = localStorage.getItem('randomizeQuestions') !== 'false';
+                document.getElementById('randomize-questions').checked = randomize;
+                document.getElementById('randomize-label').textContent = randomize ? 'Aktif' : 'Nonaktif';
+                
+                // Load certificate settings
+                document.getElementById('chairman-name').value = localStorage.getItem('chairmanName') || 'Moh. Nuril Hudha, S.Pd., M.Si.';
+                document.getElementById('motivational-messages').value = localStorage.getItem('motivationalMessages') || 
+                    '[{"min":0,"max":40,"message":"Jangan menyerah! Teruslah belajar dan tingkatkan pemahaman Anda."},' +
+                    '{"min":41,"max":60,"message":"Hasil yang cukup baik, tapi masih ada ruang untuk perbaikan."},' +
+                    '{"min":61,"max":80,"message":"Kerja bagus! Anda telah menunjukkan pemahaman yang baik."},' +
+                    '{"min":81,"max":99,"message":"Luar biasa! Hampir sempurna, pertahankan prestasi ini."},' +
+                    '{"min":100,"max":100,"message":"Sempurna! Anda sangat luar biasa dalam menguasai materi ini."}]';
+                
+                // Load content settings
+                document.getElementById('greeting-text').value = localStorage.getItem('greetingText') || 'Selamat Datang di Ujian Online PERGUNU SITUBONDO';
+                document.getElementById('welcome-message').value = localStorage.getItem('welcomeMessage') || 'Silakan masukkan kode ujian untuk melanjutkan';
+                document.getElementById('periodic-info').value = localStorage.getItem('periodicInfo') || 'Sistem ujian online ini dikembangkan oleh Tim Kreator PERGUNU SITUBONDO untuk memudahkan proses evaluasi belajar.';
+                
+                // Load exam status
+                const studentStatus = localStorage.getItem('studentExamStatus') !== 'false';
+                const generalStatus = localStorage.getItem('generalExamStatus') !== 'false';
+                const cpnsStatus = localStorage.getItem('cpnsExamStatus') !== 'false';
+                
+                document.getElementById('student-exam-status').checked = studentStatus;
+                document.getElementById('student-exam-label').textContent = studentStatus ? 'Aktif' : 'Nonaktif';
+                
+                document.getElementById('general-exam-status').checked = generalStatus;
+                document.getElementById('general-exam-label').textContent = generalStatus ? 'Aktif' : 'Nonaktif';
+                
+                document.getElementById('cpns-exam-status').checked = cpnsStatus;
+                document.getElementById('cpns-exam-label').textContent = cpnsStatus ? 'Aktif' : 'Nonaktif';
+            }
+        });
+    </script>
+</body>
+</html>
