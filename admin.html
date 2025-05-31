@@ -3,148 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Ujian Online</title>
+    <title>Admin Panel - Ujian Online PERGUNU</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="assets/images/logo.png">
 </head>
 <body>
-    <div id="particles-js"></div>
-    
-    <div class="container">
-        <div class="card">
-            <h1>Kontrol Panel Admin</h1>
-            
-            <div class="admin-tabs">
-                <div class="admin-tab active" data-tab="settings">Pengaturan</div>
-                <div class="admin-tab" data-tab="questions">Bank Soal</div>
-                <div class="admin-tab" data-tab="participants">Data Peserta</div>
-                <div class="admin-tab" data-tab="system">Sistem</div>
-            </div>
-            
-            <div class="admin-panel">
-                <!-- Tab Pengaturan -->
-                <div class="admin-tab-content active" id="settings-tab">
-                    <h2>Pengaturan Kode Akses</h2>
-                    
-                    <div class="admin-form-group">
-                        <label>Kode Login (Saat Ini):</label>
-                        <input type="text" id="currentLoginCode" readonly>
-                    </div>
-                    
-                    <div class="admin-form-group">
-                        <label>Kode Login Baru:</label>
-                        <input type="password" id="newLoginCode">
-                    </div>
-                    
-                    <button class="btn-gradient" onclick="saveAdminSettings('login')">Simpan Kode Login</button>
-                    
-                    <!-- Tambahkan bagian pengaturan lainnya -->
+    <div class="admin-login">
+        <div class="login-box">
+            <img src="assets/images/logo.png" alt="PERGUNU Logo" class="logo">
+            <h2>Admin Login</h2>
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="admin-username">Username:</label>
+                    <input type="text" id="admin-username" required>
                 </div>
-                
-                <!-- Tab Bank Soal -->
-                <div class="admin-tab-content" id="questions-tab">
-                    <h2>Kelola Bank Soal</h2>
-                    
-                    <div class="admin-form-group">
-                        <label>Kategori Soal:</label>
-                        <select id="questionCategory">
-                            <option value="agama">AGAMA</option>
-                            <option value="ppkn">PPKN</option>
-                            <!-- Tambahkan kategori lainnya -->
-                        </select>
-                    </div>
-                    
-                    <div class="admin-form-group">
-                        <label>Tambah Soal Baru:</label>
-                        <textarea id="newQuestionText" rows="3" placeholder="Pertanyaan"></textarea>
-                        <div id="questionOptions">
-                            <input type="text" placeholder="Opsi A">
-                            <input type="text" placeholder="Opsi B">
-                            <!-- Tambahkan opsi lainnya -->
-                        </div>
-                        <select id="correctAnswer">
-                            <option value="0">Jawaban Benar: A</option>
-                            <option value="1">Jawaban Benar: B</option>
-                            <!-- Tambahkan opsi lainnya -->
-                        </select>
-                        <textarea id="questionExplanation" rows="2" placeholder="Penjelasan Jawaban"></textarea>
-                    </div>
-                    
-                    <button class="btn-gradient" onclick="addNewQuestion()">Tambah Soal</button>
-                    
-                    <!-- Daftar Soal -->
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Pertanyaan</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="questionsList">
-                            <!-- Daftar soal akan diisi oleh JavaScript -->
-                        </tbody>
-                    </table>
+                <div class="form-group">
+                    <label for="admin-password">Password:</label>
+                    <input type="password" id="admin-password" required>
                 </div>
-                
-                <!-- Tab Data Peserta -->
-                <div class="admin-tab-content" id="participants-tab">
-                    <h2>Data Peserta Ujian</h2>
-                    
-                    <div class="admin-form-group">
-                        <button class="btn-gradient" onclick="exportData('excel')">Export ke Excel</button>
-                        <button class="btn-gradient" onclick="exportData('pdf')">Export ke PDF</button>
-                    </div>
-                    
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Nama</th>
-                                <th>Status</th>
-                                <th>Ujian</th>
-                                <th>Nilai</th>
-                                <th>Tanggal</th>
-                            </tr>
-                        </thead>
-                        <tbody id="participantsList">
-                            <!-- Data peserta akan diisi oleh JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- Tab Sistem -->
-                <div class="admin-tab-content" id="system-tab">
-                    <h2>Pengaturan Sistem</h2>
-                    
-                    <div class="admin-form-group">
-                        <label>Teks Pembuka:</label>
-                        <textarea id="greetingTextInput" rows="3"></textarea>
-                    </div>
-                    
-                    <div class="admin-form-group">
-                        <label>Nama Ketua:</label>
-                        <input type="text" id="chairmanNameInput">
-                    </div>
-                    
-                    <div class="admin-form-group">
-                        <label>Durasi Ujian (menit):</label>
-                        <input type="number" id="examTimerInput" min="10" max="180">
-                    </div>
-                    
-                    <div class="admin-form-group">
-                        <label>Jumlah Soal:</label>
-                        <input type="number" id="questionLimitInput" min="5" max="150" step="5">
-                    </div>
-                    
-                    <button class="btn-gradient" onclick="saveSystemSettings()">Simpan Pengaturan</button>
-                </div>
-            </div>
+                <button type="submit" class="btn-gradient">Login</button>
+            </form>
         </div>
     </div>
 
-    <script src="assets/js/particles.js"></script>
     <script src="assets/js/admin.js"></script>
-    <script src="assets/js/questions.js"></script>
 </body>
 </html>
