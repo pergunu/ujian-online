@@ -703,35 +703,34 @@ body {
 }
 
 /* Floating Buttons */
-.floating-buttons {
+floating-buttons {
     position: fixed;
     bottom: 30px;
     right: 30px;
     display: flex;
     flex-direction: column;
     gap: 15px;
-    z-index: 100;
+    z-index: 1000; /* Pastikan di atas elemen lain */
 }
 
 .floating-btn {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: linear-gradient(to bottom right, var(--gradient-1), var(--gradient-2));
+    background: linear-gradient(135deg, #4a6bff, #6a11cb);
     color: white;
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(74, 107, 255, 0.4);
-    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
 }
 
 .floating-btn:hover {
-    transform: translateY(-3px) scale(1.1);
-    box-shadow: 0 6px 20px rgba(74, 107, 255, 0.5);
+    transform: scale(1.1);
 }
 
 .floating-btn.whatsapp-btn {
