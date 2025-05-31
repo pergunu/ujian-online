@@ -902,8 +902,17 @@ function showCertificate() {
     const earnedPoints = correctAnswers * adminSettings.questionPoints;
     const score = Math.round((earnedPoints / totalPossiblePoints) * 100);
     
+    // Format name with proper capitalization
+    const formatName = (name) => {
+        return name.toLowerCase().split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    };
+    
+    const formattedName = formatName(participantData.fullName);
+    
     // Set certificate data
-    document.getElementById('certificateName').textContent = participantData.fullName;
+    document.getElementById('certificateName').textContent = formattedName;
     document.getElementById('certificateScore').textContent = score;
     
     // Set certificate date
@@ -945,7 +954,7 @@ function generateCertificateCode(score) {
     const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
     const scorePart = score.toString().padStart(3, '0');
     
-    // Use full name without truncation
+    // Use full name without modification
     const namePart = participantData.fullName.toUpperCase().replace(/\s+/g, '_');
     
     return `${namePart}/${participantData.status.toUpperCase()}/${
