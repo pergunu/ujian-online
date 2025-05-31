@@ -1,216 +1,51 @@
-/* Animate.css - https://animate.style */
+/*! animate.css v4.1.1 | MIT License | github.com/animate-css/animate.css */
 :root {
   --animate-duration: 1s;
   --animate-delay: 1s;
   --animate-repeat: 1;
 }
-
 .animate__animated {
   animation-duration: var(--animate-duration);
   animation-fill-mode: both;
 }
-
-/* Fading entrances */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
-
 .animate__fadeIn {
   animation-name: fadeIn;
 }
-
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translate3d(0, -100%, 0);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
-
-.animate__fadeInDown {
-  animation-name: fadeInDown;
+.animate__fadeOut {
+  animation-name: fadeOut;
 }
-
 @keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translate3d(0, 100%, 0);
   }
-
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
-
 .animate__fadeInUp {
   animation-name: fadeInUp;
 }
-
-/* Zoom entrances */
-@keyframes zoomIn {
+@keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: scale3d(0.3, 0.3, 0.3);
+    transform: translate3d(0, -100%, 0);
   }
-
-  50% {
-    opacity: 1;
-  }
-}
-
-.animate__zoomIn {
-  animation-name: zoomIn;
-}
-
-/* Slide entrances */
-@keyframes slideInLeft {
-  from {
-    transform: translate3d(-100%, 0, 0);
-    visibility: visible;
-  }
-
   to {
+    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
-
-.animate__slideInLeft {
-  animation-name: slideInLeft;
+.animate__fadeInDown {
+  animation-name: fadeInDown;
 }
-
-@keyframes slideInRight {
-  from {
-    transform: translate3d(100%, 0, 0);
-    visibility: visible;
-  }
-
-  to {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-.animate__slideInRight {
-  animation-name: slideInRight;
-}
-
-/* Bouncing entrances */
-@keyframes bounceIn {
-  from,
-  20%,
-  40%,
-  60%,
-  80%,
-  to {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-
-  0% {
-    opacity: 0;
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-
-  20% {
-    transform: scale3d(1.1, 1.1, 1.1);
-  }
-
-  40% {
-    transform: scale3d(0.9, 0.9, 0.9);
-  }
-
-  60% {
-    opacity: 1;
-    transform: scale3d(1.03, 1.03, 1.03);
-  }
-
-  80% {
-    transform: scale3d(0.97, 0.97, 0.97);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale3d(1, 1, 1);
-  }
-}
-
-.animate__bounceIn {
-  animation-name: bounceIn;
-}
-
-/* Attention seekers */
-@keyframes pulse {
-  from {
-    transform: scale3d(1, 1, 1);
-  }
-
-  50% {
-    transform: scale3d(1.05, 1.05, 1.05);
-  }
-
-  to {
-    transform: scale3d(1, 1, 1);
-  }
-}
-
-.animate__pulse {
-  animation-name: pulse;
-  animation-timing-function: ease-in-out;
-}
-
-/* Fast animations */
-.animate__fast {
-  animation-duration: calc(var(--animate-duration) * 0.7);
-}
-
-/* Slow animations */
-.animate__slow {
-  animation-duration: calc(var(--animate-duration) * 2);
-}
-
-/* Delay classes */
-.animate__delay-1s {
-  animation-delay: var(--animate-delay);
-}
-
-.animate__delay-2s {
-  animation-delay: calc(var(--animate-delay) * 2);
-}
-
-.animate__delay-3s {
-  animation-delay: calc(var(--animate-delay) * 3);
-}
-
-.animate__delay-4s {
-  animation-delay: calc(var(--animate-delay) * 4);
-}
-
-.animate__delay-5s {
-  animation-delay: calc(var(--animate-delay) * 5);
-}
-
-/* Repeat classes */
-.animate__repeat-1 {
-  animation-iteration-count: var(--animate-repeat);
-}
-
-.animate__repeat-2 {
-  animation-iteration-count: calc(var(--animate-repeat) * 2);
-}
-
-.animate__repeat-3 {
-  animation-iteration-count: calc(var(--animate-repeat) * 3);
-}
-
-.animate__infinite {
-  animation-iteration-count: infinite;
-}
+/* Tambahkan animasi lainnya sesuai kebutuhan */
