@@ -307,11 +307,13 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', shareToSocial);
     });
     
-    // Close modals
-    document.querySelectorAll('.close-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            this.closest('.modal').style.display = 'none';
-        });
+    // Close modals - Fixed with proper IDs
+    document.getElementById('closeBankSoalModal').addEventListener('click', function() {
+        document.getElementById('bankSoalModal').style.display = 'none';
+    });
+    
+    document.getElementById('closeAdminModal').addEventListener('click', function() {
+        document.getElementById('adminPanelModal').style.display = 'none';
     });
     
     // Close modals when clicking outside
@@ -467,7 +469,7 @@ function playWrongSound() {
 function playApplauseSound() {
     const audio = document.getElementById('applauseAudio');
     audio.currentTime = 0;
-    audio.volume = 0.5;
+    audio.volume = 0.7; // Increased volume for celebration
     audio.play().catch(e => console.log("Audio play prevented:", e));
 }
 
@@ -805,12 +807,13 @@ function displayCurrentQuestion() {
     optionsContainer.innerHTML = '';
     answerExplanation.style.display = 'none';
     
-    // Create option buttons
+    // Create option buttons with better contrast
     for (const [key, value] of Object.entries(question.options)) {
         const optionBtn = document.createElement('button');
         optionBtn.className = 'option-btn';
         optionBtn.textContent = `${key}. ${value}`;
         optionBtn.setAttribute('data-option', key);
+        optionBtn.style.color = '#333'; // Better contrast for text
         
         // If already answered, show the result
         if (selectedOptions[currentQuestionIndex]) {
@@ -1006,6 +1009,10 @@ function triggerParticleCelebration() {
     
     // Add to existing particles
     particles = particles.concat(celebrationParticles);
+    
+    // Add animation class to certificate container
+    const certificateContainer = document.getElementById('certificatePrint');
+    certificateContainer.classList.add('certificate-animation');
 }
 
 function generateCertificateCode(score, fullName) {
@@ -1084,7 +1091,7 @@ function printCertificate() {
                     font-size: 42px;
                     margin: 20px 0;
                     color: #1a3e72;
-                    font-family: 'Great Vibes', cursive;
+                    font-family: 'Dancing Script', cursive;
                 }
                 .certificate-description {
                     margin: 20px 0;
@@ -1114,7 +1121,7 @@ function printCertificate() {
                 .certificate-footer {
                     margin-top: 40px;
                     display: flex;
-                    justify-content: space-between;
+                    justify-content: space-around;
                     width: 100%;
                     padding: 0 50px;
                 }
@@ -1134,9 +1141,10 @@ function printCertificate() {
                     margin-bottom: 20px;
                 }
                 .barcode {
-                    width: 150px;
+                    width: 80px;
                     height: auto;
-                    margin-top: 10px;
+                    margin: 10px auto;
+                    display: block;
                 }
                 .certificate-code {
                     margin-top: 20px;
@@ -1150,6 +1158,7 @@ function printCertificate() {
                 <img src="assets/images/certificate.png" alt="Certificate Background" class="certificate-bg">
                 <div class="certificate-content">
                     <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
+                    <div class="certificate-code">${document.getElementById('certificateCode').textContent}</div>
                     <p class="certificate-given">Diberikan Kepada:</p>
                     <h2 class="recipient-name">${document.getElementById('certificateName').textContent}</h2>
                     <div class="certificate-description">
@@ -1174,7 +1183,6 @@ function printCertificate() {
                             <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
                         </div>
                     </div>
-                    <div class="certificate-code">${document.getElementById('certificateCode').textContent}</div>
                 </div>
             </div>
         </body>
