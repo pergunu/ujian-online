@@ -27,6 +27,147 @@
                 padding: 0;
             }
         }
+
+        /* Improved Certificate Styles */
+        .certificate-container {
+            position: relative;
+            width: 210mm;
+            height: 297mm;
+            margin: 0 auto;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .certificate-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .certificate-content {
+            width: 90%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .certificate-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        .certificate-given {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .recipient-name {
+            font-size: 28px;
+            font-weight: 600;
+            margin: 15px 0;
+            color: #000;
+            text-transform: capitalize;
+        }
+
+        .certificate-description {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .certificate-description p {
+            margin: 5px 0;
+        }
+
+        .certificate-description strong {
+            font-weight: 600;
+        }
+
+        .certificate-text {
+            width: 80%;
+            margin: 15px auto;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .score-container {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        .score-label {
+            font-weight: 600;
+        }
+
+        .score-value {
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        .motivation-text {
+            width: 80%;
+            margin: 15px auto;
+            font-style: italic;
+            font-size: 14px;
+        }
+
+        .certificate-footer {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .footer-left {
+            text-align: left;
+            width: 40%;
+        }
+
+        .footer-right {
+            text-align: center;
+            width: 40%;
+        }
+
+        .signature-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .signature-name {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .barcode {
+            width: 100px;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .certificate-code {
+            position: absolute;
+            top: 10%;
+            font-family: monospace;
+            font-size: 12px;
+            color: #333;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
@@ -286,6 +427,7 @@
             <div class="certificate-container" id="certificatePrint">
                 <img src="assets/images/certificate.png" alt="Certificate Background" class="certificate-bg">
                 <div class="certificate-content">
+                    <div class="certificate-code" id="certificateCode"></div>
                     <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
                     <p class="certificate-given">Diberikan Kepada:</p>
                     <h2 class="recipient-name" id="certificateName"></h2>
@@ -311,7 +453,6 @@
                             <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
                         </div>
                     </div>
-                    <div class="certificate-code" id="certificateCode"></div>
                 </div>
             </div>
             
