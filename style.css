@@ -780,14 +780,6 @@ button:active {
     flex-direction: column;
     gap: 15px;
     z-index: 1000;
-    transition: var(--transition);
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.floating-buttons.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .floating-btn {
