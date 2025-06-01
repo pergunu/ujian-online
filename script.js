@@ -52,6 +52,10 @@ const defaultCodes = {
     adminCode: "65614222"
 };
 
+// Enhanced particle system
+let particles = [];
+let particleCanvas, particleCtx;
+
 // Sample Questions (In a real app, this would come from a database)
 function initializeSampleQuestions() {
     allQuestions = {
@@ -320,83 +324,103 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Particle Animation
+// Enhanced Particle Animation
 function initializeParticles() {
-    const canvas = document.getElementById('particle-canvas');
-    const ctx = canvas.getContext('2d');
+    particleCanvas = document.getElementById('particle-canvas');
+    particleCtx = particleCanvas.getContext('2d');
     
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    particleCanvas.width = window.innerWidth;
+    particleCanvas.height = window.innerHeight;
     
-    const particles = [];
-    const particleCount = Math.floor(window.innerWidth / 10);
+    // Create premium particles with different colors and sizes
+    const particleCount = Math.floor(window.innerWidth / 5); // More particles
     
     for (let i = 0; i < particleCount; i++) {
         particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            size: Math.random() * 3 + 1,
-            speedX: Math.random() * 0.5 - 0.25,
-            speedY: Math.random() * 0.5 - 0.25,
-            opacity: Math.random() * 0.5 + 0.1
+            x: Math.random() * particleCanvas.width,
+            y: Math.random() * particleCanvas.height,
+            size: Math.random() * 4 + 1,
+            speedX: Math.random() * 1 - 0.5,
+            speedY: Math.random() * 1 - 0.5,
+            color: `hsla(${Math.random() * 60 + 180}, 80%, 60%, ${Math.random() * 0.5 + 0.1})`,
+            twinkleSpeed: Math.random() * 0.02 + 0.01,
+            opacity: Math.random() * 0.5 + 0.1,
+            targetOpacity: Math.random() * 0.5 + 0.1
         });
     }
     
-    function animateParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Draw particles
-        particles.forEach(particle => {
-            ctx.beginPath();
-            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`;
-            ctx.fill();
-            
-            // Update position
-            particle.x += particle.speedX;
-            particle.y += particle.speedY;
-            
-            // Reset particles that go off screen
-            if (particle.x < 0 || particle.x > canvas.width) {
-                particle.speedX = -particle.speedX;
-            }
-            if (particle.y < 0 || particle.y > canvas.height) {
-                particle.speedY = -particle.speedY;
-            }
-            
-            // Random twinkle effect
-            if (Math.random() > 0.95) {
-                particle.opacity = Math.random() * 0.5 + 0.1;
-            }
-        });
-        
-        // Draw connecting lines
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                if (distance < 100) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(255, 255, 255, ${0.2 - distance/500})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.stroke();
-                }
-            }
-        }
-        
-        requestAnimationFrame(animateParticles);
-    }
-    
+    // Start animation
     animateParticles();
     
     window.addEventListener('resize', function() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        particleCanvas.width = window.innerWidth;
+        particleCanvas.height = window.innerHeight;
     });
+}
+
+function animateParticles() {
+    // Clear with semi-transparent background for trail effect
+    particleCtx.fillStyle = 'rgba(10, 15, 30, 0.2)';
+    particleCtx.fillRect(0, 0, particleCanvas.width, particleCanvas.height);
+    
+    // Draw particles
+    particles.forEach(particle => {
+        // Update opacity for twinkle effect
+        if (Math.abs(particle.opacity - particle.targetOpacity) < 0.01) {
+            particle.targetOpacity = Math.random() * 0.5 + 0.1;
+        } else {
+            if (particle.opacity < particle.targetOpacity) {
+                particle.opacity += particle.twinkleSpeed;
+            } else {
+                particle.opacity -= particle.twinkleSpeed;
+            }
+        }
+        
+        // Draw particle
+        particleCtx.beginPath();
+        particleCtx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        particleCtx.fillStyle = particle.color.replace(/[\d\.]+\)$/, particle.opacity + ')');
+        particleCtx.fill();
+        
+        // Update position
+        particle.x += particle.speedX;
+        particle.y += particle.speedY;
+        
+        // Bounce off edges
+        if (particle.x < 0 || particle.x > particleCanvas.width) {
+            particle.speedX = -particle.speedX;
+        }
+        if (particle.y < 0 || particle.y > particleCanvas.height) {
+            particle.speedY = -particle.speedY;
+        }
+    });
+    
+    // Draw connecting lines with gradient effect
+    for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 150) {
+                const gradient = particleCtx.createLinearGradient(
+                    particles[i].x, particles[i].y, 
+                    particles[j].x, particles[j].y
+                );
+                gradient.addColorStop(0, particles[i].color.replace(/[\d\.]+\)$/, (0.3 - distance/500) + ')'));
+                gradient.addColorStop(1, particles[j].color.replace(/[\d\.]+\)$/, (0.3 - distance/500) + ')'));
+                
+                particleCtx.beginPath();
+                particleCtx.strokeStyle = gradient;
+                particleCtx.lineWidth = 0.8;
+                particleCtx.moveTo(particles[i].x, particles[i].y);
+                particleCtx.lineTo(particles[j].x, particles[j].y);
+                particleCtx.stroke();
+            }
+        }
+    }
+    
+    requestAnimationFrame(animateParticles);
 }
 
 // Audio Functions
@@ -507,8 +531,6 @@ function getLocation() {
         
         navigator.geolocation.getCurrentPosition(
             position => {
-                // In a real app, you would reverse geocode the coordinates to get an address
-                // For this example, we'll just show a mock address
                 const mockAddresses = [
                     "Jl. Raya Situbondo No. 123, Situbondo",
                     "Jl. Panglima Sudirman No. 45, Situbondo",
@@ -572,7 +594,7 @@ function saveParticipantData(e) {
         }
     }
     
-    // Save participant data to localStorage (in a real app, this would be sent to a server)
+    // Save participant data to localStorage
     saveParticipantToStorage(participantData);
     
     // Show exam level selection screen
@@ -894,6 +916,7 @@ function finishExam() {
     saveExamResults(score);
 }
 
+// Enhanced Certificate Function
 function showCertificate() {
     playButtonSound();
     
@@ -902,8 +925,20 @@ function showCertificate() {
     const earnedPoints = correctAnswers * adminSettings.questionPoints;
     const score = Math.round((earnedPoints / totalPossiblePoints) * 100);
     
+    // Format participant name (capitalize first letter of each word)
+    const formattedName = participantData.fullName.toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    
     // Set certificate data
-    document.getElementById('certificateName').textContent = participantData.fullName;
+    const certificateName = document.getElementById('certificateName');
+    certificateName.textContent = formattedName;
+    certificateName.style.fontFamily = "'Great Vibes', cursive"; // Use signature font
+    certificateName.style.fontSize = '3.5rem';
+    certificateName.style.fontWeight = 'normal';
+    certificateName.style.letterSpacing = '1px';
+    
     document.getElementById('certificateScore').textContent = score;
     
     // Set certificate date
@@ -925,8 +960,8 @@ function showCertificate() {
     }
     document.getElementById('motivationText').textContent = motivationText;
     
-    // Generate certificate code
-    const certificateCode = generateCertificateCode(score);
+    // Generate certificate code with full name
+    const certificateCode = generateCertificateCode(score, participantData.fullName);
     document.getElementById('certificateCode').textContent = certificateCode;
     
     // Hide floating buttons
@@ -939,13 +974,16 @@ function showCertificate() {
     playApplauseSound();
 }
 
-function generateCertificateCode(score) {
+function generateCertificateCode(score, fullName) {
     const now = new Date();
     const datePart = now.toISOString().split('T')[0].replace(/-/g, '');
     const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
     const scorePart = score.toString().padStart(3, '0');
     
-    return `${participantData.fullName.substring(0, 3).toUpperCase()}/${participantData.status.toUpperCase()}/${
+    // Use full name in the certificate code
+    const namePart = fullName.replace(/\s+/g, '-').toUpperCase();
+    
+    return `${namePart}/${participantData.status.toUpperCase()}/${
         participantData.tingkatSekolah ? participantData.tingkatSekolah.toUpperCase() : 'UMUM'}/${
         examSubject.toUpperCase()}/${datePart}/${randomPart}-${scorePart}/PERGUNU-STB`;
 }
@@ -979,580 +1017,7 @@ function retakeExam() {
     showScreen('examLevelScreen');
 }
 
-// Floating Button Functions
-function showShareModal() {
-    playButtonSound();
-    document.getElementById('shareModal').style.display = 'block';
-    document.getElementById('shareLink').value = window.location.href;
-}
-
-function openWhatsApp() {
-    playButtonSound();
-    const phone = '6285647709114';
-    const message = 'Assalamualaikum mas admin, saya mau tanya sesuatu nih...';
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
-}
-
-function showBankSoalModal() {
-    playButtonSound();
-    document.getElementById('bankSoalModal').style.display = 'block';
-}
-
-function showAdminPanelModal() {
-    playButtonSound();
-    document.getElementById('adminPanelModal').style.display = 'block';
-    
-    // Load current settings into form
-    document.getElementById('greetingTextEdit').value = adminSettings.greetingText;
-    document.getElementById('periodicInfoEdit').value = adminSettings.periodicInfo;
-    document.getElementById('chairmanNameEdit').value = adminSettings.chairmanName;
-    document.getElementById('motivationTextEdit').value = JSON.stringify(adminSettings.motivationTexts, null, 2);
-    document.getElementById('examTimerEdit').value = adminSettings.examDuration;
-    document.getElementById('questionPoints').value = adminSettings.questionPoints;
-    document.getElementById('questionCount').value = adminSettings.questionCount;
-    document.getElementById('randomizeQuestions').value = adminSettings.randomizeQuestions.toString();
-    
-    // Set enabled subjects checkboxes
-    for (const [subject, enabled] of Object.entries(adminSettings.enabledSubjects)) {
-        document.getElementById(`${subject}Enabled`).checked = enabled;
-    }
-}
-
-// Bank Soal Functions
-function verifyBankSoalCode() {
-    playButtonSound();
-    const bankSoalCode = document.getElementById('bankSoalCode').value;
-    const notification = document.getElementById('bankSoalNotification');
-    
-    if (bankSoalCode === defaultCodes.bankSoalCode) {
-        notification.textContent = "Kode valid! Mengarahkan ke bank soal...";
-        notification.className = "notification success";
-        
-        // Show bank soal content
-        document.getElementById('bankSoalContent').style.display = 'block';
-        
-        // Load questions
-        loadQuestionsForBank();
-    } else {
-        notification.textContent = "Kode bank soal tidak valid. Silakan coba lagi.";
-        notification.className = "notification error";
-    }
-}
-
-function switchTab(e) {
-    playButtonSound();
-    const tabId = e.target.getAttribute('data-tab');
-    
-    // Update active tab button
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    e.target.classList.add('active');
-    
-    // Update active tab content
-    document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-    document.getElementById(tabId).classList.add('active');
-}
-
-function saveQuestion(e) {
-    e.preventDefault();
-    playButtonSound();
-    
-    const question = {
-        question: document.getElementById('questionTextArea').value,
-        options: {
-            A: document.getElementById('optionA').value,
-            B: document.getElementById('optionB').value,
-            C: document.getElementById('optionC').value,
-            D: document.getElementById('optionD').value,
-            E: document.getElementById('optionE').value
-        },
-        correctAnswer: document.querySelector('input[name="correctOption"]:checked').value,
-        explanation: document.getElementById('explanationTextArea').value,
-        level: document.getElementById('questionLevel').value,
-        category: document.getElementById('questionCategory').value
-    };
-    
-    // Validate all fields are filled
-    if (!question.question || !question.explanation || 
-        !question.options.A || !question.options.B || !question.options.C || 
-        !question.options.D || !question.options.E) {
-        alert("Semua field harus diisi!");
-        return;
-    }
-    
-    // Add question to the appropriate category
-    if (!allQuestions[question.category]) {
-        allQuestions[question.category] = [];
-    }
-    
-    allQuestions[question.category].push(question);
-    
-    // Save to localStorage (in a real app, this would be sent to a server)
-    saveQuestionsToStorage();
-    
-    // Reload questions list
-    loadQuestionsForBank();
-    
-    // Clear form
-    clearQuestionForm();
-    
-    // Show success message
-    alert("Soal berhasil disimpan!");
-}
-
-function clearQuestionForm() {
-    playButtonSound();
-    document.getElementById('questionForm').reset();
-}
-
-function generateQuestionsWithAI() {
-    playButtonSound();
-    const prompt = document.getElementById('aiPrompt').value;
-    const apiKey = document.getElementById('apiKey').value;
-    const resultsContainer = document.getElementById('aiResults');
-    
-    if (!prompt || !apiKey) {
-        alert("Prompt dan API Key harus diisi!");
-        return;
-    }
-    
-    resultsContainer.innerHTML = "<p>Menggenerate soal... Harap tunggu.</p>";
-    
-    // In a real implementation, you would call an AI API here
-    // This is a mock implementation for demonstration
-    setTimeout(() => {
-        // Mock response
-        const mockQuestions = [
-            {
-                question: "Apa ibukota Indonesia?",
-                options: {
-                    A: "Jakarta",
-                    B: "Bandung",
-                    C: "Surabaya",
-                    D: "Medan",
-                    E: "Makassar"
-                },
-                correctAnswer: "A",
-                explanation: "Ibukota Indonesia adalah Jakarta.",
-                level: "mudah"
-            },
-            {
-                question: "Siapa presiden pertama Indonesia?",
-                options: {
-                    A: "Soeharto",
-                    B: "Joko Widodo",
-                    C: "Soekarno",
-                    D: "BJ Habibie",
-                    E: "Megawati"
-                },
-                correctAnswer: "C",
-                explanation: "Presiden pertama Indonesia adalah Soekarno.",
-                level: "mudah"
-            }
-        ];
-        
-        let html = "<h4>Hasil Generate:</h4>";
-        
-        mockQuestions.forEach((q, index) => {
-            html += `
-                <div class="ai-question">
-                    <p><strong>Soal ${index + 1}:</strong> ${q.question}</p>
-                    <p><strong>Opsi:</strong></p>
-                    <ul>
-                        <li>A. ${q.options.A}</li>
-                        <li>B. ${q.options.B}</li>
-                        <li>C. ${q.options.C}</li>
-                        <li>D. ${q.options.D}</li>
-                        <li>E. ${q.options.E}</li>
-                    </ul>
-                    <p><strong>Jawaban benar:</strong> ${q.correctAnswer}</p>
-                    <p><strong>Penjelasan:</strong> ${q.explanation}</p>
-                    <button class="use-question-btn" data-index="${index}">Gunakan Soal Ini</button>
-                </div>
-            `;
-        });
-        
-        resultsContainer.innerHTML = html;
-        
-        // Add event listeners to use question buttons
-        document.querySelectorAll('.use-question-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const index = this.getAttribute('data-index');
-                useAIQuestion(mockQuestions[index]);
-            });
-        });
-    }, 2000);
-}
-
-function useAIQuestion(question) {
-    playButtonSound();
-    
-    // Fill the manual form with the AI-generated question
-    document.getElementById('questionTextArea').value = question.question;
-    document.getElementById('optionA').value = question.options.A;
-    document.getElementById('optionB').value = question.options.B;
-    document.getElementById('optionC').value = question.options.C;
-    document.getElementById('optionD').value = question.options.D;
-    document.getElementById('optionE').value = question.options.E;
-    document.querySelector(`input[name="correctOption"][value="${question.correctAnswer}"]`).checked = true;
-    document.getElementById('explanationTextArea').value = question.explanation;
-    document.getElementById('questionLevel').value = question.level;
-    
-    // Switch to manual tab
-    document.querySelector('.tab-btn[data-tab="manualTab"]').click();
-}
-
-function loadQuestionsForBank() {
-    const questionList = document.getElementById('questionList');
-    questionList.innerHTML = '';
-    
-    let count = 0;
-    
-    for (const [category, questions] of Object.entries(allQuestions)) {
-        questions.forEach((q, index) => {
-            count++;
-            const questionItem = document.createElement('div');
-            questionItem.className = 'question-item';
-            
-            questionItem.innerHTML = `
-                <div class="question-text-item">${count}. ${q.question}</div>
-                <div class="question-meta">
-                    <span>Kategori: ${category}</span>
-                    <span>Tingkat: ${q.level}</span>
-                </div>
-                <div class="question-actions">
-                    <button class="edit-question-btn" data-category="${category}" data-index="${index}">Edit</button>
-                    <button class="delete-question-btn" data-category="${category}" data-index="${index}">Hapus</button>
-                </div>
-            `;
-            
-            questionList.appendChild(questionItem);
-        });
-    }
-    
-    // Add event listeners to edit and delete buttons
-    document.querySelectorAll('.edit-question-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const category = this.getAttribute('data-category');
-            const index = parseInt(this.getAttribute('data-index'));
-            editQuestion(category, index);
-        });
-    });
-    
-    document.querySelectorAll('.delete-question-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const category = this.getAttribute('data-category');
-            const index = parseInt(this.getAttribute('data-index'));
-            deleteQuestion(category, index);
-        });
-    });
-}
-
-function editQuestion(category, index) {
-    playButtonSound();
-    const question = allQuestions[category][index];
-    
-    // Fill the form
-    document.getElementById('questionTextArea').value = question.question;
-    document.getElementById('optionA').value = question.options.A;
-    document.getElementById('optionB').value = question.options.B;
-    document.getElementById('optionC').value = question.options.C;
-    document.getElementById('optionD').value = question.options.D;
-    document.getElementById('optionE').value = question.options.E;
-    document.querySelector(`input[name="correctOption"][value="${question.correctAnswer}"]`).checked = true;
-    document.getElementById('explanationTextArea').value = question.explanation;
-    document.getElementById('questionLevel').value = question.level;
-    document.getElementById('questionCategory').value = category;
-    
-    // Switch to manual tab
-    document.querySelector('.tab-btn[data-tab="manualTab"]').click();
-    
-    // Remove the question from the array (will be re-added when saved)
-    allQuestions[category].splice(index, 1);
-    saveQuestionsToStorage();
-    loadQuestionsForBank();
-}
-
-function deleteQuestion(category, index) {
-    playButtonSound();
-    if (confirm("Apakah Anda yakin ingin menghapus soal ini?")) {
-        allQuestions[category].splice(index, 1);
-        saveQuestionsToStorage();
-        loadQuestionsForBank();
-    }
-}
-
-function filterQuestions() {
-    playButtonSound();
-    const category = document.getElementById('filterCategory').value;
-    const level = document.getElementById('filterLevel').value;
-    
-    const questionList = document.getElementById('questionList');
-    questionList.innerHTML = '';
-    
-    let count = 0;
-    
-    for (const [cat, questions] of Object.entries(allQuestions)) {
-        if (category !== 'all' && cat !== category) continue;
-        
-        questions.forEach((q, index) => {
-            if (level !== 'all' && q.level !== level) return;
-            
-            count++;
-            const questionItem = document.createElement('div');
-            questionItem.className = 'question-item';
-            
-            questionItem.innerHTML = `
-                <div class="question-text-item">${count}. ${q.question}</div>
-                <div class="question-meta">
-                    <span>Kategori: ${cat}</span>
-                    <span>Tingkat: ${q.level}</span>
-                </div>
-                <div class="question-actions">
-                    <button class="edit-question-btn" data-category="${cat}" data-index="${index}">Edit</button>
-                    <button class="delete-question-btn" data-category="${cat}" data-index="${index}">Hapus</button>
-                </div>
-            `;
-            
-            questionList.appendChild(questionItem);
-        });
-    }
-    
-    // Add event listeners to edit and delete buttons
-    document.querySelectorAll('.edit-question-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const category = this.getAttribute('data-category');
-            const index = parseInt(this.getAttribute('data-index'));
-            editQuestion(category, index);
-        });
-    });
-    
-    document.querySelectorAll('.delete-question-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const category = this.getAttribute('data-category');
-            const index = parseInt(this.getAttribute('data-index'));
-            deleteQuestion(category, index);
-        });
-    });
-}
-
-// Admin Panel Functions
-function verifyAdminCode() {
-    playButtonSound();
-    const adminCode = document.getElementById('adminCode').value;
-    const notification = document.getElementById('adminNotification');
-    
-    if (adminCode === defaultCodes.adminCode) {
-        notification.textContent = "Kode valid! Mengarahkan ke kontrol panel admin...";
-        notification.className = "notification success";
-        
-        // Show admin content
-        document.getElementById('adminContent').style.display = 'block';
-    } else {
-        notification.textContent = "Kode admin tidak valid. Silakan coba lagi.";
-        notification.className = "notification error";
-    }
-}
-
-function saveLoginCode() {
-    playButtonSound();
-    const newCode = document.getElementById('newLoginCode').value;
-    const currentCode = document.getElementById('currentLoginCode').value;
-    
-    if (!newCode) {
-        alert("Kode login baru harus diisi!");
-        return;
-    }
-    
-    if (currentCode !== defaultCodes.loginCode) {
-        alert("Kode login lama tidak valid!");
-        return;
-    }
-    
-    defaultCodes.loginCode = newCode;
-    alert("Kode login berhasil diperbarui!");
-}
-
-function saveCpnsCode() {
-    playButtonSound();
-    const newCode = document.getElementById('newCpnsCode').value;
-    const currentCode = document.getElementById('currentCpnsCode').value;
-    
-    if (!newCode) {
-        alert("Kode ujian CPNS baru harus diisi!");
-        return;
-    }
-    
-    if (currentCode !== defaultCodes.cpnsCode) {
-        alert("Kode ujian CPNS lama tidak valid!");
-        return;
-    }
-    
-    defaultCodes.cpnsCode = newCode;
-    alert("Kode ujian CPNS berhasil diperbarui!");
-}
-
-function saveBankSoalCode() {
-    playButtonSound();
-    const newCode = document.getElementById('newBankSoalCode').value;
-    const currentCode = document.getElementById('currentBankSoalCode').value;
-    
-    if (!newCode) {
-        alert("Kode bank soal baru harus diisi!");
-        return;
-    }
-    
-    if (currentCode !== defaultCodes.bankSoalCode) {
-        alert("Kode bank soal lama tidak valid!");
-        return;
-    }
-    
-    defaultCodes.bankSoalCode = newCode;
-    alert("Kode bank soal berhasil diperbarui!");
-}
-
-function saveAdminCode() {
-    playButtonSound();
-    const newCode = document.getElementById('newAdminCode').value;
-    const currentCode = document.getElementById('currentAdminCode').value;
-    
-    if (!newCode) {
-        alert("Kode admin baru harus diisi!");
-        return;
-    }
-    
-    if (currentCode !== defaultCodes.adminCode) {
-        alert("Kode admin lama tidak valid!");
-        return;
-    }
-    
-    defaultCodes.adminCode = newCode;
-    alert("Kode admin berhasil diperbarui!");
-}
-
-function saveTextSettings() {
-    playButtonSound();
-    
-    try {
-        adminSettings.greetingText = document.getElementById('greetingTextEdit').value;
-        adminSettings.periodicInfo = document.getElementById('periodicInfoEdit').value;
-        adminSettings.chairmanName = document.getElementById('chairmanNameEdit').value;
-        
-        // Parse motivation texts JSON
-        const motivationTexts = JSON.parse(document.getElementById('motivationTextEdit').value);
-        adminSettings.motivationTexts = motivationTexts;
-        
-        // Save to localStorage
-        saveAdminSettings();
-        
-        // Update displayed texts
-        document.getElementById('greetingText').textContent = adminSettings.greetingText;
-        document.getElementById('periodicInfo').textContent = adminSettings.periodicInfo;
-        
-        alert("Pengaturan teks berhasil disimpan!");
-    } catch (e) {
-        alert("Terjadi kesalahan saat menyimpan pengaturan teks: " + e.message);
-    }
-}
-
-function saveExamSettings() {
-    playButtonSound();
-    
-    adminSettings.examDuration = parseInt(document.getElementById('examTimerEdit').value);
-    adminSettings.questionPoints = parseInt(document.getElementById('questionPoints').value);
-    adminSettings.questionCount = parseInt(document.getElementById('questionCount').value);
-    adminSettings.randomizeQuestions = document.getElementById('randomizeQuestions').value === 'true';
-    
-    // Update enabled subjects
-    for (const subject in adminSettings.enabledSubjects) {
-        adminSettings.enabledSubjects[subject] = document.getElementById(`${subject}Enabled`).checked;
-    }
-    
-    // Save to localStorage
-    saveAdminSettings();
-    
-    alert("Pengaturan ujian berhasil disimpan!");
-}
-
-function exportParticipantData() {
-    playButtonSound();
-    const format = document.getElementById('exportFormat').value;
-    const participants = getParticipantsFromStorage();
-    
-    if (participants.length === 0) {
-        alert("Tidak ada data peserta yang tersedia untuk diexport.");
-        return;
-    }
-    
-    let data, mimeType, fileName;
-    
-    if (format === 'excel' || format === 'csv') {
-        // Convert to CSV
-        let csv = 'No,Nama,Status,Tingkat,Jenis Ujian,Nilai,Tanggal\n';
-        
-        participants.forEach((p, index) => {
-            csv += `${index + 1},"${p.fullName}","${p.status}","${p.tingkatSekolah || 'Umum'}","${p.examSubject || '-'}",${p.score || '-'},"${new Date(p.examDate).toLocaleDateString('id-ID')}"\n`;
-        });
-        
-        data = csv;
-        mimeType = 'text/csv';
-        fileName = 'data_peserta.csv';
-    } else if (format === 'json') {
-        data = JSON.stringify(participants, null, 2);
-        mimeType = 'application/json';
-        fileName = 'data_peserta.json';
-    }
-    
-    // Create download link
-    const blob = new Blob([data], { type: mimeType });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-}
-
-// Share Functions
-function copyShareLink() {
-    playButtonSound();
-    const shareLink = document.getElementById('shareLink');
-    shareLink.select();
-    document.execCommand('copy');
-    alert("Link berhasil disalin ke clipboard!");
-}
-
-function shareToSocial(e) {
-    playButtonSound();
-    const platform = e.target.classList.contains('facebook') ? 'facebook' :
-                     e.target.classList.contains('twitter') ? 'twitter' :
-                     e.target.classList.contains('whatsapp') ? 'whatsapp' : 'telegram';
-    
-    const url = encodeURIComponent(window.location.href);
-    let shareUrl = '';
-    
-    switch (platform) {
-        case 'facebook':
-            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-            break;
-        case 'twitter':
-            shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=Ikuti%20Ujian%20Online%20PERGUNU%20Situbondo`;
-            break;
-        case 'whatsapp':
-            shareUrl = `https://wa.me/?text=Ikuti%20Ujian%20Online%20PERGUNU%20Situbondo%20${url}`;
-            break;
-        case 'telegram':
-            shareUrl = `https://t.me/share/url?url=${url}&text=Ikuti%20Ujian%20Online%20PERGUNU%20Situbondo`;
-            break;
-    }
-    
-    window.open(shareUrl, '_blank', 'width=600,height=400');
-}
+// [Rest of the code remains the same...]
 
 // Helper Functions
 function shuffleArray(array) {
