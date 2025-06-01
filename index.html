@@ -8,6 +8,106 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Parisienne&display=swap" rel="stylesheet">
+    <!-- Tambahkan CSS khusus untuk cetak -->
+    <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #certificatePrint, #certificatePrint * {
+                visibility: visible;
+            }
+            #certificatePrint {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                background-color: white;
+            }
+            .certificate-bg {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                z-index: -1;
+            }
+            .certificate-content {
+                position: relative;
+                width: 80%;
+                margin: 0 auto;
+                padding: 2cm;
+                text-align: center;
+                font-family: 'Times New Roman', serif;
+            }
+            .certificate-title {
+                font-size: 36pt;
+                margin-bottom: 1.5cm;
+                font-weight: bold;
+                color: #000;
+            }
+            .certificate-given {
+                font-size: 14pt;
+                margin-bottom: 0.5cm;
+            }
+            .recipient-name {
+                font-size: 24pt;
+                margin: 1cm 0;
+                font-weight: bold;
+                text-transform: capitalize;
+            }
+            .certificate-description {
+                font-size: 12pt;
+                margin: 1cm 0;
+            }
+            .certificate-text {
+                font-size: 11pt;
+                margin: 1cm 0;
+                line-height: 1.5;
+            }
+            .score-container {
+                font-size: 14pt;
+                margin: 1cm 0;
+                font-weight: bold;
+            }
+            .motivation-text {
+                font-size: 12pt;
+                margin: 1cm 0;
+                font-style: italic;
+            }
+            .certificate-footer {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 2cm;
+            }
+            .footer-left, .footer-right {
+                width: 45%;
+            }
+            .signature-title {
+                font-size: 12pt;
+                margin-top: 2cm;
+            }
+            .signature-name {
+                font-size: 12pt;
+                font-weight: bold;
+                margin-top: 1.5cm;
+            }
+            .barcode {
+                width: 3cm;
+                height: auto;
+                margin-top: 0.5cm;
+            }
+            .certificate-code {
+                position: absolute;
+                bottom: 0.5cm;
+                right: 0.5cm;
+                font-size: 8pt;
+                color: #666;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Canvas untuk animasi partikel premium -->
@@ -304,7 +404,7 @@
         <!-- Bank Soal Modal -->
         <div class="modal" id="bankSoalModal">
             <div class="modal-content">
-                <span class="close-btn">&times;</span>
+                <span class="close-btn" id="closeBankSoalModal">&times;</span>
                 <h2>Bank Soal</h2>
                 <div class="input-group">
                     <input type="password" id="bankSoalCode" placeholder="Masukkan Kode Bank Soal">
@@ -435,7 +535,7 @@
         <!-- Admin Panel Modal -->
         <div class="modal" id="adminPanelModal">
             <div class="modal-content">
-                <span class="close-btn">&times;</span>
+                <span class="close-btn" id="closeAdminModal">&times;</span>
                 <h2>Kontrol Panel Admin</h2>
                 <div class="input-group">
                     <input type="password" id="adminCode" placeholder="Masukkan Kode Admin">
@@ -614,7 +714,7 @@
         <!-- Share Modal -->
         <div class="modal" id="shareModal">
             <div class="modal-content">
-                <span class="close-btn">&times;</span>
+                <span class="close-btn" id="closeShareModal">&times;</span>
                 <h2>Bagikan Ujian Online</h2>
                 <div class="social-share">
                     <button class="social-btn facebook"><i class="fab fa-facebook-f"></i> Facebook</button>
