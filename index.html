@@ -8,6 +8,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Parisienne&display=swap" rel="stylesheet">
+    <style>
+        /* Tambahan style untuk sertifikat */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #certificatePrint, #certificatePrint * {
+                visibility: visible;
+            }
+            #certificatePrint {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Canvas untuk animasi partikel premium -->
@@ -21,8 +41,8 @@
     <audio id="wrongAudio" src="assets/audio/jawabansalah.mp3"></audio>
     <audio id="buttonAudio" src="assets/audio/audiotombol.mp3"></audio>
 
-    <!-- Floating Buttons (Hidden by default, will show only on welcome screen) -->
-    <div class="floating-buttons" id="floatingButtons" style="display: none;">
+    <!-- Floating Buttons -->
+    <div class="floating-buttons" id="floatingButtons">
         <button class="floating-btn" id="shareBtn"><i class="fas fa-share-alt"></i></button>
         <button class="floating-btn" id="whatsappBtn"><i class="fab fa-whatsapp"></i></button>
         <button class="floating-btn" id="bankSoalBtn"><i class="fas fa-book"></i></button>
