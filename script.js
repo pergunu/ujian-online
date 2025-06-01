@@ -320,31 +320,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Show/hide floating buttons based on screen
-function updateFloatingButtons() {
-    const floatingButtons = document.querySelector('.floating-buttons');
-    if (document.getElementById('welcomeScreen').classList.contains('active')) {
-        floatingButtons.style.display = 'flex';
-    } else {
-        floatingButtons.style.display = 'none';
-    }
-}
-
-// Call this function whenever screen changes
-function showScreen(screenId) {
-    document.querySelectorAll('.screen').forEach(screen => {
-        screen.classList.remove('active');
-    });
-    
-    const screen = document.getElementById(screenId);
-    if (screen) {
-        screen.classList.add('active');
-        screen.scrollIntoView({ behavior: 'smooth' });
-    }
-    
-    updateFloatingButtons();
-}
-
+// Particle Animation
 function initializeParticles() {
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
@@ -353,36 +329,27 @@ function initializeParticles() {
     canvas.height = window.innerHeight;
     
     const particles = [];
-    const particleCount = Math.floor(window.innerWidth / 5);
-    const colors = ['rgba(255, 255, 255, 0.8)', 'rgba(200, 200, 255, 0.6)', 'rgba(173, 216, 230, 0.7)'];
+    const particleCount = Math.floor(window.innerWidth / 10);
     
     for (let i = 0; i < particleCount; i++) {
         particles.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            size: Math.random() * 4 + 1,
-            speedX: Math.random() * 1 - 0.5,
-            speedY: Math.random() * 1 - 0.5,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            opacity: Math.random() * 0.7 + 0.3
+            size: Math.random() * 3 + 1,
+            speedX: Math.random() * 0.5 - 0.25,
+            speedY: Math.random() * 0.5 - 0.25,
+            opacity: Math.random() * 0.5 + 0.1
         });
     }
     
     function animateParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        // Draw particles with gradient effect
+        // Draw particles
         particles.forEach(particle => {
-            const gradient = ctx.createRadialGradient(
-                particle.x, particle.y, 0,
-                particle.x, particle.y, particle.size
-            );
-            gradient.addColorStop(0, particle.color);
-            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-            
             ctx.beginPath();
             ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-            ctx.fillStyle = gradient;
+            ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`;
             ctx.fill();
             
             // Update position
@@ -398,29 +365,22 @@ function initializeParticles() {
             }
             
             // Random twinkle effect
-            if (Math.random() > 0.97) {
-                particle.opacity = Math.random() * 0.7 + 0.3;
+            if (Math.random() > 0.95) {
+                particle.opacity = Math.random() * 0.5 + 0.1;
             }
         });
         
-        // Draw connecting lines with gradient
+        // Draw connecting lines
         for (let i = 0; i < particles.length; i++) {
             for (let j = i + 1; j < particles.length; j++) {
                 const dx = particles[i].x - particles[j].x;
                 const dy = particles[i].y - particles[j].y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
                 
-                if (distance < 120) {
-                    const gradient = ctx.createLinearGradient(
-                        particles[i].x, particles[i].y,
-                        particles[j].x, particles[j].y
-                    );
-                    gradient.addColorStop(0, particles[i].color);
-                    gradient.addColorStop(1, particles[j].color);
-                    
+                if (distance < 100) {
                     ctx.beginPath();
-                    ctx.strokeStyle = gradient;
-                    ctx.lineWidth = 0.8;
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${0.2 - distance/500})`;
+                    ctx.lineWidth = 0.5;
                     ctx.moveTo(particles[i].x, particles[i].y);
                     ctx.lineTo(particles[j].x, particles[j].y);
                     ctx.stroke();
@@ -438,6 +398,7 @@ function initializeParticles() {
         canvas.height = window.innerHeight;
     });
 }
+
 // Audio Functions
 function playOpeningSound() {
     const audio = document.getElementById('openingAudio');
