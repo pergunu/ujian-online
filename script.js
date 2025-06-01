@@ -951,14 +951,7 @@ function showCertificate() {
         .join(' ');
     
     // Set certificate data
-    const certificateName = document.getElementById('certificateName');
-    certificateName.textContent = formattedName;
-    certificateName.style.fontFamily = "'Great Vibes', cursive";
-    certificateName.style.fontSize = '3.5rem';
-    certificateName.style.fontWeight = 'normal';
-    certificateName.style.letterSpacing = '1px';
-    certificateName.style.margin = '10px 0';
-    
+    document.getElementById('certificateName').textContent = formattedName;
     document.getElementById('certificateScore').textContent = score;
     
     // Set certificate date
