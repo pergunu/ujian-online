@@ -902,17 +902,8 @@ function showCertificate() {
     const earnedPoints = correctAnswers * adminSettings.questionPoints;
     const score = Math.round((earnedPoints / totalPossiblePoints) * 100);
     
-    // Format name with proper capitalization
-    const formatName = (name) => {
-        return name.toLowerCase().split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
-    };
-    
-    const formattedName = formatName(participantData.fullName);
-    
     // Set certificate data
-    document.getElementById('certificateName').textContent = formattedName;
+    document.getElementById('certificateName').textContent = participantData.fullName;
     document.getElementById('certificateScore').textContent = score;
     
     // Set certificate date
@@ -954,110 +945,22 @@ function generateCertificateCode(score) {
     const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
     const scorePart = score.toString().padStart(3, '0');
     
-    // Use full name without modification
-    const namePart = participantData.fullName.toUpperCase().replace(/\s+/g, '_');
-    
-    return `${namePart}/${participantData.status.toUpperCase()}/${
+    return `${participantData.fullName.substring(0, 3).toUpperCase()}/${participantData.status.toUpperCase()}/${
         participantData.tingkatSekolah ? participantData.tingkatSekolah.toUpperCase() : 'UMUM'}/${
         examSubject.toUpperCase()}/${datePart}/${randomPart}-${scorePart}/PERGUNU-STB`;
 }
 
 function printCertificate() {
     playButtonSound();
+    const printContent = document.getElementById('certificatePrint').innerHTML;
+    const originalContent = document.body.innerHTML;
     
-    // Get certificate element and its styles
-    const certificate = document.getElementById('certificatePrint');
-    const styles = document.querySelector('style').innerHTML;
+    document.body.innerHTML = printContent;
+    window.print();
+    document.body.innerHTML = originalContent;
     
-    // Create a new window for printing
-    const printWindow = window.open('', '_blank', 'width=900,height=1200');
-    
-    // Build the print document
-    printWindow.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Sertifikat Ujian PERGUNU Situbondo</title>
-            <style>
-                @page {
-                    size: A4 landscape;
-                    margin: 0;
-                }
-                body {
-                    margin: 0;
-                    padding: 0;
-                    font-family: 'Poppins', sans-serif;
-                    -webkit-print-color-adjust: exact !important;
-                    print-color-adjust: exact !important;
-                }
-                ${styles}
-                
-                /* Override styles for printing */
-                .certificate-container {
-                    width: 100% !important;
-                    height: 100% !important;
-                    margin: 0 !important;
-                    padding: 0 !important;
-                    box-shadow: none !important;
-                    border: none !important;
-                    background-image: url('assets/images/certificate.png') !important;
-                    background-size: cover !important;
-                    background-position: center !important;
-                    background-repeat: no-repeat !important;
-                    position: relative;
-                    page-break-after: avoid;
-                    page-break-inside: avoid;
-                }
-                
-                .certificate-content {
-                    position: relative;
-                    z-index: 1;
-                    padding: 50px;
-                    text-align: center;
-                    height: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                }
-                
-                .certificate-bg {
-                    display: block !important;
-                    opacity: 0.1 !important;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    z-index: 0;
-                }
-                
-                /* Ensure text is visible */
-                .certificate-title, .recipient-name, .certificate-text,
-                .score-container, .motivation-text, .certificate-footer {
-                    color: #000 !important;
-                    text-shadow: none !important;
-                }
-            </style>
-            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-        </head>
-        <body>
-            ${certificate.outerHTML}
-            <script>
-                window.onload = function() {
-                    setTimeout(function() {
-                        window.print();
-                        setTimeout(function() {
-                            window.close();
-                        }, 500);
-                    }, 300);
-                };
-            </script>
-        </body>
-        </html>
-    `);
-    printWindow.document.close();
+    // Restore the screen
+    showScreen('certificateScreen');
 }
 
 function backToResults() {
