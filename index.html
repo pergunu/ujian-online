@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Parisienne&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Canvas untuk animasi partikel -->
+    <!-- Canvas untuk animasi partikel premium -->
     <canvas id="particle-canvas"></canvas>
+    <div class="particle-overlay"></div>
 
     <!-- Audio Elements -->
     <audio id="openingAudio" src="assets/audio/opening.mp3"></audio>
@@ -267,22 +269,27 @@
                     <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
                     <p class="certificate-given">Diberikan Kepada:</p>
                     <h2 class="recipient-name" id="certificateName"></h2>
-                    <p class="certificate-description">
-                        Atas Partisipasi & Pencapaian Luar Biasa dalam <strong>Ujian Pergunu Situbondo</strong>
-                    </p>
-                    <p class="certificate-text">
-                        Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, sertifikat ini diberikan sebagai motivasi untuk terus berkembang.
-                    </p>
+                    <div class="certificate-description">
+                        <p>Atas Partisipasi & Pencapaian Luar Biasa dalam</p>
+                        <p><strong>Ujian Pergunu Situbondo</strong></p>
+                    </div>
+                    <div class="certificate-text">
+                        <p>Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, sertifikat ini diberikan sebagai motivasi untuk terus berkembang.</p>
+                    </div>
                     <div class="score-container">
                         <span class="score-label">Nilai:</span>
                         <span class="score-value" id="certificateScore"></span>
                     </div>
-                    <p class="motivation-text" id="motivationText"></p>
+                    <div class="motivation-text" id="motivationText"></div>
                     <div class="certificate-footer">
-                        <p class="period">Ditetapkan di: Situbondo, <span id="certificateDate"></span></p>
-                        <p class="signature-title">Ketua Pergunu Situbondo</p>
-                        <p class="signature-name" id="chairmanName">Moh. Nuril Hudha, S.Pd., M.Si.</p>
-                        <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
+                        <div class="footer-left">
+                            <p class="period">Ditetapkan di: Situbondo, <span id="certificateDate"></span></p>
+                        </div>
+                        <div class="footer-right">
+                            <p class="signature-title">Ketua Pergunu Situbondo</p>
+                            <p class="signature-name" id="chairmanName">Moh. Nuril Hudha, S.Pd., M.Si.</p>
+                            <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
+                        </div>
                     </div>
                     <div class="certificate-code" id="certificateCode"></div>
                 </div>
