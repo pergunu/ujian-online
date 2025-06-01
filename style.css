@@ -265,6 +265,18 @@ input:focus, select:focus, textarea:focus {
     background-color: white;
 }
 
+/* Checkbox Container - Fixed position */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.checkbox-container input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+}
+
 /* Certificate Styles - Enhanced */
 .certificate-container {
     position: relative;
@@ -531,13 +543,9 @@ input:focus, select:focus, textarea:focus {
     z-index: 1000;
 }
 
-#welcomeScreen.active ~ .floating-buttons {
-    display: flex;
-}
-
 .floating-btn {
-    width: 56px;
-    height: 56px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
@@ -548,7 +556,7 @@ input:focus, select:focus, textarea:focus {
     cursor: pointer;
     transition: var(--transition);
     border: none;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     position: relative;
     overflow: hidden;
 }
@@ -658,35 +666,13 @@ input:focus, select:focus, textarea:focus {
     }
     
     .floating-btn {
-        width: 48px;
-        height: 48px;
+        width: 45px;
+        height: 45px;
         font-size: 1.1rem;
     }
 }
 
-/* Additional Components... (keep all other existing styles) */
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-dark);
-}
-
-/* Notification Styles - Fixed with better icons */
+/* Notification Styles */
 .notification {
     padding: 12px 20px;
     border-radius: var(--border-radius);
@@ -723,26 +709,10 @@ input:focus, select:focus, textarea:focus {
     border-left: 4px solid var(--success-color);
 }
 
-.notification.success::after {
-    content: '\f00c'; /* FontAwesome check icon */
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    margin-left: 10px;
-    color: var(--success-color);
-}
-
 .notification.error {
     background-color: rgba(220, 53, 69, 0.15);
     color: var(--error-color);
     border-left: 4px solid var(--error-color);
-}
-
-.notification.error::after {
-    content: '\f00d'; /* FontAwesome times icon */
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    margin-left: 10px;
-    color: var(--error-color);
 }
 
 /* Terms and Conditions */
@@ -841,12 +811,6 @@ input:focus, select:focus, textarea:focus {
     gap: 8px;
 }
 
-.timer-container::before {
-    content: '\f017';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-}
-
 .exam-info {
     font-size: 1rem;
     color: var(--text-color);
@@ -894,7 +858,8 @@ input:focus, select:focus, textarea:focus {
 .option-btn.correct {
     background-color: rgba(40, 167, 69, 0.1);
     border-color: var(--success-color);
-    color: var(--success-color);
+    color: white;
+    font-weight: bold;
 }
 
 .option-btn.correct::after {
@@ -903,13 +868,14 @@ input:focus, select:focus, textarea:focus {
     font-weight: 900;
     position: absolute;
     right: 15px;
-    color: var(--success-color);
+    color: white;
 }
 
 .option-btn.incorrect {
     background-color: rgba(220, 53, 69, 0.1);
     border-color: var(--error-color);
-    color: var(--error-color);
+    color: white;
+    font-weight: bold;
 }
 
 .option-btn.incorrect::after {
@@ -918,7 +884,7 @@ input:focus, select:focus, textarea:focus {
     font-weight: 900;
     position: absolute;
     right: 15px;
-    color: var(--error-color);
+    color: white;
 }
 
 .option-btn.selected {
@@ -1000,67 +966,6 @@ input:focus, select:focus, textarea:focus {
     gap: 20px;
     margin-top: 30px;
     flex-wrap: wrap;
-}
-
-/* Floating Buttons */
-.floating-buttons {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 1000;
-}
-
-.floating-btn {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow);
-    cursor: pointer;
-    transition: var(--transition);
-    border: none;
-    font-size: 1.3rem;
-    position: relative;
-    overflow: hidden;
-}
-
-.floating-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: 0.5s;
-}
-
-.floating-btn:hover {
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: var(--shadow-hover);
-}
-
-.floating-btn:hover::before {
-    left: 100%;
-}
-
-.floating-btn[title]:hover::after {
-    content: attr(title);
-    position: absolute;
-    right: 60px;
-    background: var(--dark-color);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    white-space: nowrap;
 }
 
 /* Modals */
