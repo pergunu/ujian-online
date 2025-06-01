@@ -411,11 +411,11 @@ button:active {
     text-align: left;
     cursor: pointer;
     transition: var(--transition);
-    color: var(--dark-color);
+    color: #333; /* Improved contrast */
+    font-weight: 500; /* Make text bolder */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     position: relative;
     overflow: hidden;
-    font-weight: 500;
 }
 
 .option-btn::before {
@@ -540,6 +540,7 @@ button:active {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     border-radius: 10px;
+    animation: fadeIn 0.5s ease;
 }
 
 .certificate-bg {
@@ -567,11 +568,22 @@ button:active {
 .certificate-title {
     font-size: 2.8rem;
     color: var(--primary-color);
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     text-transform: uppercase;
     letter-spacing: 4px;
     font-weight: 700;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.certificate-code {
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.03);
+    padding: 8px 15px;
+    border-radius: 4px;
+    letter-spacing: 1px;
 }
 
 .certificate-given {
@@ -584,7 +596,7 @@ button:active {
     font-size: 3.5rem;
     color: var(--primary-color);
     margin: 30px 0;
-    font-family: 'Great Vibes', 'Alex Brush', cursive;
+    font-family: 'Dancing Script', cursive;
     font-weight: normal;
     text-transform: capitalize;
     letter-spacing: 2px;
@@ -668,13 +680,14 @@ button:active {
 .certificate-footer {
     margin-top: 40px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
     max-width: 600px;
 }
 
 .footer-left, .footer-right {
     flex: 1;
+    text-align: center;
 }
 
 .period {
@@ -692,26 +705,17 @@ button:active {
 
 .signature-name {
     font-weight: bold;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     font-size: 1.1rem;
     color: var(--primary-color);
 }
 
 .barcode {
-    width: 120px;
+    width: 80px;
     height: auto;
-    margin-top: 20px;
+    margin: 10px auto;
+    display: block;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-}
-
-.certificate-code {
-    margin-top: 20px;
-    font-family: monospace;
-    font-size: 0.9rem;
-    color: #666;
-    background-color: rgba(0, 0, 0, 0.03);
-    padding: 8px 15px;
-    border-radius: 4px;
 }
 
 .certificate-actions {
@@ -719,6 +723,16 @@ button:active {
     justify-content: center;
     gap: 20px;
     margin-top: 30px;
+}
+
+/* Certificate Animation */
+@keyframes certificateFadeIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.certificate-animation {
+    animation: certificateFadeIn 0.8s ease-out forwards;
 }
 
 /* Print Styles for Certificate */
@@ -751,7 +765,10 @@ button:active {
     }
     .certificate-title {
         font-size: 3rem;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
+    }
+    .certificate-code {
+        margin-bottom: 30px;
     }
     .recipient-name {
         font-size: 4rem;
@@ -770,7 +787,10 @@ button:active {
         font-size: 1.3rem;
     }
     .barcode {
-        width: 100px;
+        width: 80px;
+    }
+    .certificate-footer {
+        margin-top: 60px;
     }
 }
 
@@ -845,6 +865,7 @@ button:active {
     cursor: pointer;
     color: #666;
     transition: var(--transition);
+    z-index: 10;
 }
 
 .close-btn:hover {
