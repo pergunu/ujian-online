@@ -253,6 +253,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('greetingText').textContent = adminSettings.greetingText;
     document.getElementById('periodicInfo').textContent = adminSettings.periodicInfo;
     
+    // Show floating buttons only on welcome screen
+    showFloatingButtons('welcomeScreen');
+    
     // Event Listeners
     document.getElementById('loginBtn').addEventListener('click', verifyLoginCode);
     document.getElementById('agreeCheckbox').addEventListener('change', toggleContinueButton);
@@ -323,6 +326,16 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', playButtonSound);
     });
 });
+
+// Show/hide floating buttons based on current screen
+function showFloatingButtons(screenId) {
+    const floatingButtons = document.getElementById('floatingButtons');
+    if (screenId === 'welcomeScreen') {
+        floatingButtons.style.display = 'flex';
+    } else {
+        floatingButtons.style.display = 'none';
+    }
+}
 
 // Enhanced Particle Animation
 function initializeParticles() {
@@ -469,6 +482,9 @@ function showScreen(screenId) {
         screen.classList.add('active');
         screen.scrollIntoView({ behavior: 'smooth' });
     }
+    
+    // Update floating buttons visibility
+    showFloatingButtons(screenId);
 }
 
 function verifyLoginCode() {
@@ -938,6 +954,7 @@ function showCertificate() {
     certificateName.style.fontSize = '3.5rem';
     certificateName.style.fontWeight = 'normal';
     certificateName.style.letterSpacing = '1px';
+    certificateName.style.margin = '10px 0';
     
     document.getElementById('certificateScore').textContent = score;
     
@@ -964,9 +981,6 @@ function showCertificate() {
     const certificateCode = generateCertificateCode(score, participantData.fullName);
     document.getElementById('certificateCode').textContent = certificateCode;
     
-    // Hide floating buttons
-    document.querySelector('.floating-buttons').style.display = 'none';
-    
     // Show certificate screen
     showScreen('certificateScreen');
     
@@ -990,34 +1004,193 @@ function generateCertificateCode(score, fullName) {
 
 function printCertificate() {
     playButtonSound();
-    const printContent = document.getElementById('certificatePrint').innerHTML;
+    
+    // Hide elements that shouldn't be printed
+    const printContent = document.getElementById('certificatePrint');
     const originalContent = document.body.innerHTML;
     
-    document.body.innerHTML = printContent;
-    window.print();
-    document.body.innerHTML = originalContent;
+    // Create a print-specific version
+    const printWindow = window.open('', '', 'width=800,height=600');
+    printWindow.document.write('<html><head><title>Sertifikat Ujian</title>');
+    printWindow.document.write('<style>');
+    printWindow.document.write(`
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: white;
+            }
+            .certificate-container {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                text-align: center;
+            }
+            .certificate-bg {
+                width: 100%;
+                height: auto;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+            .certificate-content {
+                position: relative;
+                z-index: 2;
+                padding: 50px;
+                color: #333;
+                text-align: center;
+            }
+            .certificate-title {
+                font-size: 36px;
+                margin-bottom: 30px;
+                color: #1a3e72;
+            }
+            .recipient-name {
+                font-size: 42px;
+                margin: 20px 0;
+                color: #1a3e72;
+            }
+            .certificate-description {
+                margin: 20px 0;
+                font-size: 18px;
+            }
+            .certificate-text {
+                margin: 20px auto;
+                max-width: 600px;
+                font-size: 16px;
+            }
+            .score-container {
+                margin: 20px 0;
+                font-size: 24px;
+            }
+            .motivation-text {
+                margin: 20px auto;
+                max-width: 600px;
+                font-style: italic;
+                font-size: 16px;
+            }
+            .certificate-footer {
+                margin-top: 40px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .footer-left, .footer-right {
+                text-align: left;
+                width: 45%;
+            }
+            .signature-title {
+                margin-top: 80px;
+                font-weight: bold;
+            }
+            .signature-name {
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+            .barcode {
+                width: 150px;
+                height: auto;
+            }
+            .certificate-code {
+                margin-top: 20px;
+                font-size: 14px;
+                color: #666;
+            }
+        }
+    `);
+    printWindow.document.write('</style></head><body>');
+    printWindow.document.write(printContent.innerHTML);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
     
-    // Restore the screen
-    showScreen('certificateScreen');
+    // Trigger print after content is loaded
+    printWindow.onload = function() {
+        printWindow.print();
+        printWindow.close();
+    };
 }
 
 function backToResults() {
     playButtonSound();
-    // Show floating buttons again
-    document.querySelector('.floating-buttons').style.display = 'flex';
     showScreen('resultsScreen');
 }
 
 function retakeExam() {
     playButtonSound();
-    // Show floating buttons again
-    document.querySelector('.floating-buttons').style.display = 'flex';
-    
     // Go back to exam level selection
     showScreen('examLevelScreen');
 }
 
-// [Rest of the code remains the same...]
+// Modal Functions
+function showShareModal() {
+    playButtonSound();
+    document.getElementById('shareModal').style.display = 'block';
+    document.getElementById('shareLink').value = window.location.href;
+}
+
+function openWhatsApp() {
+    playButtonSound();
+    const message = "Halo admin, saya ingin bertanya tentang ujian online PERGUNU Situbondo.";
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+}
+
+function showBankSoalModal() {
+    playButtonSound();
+    document.getElementById('bankSoalModal').style.display = 'block';
+}
+
+function showAdminPanelModal() {
+    playButtonSound();
+    document.getElementById('adminPanelModal').style.display = 'block';
+}
+
+function verifyBankSoalCode() {
+    playButtonSound();
+    const code = document.getElementById('bankSoalCode').value;
+    const notification = document.getElementById('bankSoalNotification');
+    
+    if (code === defaultCodes.bankSoalCode) {
+        notification.textContent = "Kode valid! Mengarahkan ke bank soal...";
+        notification.className = "notification success";
+        document.getElementById('bankSoalContent').style.display = 'block';
+    } else {
+        notification.textContent = "Kode bank soal tidak valid. Silakan coba lagi.";
+        notification.className = "notification error";
+    }
+}
+
+function verifyAdminCode() {
+    playButtonSound();
+    const code = document.getElementById('adminCode').value;
+    const notification = document.getElementById('adminNotification');
+    
+    if (code === defaultCodes.adminCode) {
+        notification.textContent = "Kode valid! Mengarahkan ke panel admin...";
+        notification.className = "notification success";
+        document.getElementById('adminContent').style.display = 'block';
+    } else {
+        notification.textContent = "Kode admin tidak valid. Silakan coba lagi.";
+        notification.className = "notification error";
+    }
+}
+
+function copyShareLink() {
+    playButtonSound();
+    const shareLink = document.getElementById('shareLink');
+    shareLink.select();
+    document.execCommand('copy');
+    
+    // Show copied notification
+    const notification = document.createElement('div');
+    notification.className = 'notification success';
+    notification.textContent = 'Link berhasil disalin!';
+    document.getElementById('shareModal').appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 2000);
+}
 
 // Helper Functions
 function shuffleArray(array) {
