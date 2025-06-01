@@ -930,6 +930,9 @@ function finishExam() {
     
     // Save exam results
     saveExamResults(score);
+    
+    // Play applause sound when exam is finished
+    playApplauseSound();
 }
 
 // Enhanced Certificate Function
@@ -950,7 +953,7 @@ function showCertificate() {
     // Set certificate data
     const certificateName = document.getElementById('certificateName');
     certificateName.textContent = formattedName;
-    certificateName.style.fontFamily = "'Great Vibes', cursive"; // Use signature font
+    certificateName.style.fontFamily = "'Great Vibes', cursive";
     certificateName.style.fontSize = '3.5rem';
     certificateName.style.fontWeight = 'normal';
     certificateName.style.letterSpacing = '1px';
@@ -986,6 +989,30 @@ function showCertificate() {
     
     // Play applause sound
     playApplauseSound();
+    
+    // Trigger particle celebration effect
+    triggerParticleCelebration();
+}
+
+function triggerParticleCelebration() {
+    // Create celebration particles
+    const celebrationParticles = [];
+    const particleCount = 100;
+    
+    for (let i = 0; i < particleCount; i++) {
+        celebrationParticles.push({
+            x: particleCanvas.width / 2,
+            y: particleCanvas.height / 2,
+            size: Math.random() * 8 + 2,
+            speedX: (Math.random() - 0.5) * 10,
+            speedY: (Math.random() - 0.5) * 10,
+            color: `hsla(${Math.random() * 360}, 100%, 50%, 0.8)`,
+            life: 100 + Math.random() * 50
+        });
+    }
+    
+    // Add to existing particles
+    particles = particles.concat(celebrationParticles);
 }
 
 function generateCertificateCode(score, fullName) {
@@ -1005,108 +1032,169 @@ function generateCertificateCode(score, fullName) {
 function printCertificate() {
     playButtonSound();
     
-    // Hide elements that shouldn't be printed
-    const printContent = document.getElementById('certificatePrint');
-    const originalContent = document.body.innerHTML;
-    
     // Create a print-specific version
-    const printWindow = window.open('', '', 'width=800,height=600');
-    printWindow.document.write('<html><head><title>Sertifikat Ujian</title>');
-    printWindow.document.write('<style>');
+    const printWindow = window.open('', '_blank');
     printWindow.document.write(`
-        @media print {
-            body {
-                margin: 0;
-                padding: 0;
-                background-color: white;
-            }
-            .certificate-container {
-                width: 100%;
-                height: 100%;
-                position: relative;
-                text-align: center;
-            }
-            .certificate-bg {
-                width: 100%;
-                height: auto;
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: 1;
-            }
-            .certificate-content {
-                position: relative;
-                z-index: 2;
-                padding: 50px;
-                color: #333;
-                text-align: center;
-            }
-            .certificate-title {
-                font-size: 36px;
-                margin-bottom: 30px;
-                color: #1a3e72;
-            }
-            .recipient-name {
-                font-size: 42px;
-                margin: 20px 0;
-                color: #1a3e72;
-            }
-            .certificate-description {
-                margin: 20px 0;
-                font-size: 18px;
-            }
-            .certificate-text {
-                margin: 20px auto;
-                max-width: 600px;
-                font-size: 16px;
-            }
-            .score-container {
-                margin: 20px 0;
-                font-size: 24px;
-            }
-            .motivation-text {
-                margin: 20px auto;
-                max-width: 600px;
-                font-style: italic;
-                font-size: 16px;
-            }
-            .certificate-footer {
-                margin-top: 40px;
-                display: flex;
-                justify-content: space-between;
-            }
-            .footer-left, .footer-right {
-                text-align: left;
-                width: 45%;
-            }
-            .signature-title {
-                margin-top: 80px;
-                font-weight: bold;
-            }
-            .signature-name {
-                font-weight: bold;
-                margin-bottom: 20px;
-            }
-            .barcode {
-                width: 150px;
-                height: auto;
-            }
-            .certificate-code {
-                margin-top: 20px;
-                font-size: 14px;
-                color: #666;
-            }
-        }
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Sertifikat Ujian</title>
+            <style>
+                @page {
+                    size: A4 landscape;
+                    margin: 0;
+                }
+                body {
+                    margin: 0;
+                    padding: 0;
+                    background-color: white;
+                    font-family: 'Poppins', sans-serif;
+                }
+                .certificate-container {
+                    width: 100%;
+                    height: 100vh;
+                    position: relative;
+                    text-align: center;
+                }
+                .certificate-bg {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: 1;
+                }
+                .certificate-content {
+                    position: relative;
+                    z-index: 2;
+                    padding: 50px;
+                    color: #333;
+                    text-align: center;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .certificate-title {
+                    font-size: 48px;
+                    margin-bottom: 30px;
+                    color: #1a3e72;
+                    font-weight: bold;
+                }
+                .certificate-given {
+                    font-size: 24px;
+                    margin: 10px 0;
+                }
+                .recipient-name {
+                    font-size: 42px;
+                    margin: 20px 0;
+                    color: #1a3e72;
+                    font-family: 'Great Vibes', cursive;
+                }
+                .certificate-description {
+                    margin: 20px 0;
+                    font-size: 18px;
+                }
+                .certificate-description strong {
+                    font-weight: bold;
+                }
+                .certificate-text {
+                    margin: 20px auto;
+                    max-width: 600px;
+                    font-size: 16px;
+                }
+                .score-container {
+                    margin: 20px 0;
+                    font-size: 24px;
+                }
+                .score-label {
+                    font-weight: bold;
+                }
+                .motivation-text {
+                    margin: 20px auto;
+                    max-width: 600px;
+                    font-style: italic;
+                    font-size: 16px;
+                }
+                .certificate-footer {
+                    margin-top: 40px;
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                    padding: 0 50px;
+                }
+                .footer-left, .footer-right {
+                    text-align: center;
+                    width: 45%;
+                }
+                .period {
+                    font-size: 14px;
+                }
+                .signature-title {
+                    margin-top: 80px;
+                    font-weight: bold;
+                }
+                .signature-name {
+                    font-weight: bold;
+                    margin-bottom: 20px;
+                }
+                .barcode {
+                    width: 150px;
+                    height: auto;
+                    margin-top: 10px;
+                }
+                .certificate-code {
+                    margin-top: 20px;
+                    font-size: 12px;
+                    color: #666;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="certificate-container">
+                <img src="assets/images/certificate.png" alt="Certificate Background" class="certificate-bg">
+                <div class="certificate-content">
+                    <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
+                    <p class="certificate-given">Diberikan Kepada:</p>
+                    <h2 class="recipient-name">${document.getElementById('certificateName').textContent}</h2>
+                    <div class="certificate-description">
+                        <p>Atas Partisipasi & Pencapaian Luar Biasa dalam</p>
+                        <p><strong>Ujian Pergunu Situbondo</strong></p>
+                    </div>
+                    <div class="certificate-text">
+                        <p>Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, sertifikat ini diberikan sebagai motivasi untuk terus berkembang.</p>
+                    </div>
+                    <div class="score-container">
+                        <span class="score-label">Nilai:</span>
+                        <span class="score-value">${document.getElementById('certificateScore').textContent}</span>
+                    </div>
+                    <div class="motivation-text">${document.getElementById('motivationText').textContent}</div>
+                    <div class="certificate-footer">
+                        <div class="footer-left">
+                            <p class="period">Ditetapkan di: Situbondo, ${document.getElementById('certificateDate').textContent}</p>
+                        </div>
+                        <div class="footer-right">
+                            <p class="signature-title">Ketua Pergunu Situbondo</p>
+                            <p class="signature-name">${document.getElementById('chairmanName').textContent}</p>
+                            <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
+                        </div>
+                    </div>
+                    <div class="certificate-code">${document.getElementById('certificateCode').textContent}</div>
+                </div>
+            </div>
+        </body>
+        </html>
     `);
-    printWindow.document.write('</style></head><body>');
-    printWindow.document.write(printContent.innerHTML);
-    printWindow.document.write('</body></html>');
+    
     printWindow.document.close();
     
-    // Trigger print after content is loaded
+    // Wait for content to load before printing
     printWindow.onload = function() {
-        printWindow.print();
-        printWindow.close();
+        setTimeout(() => {
+            printWindow.print();
+        }, 500);
     };
 }
 
