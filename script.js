@@ -320,6 +320,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Show/hide floating buttons based on screen
+function updateFloatingButtons() {
+    const floatingButtons = document.querySelector('.floating-buttons');
+    if (document.getElementById('welcomeScreen').classList.contains('active')) {
+        floatingButtons.style.display = 'flex';
+    } else {
+        floatingButtons.style.display = 'none';
+    }
+}
+
+// Call this function whenever screen changes
+function showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.remove('active');
+    });
+    
+    const screen = document.getElementById(screenId);
+    if (screen) {
+        screen.classList.add('active');
+        screen.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    updateFloatingButtons();
+}
+
 function initializeParticles() {
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
