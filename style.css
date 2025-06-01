@@ -31,7 +31,7 @@ body {
     position: relative;
 }
 
-/* Particle Animation */
+/* Enhanced Particle Animation */
 #particle-canvas {
     position: fixed;
     top: 0;
@@ -39,7 +39,17 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    opacity: 0.5;
+    background: linear-gradient(135deg, #1a0a2e, #0d0633);
+}
+
+.particle-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: radial-gradient(circle at center, rgba(106, 17, 203, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
 }
 
 /* Container */
@@ -53,7 +63,7 @@ body {
 
 /* Screens */
 .screen {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.95);
     border-radius: 15px;
     padding: 30px;
     box-shadow: var(--shadow);
@@ -63,6 +73,8 @@ body {
     animation: fadeIn 0.5s ease;
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .screen::before {
@@ -109,6 +121,7 @@ body {
     max-width: 150px;
     height: auto;
     animation: pulse 2s infinite;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
 }
 
 @keyframes pulse {
@@ -126,6 +139,7 @@ h1, h2, h3 {
 h1 {
     font-size: 2rem;
     font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -156,6 +170,7 @@ h3 {
     font-size: 1rem;
     margin-bottom: 10px;
     transition: var(--transition);
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .input-group input:focus {
@@ -192,18 +207,20 @@ button {
     transition: var(--transition);
     display: inline-block;
     margin: 5px;
+    box-shadow: var(--shadow);
 }
 
 button:hover {
     background-color: #1a68e0;
     transform: translateY(-2px);
-    box-shadow: var(--shadow);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
     transform: none;
+    box-shadow: none;
 }
 
 button:active {
@@ -234,6 +251,7 @@ button:active {
     border-radius: 8px;
     font-size: 1rem;
     transition: var(--transition);
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .form-group input:focus,
@@ -385,36 +403,42 @@ button:active {
 }
 
 .option-btn {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.9);
     border: 2px solid #ddd;
     border-radius: 8px;
     padding: 12px 15px;
     text-align: left;
     cursor: pointer;
     transition: var(--transition);
+    color: var(--dark-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .option-btn:hover {
     border-color: var(--secondary-color);
-    background-color: rgba(37, 117, 252, 0.05);
+    background-color: rgba(37, 117, 252, 0.1);
+    transform: translateY(-2px);
 }
 
 .option-btn.correct {
-    background-color: rgba(76, 175, 80, 0.2);
+    background-color: rgba(76, 175, 80, 0.15);
     border-color: var(--success-color);
     color: var(--success-color);
+    box-shadow: 0 2px 4px rgba(76, 175, 80, 0.1);
 }
 
 .option-btn.incorrect {
-    background-color: rgba(244, 67, 54, 0.2);
+    background-color: rgba(244, 67, 54, 0.15);
     border-color: var(--error-color);
     color: var(--error-color);
+    box-shadow: 0 2px 4px rgba(244, 67, 54, 0.1);
 }
 
 .option-btn.selected {
     background-color: var(--secondary-color);
     color: white;
     border-color: var(--secondary-color);
+    box-shadow: 0 2px 8px rgba(37, 117, 252, 0.3);
 }
 
 .answer-explanation {
@@ -485,15 +509,16 @@ button:active {
     margin-top: 30px;
 }
 
-/* Certificate Screen */
+/* Enhanced Certificate Screen */
 .certificate-container {
     position: relative;
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
     background-color: white;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    border-radius: 10px;
 }
 
 .certificate-bg {
@@ -503,100 +528,158 @@ button:active {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.1;
+    opacity: 0.15;
     z-index: 0;
 }
 
 .certificate-content {
     position: relative;
     z-index: 1;
-    padding: 50px;
+    padding: 60px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .certificate-title {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     color: var(--primary-color);
     margin-bottom: 30px;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .certificate-given {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     margin-bottom: 10px;
+    color: #555;
 }
 
 .recipient-name {
-    font-size: 2rem;
+    font-size: 3.5rem;
     color: var(--primary-color);
-    margin: 20px 0;
-    text-transform: uppercase;
+    margin: 30px 0;
+    font-family: 'Great Vibes', 'Alex Brush', cursive;
+    font-weight: normal;
+    text-transform: capitalize;
     letter-spacing: 2px;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 10px;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
     display: inline-block;
+    padding: 0 20px;
+}
+
+.recipient-name::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--primary-color), transparent);
 }
 
 .certificate-description {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     margin: 20px 0;
     line-height: 1.6;
+    max-width: 600px;
+}
+
+.certificate-description p {
+    margin-bottom: 10px;
+}
+
+.certificate-description strong {
+    color: var(--primary-color);
+    font-weight: 600;
 }
 
 .certificate-text {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin: 20px 0;
     line-height: 1.6;
+    max-width: 600px;
 }
 
 .score-container {
     margin: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .score-label {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: bold;
+    color: #555;
 }
 
 .score-value {
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: bold;
     color: var(--primary-color);
-    display: block;
-    margin-top: 10px;
+    margin-top: 5px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .motivation-text {
     font-style: italic;
     margin: 30px 0;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: var(--dark-color);
+    max-width: 600px;
+    padding: 15px;
+    background-color: rgba(106, 17, 203, 0.05);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
 }
 
 .certificate-footer {
     margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+}
+
+.footer-left, .footer-right {
+    flex: 1;
 }
 
 .period {
     margin-bottom: 40px;
+    font-size: 0.95rem;
+    color: #666;
 }
 
 .signature-title {
     font-weight: bold;
     margin-top: 60px;
     margin-bottom: 5px;
+    font-size: 1.1rem;
 }
 
 .signature-name {
     font-weight: bold;
     margin-bottom: 30px;
+    font-size: 1.1rem;
+    color: var(--primary-color);
 }
 
 .barcode {
     width: 150px;
     height: auto;
     margin-top: 20px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .certificate-code {
@@ -604,6 +687,9 @@ button:active {
     font-family: monospace;
     font-size: 0.9rem;
     color: #666;
+    background-color: rgba(0, 0, 0, 0.03);
+    padding: 8px 15px;
+    border-radius: 4px;
 }
 
 .certificate-actions {
@@ -628,12 +714,12 @@ button:active {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     transition: var(--transition);
     border: none;
@@ -641,9 +727,8 @@ button:active {
 }
 
 .floating-btn:hover {
-    background-color: #5a0db4;
     transform: translateY(-3px) scale(1.1);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Modals */
@@ -657,6 +742,7 @@ button:active {
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 2000;
     overflow-y: auto;
+    backdrop-filter: blur(5px);
 }
 
 .modal-content {
@@ -668,6 +754,7 @@ button:active {
     width: 90%;
     position: relative;
     animation: modalFadeIn 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes modalFadeIn {
@@ -940,7 +1027,7 @@ button:active {
     }
     
     .recipient-name {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
     
     .floating-buttons {
@@ -950,6 +1037,19 @@ button:active {
     
     .subject-buttons {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    .certificate-footer {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .footer-left, .footer-right {
+        text-align: center;
+    }
+    
+    .signature-title {
+        margin-top: 20px;
     }
 }
 
@@ -972,7 +1072,7 @@ button:active {
     }
     
     .recipient-name {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
     
     .floating-buttons {
@@ -982,5 +1082,13 @@ button:active {
     
     .modal-content {
         padding: 20px 15px;
+    }
+    
+    .certificate-description, .certificate-text {
+        font-size: 1rem;
+    }
+    
+    .score-value {
+        font-size: 2rem;
     }
 }
