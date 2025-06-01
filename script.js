@@ -1041,7 +1041,7 @@ function printCertificate() {
             <title>Sertifikat Ujian</title>
             <style>
                 @page {
-                    size: A4 landscape;
+                    size: A4 portrait;
                     margin: 0;
                 }
                 body {
