@@ -65,34 +65,46 @@
         }
 
         .certificate-title {
-            font-size: 36px;
+            font-size: 42px;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             color: #000;
             text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .certificate-code {
+            font-family: monospace;
+            font-size: 12px;
+            color: #333;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
         }
 
         .certificate-given {
-            font-size: 18px;
+            font-size: 20px;
             margin-bottom: 5px;
             color: #333;
         }
 
         .recipient-name {
-            font-size: 28px;
+            font-size: 36px;
             font-weight: 600;
-            margin: 15px 0;
+            margin: 20px 0;
             color: #000;
             text-transform: capitalize;
+            font-family: 'Alex Brush', cursive;
+            letter-spacing: 1px;
         }
 
         .certificate-description {
-            margin: 15px 0;
-            font-size: 16px;
+            margin: 20px 0;
+            font-size: 18px;
+            line-height: 1.6;
         }
 
         .certificate-description p {
-            margin: 5px 0;
+            margin: 10px 0;
         }
 
         .certificate-description strong {
@@ -101,14 +113,14 @@
 
         .certificate-text {
             width: 80%;
-            margin: 15px auto;
-            font-size: 14px;
-            line-height: 1.5;
+            margin: 20px auto;
+            font-size: 16px;
+            line-height: 1.6;
         }
 
         .score-container {
-            margin: 20px 0;
-            font-size: 18px;
+            margin: 25px 0;
+            font-size: 20px;
         }
 
         .score-label {
@@ -117,56 +129,89 @@
 
         .score-value {
             font-weight: 700;
-            font-size: 24px;
+            font-size: 28px;
+            color: #2a6496;
         }
 
         .motivation-text {
             width: 80%;
-            margin: 15px auto;
+            margin: 20px auto;
             font-style: italic;
-            font-size: 14px;
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
         }
 
         .certificate-footer {
             width: 100%;
             display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
         }
 
         .footer-left {
-            text-align: left;
-            width: 40%;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .footer-right {
             text-align: center;
-            width: 40%;
+            width: 100%;
         }
 
         .signature-title {
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            font-size: 18px;
         }
 
         .signature-name {
             font-weight: 500;
-            margin-bottom: 10px;
+            margin: 15px 0;
+            font-size: 16px;
         }
 
         .barcode {
-            width: 100px;
+            width: 80px;
             height: auto;
-            margin: 0 auto;
+            margin: 10px auto;
         }
 
-        .certificate-code {
+        .period {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        /* Animation for certificate appearance */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .certificate-container {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        /* Improved button styles in exam */
+        .option-btn {
+            color: #333 !important;
+            background-color: #f8f9fa !important;
+            border: 1px solid #ddd !important;
+        }
+
+        /* Close button fixes */
+        .close-btn {
+            cursor: pointer;
             position: absolute;
-            top: 10%;
-            font-family: monospace;
-            font-size: 12px;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            color: #666;
+        }
+
+        .close-btn:hover {
             color: #333;
-            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -427,8 +472,8 @@
             <div class="certificate-container" id="certificatePrint">
                 <img src="assets/images/certificate.png" alt="Certificate Background" class="certificate-bg">
                 <div class="certificate-content">
-                    <div class="certificate-code" id="certificateCode"></div>
                     <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
+                    <div class="certificate-code" id="certificateCode"></div>
                     <p class="certificate-given">Diberikan Kepada:</p>
                     <h2 class="recipient-name" id="certificateName"></h2>
                     <div class="certificate-description">
@@ -449,8 +494,8 @@
                         </div>
                         <div class="footer-right">
                             <p class="signature-title">Ketua Pergunu Situbondo</p>
-                            <p class="signature-name" id="chairmanName">Moh. Nuril Hudha, S.Pd., M.Si.</p>
                             <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
+                            <p class="signature-name" id="chairmanName">Moh. Nuril Hudha, S.Pd., M.Si.</p>
                         </div>
                     </div>
                 </div>
@@ -465,7 +510,7 @@
         <!-- Bank Soal Modal -->
         <div class="modal" id="bankSoalModal">
             <div class="modal-content">
-                <span class="close-btn">&times;</span>
+                <span class="close-btn" id="closeBankSoalBtn">&times;</span>
                 <h2>Bank Soal</h2>
                 <div class="input-group">
                     <input type="password" id="bankSoalCode" placeholder="Masukkan Kode Bank Soal">
@@ -596,7 +641,7 @@
         <!-- Admin Panel Modal -->
         <div class="modal" id="adminPanelModal">
             <div class="modal-content">
-                <span class="close-btn">&times;</span>
+                <span class="close-btn" id="closeAdminBtn">&times;</span>
                 <h2>Kontrol Panel Admin</h2>
                 <div class="input-group">
                     <input type="password" id="adminCode" placeholder="Masukkan Kode Admin">
