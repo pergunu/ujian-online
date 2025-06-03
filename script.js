@@ -307,11 +307,13 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', shareToSocial);
     });
     
-    // Close modals
-    document.querySelectorAll('.close-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            this.closest('.modal').style.display = 'none';
-        });
+    // Close modals - Fixed with proper IDs
+    document.getElementById('closeBankSoalBtn').addEventListener('click', function() {
+        document.getElementById('bankSoalModal').style.display = 'none';
+    });
+    
+    document.getElementById('closeAdminBtn').addEventListener('click', function() {
+        document.getElementById('adminPanelModal').style.display = 'none';
     });
     
     // Close modals when clicking outside
@@ -467,7 +469,7 @@ function playWrongSound() {
 function playApplauseSound() {
     const audio = document.getElementById('applauseAudio');
     audio.currentTime = 0;
-    audio.volume = 0.5;
+    audio.volume = 0.7; // Increased volume for applause
     audio.play().catch(e => console.log("Audio play prevented:", e));
 }
 
@@ -805,19 +807,26 @@ function displayCurrentQuestion() {
     optionsContainer.innerHTML = '';
     answerExplanation.style.display = 'none';
     
-    // Create option buttons
+    // Create option buttons with improved styling
     for (const [key, value] of Object.entries(question.options)) {
         const optionBtn = document.createElement('button');
         optionBtn.className = 'option-btn';
         optionBtn.textContent = `${key}. ${value}`;
         optionBtn.setAttribute('data-option', key);
         
+        // Improved button styling for better contrast
+        optionBtn.style.color = '#333'; // Dark text for better readability
+        optionBtn.style.backgroundColor = '#f8f9fa';
+        optionBtn.style.border = '1px solid #ddd';
+        
         // If already answered, show the result
         if (selectedOptions[currentQuestionIndex]) {
             if (key === question.correctAnswer) {
                 optionBtn.classList.add('correct');
+                optionBtn.style.color = '#fff'; // White text for better contrast
             } else if (key === selectedOptions[currentQuestionIndex] && key !== question.correctAnswer) {
                 optionBtn.classList.add('incorrect');
+                optionBtn.style.color = '#fff'; // White text for better contrast
             }
             
             if (key === selectedOptions[currentQuestionIndex]) {
@@ -1113,33 +1122,28 @@ function printCertificate() {
                 }
                 .certificate-footer {
                     margin-top: 40px;
-                    display: flex;
-                    justify-content: space-between;
                     width: 100%;
-                    padding: 0 50px;
-                }
-                .footer-left, .footer-right {
                     text-align: center;
-                    width: 45%;
                 }
                 .period {
                     font-size: 14px;
                 }
                 .signature-title {
-                    margin-top: 80px;
+                    margin-top: 30px;
                     font-weight: bold;
+                    font-size: 18px;
                 }
                 .signature-name {
                     font-weight: bold;
-                    margin-bottom: 20px;
+                    margin: 10px 0;
                 }
                 .barcode {
-                    width: 150px;
+                    width: 80px;
                     height: auto;
-                    margin-top: 10px;
+                    margin: 10px auto;
                 }
                 .certificate-code {
-                    margin-top: 20px;
+                    margin: 20px 0;
                     font-size: 12px;
                     color: #666;
                 }
@@ -1150,6 +1154,7 @@ function printCertificate() {
                 <img src="assets/images/certificate.png" alt="Certificate Background" class="certificate-bg">
                 <div class="certificate-content">
                     <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
+                    <div class="certificate-code">${document.getElementById('certificateCode').textContent}</div>
                     <p class="certificate-given">Diberikan Kepada:</p>
                     <h2 class="recipient-name">${document.getElementById('certificateName').textContent}</h2>
                     <div class="certificate-description">
@@ -1165,16 +1170,15 @@ function printCertificate() {
                     </div>
                     <div class="motivation-text">${document.getElementById('motivationText').textContent}</div>
                     <div class="certificate-footer">
-                        <div class="footer-left">
+                        <div>
                             <p class="period">Ditetapkan di: Situbondo, ${document.getElementById('certificateDate').textContent}</p>
                         </div>
-                        <div class="footer-right">
+                        <div>
                             <p class="signature-title">Ketua Pergunu Situbondo</p>
-                            <p class="signature-name">${document.getElementById('chairmanName').textContent}</p>
                             <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
+                            <p class="signature-name">${document.getElementById('chairmanName').textContent}</p>
                         </div>
                     </div>
-                    <div class="certificate-code">${document.getElementById('certificateCode').textContent}</div>
                 </div>
             </div>
         </body>
