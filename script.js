@@ -55,6 +55,7 @@ const defaultCodes = {
 // Enhanced particle system
 let particles = [];
 let particleCanvas, particleCtx;
+let celebrationParticles = [];
 
 // Sample Questions (In a real app, this would come from a database)
 function initializeSampleQuestions() {
@@ -291,36 +292,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('generateQuestionsBtn').addEventListener('click', generateQuestionsWithAI);
     document.getElementById('applyFilterBtn').addEventListener('click', filterQuestions);
     
-    // Admin Panel Modal - Fixed event listeners
-    document.getElementById('verifyAdminCodeBtn').addEventListener('click', function() {
-        const code = document.getElementById('adminCode').value;
-        const notification = document.getElementById('adminNotification');
-        
-        if (code === defaultCodes.adminCode) {
-            notification.textContent = "Kode valid! Mengarahkan ke panel admin...";
-            notification.className = "notification success";
-            document.getElementById('adminContent').style.display = 'block';
-            
-            // Load current settings into form
-            document.getElementById('greetingTextEdit').value = adminSettings.greetingText;
-            document.getElementById('periodicInfoEdit').value = adminSettings.periodicInfo;
-            document.getElementById('chairmanNameEdit').value = adminSettings.chairmanName;
-            document.getElementById('motivationTextEdit').value = JSON.stringify(adminSettings.motivationTexts, null, 2);
-            document.getElementById('examTimerEdit').value = adminSettings.examDuration;
-            document.getElementById('questionPoints').value = adminSettings.questionPoints;
-            document.getElementById('questionCount').value = adminSettings.questionCount;
-            document.getElementById('randomizeQuestions').value = adminSettings.randomizeQuestions.toString();
-            
-            // Set enabled subjects checkboxes
-            for (const subject in adminSettings.enabledSubjects) {
-                document.getElementById(`${subject}Enabled`).checked = adminSettings.enabledSubjects[subject];
-            }
-        } else {
-            notification.textContent = "Kode admin tidak valid. Silakan coba lagi.";
-            notification.className = "notification error";
-        }
-    });
-    
+    // Admin Panel Modal
+    document.getElementById('verifyAdminCodeBtn').addEventListener('click', verifyAdminCode);
     document.getElementById('saveLoginCodeBtn').addEventListener('click', saveLoginCode);
     document.getElementById('saveCpnsCodeBtn').addEventListener('click', saveCpnsCode);
     document.getElementById('saveBankSoalCodeBtn').addEventListener('click', saveBankSoalCode);
@@ -335,7 +308,7 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', shareToSocial);
     });
     
-    // Close modals - Fixed event listeners
+    // Close modals
     document.getElementById('closeBankSoalModal').addEventListener('click', function() {
         document.getElementById('bankSoalModal').style.display = 'none';
     });
@@ -524,6 +497,81 @@ function showScreen(screenId) {
     if (screenId === 'resultsScreen') {
         createCelebrationParticles();
     }
+    
+    // Show certificate animation when showing certificate screen
+    if (screenId === 'certificateScreen') {
+        createCertificateAnimation();
+    }
+}
+
+// Certificate Animation
+function createCertificateAnimation() {
+    const particleCanvas = document.getElementById('particle-canvas');
+    const ctx = particleCanvas.getContext('2d');
+    
+    // Clear any existing celebration particles
+    celebrationParticles = [];
+    
+    // Create golden particles for certificate
+    const colors = ['#FFD700', '#FFC125', '#FFD700', '#FFEC8B', '#FFFACD'];
+    
+    for (let i = 0; i < 100; i++) {
+        celebrationParticles.push({
+            x: Math.random() * particleCanvas.width,
+            y: Math.random() * particleCanvas.height,
+            size: Math.random() * 8 + 2,
+            speedY: Math.random() * 2 + 1,
+            speedX: Math.random() * 2 - 1,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotation: Math.random() * 360,
+            rotationSpeed: Math.random() * 5 - 2.5,
+            alpha: 0,
+            targetAlpha: Math.random() * 0.7 + 0.3
+        });
+    }
+    
+    // Play applause sound
+    playApplauseSound();
+    
+    // Animate certificate particles
+    function animateCertificateParticles() {
+        ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+        
+        celebrationParticles.forEach(particle => {
+            // Fade in
+            if (particle.alpha < particle.targetAlpha) {
+                particle.alpha += 0.02;
+            }
+            
+            ctx.save();
+            ctx.translate(particle.x, particle.y);
+            ctx.rotate(particle.rotation * Math.PI / 180);
+            ctx.globalAlpha = particle.alpha;
+            
+            ctx.fillStyle = particle.color;
+            ctx.fillRect(-particle.size/2, -particle.size/2, particle.size, particle.size);
+            
+            ctx.restore();
+            
+            // Update position
+            particle.y += particle.speedY;
+            particle.x += particle.speedX;
+            particle.rotation += particle.rotationSpeed;
+            
+            // Reset if out of screen
+            if (particle.y > particleCanvas.height || particle.x < 0 || particle.x > particleCanvas.width) {
+                particle.y = -20;
+                particle.x = Math.random() * particleCanvas.width;
+                particle.alpha = 0;
+            }
+        });
+        
+        if (document.getElementById('certificateScreen').classList.contains('active')) {
+            requestAnimationFrame(animateCertificateParticles);
+        }
+    }
+    
+    animateCertificateParticles();
 }
 
 // Celebration particles for results screen
@@ -531,12 +579,14 @@ function createCelebrationParticles() {
     const particleCanvas = document.getElementById('particle-canvas');
     const ctx = particleCanvas.getContext('2d');
     
+    // Clear any existing celebration particles
+    celebrationParticles = [];
+    
     // Create confetti particles
-    const confettiParticles = [];
     const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
     
     for (let i = 0; i < 150; i++) {
-        confettiParticles.push({
+        celebrationParticles.push({
             x: Math.random() * particleCanvas.width,
             y: -20,
             size: Math.random() * 10 + 5,
@@ -552,7 +602,7 @@ function createCelebrationParticles() {
     function animateConfetti() {
         ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
         
-        confettiParticles.forEach(particle => {
+        celebrationParticles.forEach(particle => {
             ctx.save();
             ctx.translate(particle.x, particle.y);
             ctx.rotate(particle.rotation * Math.PI / 180);
@@ -900,11 +950,11 @@ function displayCurrentQuestion() {
     optionsContainer.innerHTML = '';
     answerExplanation.style.display = 'none';
     
-    // Create option buttons
+    // Create option buttons with improved styling
     for (const [key, value] of Object.entries(question.options)) {
         const optionBtn = document.createElement('button');
         optionBtn.className = 'option-btn';
-        optionBtn.textContent = `${key}. ${value}`;
+        optionBtn.innerHTML = `<span class="option-letter">${key}.</span> <span class="option-text">${value}</span>`;
         optionBtn.setAttribute('data-option', key);
         
         // If already answered, show the result
@@ -1071,37 +1121,6 @@ function showCertificate() {
     
     // Show certificate screen
     showScreen('certificateScreen');
-    
-    // Play applause sound
-    playApplauseSound();
-    
-    // Create certificate celebration effect
-    createCertificateCelebration();
-}
-
-function createCertificateCelebration() {
-    const certificateContainer = document.getElementById('certificatePrint');
-    const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
-    
-    // Create 50 celebration elements
-    for (let i = 0; i < 50; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'celebration-dot';
-        dot.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        dot.style.left = `${Math.random() * 100}%`;
-        dot.style.top = `${Math.random() * 100}%`;
-        dot.style.width = `${Math.random() * 10 + 5}px`;
-        dot.style.height = dot.style.width;
-        dot.style.animationDuration = `${Math.random() * 3 + 2}s`;
-        dot.style.animationDelay = `${Math.random() * 0.5}s`;
-        
-        certificateContainer.appendChild(dot);
-        
-        // Remove after animation completes
-        setTimeout(() => {
-            dot.remove();
-        }, 5000);
-    }
 }
 
 function generateCertificateCode(score, fullName) {
@@ -1184,8 +1203,9 @@ function printCertificate() {
                     font-size: 24pt;
                     margin: 1cm 0;
                     font-weight: bold;
-                    font-family: 'Times New Roman', serif;
+                    font-family: 'Great Vibes', cursive;
                     letter-spacing: 1px;
+                    color: #000;
                 }
                 .certificate-description {
                     font-size: 12pt;
@@ -1215,7 +1235,7 @@ function printCertificate() {
                     display: flex;
                     justify-content: space-between;
                     width: 100%;
-                    margin-top: 1cm;
+                    margin-top: 2cm;
                 }
                 .footer-left, .footer-right {
                     width: 45%;
@@ -1227,12 +1247,12 @@ function printCertificate() {
                 .signature-title {
                     font-size: 12pt;
                     font-weight: bold;
-                    margin-top: 1.5cm;
+                    margin-top: 2cm;
                 }
                 .signature-name {
                     font-size: 12pt;
                     font-weight: bold;
-                    margin-top: 1cm;
+                    margin-top: 1.5cm;
                 }
                 .barcode {
                     width: 3cm;
@@ -1243,10 +1263,8 @@ function printCertificate() {
                     position: absolute;
                     bottom: 0.5cm;
                     right: 0.5cm;
-                    font-size: 10pt;
-                    font-weight: bold;
-                    color: #000;
-                    letter-spacing: 1px;
+                    font-size: 8pt;
+                    color: #666;
                 }
             </style>
         </head>
@@ -1298,6 +1316,35 @@ function showBankSoalModal() {
 function showAdminPanelModal() {
     playButtonSound();
     document.getElementById('adminPanelModal').style.display = 'block';
+}
+
+function verifyAdminCode() {
+    const code = document.getElementById('adminCode').value;
+    const notification = document.getElementById('adminNotification');
+    
+    if (code === defaultCodes.adminCode) {
+        notification.textContent = "Kode valid! Mengarahkan ke panel admin...";
+        notification.className = "notification success";
+        document.getElementById('adminContent').style.display = 'block';
+        
+        // Load current settings into form
+        document.getElementById('greetingTextEdit').value = adminSettings.greetingText;
+        document.getElementById('periodicInfoEdit').value = adminSettings.periodicInfo;
+        document.getElementById('chairmanNameEdit').value = adminSettings.chairmanName;
+        document.getElementById('motivationTextEdit').value = JSON.stringify(adminSettings.motivationTexts, null, 2);
+        document.getElementById('examTimerEdit').value = adminSettings.examDuration;
+        document.getElementById('questionPoints').value = adminSettings.questionPoints;
+        document.getElementById('questionCount').value = adminSettings.questionCount;
+        document.getElementById('randomizeQuestions').value = adminSettings.randomizeQuestions.toString();
+        
+        // Set enabled subjects checkboxes
+        for (const subject in adminSettings.enabledSubjects) {
+            document.getElementById(`${subject}Enabled`).checked = adminSettings.enabledSubjects[subject];
+        }
+    } else {
+        notification.textContent = "Kode admin tidak valid. Silakan coba lagi.";
+        notification.className = "notification error";
+    }
 }
 
 function verifyBankSoalCode() {
