@@ -41,60 +41,81 @@
                 padding: 2cm;
                 text-align: center;
                 font-family: 'Times New Roman', serif;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
             }
             .certificate-title {
                 font-size: 36pt;
-                margin-bottom: 1cm;
+                margin-bottom: 1.5cm;
                 font-weight: bold;
                 color: #000;
+                text-align: center;
+                width: 100%;
             }
             .certificate-given {
                 font-size: 14pt;
                 margin-bottom: 0.5cm;
+                text-align: center;
+                width: 100%;
             }
             .recipient-name {
                 font-size: 24pt;
-                margin: 0.5cm 0;
+                margin: 1cm 0;
                 font-weight: bold;
                 text-transform: capitalize;
-                font-family: 'Times New Roman', serif;
+                font-family: 'Great Vibes', cursive;
+                text-align: center;
+                width: 100%;
                 color: #000;
             }
             .certificate-description {
                 font-size: 12pt;
-                margin: 0.5cm 0;
+                margin: 1cm 0;
+                text-align: center;
+                width: 100%;
             }
             .certificate-text {
                 font-size: 11pt;
-                margin: 0.5cm 0;
+                margin: 1cm 0;
                 line-height: 1.5;
+                text-align: center;
+                width: 80%;
             }
             .score-container {
                 font-size: 14pt;
-                margin: 0.5cm 0;
+                margin: 1cm 0;
                 font-weight: bold;
+                text-align: center;
+                width: 100%;
             }
             .motivation-text {
                 font-size: 12pt;
-                margin: 0.5cm 0;
+                margin: 1cm 0;
                 font-style: italic;
+                text-align: center;
+                width: 80%;
             }
             .certificate-footer {
                 display: flex;
                 justify-content: space-between;
-                margin-top: 1cm;
+                margin-top: 2cm;
+                width: 100%;
             }
             .footer-left, .footer-right {
                 width: 45%;
+                text-align: center;
             }
             .signature-title {
                 font-size: 12pt;
-                margin-top: 1.5cm;
+                margin-top: 2cm;
             }
             .signature-name {
                 font-size: 12pt;
                 font-weight: bold;
-                margin-top: 1cm;
+                margin-top: 1.5cm;
             }
             .barcode {
                 width: 3cm;
@@ -105,10 +126,8 @@
                 position: absolute;
                 bottom: 0.5cm;
                 right: 0.5cm;
-                font-size: 10pt;
-                font-weight: bold;
-                color: #000;
-                letter-spacing: 1px;
+                font-size: 8pt;
+                color: #666;
             }
         }
     </style>
@@ -125,7 +144,7 @@
     <audio id="wrongAudio" src="assets/audio/jawabansalah.mp3"></audio>
     <audio id="buttonAudio" src="assets/audio/audiotombol.mp3"></audio>
 
-    <!-- Floating Buttons (Hidden by default, will show only on welcome screen) -->
+    <!-- Floating Buttons -->
     <div class="floating-buttons" id="floatingButtons">
         <button class="floating-btn" id="shareBtn"><i class="fas fa-share-alt"></i></button>
         <button class="floating-btn" id="whatsappBtn"><i class="fab fa-whatsapp"></i></button>
