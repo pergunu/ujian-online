@@ -291,8 +291,36 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('generateQuestionsBtn').addEventListener('click', generateQuestionsWithAI);
     document.getElementById('applyFilterBtn').addEventListener('click', filterQuestions);
     
-    // Admin Panel Modal
-    document.getElementById('verifyAdminCodeBtn').addEventListener('click', verifyAdminCode);
+    // Admin Panel Modal - Fixed event listeners
+    document.getElementById('verifyAdminCodeBtn').addEventListener('click', function() {
+        const code = document.getElementById('adminCode').value;
+        const notification = document.getElementById('adminNotification');
+        
+        if (code === defaultCodes.adminCode) {
+            notification.textContent = "Kode valid! Mengarahkan ke panel admin...";
+            notification.className = "notification success";
+            document.getElementById('adminContent').style.display = 'block';
+            
+            // Load current settings into form
+            document.getElementById('greetingTextEdit').value = adminSettings.greetingText;
+            document.getElementById('periodicInfoEdit').value = adminSettings.periodicInfo;
+            document.getElementById('chairmanNameEdit').value = adminSettings.chairmanName;
+            document.getElementById('motivationTextEdit').value = JSON.stringify(adminSettings.motivationTexts, null, 2);
+            document.getElementById('examTimerEdit').value = adminSettings.examDuration;
+            document.getElementById('questionPoints').value = adminSettings.questionPoints;
+            document.getElementById('questionCount').value = adminSettings.questionCount;
+            document.getElementById('randomizeQuestions').value = adminSettings.randomizeQuestions.toString();
+            
+            // Set enabled subjects checkboxes
+            for (const subject in adminSettings.enabledSubjects) {
+                document.getElementById(`${subject}Enabled`).checked = adminSettings.enabledSubjects[subject];
+            }
+        } else {
+            notification.textContent = "Kode admin tidak valid. Silakan coba lagi.";
+            notification.className = "notification error";
+        }
+    });
+    
     document.getElementById('saveLoginCodeBtn').addEventListener('click', saveLoginCode);
     document.getElementById('saveCpnsCodeBtn').addEventListener('click', saveCpnsCode);
     document.getElementById('saveBankSoalCodeBtn').addEventListener('click', saveBankSoalCode);
@@ -307,13 +335,17 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', shareToSocial);
     });
     
-    // Close modals - Fixed with proper IDs
-    document.getElementById('closeBankSoalBtn').addEventListener('click', function() {
+    // Close modals - Fixed event listeners
+    document.getElementById('closeBankSoalModal').addEventListener('click', function() {
         document.getElementById('bankSoalModal').style.display = 'none';
     });
     
-    document.getElementById('closeAdminBtn').addEventListener('click', function() {
+    document.getElementById('closeAdminModal').addEventListener('click', function() {
         document.getElementById('adminPanelModal').style.display = 'none';
+    });
+    
+    document.getElementById('closeShareModal').addEventListener('click', function() {
+        document.getElementById('shareModal').style.display = 'none';
     });
     
     // Close modals when clicking outside
@@ -469,7 +501,7 @@ function playWrongSound() {
 function playApplauseSound() {
     const audio = document.getElementById('applauseAudio');
     audio.currentTime = 0;
-    audio.volume = 0.7; // Increased volume for applause
+    audio.volume = 0.7;
     audio.play().catch(e => console.log("Audio play prevented:", e));
 }
 
@@ -487,6 +519,67 @@ function showScreen(screenId) {
     
     // Update floating buttons visibility
     showFloatingButtons(screenId);
+    
+    // Show particle effect when showing results screen
+    if (screenId === 'resultsScreen') {
+        createCelebrationParticles();
+    }
+}
+
+// Celebration particles for results screen
+function createCelebrationParticles() {
+    const particleCanvas = document.getElementById('particle-canvas');
+    const ctx = particleCanvas.getContext('2d');
+    
+    // Create confetti particles
+    const confettiParticles = [];
+    const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
+    
+    for (let i = 0; i < 150; i++) {
+        confettiParticles.push({
+            x: Math.random() * particleCanvas.width,
+            y: -20,
+            size: Math.random() * 10 + 5,
+            speedY: Math.random() * 5 + 2,
+            speedX: Math.random() * 4 - 2,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotation: Math.random() * 360,
+            rotationSpeed: Math.random() * 10 - 5
+        });
+    }
+    
+    // Animate confetti
+    function animateConfetti() {
+        ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+        
+        confettiParticles.forEach(particle => {
+            ctx.save();
+            ctx.translate(particle.x, particle.y);
+            ctx.rotate(particle.rotation * Math.PI / 180);
+            
+            ctx.fillStyle = particle.color;
+            ctx.fillRect(-particle.size/2, -particle.size/2, particle.size, particle.size);
+            
+            ctx.restore();
+            
+            // Update position
+            particle.y += particle.speedY;
+            particle.x += particle.speedX;
+            particle.rotation += particle.rotationSpeed;
+            
+            // Reset if out of screen
+            if (particle.y > particleCanvas.height) {
+                particle.y = -20;
+                particle.x = Math.random() * particleCanvas.width;
+            }
+        });
+        
+        if (document.getElementById('resultsScreen').classList.contains('active')) {
+            requestAnimationFrame(animateConfetti);
+        }
+    }
+    
+    animateConfetti();
 }
 
 function verifyLoginCode() {
@@ -807,26 +900,19 @@ function displayCurrentQuestion() {
     optionsContainer.innerHTML = '';
     answerExplanation.style.display = 'none';
     
-    // Create option buttons with improved styling
+    // Create option buttons
     for (const [key, value] of Object.entries(question.options)) {
         const optionBtn = document.createElement('button');
         optionBtn.className = 'option-btn';
         optionBtn.textContent = `${key}. ${value}`;
         optionBtn.setAttribute('data-option', key);
         
-        // Improved button styling for better contrast
-        optionBtn.style.color = '#333'; // Dark text for better readability
-        optionBtn.style.backgroundColor = '#f8f9fa';
-        optionBtn.style.border = '1px solid #ddd';
-        
         // If already answered, show the result
         if (selectedOptions[currentQuestionIndex]) {
             if (key === question.correctAnswer) {
                 optionBtn.classList.add('correct');
-                optionBtn.style.color = '#fff'; // White text for better contrast
             } else if (key === selectedOptions[currentQuestionIndex] && key !== question.correctAnswer) {
                 optionBtn.classList.add('incorrect');
-                optionBtn.style.color = '#fff'; // White text for better contrast
             }
             
             if (key === selectedOptions[currentQuestionIndex]) {
@@ -939,9 +1025,6 @@ function finishExam() {
     
     // Save exam results
     saveExamResults(score);
-    
-    // Play applause sound when exam is finished
-    playApplauseSound();
 }
 
 // Enhanced Certificate Function
@@ -992,29 +1075,33 @@ function showCertificate() {
     // Play applause sound
     playApplauseSound();
     
-    // Trigger particle celebration effect
-    triggerParticleCelebration();
+    // Create certificate celebration effect
+    createCertificateCelebration();
 }
 
-function triggerParticleCelebration() {
-    // Create celebration particles
-    const celebrationParticles = [];
-    const particleCount = 100;
+function createCertificateCelebration() {
+    const certificateContainer = document.getElementById('certificatePrint');
+    const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
     
-    for (let i = 0; i < particleCount; i++) {
-        celebrationParticles.push({
-            x: particleCanvas.width / 2,
-            y: particleCanvas.height / 2,
-            size: Math.random() * 8 + 2,
-            speedX: (Math.random() - 0.5) * 10,
-            speedY: (Math.random() - 0.5) * 10,
-            color: `hsla(${Math.random() * 360}, 100%, 50%, 0.8)`,
-            life: 100 + Math.random() * 50
-        });
+    // Create 50 celebration elements
+    for (let i = 0; i < 50; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'celebration-dot';
+        dot.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        dot.style.left = `${Math.random() * 100}%`;
+        dot.style.top = `${Math.random() * 100}%`;
+        dot.style.width = `${Math.random() * 10 + 5}px`;
+        dot.style.height = dot.style.width;
+        dot.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        dot.style.animationDelay = `${Math.random() * 0.5}s`;
+        
+        certificateContainer.appendChild(dot);
+        
+        // Remove after animation completes
+        setTimeout(() => {
+            dot.remove();
+        }, 5000);
     }
-    
-    // Add to existing particles
-    particles = particles.concat(celebrationParticles);
 }
 
 function generateCertificateCode(score, fullName) {
@@ -1035,7 +1122,9 @@ function printCertificate() {
     playButtonSound();
     
     // Create a print-specific version
-    const printWindow = window.open('', '_blank');
+    const printContent = document.getElementById('certificatePrint').innerHTML;
+    const printWindow = window.open('', '', 'width=800,height=600');
+    
     printWindow.document.write(`
         <!DOCTYPE html>
         <html>
@@ -1043,36 +1132,37 @@ function printCertificate() {
             <title>Sertifikat Ujian</title>
             <style>
                 @page {
-                    size: A4 portrait;
+                    size: A4 landscape;
                     margin: 0;
                 }
                 body {
                     margin: 0;
                     padding: 0;
-                    background-color: white;
-                    font-family: 'Poppins', sans-serif;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: #fff;
                 }
                 .certificate-container {
-                    width: 100%;
-                    height: 100vh;
                     position: relative;
+                    width: 100%;
+                    height: 100%;
                     text-align: center;
                 }
                 .certificate-bg {
+                    position: absolute;
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
                     z-index: 1;
                 }
                 .certificate-content {
                     position: relative;
                     z-index: 2;
-                    padding: 50px;
+                    padding: 2cm;
                     color: #333;
-                    text-align: center;
                     height: 100%;
                     display: flex;
                     flex-direction: column;
@@ -1080,118 +1170,98 @@ function printCertificate() {
                     align-items: center;
                 }
                 .certificate-title {
-                    font-size: 48px;
-                    margin-bottom: 30px;
-                    color: #1a3e72;
+                    font-size: 36pt;
+                    margin-bottom: 1cm;
                     font-weight: bold;
+                    color: #1a3e72;
+                    font-family: 'Times New Roman', serif;
                 }
                 .certificate-given {
-                    font-size: 24px;
-                    margin: 10px 0;
+                    font-size: 14pt;
+                    margin-bottom: 0.5cm;
                 }
                 .recipient-name {
-                    font-size: 42px;
-                    margin: 20px 0;
-                    color: #1a3e72;
-                    font-family: 'Great Vibes', cursive;
+                    font-size: 24pt;
+                    margin: 1cm 0;
+                    font-weight: bold;
+                    font-family: 'Times New Roman', serif;
+                    letter-spacing: 1px;
                 }
                 .certificate-description {
-                    margin: 20px 0;
-                    font-size: 18px;
+                    font-size: 12pt;
+                    margin: 1cm 0;
                 }
                 .certificate-description strong {
                     font-weight: bold;
                 }
                 .certificate-text {
-                    margin: 20px auto;
-                    max-width: 600px;
-                    font-size: 16px;
+                    font-size: 11pt;
+                    margin: 1cm auto;
+                    max-width: 80%;
+                    line-height: 1.5;
                 }
                 .score-container {
-                    margin: 20px 0;
-                    font-size: 24px;
-                }
-                .score-label {
+                    font-size: 14pt;
+                    margin: 1cm 0;
                     font-weight: bold;
                 }
                 .motivation-text {
-                    margin: 20px auto;
-                    max-width: 600px;
+                    font-size: 12pt;
+                    margin: 1cm auto;
+                    max-width: 80%;
                     font-style: italic;
-                    font-size: 16px;
                 }
                 .certificate-footer {
-                    margin-top: 40px;
+                    display: flex;
+                    justify-content: space-between;
                     width: 100%;
-                    text-align: center;
+                    margin-top: 1cm;
+                }
+                .footer-left, .footer-right {
+                    width: 45%;
                 }
                 .period {
-                    font-size: 14px;
+                    font-size: 11pt;
+                    text-align: left;
                 }
                 .signature-title {
-                    margin-top: 30px;
+                    font-size: 12pt;
                     font-weight: bold;
-                    font-size: 18px;
+                    margin-top: 1.5cm;
                 }
                 .signature-name {
+                    font-size: 12pt;
                     font-weight: bold;
-                    margin: 10px 0;
+                    margin-top: 1cm;
                 }
                 .barcode {
-                    width: 80px;
+                    width: 3cm;
                     height: auto;
-                    margin: 10px auto;
+                    margin-top: 0.5cm;
                 }
                 .certificate-code {
-                    margin: 20px 0;
-                    font-size: 12px;
-                    color: #666;
+                    position: absolute;
+                    bottom: 0.5cm;
+                    right: 0.5cm;
+                    font-size: 10pt;
+                    font-weight: bold;
+                    color: #000;
+                    letter-spacing: 1px;
                 }
             </style>
         </head>
         <body>
-            <div class="certificate-container">
-                <img src="assets/images/certificate.png" alt="Certificate Background" class="certificate-bg">
-                <div class="certificate-content">
-                    <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
-                    <div class="certificate-code">${document.getElementById('certificateCode').textContent}</div>
-                    <p class="certificate-given">Diberikan Kepada:</p>
-                    <h2 class="recipient-name">${document.getElementById('certificateName').textContent}</h2>
-                    <div class="certificate-description">
-                        <p>Atas Partisipasi & Pencapaian Luar Biasa dalam</p>
-                        <p><strong>Ujian Pergunu Situbondo</strong></p>
-                    </div>
-                    <div class="certificate-text">
-                        <p>Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, sertifikat ini diberikan sebagai motivasi untuk terus berkembang.</p>
-                    </div>
-                    <div class="score-container">
-                        <span class="score-label">Nilai:</span>
-                        <span class="score-value">${document.getElementById('certificateScore').textContent}</span>
-                    </div>
-                    <div class="motivation-text">${document.getElementById('motivationText').textContent}</div>
-                    <div class="certificate-footer">
-                        <div>
-                            <p class="period">Ditetapkan di: Situbondo, ${document.getElementById('certificateDate').textContent}</p>
-                        </div>
-                        <div>
-                            <p class="signature-title">Ketua Pergunu Situbondo</p>
-                            <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
-                            <p class="signature-name">${document.getElementById('chairmanName').textContent}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            ${printContent}
         </body>
         </html>
     `);
     
     printWindow.document.close();
     
-    // Wait for content to load before printing
+    // Trigger print after content is loaded
     printWindow.onload = function() {
-        setTimeout(() => {
-            printWindow.print();
-        }, 500);
+        printWindow.print();
+        printWindow.close();
     };
 }
 
@@ -1241,21 +1311,6 @@ function verifyBankSoalCode() {
         document.getElementById('bankSoalContent').style.display = 'block';
     } else {
         notification.textContent = "Kode bank soal tidak valid. Silakan coba lagi.";
-        notification.className = "notification error";
-    }
-}
-
-function verifyAdminCode() {
-    playButtonSound();
-    const code = document.getElementById('adminCode').value;
-    const notification = document.getElementById('adminNotification');
-    
-    if (code === defaultCodes.adminCode) {
-        notification.textContent = "Kode valid! Mengarahkan ke panel admin...";
-        notification.className = "notification success";
-        document.getElementById('adminContent').style.display = 'block';
-    } else {
-        notification.textContent = "Kode admin tidak valid. Silakan coba lagi.";
         notification.className = "notification error";
     }
 }
@@ -1330,4 +1385,140 @@ function loadAdminSettings() {
     if (savedSettings) {
         adminSettings = JSON.parse(savedSettings);
     }
+}
+
+// Admin Panel Functions
+function saveLoginCode() {
+    const newCode = document.getElementById('newLoginCode').value;
+    const currentCode = document.getElementById('currentLoginCode').value;
+    
+    if (currentCode === defaultCodes.loginCode) {
+        defaultCodes.loginCode = newCode;
+        alert("Kode login berhasil diperbarui!");
+    } else {
+        alert("Kode login lama tidak valid!");
+    }
+}
+
+function saveCpnsCode() {
+    const newCode = document.getElementById('newCpnsCode').value;
+    const currentCode = document.getElementById('currentCpnsCode').value;
+    
+    if (currentCode === defaultCodes.cpnsCode) {
+        defaultCodes.cpnsCode = newCode;
+        alert("Kode ujian CPNS berhasil diperbarui!");
+    } else {
+        alert("Kode ujian CPNS lama tidak valid!");
+    }
+}
+
+function saveBankSoalCode() {
+    const newCode = document.getElementById('newBankSoalCode').value;
+    const currentCode = document.getElementById('currentBankSoalCode').value;
+    
+    if (currentCode === defaultCodes.bankSoalCode) {
+        defaultCodes.bankSoalCode = newCode;
+        alert("Kode bank soal berhasil diperbarui!");
+    } else {
+        alert("Kode bank soal lama tidak valid!");
+    }
+}
+
+function saveAdminCode() {
+    const newCode = document.getElementById('newAdminCode').value;
+    const currentCode = document.getElementById('currentAdminCode').value;
+    
+    if (currentCode === defaultCodes.adminCode) {
+        defaultCodes.adminCode = newCode;
+        alert("Kode admin berhasil diperbarui!");
+    } else {
+        alert("Kode admin lama tidak valid!");
+    }
+}
+
+function saveTextSettings() {
+    adminSettings.greetingText = document.getElementById('greetingTextEdit').value;
+    adminSettings.periodicInfo = document.getElementById('periodicInfoEdit').value;
+    adminSettings.chairmanName = document.getElementById('chairmanNameEdit').value;
+    
+    try {
+        adminSettings.motivationTexts = JSON.parse(document.getElementById('motivationTextEdit').value);
+        saveAdminSettings();
+        alert("Pengaturan teks berhasil disimpan!");
+    } catch (e) {
+        alert("Format JSON tidak valid untuk teks motivasi!");
+    }
+}
+
+function saveExamSettings() {
+    adminSettings.examDuration = parseInt(document.getElementById('examTimerEdit').value);
+    adminSettings.questionPoints = parseInt(document.getElementById('questionPoints').value);
+    adminSettings.questionCount = parseInt(document.getElementById('questionCount').value);
+    adminSettings.randomizeQuestions = document.getElementById('randomizeQuestions').value === 'true';
+    
+    // Update enabled subjects
+    for (const subject in adminSettings.enabledSubjects) {
+        adminSettings.enabledSubjects[subject] = document.getElementById(`${subject}Enabled`).checked;
+    }
+    
+    saveAdminSettings();
+    alert("Pengaturan ujian berhasil disimpan!");
+}
+
+function exportParticipantData() {
+    const format = document.getElementById('exportFormat').value;
+    const participants = getParticipantsFromStorage();
+    
+    if (participants.length === 0) {
+        alert("Tidak ada data peserta yang tersedia untuk diekspor.");
+        return;
+    }
+    
+    let data, mimeType, extension;
+    
+    if (format === 'json') {
+        data = JSON.stringify(participants, null, 2);
+        mimeType = 'application/json';
+        extension = 'json';
+    } else if (format === 'csv') {
+        // Create CSV header
+        let csv = 'Nama,Status,Sekolah,NIS,Tingkat,Tujuan,Alamat,WhatsApp,Email,Mata Ujian,Tingkat Ujian,Nilai,Tanggal Ujian\n';
+        
+        // Add data rows
+        participants.forEach(p => {
+            csv += `"${p.fullName}","${p.status}","${p.schoolName || ''}","${p.nis || ''}","${
+                p.tingkatSekolah || ''}","${p.tujuan}","${p.address || ''}","${p.whatsapp || ''}","${
+                p.email || ''}","${p.examSubject || ''}","${p.examLevel || ''}","${p.score || ''}","${
+                p.examDate || ''}"\n`;
+        });
+        
+        data = csv;
+        mimeType = 'text/csv';
+        extension = 'csv';
+    } else { // Excel
+        // For Excel, we'll create a CSV with tab separator
+        let excel = 'Nama\tStatus\tSekolah\tNIS\tTingkat\tTujuan\tAlamat\tWhatsApp\tEmail\tMata Ujian\tTingkat Ujian\tNilai\tTanggal Ujian\n';
+        
+        participants.forEach(p => {
+            excel += `${p.fullName}\t${p.status}\t${p.schoolName || ''}\t${p.nis || ''}\t${
+                p.tingkatSekolah || ''}\t${p.tujuan}\t${p.address || ''}\t${p.whatsapp || ''}\t${
+                p.email || ''}\t${p.examSubject || ''}\t${p.examLevel || ''}\t${p.score || ''}\t${
+                p.examDate || ''}\n`;
+        });
+        
+        data = excel;
+        mimeType = 'application/vnd.ms-excel';
+        extension = 'xls';
+    }
+    
+    // Create download link
+    const blob = new Blob([data], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `data_peserta_ujian.${extension}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
