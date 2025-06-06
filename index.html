@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Parisienne&display=swap" rel="stylesheet">
-    <!-- Tambahkan CSS khusus untuk cetak -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Mr+Dafoe&display=swap" rel="stylesheet">
     <style>
+        /* Tambahan style untuk sertifikat */
         @media print {
             body * {
                 visibility: hidden;
@@ -25,110 +26,180 @@
                 height: 100%;
                 margin: 0;
                 padding: 0;
-                background-color: white;
             }
-            .certificate-bg {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                z-index: -1;
-            }
-            .certificate-content {
-                position: relative;
-                width: 80%;
-                margin: 0 auto;
-                padding: 2cm;
-                text-align: center;
-                font-family: 'Times New Roman', serif;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                min-height: 100vh;
-            }
-            .certificate-title {
-                font-size: 36pt;
-                margin-bottom: 1.5cm;
-                font-weight: bold;
-                color: #000;
-                text-align: center;
-                width: 100%;
-            }
-            .certificate-given {
-                font-size: 14pt;
-                margin-bottom: 0.5cm;
-                text-align: center;
-                width: 100%;
-            }
-            .recipient-name {
-                font-size: 24pt;
-                margin: 1cm 0;
-                font-weight: bold;
-                text-transform: capitalize;
-                font-family: 'Great Vibes', cursive;
-                text-align: center;
-                width: 100%;
-                color: #000;
-            }
-            .certificate-description {
-                font-size: 12pt;
-                margin: 1cm 0;
-                text-align: center;
-                width: 100%;
-            }
-            .certificate-text {
-                font-size: 11pt;
-                margin: 1cm 0;
-                line-height: 1.5;
-                text-align: center;
-                width: 80%;
-            }
-            .score-container {
-                font-size: 14pt;
-                margin: 1cm 0;
-                font-weight: bold;
-                text-align: center;
-                width: 100%;
-            }
-            .motivation-text {
-                font-size: 12pt;
-                margin: 1cm 0;
-                font-style: italic;
-                text-align: center;
-                width: 80%;
-            }
-            .certificate-footer {
-                display: flex;
-                justify-content: space-between;
-                margin-top: 2cm;
-                width: 100%;
-            }
-            .footer-left, .footer-right {
-                width: 45%;
-                text-align: center;
-            }
-            .signature-title {
-                font-size: 12pt;
-                margin-top: 2cm;
-            }
-            .signature-name {
-                font-size: 12pt;
-                font-weight: bold;
-                margin-top: 1.5cm;
-            }
-            .barcode {
-                width: 3cm;
-                height: auto;
-                margin-top: 0.5cm;
-            }
-            .certificate-code {
-                position: absolute;
-                bottom: 0.5cm;
-                right: 0.5cm;
-                font-size: 8pt;
-                color: #666;
-            }
+        }
+
+        /* Improved Certificate Styles */
+        .certificate-container {
+            position: relative;
+            width: 210mm;
+            height: 297mm;
+            margin: 0 auto;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .certificate-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .certificate-content {
+            width: 90%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .certificate-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        .certificate-code {
+            font-family: monospace;
+            font-size: 12px;
+            color: #333;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .certificate-given {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .recipient-name {
+            font-size: 42px;
+            font-weight: 600;
+            margin: 15px 0;
+            color: #000;
+            text-transform: capitalize;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .certificate-description {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .certificate-description p {
+            margin: 5px 0;
+        }
+
+        .certificate-description strong {
+            font-weight: 600;
+        }
+
+        .certificate-text {
+            width: 80%;
+            margin: 15px auto;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .score-container {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        .score-label {
+            font-weight: 600;
+        }
+
+        .score-value {
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        .motivation-text {
+            width: 80%;
+            margin: 15px auto;
+            font-style: italic;
+            font-size: 14px;
+        }
+
+        .certificate-footer {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+
+        .footer-left {
+            text-align: center;
+            width: 40%;
+        }
+
+        .footer-right {
+            text-align: center;
+            width: 40%;
+        }
+
+        .signature-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .signature-name {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .barcode {
+            width: 80px;
+            height: auto;
+            margin: 10px auto;
+            display: block;
+        }
+
+        /* Animasi sertifikat */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .certificate-animation {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* Tombol jawaban lebih kontras */
+        .options-container .option-btn {
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* Tombol close modal */
+        .modal .close-btn {
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            color: #666;
+            z-index: 10;
+        }
+
+        .modal .close-btn:hover {
+            color: #333;
         }
     </style>
 </head>
@@ -386,10 +457,11 @@
 
         <!-- Certificate Screen -->
         <div class="screen" id="certificateScreen">
-            <div class="certificate-container" id="certificatePrint">
+            <div class="certificate-container certificate-animation" id="certificatePrint">
                 <img src="assets/images/certificate.png" alt="Certificate Background" class="certificate-bg">
                 <div class="certificate-content">
                     <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
+                    <div class="certificate-code" id="certificateCode"></div>
                     <p class="certificate-given">Diberikan Kepada:</p>
                     <h2 class="recipient-name" id="certificateName"></h2>
                     <div class="certificate-description">
@@ -414,7 +486,6 @@
                             <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
                         </div>
                     </div>
-                    <div class="certificate-code" id="certificateCode"></div>
                 </div>
             </div>
             
@@ -737,7 +808,7 @@
         <!-- Share Modal -->
         <div class="modal" id="shareModal">
             <div class="modal-content">
-                <span class="close-btn" id="closeShareModal">&times;</span>
+                <span class="close-btn">&times;</span>
                 <h2>Bagikan Ujian Online</h2>
                 <div class="social-share">
                     <button class="social-btn facebook"><i class="fab fa-facebook-f"></i> Facebook</button>
