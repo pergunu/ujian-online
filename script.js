@@ -307,13 +307,11 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', shareToSocial);
     });
     
-    // Close modals - Fixed with proper IDs
-    document.getElementById('closeBankSoalModal').addEventListener('click', function() {
-        document.getElementById('bankSoalModal').style.display = 'none';
-    });
-    
-    document.getElementById('closeAdminModal').addEventListener('click', function() {
-        document.getElementById('adminPanelModal').style.display = 'none';
+    // Close modals
+    document.querySelectorAll('.close-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.closest('.modal').style.display = 'none';
+        });
     });
     
     // Close modals when clicking outside
@@ -469,7 +467,7 @@ function playWrongSound() {
 function playApplauseSound() {
     const audio = document.getElementById('applauseAudio');
     audio.currentTime = 0;
-    audio.volume = 0.7; // Increased volume for celebration
+    audio.volume = 0.5;
     audio.play().catch(e => console.log("Audio play prevented:", e));
 }
 
@@ -807,13 +805,12 @@ function displayCurrentQuestion() {
     optionsContainer.innerHTML = '';
     answerExplanation.style.display = 'none';
     
-    // Create option buttons with better contrast
+    // Create option buttons
     for (const [key, value] of Object.entries(question.options)) {
         const optionBtn = document.createElement('button');
         optionBtn.className = 'option-btn';
         optionBtn.textContent = `${key}. ${value}`;
         optionBtn.setAttribute('data-option', key);
-        optionBtn.style.color = '#333'; // Better contrast for text
         
         // If already answered, show the result
         if (selectedOptions[currentQuestionIndex]) {
@@ -954,7 +951,14 @@ function showCertificate() {
         .join(' ');
     
     // Set certificate data
-    document.getElementById('certificateName').textContent = formattedName;
+    const certificateName = document.getElementById('certificateName');
+    certificateName.textContent = formattedName;
+    certificateName.style.fontFamily = "'Great Vibes', cursive";
+    certificateName.style.fontSize = '3.5rem';
+    certificateName.style.fontWeight = 'normal';
+    certificateName.style.letterSpacing = '1px';
+    certificateName.style.margin = '10px 0';
+    
     document.getElementById('certificateScore').textContent = score;
     
     // Set certificate date
@@ -1009,10 +1013,6 @@ function triggerParticleCelebration() {
     
     // Add to existing particles
     particles = particles.concat(celebrationParticles);
-    
-    // Add animation class to certificate container
-    const certificateContainer = document.getElementById('certificatePrint');
-    certificateContainer.classList.add('certificate-animation');
 }
 
 function generateCertificateCode(score, fullName) {
@@ -1091,7 +1091,7 @@ function printCertificate() {
                     font-size: 42px;
                     margin: 20px 0;
                     color: #1a3e72;
-                    font-family: 'Dancing Script', cursive;
+                    font-family: 'Great Vibes', cursive;
                 }
                 .certificate-description {
                     margin: 20px 0;
@@ -1121,7 +1121,7 @@ function printCertificate() {
                 .certificate-footer {
                     margin-top: 40px;
                     display: flex;
-                    justify-content: space-around;
+                    justify-content: space-between;
                     width: 100%;
                     padding: 0 50px;
                 }
@@ -1141,10 +1141,9 @@ function printCertificate() {
                     margin-bottom: 20px;
                 }
                 .barcode {
-                    width: 80px;
+                    width: 150px;
                     height: auto;
-                    margin: 10px auto;
-                    display: block;
+                    margin-top: 10px;
                 }
                 .certificate-code {
                     margin-top: 20px;
@@ -1158,7 +1157,6 @@ function printCertificate() {
                 <img src="assets/images/certificate.png" alt="Certificate Background" class="certificate-bg">
                 <div class="certificate-content">
                     <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
-                    <div class="certificate-code">${document.getElementById('certificateCode').textContent}</div>
                     <p class="certificate-given">Diberikan Kepada:</p>
                     <h2 class="recipient-name">${document.getElementById('certificateName').textContent}</h2>
                     <div class="certificate-description">
@@ -1183,6 +1181,7 @@ function printCertificate() {
                             <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
                         </div>
                     </div>
+                    <div class="certificate-code">${document.getElementById('certificateCode').textContent}</div>
                 </div>
             </div>
         </body>
