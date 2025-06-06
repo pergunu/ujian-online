@@ -55,7 +55,6 @@ const defaultCodes = {
 // Enhanced particle system
 let particles = [];
 let particleCanvas, particleCtx;
-let celebrationParticles = [];
 
 // Sample Questions (In a real app, this would come from a database)
 function initializeSampleQuestions() {
@@ -308,17 +307,13 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', shareToSocial);
     });
     
-    // Close modals
+    // Close modals - Fixed with proper IDs
     document.getElementById('closeBankSoalModal').addEventListener('click', function() {
         document.getElementById('bankSoalModal').style.display = 'none';
     });
     
     document.getElementById('closeAdminModal').addEventListener('click', function() {
         document.getElementById('adminPanelModal').style.display = 'none';
-    });
-    
-    document.getElementById('closeShareModal').addEventListener('click', function() {
-        document.getElementById('shareModal').style.display = 'none';
     });
     
     // Close modals when clicking outside
@@ -474,7 +469,7 @@ function playWrongSound() {
 function playApplauseSound() {
     const audio = document.getElementById('applauseAudio');
     audio.currentTime = 0;
-    audio.volume = 0.7;
+    audio.volume = 0.7; // Increased volume for celebration
     audio.play().catch(e => console.log("Audio play prevented:", e));
 }
 
@@ -492,144 +487,6 @@ function showScreen(screenId) {
     
     // Update floating buttons visibility
     showFloatingButtons(screenId);
-    
-    // Show particle effect when showing results screen
-    if (screenId === 'resultsScreen') {
-        createCelebrationParticles();
-    }
-    
-    // Show certificate animation when showing certificate screen
-    if (screenId === 'certificateScreen') {
-        createCertificateAnimation();
-    }
-}
-
-// Certificate Animation
-function createCertificateAnimation() {
-    const particleCanvas = document.getElementById('particle-canvas');
-    const ctx = particleCanvas.getContext('2d');
-    
-    // Clear any existing celebration particles
-    celebrationParticles = [];
-    
-    // Create golden particles for certificate
-    const colors = ['#FFD700', '#FFC125', '#FFD700', '#FFEC8B', '#FFFACD'];
-    
-    for (let i = 0; i < 100; i++) {
-        celebrationParticles.push({
-            x: Math.random() * particleCanvas.width,
-            y: Math.random() * particleCanvas.height,
-            size: Math.random() * 8 + 2,
-            speedY: Math.random() * 2 + 1,
-            speedX: Math.random() * 2 - 1,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            rotation: Math.random() * 360,
-            rotationSpeed: Math.random() * 5 - 2.5,
-            alpha: 0,
-            targetAlpha: Math.random() * 0.7 + 0.3
-        });
-    }
-    
-    // Play applause sound
-    playApplauseSound();
-    
-    // Animate certificate particles
-    function animateCertificateParticles() {
-        ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-        
-        celebrationParticles.forEach(particle => {
-            // Fade in
-            if (particle.alpha < particle.targetAlpha) {
-                particle.alpha += 0.02;
-            }
-            
-            ctx.save();
-            ctx.translate(particle.x, particle.y);
-            ctx.rotate(particle.rotation * Math.PI / 180);
-            ctx.globalAlpha = particle.alpha;
-            
-            ctx.fillStyle = particle.color;
-            ctx.fillRect(-particle.size/2, -particle.size/2, particle.size, particle.size);
-            
-            ctx.restore();
-            
-            // Update position
-            particle.y += particle.speedY;
-            particle.x += particle.speedX;
-            particle.rotation += particle.rotationSpeed;
-            
-            // Reset if out of screen
-            if (particle.y > particleCanvas.height || particle.x < 0 || particle.x > particleCanvas.width) {
-                particle.y = -20;
-                particle.x = Math.random() * particleCanvas.width;
-                particle.alpha = 0;
-            }
-        });
-        
-        if (document.getElementById('certificateScreen').classList.contains('active')) {
-            requestAnimationFrame(animateCertificateParticles);
-        }
-    }
-    
-    animateCertificateParticles();
-}
-
-// Celebration particles for results screen
-function createCelebrationParticles() {
-    const particleCanvas = document.getElementById('particle-canvas');
-    const ctx = particleCanvas.getContext('2d');
-    
-    // Clear any existing celebration particles
-    celebrationParticles = [];
-    
-    // Create confetti particles
-    const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
-    
-    for (let i = 0; i < 150; i++) {
-        celebrationParticles.push({
-            x: Math.random() * particleCanvas.width,
-            y: -20,
-            size: Math.random() * 10 + 5,
-            speedY: Math.random() * 5 + 2,
-            speedX: Math.random() * 4 - 2,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            rotation: Math.random() * 360,
-            rotationSpeed: Math.random() * 10 - 5
-        });
-    }
-    
-    // Animate confetti
-    function animateConfetti() {
-        ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-        
-        celebrationParticles.forEach(particle => {
-            ctx.save();
-            ctx.translate(particle.x, particle.y);
-            ctx.rotate(particle.rotation * Math.PI / 180);
-            
-            ctx.fillStyle = particle.color;
-            ctx.fillRect(-particle.size/2, -particle.size/2, particle.size, particle.size);
-            
-            ctx.restore();
-            
-            // Update position
-            particle.y += particle.speedY;
-            particle.x += particle.speedX;
-            particle.rotation += particle.rotationSpeed;
-            
-            // Reset if out of screen
-            if (particle.y > particleCanvas.height) {
-                particle.y = -20;
-                particle.x = Math.random() * particleCanvas.width;
-            }
-        });
-        
-        if (document.getElementById('resultsScreen').classList.contains('active')) {
-            requestAnimationFrame(animateConfetti);
-        }
-    }
-    
-    animateConfetti();
 }
 
 function verifyLoginCode() {
@@ -950,12 +807,13 @@ function displayCurrentQuestion() {
     optionsContainer.innerHTML = '';
     answerExplanation.style.display = 'none';
     
-    // Create option buttons with improved styling
+    // Create option buttons with better contrast
     for (const [key, value] of Object.entries(question.options)) {
         const optionBtn = document.createElement('button');
         optionBtn.className = 'option-btn';
-        optionBtn.innerHTML = `<span class="option-letter">${key}.</span> <span class="option-text">${value}</span>`;
+        optionBtn.textContent = `${key}. ${value}`;
         optionBtn.setAttribute('data-option', key);
+        optionBtn.style.color = '#333'; // Better contrast for text
         
         // If already answered, show the result
         if (selectedOptions[currentQuestionIndex]) {
@@ -1075,6 +933,9 @@ function finishExam() {
     
     // Save exam results
     saveExamResults(score);
+    
+    // Play applause sound when exam is finished
+    playApplauseSound();
 }
 
 // Enhanced Certificate Function
@@ -1121,6 +982,37 @@ function showCertificate() {
     
     // Show certificate screen
     showScreen('certificateScreen');
+    
+    // Play applause sound
+    playApplauseSound();
+    
+    // Trigger particle celebration effect
+    triggerParticleCelebration();
+}
+
+function triggerParticleCelebration() {
+    // Create celebration particles
+    const celebrationParticles = [];
+    const particleCount = 100;
+    
+    for (let i = 0; i < particleCount; i++) {
+        celebrationParticles.push({
+            x: particleCanvas.width / 2,
+            y: particleCanvas.height / 2,
+            size: Math.random() * 8 + 2,
+            speedX: (Math.random() - 0.5) * 10,
+            speedY: (Math.random() - 0.5) * 10,
+            color: `hsla(${Math.random() * 360}, 100%, 50%, 0.8)`,
+            life: 100 + Math.random() * 50
+        });
+    }
+    
+    // Add to existing particles
+    particles = particles.concat(celebrationParticles);
+    
+    // Add animation class to certificate container
+    const certificateContainer = document.getElementById('certificatePrint');
+    certificateContainer.classList.add('certificate-animation');
 }
 
 function generateCertificateCode(score, fullName) {
@@ -1141,9 +1033,7 @@ function printCertificate() {
     playButtonSound();
     
     // Create a print-specific version
-    const printContent = document.getElementById('certificatePrint').innerHTML;
-    const printWindow = window.open('', '', 'width=800,height=600');
-    
+    const printWindow = window.open('', '_blank');
     printWindow.document.write(`
         <!DOCTYPE html>
         <html>
@@ -1151,37 +1041,36 @@ function printCertificate() {
             <title>Sertifikat Ujian</title>
             <style>
                 @page {
-                    size: A4 landscape;
+                    size: A4 portrait;
                     margin: 0;
                 }
                 body {
                     margin: 0;
                     padding: 0;
-                    width: 100%;
-                    height: 100%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    background-color: #fff;
+                    background-color: white;
+                    font-family: 'Poppins', sans-serif;
                 }
                 .certificate-container {
-                    position: relative;
                     width: 100%;
-                    height: 100%;
+                    height: 100vh;
+                    position: relative;
                     text-align: center;
                 }
                 .certificate-bg {
-                    position: absolute;
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
                     z-index: 1;
                 }
                 .certificate-content {
                     position: relative;
                     z-index: 2;
-                    padding: 2cm;
+                    padding: 50px;
                     color: #333;
+                    text-align: center;
                     height: 100%;
                     display: flex;
                     flex-direction: column;
@@ -1189,97 +1078,124 @@ function printCertificate() {
                     align-items: center;
                 }
                 .certificate-title {
-                    font-size: 36pt;
-                    margin-bottom: 1cm;
-                    font-weight: bold;
+                    font-size: 48px;
+                    margin-bottom: 30px;
                     color: #1a3e72;
-                    font-family: 'Times New Roman', serif;
+                    font-weight: bold;
                 }
                 .certificate-given {
-                    font-size: 14pt;
-                    margin-bottom: 0.5cm;
+                    font-size: 24px;
+                    margin: 10px 0;
                 }
                 .recipient-name {
-                    font-size: 24pt;
-                    margin: 1cm 0;
-                    font-weight: bold;
-                    font-family: 'Great Vibes', cursive;
-                    letter-spacing: 1px;
-                    color: #000;
+                    font-size: 42px;
+                    margin: 20px 0;
+                    color: #1a3e72;
+                    font-family: 'Dancing Script', cursive;
                 }
                 .certificate-description {
-                    font-size: 12pt;
-                    margin: 1cm 0;
+                    margin: 20px 0;
+                    font-size: 18px;
                 }
                 .certificate-description strong {
                     font-weight: bold;
                 }
                 .certificate-text {
-                    font-size: 11pt;
-                    margin: 1cm auto;
-                    max-width: 80%;
-                    line-height: 1.5;
+                    margin: 20px auto;
+                    max-width: 600px;
+                    font-size: 16px;
                 }
                 .score-container {
-                    font-size: 14pt;
-                    margin: 1cm 0;
+                    margin: 20px 0;
+                    font-size: 24px;
+                }
+                .score-label {
                     font-weight: bold;
                 }
                 .motivation-text {
-                    font-size: 12pt;
-                    margin: 1cm auto;
-                    max-width: 80%;
+                    margin: 20px auto;
+                    max-width: 600px;
                     font-style: italic;
+                    font-size: 16px;
                 }
                 .certificate-footer {
+                    margin-top: 40px;
                     display: flex;
-                    justify-content: space-between;
+                    justify-content: space-around;
                     width: 100%;
-                    margin-top: 2cm;
+                    padding: 0 50px;
                 }
                 .footer-left, .footer-right {
+                    text-align: center;
                     width: 45%;
                 }
                 .period {
-                    font-size: 11pt;
-                    text-align: left;
+                    font-size: 14px;
                 }
                 .signature-title {
-                    font-size: 12pt;
+                    margin-top: 80px;
                     font-weight: bold;
-                    margin-top: 2cm;
                 }
                 .signature-name {
-                    font-size: 12pt;
                     font-weight: bold;
-                    margin-top: 1.5cm;
+                    margin-bottom: 20px;
                 }
                 .barcode {
-                    width: 3cm;
+                    width: 80px;
                     height: auto;
-                    margin-top: 0.5cm;
+                    margin: 10px auto;
+                    display: block;
                 }
                 .certificate-code {
-                    position: absolute;
-                    bottom: 0.5cm;
-                    right: 0.5cm;
-                    font-size: 8pt;
+                    margin-top: 20px;
+                    font-size: 12px;
                     color: #666;
                 }
             </style>
         </head>
         <body>
-            ${printContent}
+            <div class="certificate-container">
+                <img src="assets/images/certificate.png" alt="Certificate Background" class="certificate-bg">
+                <div class="certificate-content">
+                    <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
+                    <div class="certificate-code">${document.getElementById('certificateCode').textContent}</div>
+                    <p class="certificate-given">Diberikan Kepada:</p>
+                    <h2 class="recipient-name">${document.getElementById('certificateName').textContent}</h2>
+                    <div class="certificate-description">
+                        <p>Atas Partisipasi & Pencapaian Luar Biasa dalam</p>
+                        <p><strong>Ujian Pergunu Situbondo</strong></p>
+                    </div>
+                    <div class="certificate-text">
+                        <p>Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, sertifikat ini diberikan sebagai motivasi untuk terus berkembang.</p>
+                    </div>
+                    <div class="score-container">
+                        <span class="score-label">Nilai:</span>
+                        <span class="score-value">${document.getElementById('certificateScore').textContent}</span>
+                    </div>
+                    <div class="motivation-text">${document.getElementById('motivationText').textContent}</div>
+                    <div class="certificate-footer">
+                        <div class="footer-left">
+                            <p class="period">Ditetapkan di: Situbondo, ${document.getElementById('certificateDate').textContent}</p>
+                        </div>
+                        <div class="footer-right">
+                            <p class="signature-title">Ketua Pergunu Situbondo</p>
+                            <p class="signature-name">${document.getElementById('chairmanName').textContent}</p>
+                            <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </body>
         </html>
     `);
     
     printWindow.document.close();
     
-    // Trigger print after content is loaded
+    // Wait for content to load before printing
     printWindow.onload = function() {
-        printWindow.print();
-        printWindow.close();
+        setTimeout(() => {
+            printWindow.print();
+        }, 500);
     };
 }
 
@@ -1318,35 +1234,6 @@ function showAdminPanelModal() {
     document.getElementById('adminPanelModal').style.display = 'block';
 }
 
-function verifyAdminCode() {
-    const code = document.getElementById('adminCode').value;
-    const notification = document.getElementById('adminNotification');
-    
-    if (code === defaultCodes.adminCode) {
-        notification.textContent = "Kode valid! Mengarahkan ke panel admin...";
-        notification.className = "notification success";
-        document.getElementById('adminContent').style.display = 'block';
-        
-        // Load current settings into form
-        document.getElementById('greetingTextEdit').value = adminSettings.greetingText;
-        document.getElementById('periodicInfoEdit').value = adminSettings.periodicInfo;
-        document.getElementById('chairmanNameEdit').value = adminSettings.chairmanName;
-        document.getElementById('motivationTextEdit').value = JSON.stringify(adminSettings.motivationTexts, null, 2);
-        document.getElementById('examTimerEdit').value = adminSettings.examDuration;
-        document.getElementById('questionPoints').value = adminSettings.questionPoints;
-        document.getElementById('questionCount').value = adminSettings.questionCount;
-        document.getElementById('randomizeQuestions').value = adminSettings.randomizeQuestions.toString();
-        
-        // Set enabled subjects checkboxes
-        for (const subject in adminSettings.enabledSubjects) {
-            document.getElementById(`${subject}Enabled`).checked = adminSettings.enabledSubjects[subject];
-        }
-    } else {
-        notification.textContent = "Kode admin tidak valid. Silakan coba lagi.";
-        notification.className = "notification error";
-    }
-}
-
 function verifyBankSoalCode() {
     playButtonSound();
     const code = document.getElementById('bankSoalCode').value;
@@ -1358,6 +1245,21 @@ function verifyBankSoalCode() {
         document.getElementById('bankSoalContent').style.display = 'block';
     } else {
         notification.textContent = "Kode bank soal tidak valid. Silakan coba lagi.";
+        notification.className = "notification error";
+    }
+}
+
+function verifyAdminCode() {
+    playButtonSound();
+    const code = document.getElementById('adminCode').value;
+    const notification = document.getElementById('adminNotification');
+    
+    if (code === defaultCodes.adminCode) {
+        notification.textContent = "Kode valid! Mengarahkan ke panel admin...";
+        notification.className = "notification success";
+        document.getElementById('adminContent').style.display = 'block';
+    } else {
+        notification.textContent = "Kode admin tidak valid. Silakan coba lagi.";
         notification.className = "notification error";
     }
 }
@@ -1432,140 +1334,4 @@ function loadAdminSettings() {
     if (savedSettings) {
         adminSettings = JSON.parse(savedSettings);
     }
-}
-
-// Admin Panel Functions
-function saveLoginCode() {
-    const newCode = document.getElementById('newLoginCode').value;
-    const currentCode = document.getElementById('currentLoginCode').value;
-    
-    if (currentCode === defaultCodes.loginCode) {
-        defaultCodes.loginCode = newCode;
-        alert("Kode login berhasil diperbarui!");
-    } else {
-        alert("Kode login lama tidak valid!");
-    }
-}
-
-function saveCpnsCode() {
-    const newCode = document.getElementById('newCpnsCode').value;
-    const currentCode = document.getElementById('currentCpnsCode').value;
-    
-    if (currentCode === defaultCodes.cpnsCode) {
-        defaultCodes.cpnsCode = newCode;
-        alert("Kode ujian CPNS berhasil diperbarui!");
-    } else {
-        alert("Kode ujian CPNS lama tidak valid!");
-    }
-}
-
-function saveBankSoalCode() {
-    const newCode = document.getElementById('newBankSoalCode').value;
-    const currentCode = document.getElementById('currentBankSoalCode').value;
-    
-    if (currentCode === defaultCodes.bankSoalCode) {
-        defaultCodes.bankSoalCode = newCode;
-        alert("Kode bank soal berhasil diperbarui!");
-    } else {
-        alert("Kode bank soal lama tidak valid!");
-    }
-}
-
-function saveAdminCode() {
-    const newCode = document.getElementById('newAdminCode').value;
-    const currentCode = document.getElementById('currentAdminCode').value;
-    
-    if (currentCode === defaultCodes.adminCode) {
-        defaultCodes.adminCode = newCode;
-        alert("Kode admin berhasil diperbarui!");
-    } else {
-        alert("Kode admin lama tidak valid!");
-    }
-}
-
-function saveTextSettings() {
-    adminSettings.greetingText = document.getElementById('greetingTextEdit').value;
-    adminSettings.periodicInfo = document.getElementById('periodicInfoEdit').value;
-    adminSettings.chairmanName = document.getElementById('chairmanNameEdit').value;
-    
-    try {
-        adminSettings.motivationTexts = JSON.parse(document.getElementById('motivationTextEdit').value);
-        saveAdminSettings();
-        alert("Pengaturan teks berhasil disimpan!");
-    } catch (e) {
-        alert("Format JSON tidak valid untuk teks motivasi!");
-    }
-}
-
-function saveExamSettings() {
-    adminSettings.examDuration = parseInt(document.getElementById('examTimerEdit').value);
-    adminSettings.questionPoints = parseInt(document.getElementById('questionPoints').value);
-    adminSettings.questionCount = parseInt(document.getElementById('questionCount').value);
-    adminSettings.randomizeQuestions = document.getElementById('randomizeQuestions').value === 'true';
-    
-    // Update enabled subjects
-    for (const subject in adminSettings.enabledSubjects) {
-        adminSettings.enabledSubjects[subject] = document.getElementById(`${subject}Enabled`).checked;
-    }
-    
-    saveAdminSettings();
-    alert("Pengaturan ujian berhasil disimpan!");
-}
-
-function exportParticipantData() {
-    const format = document.getElementById('exportFormat').value;
-    const participants = getParticipantsFromStorage();
-    
-    if (participants.length === 0) {
-        alert("Tidak ada data peserta yang tersedia untuk diekspor.");
-        return;
-    }
-    
-    let data, mimeType, extension;
-    
-    if (format === 'json') {
-        data = JSON.stringify(participants, null, 2);
-        mimeType = 'application/json';
-        extension = 'json';
-    } else if (format === 'csv') {
-        // Create CSV header
-        let csv = 'Nama,Status,Sekolah,NIS,Tingkat,Tujuan,Alamat,WhatsApp,Email,Mata Ujian,Tingkat Ujian,Nilai,Tanggal Ujian\n';
-        
-        // Add data rows
-        participants.forEach(p => {
-            csv += `"${p.fullName}","${p.status}","${p.schoolName || ''}","${p.nis || ''}","${
-                p.tingkatSekolah || ''}","${p.tujuan}","${p.address || ''}","${p.whatsapp || ''}","${
-                p.email || ''}","${p.examSubject || ''}","${p.examLevel || ''}","${p.score || ''}","${
-                p.examDate || ''}"\n`;
-        });
-        
-        data = csv;
-        mimeType = 'text/csv';
-        extension = 'csv';
-    } else { // Excel
-        // For Excel, we'll create a CSV with tab separator
-        let excel = 'Nama\tStatus\tSekolah\tNIS\tTingkat\tTujuan\tAlamat\tWhatsApp\tEmail\tMata Ujian\tTingkat Ujian\tNilai\tTanggal Ujian\n';
-        
-        participants.forEach(p => {
-            excel += `${p.fullName}\t${p.status}\t${p.schoolName || ''}\t${p.nis || ''}\t${
-                p.tingkatSekolah || ''}\t${p.tujuan}\t${p.address || ''}\t${p.whatsapp || ''}\t${
-                p.email || ''}\t${p.examSubject || ''}\t${p.examLevel || ''}\t${p.score || ''}\t${
-                p.examDate || ''}\n`;
-        });
-        
-        data = excel;
-        mimeType = 'application/vnd.ms-excel';
-        extension = 'xls';
-    }
-    
-    // Create download link
-    const blob = new Blob([data], { type: mimeType });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `data_peserta_ujian.${extension}`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
 }
