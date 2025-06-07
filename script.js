@@ -201,8 +201,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set halaman awal
     showPage('welcome-page');
     
-    // Mainkan audio opening
-    document.getElementById('opening-audio').play();
+    // Mainkan audio opening (hanya sekali)
+    const openingAudio = document.getElementById('opening-audio');
+    openingAudio.volume = 0.5;
+    openingAudio.play().catch(e => console.log("Audio play failed:", e));
     
     // Inisialisasi partikel
     initParticles();
@@ -298,6 +300,7 @@ function setupEventListeners() {
         if (loginCode === defaultCodes.login) {
             playButtonSound();
             showPage('terms-page');
+            errorElement.style.display = 'none';
         } else {
             errorElement.textContent = "Kode login salah. Silakan coba lagi.";
             errorElement.style.display = 'block';
@@ -334,7 +337,6 @@ function setupEventListeners() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 // Gunakan API geocoding untuk mendapatkan alamat dari koordinat
-                // Ini adalah contoh, Anda perlu mengganti dengan API yang sebenarnya
                 const lat = position.coords.latitude;
                 const lng = position.coords.longitude;
                 
@@ -361,6 +363,11 @@ function setupEventListeners() {
     document.getElementById('participant-form').addEventListener('submit', function(e) {
         e.preventDefault();
         playButtonSound();
+        
+        // Validasi form
+        if (!validateParticipantForm()) {
+            return;
+        }
         
         // Kumpulkan data peserta
         participantData = {
@@ -569,6 +576,58 @@ function setupEventListeners() {
         playButtonSound();
         addShareLink();
     });
+}
+
+// Fungsi untuk validasi form peserta
+function validateParticipantForm() {
+    const status = document.querySelector('input[name="status"]:checked').value;
+    let isValid = true;
+    
+    // Validasi nama lengkap
+    const fullname = document.getElementById('fullname').value.trim();
+    if (!fullname) {
+        alert("Nama lengkap harus diisi");
+        isValid = false;
+    }
+    
+    if (status === 'pelajar') {
+        // Validasi untuk pelajar
+        const school = document.getElementById('school').value.trim();
+        const nis = document.getElementById('nis').value.trim();
+        const purpose = document.getElementById('student-purpose').value;
+        const schoolLevel = document.getElementById('school-level').value;
+        
+        if (!school || !nis || !purpose || !schoolLevel) {
+            alert("Semua data untuk pelajar harus diisi");
+            isValid = false;
+        }
+    } else {
+        // Validasi untuk umum
+        const address = document.getElementById('address').value.trim();
+        const whatsapp = document.getElementById('whatsapp').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const purpose = document.getElementById('general-purpose').value;
+        
+        if (!address || !whatsapp || !email || !purpose) {
+            alert("Semua data untuk umum harus diisi");
+            isValid = false;
+        }
+        
+        // Validasi format email
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|hotmail)\.com$/;
+        if (!emailRegex.test(email)) {
+            alert("Format email tidak valid. Gunakan @gmail.com, @yahoo.com, atau @hotmail.com");
+            isValid = false;
+        }
+        
+        // Validasi nomor WhatsApp
+        if (whatsapp.length < 10 || whatsapp.length > 13) {
+            alert("Nomor WhatsApp harus antara 10-13 digit");
+            isValid = false;
+        }
+    }
+    
+    return isValid;
 }
 
 // Fungsi untuk Menampilkan Halaman
@@ -1014,6 +1073,16 @@ function showCertificate() {
 function downloadCertificate() {
     // Dalam implementasi nyata, ini akan menggunakan library seperti html2canvas
     alert("Fungsi download sertifikat akan mengkonversi HTML ke gambar/PDF. Di sini hanya simulasi.");
+    
+    // Contoh implementasi dengan html2canvas (uncomment jika library tersedia)
+    /*
+    html2canvas(document.getElementById('certificate')).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'sertifikat-ujian.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+    */
 }
 
 // Fungsi untuk Menampilkan Modal Kode Akses
@@ -1422,7 +1491,7 @@ function loadFromLocalStorage() {
 function playButtonSound() {
     const audio = document.getElementById('button-audio');
     audio.currentTime = 0;
-    audio.play();
+    audio.play().catch(e => console.log("Audio play failed:", e));
 }
 
 // Fungsi untuk Mengacak Array
