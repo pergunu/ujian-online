@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ujian Online - Pergunu Situbondo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* CSS Styles */
         :root {
@@ -310,8 +310,11 @@
         }
 
         .certificate-container {
-            background: white;
-            padding: 30px;
+            background-image: url('assets/images/certificate.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 50px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             margin: 30px auto;
@@ -319,6 +322,12 @@
             position: relative;
             color: #333;
             text-align: center;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Playfair Display', serif;
         }
 
         .certificate-title {
@@ -326,6 +335,8 @@
             font-weight: 700;
             margin-bottom: 20px;
             color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .certificate-name {
@@ -333,12 +344,14 @@
             font-weight: 600;
             margin: 30px 0;
             color: var(--dark);
+            text-transform: capitalize;
         }
 
         .certificate-text {
             font-size: 1.1rem;
             line-height: 1.6;
             margin-bottom: 20px;
+            max-width: 600px;
         }
 
         .certificate-score {
@@ -353,14 +366,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
+            padding: 0 50px;
         }
 
         .certificate-signature {
             text-align: center;
+            flex: 1;
         }
 
         .certificate-barcode {
             height: 80px;
+        }
+
+        .certificate-date {
+            margin-bottom: 10px;
         }
 
         .floating-buttons {
@@ -495,7 +515,8 @@
             }
             
             .certificate-container {
-                padding: 20px;
+                padding: 30px;
+                min-height: 500px;
             }
             
             .certificate-title {
@@ -515,6 +536,12 @@
                 width: 45px;
                 height: 45px;
                 font-size: 1.2rem;
+            }
+            
+            .certificate-footer {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0;
             }
         }
 
@@ -542,7 +569,8 @@
             }
             
             .certificate-container {
-                padding: 15px;
+                padding: 20px;
+                min-height: 400px;
             }
             
             .certificate-title {
@@ -555,6 +583,10 @@
             
             .certificate-text {
                 font-size: 1rem;
+            }
+            
+            .certificate-score {
+                font-size: 1.5rem;
             }
         }
 
@@ -995,7 +1027,7 @@
                     </div>
                     
                     <div>
-                        <div style="margin-bottom: 10px;">Periode: <span id="certificate-date">16 Mei 2025</span></div>
+                        <div class="certificate-date">Ditetapkan di: Situbondo, <span id="certificate-date">16 Mei 2025</span></div>
                         <img src="assets/images/BARCODE.png" alt="Barcode" class="certificate-barcode">
                         <div style="font-size: 0.8rem; margin-top: 5px;" id="certificate-code">Kode Sertifikat</div>
                     </div>
@@ -1440,6 +1472,7 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
         let timerInterval;
         let timeLeft = 120 * 60; // 120 menit dalam detik
         let examStarted = false;
+        let hasPlayedOpeningSound = false;
         
         // Data contoh soal (dalam aplikasi nyata, ini akan diambil dari database)
         const sampleQuestions = {
@@ -1679,9 +1712,12 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
             // Load settings
             loadSettings();
             
-            // Play opening sound
-            const buttonSound = document.getElementById('button-sound');
-            buttonSound.play().catch(e => console.log('Autoplay prevented:', e));
+            // Play opening sound only once
+            if (!hasPlayedOpeningSound) {
+                const buttonSound = document.getElementById('button-sound');
+                buttonSound.play().catch(e => console.log('Autoplay prevented:', e));
+                hasPlayedOpeningSound = true;
+            }
         });
 
         // Fungsi untuk menampilkan halaman tertentu
@@ -1696,7 +1732,7 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
             
             // Sembunyikan tombol mengambang di halaman sertifikat
             const floatingButtons = document.querySelector('.floating-buttons');
-            if (page === 'certificate') {
+            if (page === 'certificate' || page === 'result') {
                 floatingButtons.style.display = 'none';
             } else {
                 floatingButtons.style.display = 'flex';
@@ -1771,6 +1807,38 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
                 participantData.address = document.getElementById('address').value;
                 participantData.phone = document.getElementById('phone').value;
                 participantData.email = document.getElementById('email').value;
+            }
+            
+            // Validasi form
+            if (!participantData.fullName) {
+                showNotification('Nama lengkap harus diisi!', 'error');
+                return;
+            }
+            
+            if (status === 'pelajar') {
+                if (!participantData.schoolName || !participantData.studentId || !participantData.schoolLevel) {
+                    showNotification('Semua data pelajar harus diisi!', 'error');
+                    return;
+                }
+            } else {
+                if (!participantData.address || !participantData.phone || !participantData.email) {
+                    showNotification('Semua data umum harus diisi!', 'error');
+                    return;
+                }
+                
+                // Validasi email
+                const emailRegex = /^[a-z0-9._%+-]+@(gmail|yahoo|hotmail)\.com$/i;
+                if (!emailRegex.test(participantData.email)) {
+                    showNotification('Format email tidak valid! Hanya menerima @gmail.com, @yahoo.com, atau @hotmail.com', 'error');
+                    return;
+                }
+                
+                // Validasi nomor WhatsApp
+                const phoneRegex = /^[0-9]{10,13}$/;
+                if (!phoneRegex.test(participantData.phone)) {
+                    showNotification('Nomor WhatsApp harus 10-13 digit angka!', 'error');
+                    return;
+                }
             }
             
             // Simpan data peserta ke localStorage (simulasi database)
