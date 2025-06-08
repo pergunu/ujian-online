@@ -3,1239 +3,563 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ujian Online - Pergunu Situbondo</title>
+    <title>Ujian Online PERGUNU Situbondo</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Parisienne&display=swap" rel="stylesheet">
     <style>
-        /* CSS Styles */
-        :root {
-            --primary: #6a11cb;
-            --secondary: #2575fc;
-            --accent: #ff4d4d;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
-            --info: #17a2b8;
-            --gold: #FFD700;
-            --silver: #C0C0C0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--primary), var(--secondary), #00d2ff);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: white;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 0;
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .logo img {
-            height: 80px;
-            margin-bottom: 10px;
-        }
-
-        .logo h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            background: linear-gradient(to right, #fff, #ddd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            margin-bottom: 30px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: none;
-            background: rgba(255, 255, 255, 0.9);
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.3);
-            background: white;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            color: white;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 7px 20px rgba(106, 17, 203, 0.4);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn-block {
-            display: block;
-            width: 100%;
-        }
-
-        .btn-success {
-            background: linear-gradient(to right, var(--success), #5cb85c);
-        }
-
-        .btn-danger {
-            background: linear-gradient(to right, var(--danger), #c82333);
-        }
-
-        .btn-warning {
-            background: linear-gradient(to right, var(--warning), #e0a800);
-            color: var(--dark);
-        }
-
-        .btn-info {
-            background: linear-gradient(to right, var(--info), #138496);
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .flex-center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .welcome-message {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .rules-container {
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .rules-container h3 {
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .rules-container ul {
-            padding-left: 20px;
-        }
-
-        .rules-container li {
-            margin-bottom: 8px;
-        }
-
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .checkbox-container input {
-            width: auto;
-            margin-right: 10px;
-        }
-
-        .timer {
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin: 20px 0;
-            color: white;
-        }
-
-        .timer.warning {
-            color: var(--warning);
-            animation: pulse 1s infinite;
-        }
-
-        .timer.danger {
-            color: var(--danger);
-            animation: pulse 0.5s infinite;
-            font-size: 2rem;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .question-container {
-            margin-bottom: 30px;
-        }
-
-        .question {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .options {
-            margin-bottom: 20px;
-        }
-
-        .option {
-            display: block;
-            padding: 15px;
-            margin-bottom: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .option:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .option.selected {
-            background: rgba(40, 167, 69, 0.3);
-            border-color: var(--success);
-        }
-
-        .option.wrong {
-            background: rgba(220, 53, 69, 0.3);
-            border-color: var(--danger);
-        }
-
-        .explanation {
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            margin-top: 20px;
-            display: none;
-        }
-
-        .navigation-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-
-        .result-container {
-            text-align: center;
-        }
-
-        .result-score {
-            font-size: 3rem;
-            font-weight: 700;
-            margin: 20px 0;
-            color: white;
-        }
-
-        /* Sertifikat yang diperbaiki */
-        .certificate-container {
-            width: 100%;
-            max-width: 900px;
-            margin: 30px auto;
-            position: relative;
-            background-image: url('assets/images/certificate.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            padding: 60px;
-            border: 15px solid #f5f5f5;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            color: #333;
-            text-align: center;
-            min-height: 600px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .certificate-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #8B4513;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .certificate-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            color: #555;
-        }
-
-        .certificate-divider {
-            width: 150px;
-            height: 2px;
-            background: linear-gradient(to right, transparent, #8B4513, transparent);
-            margin: 20px auto;
-        }
-
-        .certificate-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin: 30px 0;
-            color: #000;
-            text-transform: uppercase;
-        }
-
-        .certificate-text {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            color: #444;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .certificate-score {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin: 30px 0;
-            color: var(--primary);
-            background: linear-gradient(to right, var(--gold), var(--silver));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-            padding: 0 20px;
-        }
-
-        .certificate-footer {
-            margin-top: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .certificate-signature {
-            text-align: center;
-            flex: 1;
-        }
-
-        .signature-line {
-            width: 200px;
-            height: 1px;
-            background: #000;
-            margin: 5px auto;
-        }
-
-        .certificate-date {
-            flex: 1;
-            text-align: center;
-        }
-
-        .certificate-barcode {
-            height: 80px;
-            margin-bottom: 10px;
-        }
-
-        .certificate-code {
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        .floating-buttons {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-        }
-
-        .floating-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-        }
-
-        .floating-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .admin-panel {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 30px;
-        }
-
-        .admin-tabs {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            overflow-x: auto;
-        }
-
-        .admin-tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .admin-tab.active {
-            border-bottom: 3px solid var(--primary);
-            font-weight: 600;
-        }
-
-        .admin-tab:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .admin-content {
-            display: none;
-        }
-
-        .admin-content.active {
-            display: block;
-        }
-
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            animation: slideIn 0.5s forwards, slideOut 0.5s forwards 2.5s;
-            display: none;
-        }
-
-        @keyframes slideIn {
-            from { bottom: -50px; opacity: 0; }
-            to { bottom: 20px; opacity: 1; }
-        }
-
-        @keyframes slideOut {
-            from { bottom: 20px; opacity: 1; }
-            to { bottom: -50px; opacity: 0; }
-        }
-
-        /* Animasi untuk transisi halaman */
-        .page {
-            animation: fadeIn 0.5s forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .slide-in {
-            animation: slideInRight 0.5s forwards;
-        }
-
-        .slide-out {
-            animation: slideOutLeft 0.5s forwards;
-        }
-
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(100px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes slideOutLeft {
-            from { opacity: 1; transform: translateX(0); }
-            to { opacity: 0; transform: translateX(-100px); }
-        }
-
-        /* Responsif */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .card {
-                padding: 20px;
-            }
-            
-            .certificate-container {
-                padding: 30px;
-                min-height: 500px;
-            }
-            
-            .certificate-title {
-                font-size: 2rem;
-            }
-            
-            .certificate-name {
-                font-size: 1.8rem;
-            }
-            
-            .floating-buttons {
-                bottom: 20px;
-                right: 20px;
-            }
-            
-            .floating-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 1.2rem;
-            }
-
-            .navigation-buttons {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .navigation-buttons .btn {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo h1 {
-                font-size: 1.5rem;
-            }
-            
-            .welcome-message {
-                font-size: 1rem;
-            }
-            
-            .btn {
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-            
-            .certificate-container {
-                padding: 20px;
-                min-height: 400px;
-            }
-            
-            .certificate-title {
-                font-size: 1.8rem;
-            }
-            
-            .certificate-name {
-                font-size: 1.5rem;
-            }
-            
-            .certificate-text {
-                font-size: 1rem;
-            }
-
-            .certificate-footer {
-                flex-direction: column;
-                gap: 20px;
-                align-items: center;
-            }
-        }
-
-        /* Roman numeral styling */
-        .roman-option {
-            font-family: 'Times New Roman', serif;
-            font-style: italic;
-        }
-
-        /* GPS styling */
-        .gps-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .gps-btn {
-            margin-left: 10px;
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .gps-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Loading spinner */
-        .spinner {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            animation: fadeIn 0.3s;
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            margin: 10% auto;
-            padding: 25px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: slideInRight 0.3s;
-        }
-
-        .close-modal {
-            position: absolute;
-            right: 20px;
-            top: 15px;
-            color: white;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .close-modal:hover {
-            color: var(--danger);
-            transform: rotate(90deg);
-        }
-
-        /* Share links styles */
-        #share-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        #share-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        #share-links a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
-        }
-
-        #share-links a i {
-            margin-right: 8px;
-        }
-
-        /* Certificate print styles */
+        /* Tambahan style untuk sertifikat */
         @media print {
             body * {
                 visibility: hidden;
             }
-            #certificate-print, #certificate-print * {
+            #certificatePrint, #certificatePrint * {
                 visibility: visible;
             }
-            #certificate-print {
+            #certificatePrint {
                 position: absolute;
                 left: 0;
                 top: 0;
                 width: 100%;
                 height: 100%;
-                background-image: url('assets/images/certificate.png');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                padding: 0;
                 margin: 0;
-                border: none;
-                box-shadow: none;
-            }
-            .no-print {
-                display: none !important;
+                padding: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div id="particles-js"></div>
-    
-    <div class="container">
-        <!-- Halaman Login -->
-        <div id="login-page" class="page">
-            <div class="logo">
-                <img src="assets/images/logo.png" alt="Pergunu Situbondo">
-                <h1>Ujian Online Pergunu Situbondo</h1>
+    <!-- Canvas untuk animasi partikel premium -->
+    <canvas id="particle-canvas"></canvas>
+    <div class="particle-overlay"></div>
+
+    <!-- Audio Elements -->
+    <audio id="openingAudio" src="assets/audio/opening.mp3"></audio>
+    <audio id="applauseAudio" src="assets/audio/applause.mp3"></audio>
+    <audio id="correctAudio" src="assets/audio/jawabanbenar.mp3"></audio>
+    <audio id="wrongAudio" src="assets/audio/jawabansalah.mp3"></audio>
+    <audio id="buttonAudio" src="assets/audio/audiotombol.mp3"></audio>
+
+    <!-- Floating Buttons -->
+    <div class="floating-buttons" id="floatingButtons">
+        <button class="floating-btn" id="shareBtn"><i class="fas fa-share-alt"></i></button>
+        <button class="floating-btn" id="whatsappBtn"><i class="fab fa-whatsapp"></i></button>
+        <button class="floating-btn" id="bankSoalBtn"><i class="fas fa-book"></i></button>
+        <button class="floating-btn" id="adminBtn"><i class="fas fa-cog"></i></button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container" id="mainContainer">
+        <!-- Welcome Screen -->
+        <div class="screen active" id="welcomeScreen">
+            <div class="logo-container">
+                <img src="assets/images/logo.png" alt="PERGUNU Logo" class="logo">
             </div>
-            
-            <div class="card slide-in">
-                <div id="welcome-message" class="welcome-message">
-                    Selamat datang di sistem ujian online Pergunu Situbondo. Silakan masukkan kode login untuk melanjutkan.
+            <h1 id="greetingText">Selamat Datang di Ujian Online PERGUNU Situbondo</h1>
+            <div class="input-group slide-in">
+                <input type="password" id="loginCode" placeholder="Masukkan Kode Ujian">
+                <button id="loginBtn">Masuk</button>
+            </div>
+            <div class="notification" id="loginNotification"></div>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="screen" id="termsScreen">
+            <h2>Peraturan & Kebijakan Ujian</h2>
+            <div class="terms-content">
+                <p>Dikembangkan oleh Cendhanu tim kreator PERGUNU SITUBONDO</p>
+                <ol>
+                    <li>Peserta wajib mengisi data diri dengan benar dan valid.</li>
+                    <li>Dilarang keras melakukan kecurangan selama ujian berlangsung.</li>
+                    <li>Waktu ujian akan berjalan terus dan tidak dapat dihentikan.</li>
+                    <li>Jawaban yang sudah dipilih tidak dapat diubah.</li>
+                    <li>Peserta yang melanggar akan didiskualifikasi.</li>
+                </ol>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="agreeCheckbox">
+                <label for="agreeCheckbox">Saya menyetujui peraturan di atas</label>
+            </div>
+            <button id="continueBtn" disabled>Lanjut Ikut Ujian</button>
+        </div>
+
+        <!-- Participant Form -->
+        <div class="screen" id="participantForm">
+            <h2>Form Data Peserta</h2>
+            <form id="participantDataForm">
+                <div class="form-group">
+                    <label for="fullName">Nama Lengkap:</label>
+                    <input type="text" id="fullName" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="login-code">Kode Login</label>
-                    <input type="password" id="login-code" placeholder="Masukkan kode login">
+                    <label>Status:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="pelajar" name="status" value="pelajar" checked>
+                        <label for="pelajar">Pelajar</label>
+                        <input type="radio" id="umum" name="status" value="umum">
+                        <label for="umum">Umum</label>
+                    </div>
+                </div>
+
+                <!-- Pelajar Fields -->
+                <div class="form-group pelajar-fields">
+                    <label for="schoolName">Nama Sekolah:</label>
+                    <input type="text" id="schoolName">
+                </div>
+                <div class="form-group pelajar-fields">
+                    <label for="nis">NIS (Nomor Induk Siswa):</label>
+                    <input type="number" id="nis" pattern="\d*">
+                </div>
+                <div class="form-group pelajar-fields">
+                    <label for="pelajarTujuan">Tujuan Ikut Ujian:</label>
+                    <select id="pelajarTujuan">
+                        <option value="tugas_sekolah">Tugas Sekolah</option>
+                        <option value="tugas_ulangan">Tugas Ulangan</option>
+                        <option value="tes_belajar">Tes dan Belajar</option>
+                    </select>
+                </div>
+                <div class="form-group pelajar-fields">
+                    <label for="tingkatSekolah">Tingkat Sekolah:</label>
+                    <select id="tingkatSekolah">
+                        <option value="SD">SD</option>
+                        <option value="SMP">SMP</option>
+                        <option value="SMA">SMA/SMK</option>
+                    </select>
+                </div>
+
+                <!-- Umum Fields -->
+                <div class="form-group umum-fields" style="display: none;">
+                    <label for="address">Alamat:</label>
+                    <input type="text" id="address">
+                    <button type="button" id="getLocationBtn">Gunakan Lokasi Sekarang</button>
+                    <div id="locationDisplay"></div>
+                </div>
+                <div class="form-group umum-fields" style="display: none;">
+                    <label for="whatsapp">Nomor WhatsApp Aktif:</label>
+                    <input type="tel" id="whatsapp" pattern="[0-9]{10,13}">
+                </div>
+                <div class="form-group umum-fields" style="display: none;">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" pattern="[a-z0-9._%+-]+@(gmail|yahoo|hotmail)\.com$">
+                </div>
+                <div class="form-group umum-fields" style="display: none;">
+                    <label for="umumTujuan">Tujuan Ikut Ujian:</label>
+                    <select id="umumTujuan">
+                        <option value="tes_iq">Tes IQ</option>
+                        <option value="ujian_cpns">Ujian CPNS/P3K</option>
+                    </select>
+                </div>
+
+                <div class="info-box" id="periodicInfo">
+                    Informasi penting akan ditampilkan di sini sesuai pengaturan admin.
+                </div>
+
+                <button type="submit" id="saveDataBtn">Simpan & Ikut Ujian</button>
+            </form>
+        </div>
+
+        <!-- Exam Level Selection -->
+        <div class="screen" id="examLevelScreen">
+            <h2>Pilih Tingkat Ujian</h2>
+            
+            <!-- Pelajar Options -->
+            <div class="pelajar-options">
+                <h3>Tingkat Pelajar</h3>
+                <div class="kelas-options sd-options" style="display: none;">
+                    <button class="level-btn" data-level="IV">Kelas IV</button>
+                    <button class="level-btn" data-level="V">Kelas V</button>
+                    <button class="level-btn" data-level="VI">Kelas VI</button>
+                </div>
+                <div class="kelas-options smp-options" style="display: none;">
+                    <button class="level-btn" data-level="VII">Kelas VII</button>
+                    <button class="level-btn" data-level="VIII">Kelas VIII</button>
+                    <button class="level-btn" data-level="IX">Kelas IX</button>
+                </div>
+                <div class="kelas-options sma-options" style="display: none;">
+                    <button class="level-btn" data-level="X">Kelas X</button>
+                    <button class="level-btn" data-level="XI">Kelas XI</button>
+                    <button class="level-btn" data-level="XII">Kelas XII</button>
                 </div>
                 
-                <button id="login-btn" class="btn btn-block">Masuk</button>
-            </div>
-        </div>
-        
-        <!-- Halaman Peraturan -->
-        <div id="rules-page" class="page hidden">
-            <div class="logo">
-                <img src="assets/images/logo.png" alt="Pergunu Situbondo">
-                <h1>Peraturan Ujian</h1>
+                <h3>Pilih Jenis Ujian</h3>
+                <div class="subject-buttons">
+                    <button class="subject-btn" data-subject="agama">AGAMA</button>
+                    <button class="subject-btn" data-subject="ppkn">PPKN</button>
+                    <button class="subject-btn" data-subject="sejarah">SEJARAH</button>
+                    <button class="subject-btn" data-subject="ipa">IPA</button>
+                    <button class="subject-btn" data-subject="ips">IPS</button>
+                    <button class="subject-btn" data-subject="matematika">MATEMATIKA</button>
+                    <button class="subject-btn" data-subject="bahasa_indonesia">BAHASA INDONESIA</button>
+                    <button class="subject-btn" data-subject="bahasa_inggris">BAHASA INGGRIS</button>
+                    <button class="subject-btn" data-subject="materi_extra">MATERI EXTRA</button>
+                    <button class="subject-btn" data-subject="materi_khusus">MATERI KHUSUS</button>
+                </div>
             </div>
             
-            <div class="card slide-in">
-                <div class="rules-container">
-                    <h3>Peraturan dan Kebijakan Ujian Online</h3>
-                    <p>Dikembangkan oleh Cendhanu Tim Kreator PERGUNU SITUBONDO</p>
-                    <ul>
-                        <li>Peserta wajib mengisi semua data dengan benar dan valid.</li>
-                        <li>Dilarang keras melakukan kecurangan selama ujian berlangsung.</li>
-                        <li>Peserta hanya diperbolehkan mengikuti ujian satu kali untuk setiap kategori.</li>
-                        <li>Waktu ujian akan terus berjalan dan tidak dapat dihentikan.</li>
-                        <li>Jika waktu habis, semua jawaban yang belum diisi akan dianggap salah.</li>
-                        <li>Hasil ujian akan langsung ditampilkan setelah selesai.</li>
-                        <li>Sertifikat hanya akan diberikan kepada peserta yang menyelesaikan ujian.</li>
-                        <li>Segala bentuk pelanggaran akan dikenakan sanksi sesuai kebijakan panitia.</li>
-                    </ul>
-                </div>
+            <!-- Umum Options -->
+            <div class="umum-options" style="display: none;">
+                <h3>Tingkat Umum</h3>
+                <button class="level-btn" data-level="tes_iq">Tes IQ</button>
+                <button class="level-btn" data-level="ujian_cpns">Ujian CPNS/P3K</button>
                 
-                <div class="checkbox-container">
-                    <input type="checkbox" id="agree-rules">
-                    <label for="agree-rules">Saya telah membaca dan menyetujui semua peraturan di atas</label>
+                <div id="cpnsCodeContainer" style="display: none;">
+                    <div class="input-group">
+                        <input type="password" id="cpnsCode" placeholder="Masukkan Kode Lisensi Ujian">
+                        <button id="verifyCpnsCodeBtn">Verifikasi</button>
+                    </div>
+                    <div class="notification" id="cpnsCodeNotification"></div>
                 </div>
-                
-                <button id="continue-btn" class="btn btn-block" disabled>Lanjut Ikut Ujian</button>
-            </div>
-        </div>
-        
-        <!-- Halaman Data Peserta -->
-        <div id="participant-page" class="page hidden">
-            <div class="logo">
-                <img src="assets/images/logo.png" alt="Pergunu Situbondo">
-                <h1>Data Peserta Ujian</h1>
             </div>
             
-            <div class="card slide-in">
-                <form id="participant-form">
-                    <div class="form-group">
-                        <label for="full-name">Nama Lengkap</label>
-                        <input type="text" id="full-name" placeholder="Masukkan nama lengkap" required>
+            <div class="info-box">
+                Silakan pilih tingkat dan jenis ujian yang sesuai dengan kebutuhan Anda.
+            </div>
+            
+            <button id="startExamBtn" disabled>Mulai Ujian Sekarang</button>
+        </div>
+
+        <!-- Exam Screen -->
+        <div class="screen" id="examScreen">
+            <div class="exam-header">
+                <div class="timer-container">
+                    <span id="examTimer">120:00</span>
+                </div>
+                <div class="exam-info">
+                    <span id="currentQuestion">1</span>/<span id="totalQuestions">10</span>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question-text" id="questionText"></div>
+                <div class="options-container" id="optionsContainer"></div>
+            </div>
+            
+            <div class="answer-explanation" id="answerExplanation" style="display: none;"></div>
+            
+            <div class="exam-footer">
+                <button id="finishExamBtn">Selesaikan Ujian Sekarang</button>
+                <button id="skipQuestionBtn">Lewati Soal</button>
+                <button id="unansweredBtn">Soal Belum Dijawab</button>
+            </div>
+            
+            <div class="time-warning" id="timeWarning" style="display: none;">
+                Perhatian! Ujian akan berakhir dalam waktu 10 menit. Mohon pastikan semua jawaban telah diselesaikan dan diperiksa sebelum waktu habis. Terima kasih atas partisipasi Anda.
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div class="screen" id="resultsScreen">
+            <div class="results-summary">
+                <h2>Hasil Ujian Anda</h2>
+                <div class="result-item">
+                    <span>Jumlah Soal:</span>
+                    <span id="totalQuestionsResult">0</span>
+                </div>
+                <div class="result-item">
+                    <span>Jawaban Benar:</span>
+                    <span id="correctAnswers">0</span>
+                </div>
+                <div class="result-item">
+                    <span>Jawaban Salah:</span>
+                    <span id="wrongAnswers">0</span>
+                </div>
+                <div class="result-item">
+                    <span>Tidak Dijawab:</span>
+                    <span id="unansweredQuestions">0</span>
+                </div>
+                <div class="result-item score">
+                    <span>Nilai:</span>
+                    <span id="finalScore">0</span>
+                </div>
+                
+                <div class="buttons-container">
+                    <button id="viewCertificateBtn">Lihat Sertifikat</button>
+                    <button id="retakeExamBtn">Ulangi Ujian</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certificate Screen -->
+        <div class="screen" id="certificateScreen">
+            <div class="certificate-container" id="certificatePrint">
+                <img src="assets/images/certificate.png" alt="Certificate Background" class="certificate-bg">
+                <div class="certificate-content">
+                    <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
+                    <p class="certificate-given">Diberikan Kepada:</p>
+                    <h2 class="recipient-name" id="certificateName"></h2>
+                    <div class="certificate-description">
+                        <p>Atas Partisipasi & Pencapaian Luar Biasa dalam</p>
+                        <p><strong>Ujian Pergunu Situbondo</strong></p>
+                    </div>
+                    <div class="certificate-text">
+                        <p>Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, sertifikat ini diberikan sebagai motivasi untuk terus berkembang.</p>
+                    </div>
+                    <div class="score-container">
+                        <span class="score-label">Nilai:</span>
+                        <span class="score-value" id="certificateScore"></span>
+                    </div>
+                    <div class="motivation-text" id="motivationText"></div>
+                    <div class="certificate-footer">
+                        <div class="footer-left">
+                            <p class="period">Ditetapkan di: Situbondo, <span id="certificateDate"></span></p>
+                        </div>
+                        <div class="footer-right">
+                            <p class="signature-title">Ketua Pergunu Situbondo</p>
+                            <p class="signature-name" id="chairmanName">Moh. Nuril Hudha, S.Pd., M.Si.</p>
+                            <img src="assets/images/BARCODE.png" alt="Barcode" class="barcode">
+                        </div>
+                    </div>
+                    <div class="certificate-code" id="certificateCode"></div>
+                </div>
+            </div>
+            
+            <div class="certificate-actions">
+                <button id="printCertificateBtn">Cetak Sertifikat</button>
+                <button id="backToResultsBtn">Kembali ke Hasil</button>
+            </div>
+        </div>
+
+        <!-- Bank Soal Modal -->
+        <div class="modal" id="bankSoalModal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Bank Soal</h2>
+                <div class="input-group">
+                    <input type="password" id="bankSoalCode" placeholder="Masukkan Kode Bank Soal">
+                    <button id="verifyBankSoalCodeBtn">Verifikasi</button>
+                </div>
+                <div class="notification" id="bankSoalNotification"></div>
+                
+                <div class="bank-soal-content" id="bankSoalContent" style="display: none;">
+                    <div class="tab-container">
+                        <button class="tab-btn active" data-tab="manualTab">Input Manual</button>
+                        <button class="tab-btn" data-tab="aiTab">Input AI</button>
                     </div>
                     
-                    <div class="form-group">
-                        <label>Status</label>
-                        <div>
-                            <input type="radio" id="student-status" name="status" value="pelajar" checked>
-                            <label for="student-status" style="display: inline; margin-right: 15px;">Pelajar</label>
-                            
-                            <input type="radio" id="general-status" name="status" value="umum">
-                            <label for="general-status" style="display: inline;">Umum</label>
-                        </div>
+                    <div class="tab-content active" id="manualTab">
+                        <form id="questionForm">
+                            <div class="form-group">
+                                <label for="questionCategory">Kategori Soal:</label>
+                                <select id="questionCategory">
+                                    <option value="agama">AGAMA</option>
+                                    <option value="ppkn">PPKN</option>
+                                    <option value="sejarah">SEJARAH</option>
+                                    <option value="ipa">IPA</option>
+                                    <option value="ips">IPS</option>
+                                    <option value="matematika">MATEMATIKA</option>
+                                    <option value="bahasa_indonesia">BAHASA INDONESIA</option>
+                                    <option value="bahasa_inggris">BAHASA INGGRIS</option>
+                                    <option value="materi_extra">MATERI EXTRA</option>
+                                    <option value="materi_khusus">MATERI KHUSUS</option>
+                                    <option value="ujian_logika">UJIAN LOGIKA</option>
+                                    <option value="ujian_cpns">UJIAN CPNS/P3K</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="questionLevel">Tingkat Kesulitan:</label>
+                                <select id="questionLevel">
+                                    <option value="mudah">Mudah</option>
+                                    <option value="sedang">Sedang</option>
+                                    <option value="sulit">Sulit</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="questionTextArea">Pertanyaan:</label>
+                                <textarea id="questionTextArea" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Opsi Jawaban:</label>
+                                <div class="option-group">
+                                    <input type="radio" name="correctOption" value="A" required>
+                                    <input type="text" id="optionA" placeholder="Opsi A" required>
+                                </div>
+                                <div class="option-group">
+                                    <input type="radio" name="correctOption" value="B" required>
+                                    <input type="text" id="optionB" placeholder="Opsi B" required>
+                                </div>
+                                <div class="option-group">
+                                    <input type="radio" name="correctOption" value="C" required>
+                                    <input type="text" id="optionC" placeholder="Opsi C" required>
+                                </div>
+                                <div class="option-group">
+                                    <input type="radio" name="correctOption" value="D" required>
+                                    <input type="text" id="optionD" placeholder="Opsi D" required>
+                                </div>
+                                <div class="option-group">
+                                    <input type="radio" name="correctOption" value="E" required>
+                                    <input type="text" id="optionE" placeholder="Opsi E" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="explanationTextArea">Penjelasan Jawaban:</label>
+                                <textarea id="explanationTextArea" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="questionImage">Gambar (Opsional):</label>
+                                <input type="file" id="questionImage" accept="image/*">
+                            </div>
+                            <div class="form-buttons">
+                                <button type="submit" id="saveQuestionBtn">Simpan Soal</button>
+                                <button type="button" id="clearFormBtn">Bersihkan Form</button>
+                            </div>
+                        </form>
                     </div>
                     
-                    <!-- Form untuk Pelajar -->
-                    <div id="student-form">
+                    <div class="tab-content" id="aiTab">
                         <div class="form-group">
-                            <label for="school-name">Nama Sekolah</label>
-                            <input type="text" id="school-name" placeholder="Masukkan nama sekolah" required>
+                            <label for="aiPrompt">Prompt AI:</label>
+                            <textarea id="aiPrompt" rows="4" placeholder="Contoh: Buatkan 5 soal pilihan ganda tentang sejarah kemerdekaan Indonesia untuk tingkat SMA"></textarea>
                         </div>
-                        
                         <div class="form-group">
-                            <label for="student-id">NIS (Nomor Induk Siswa)</label>
-                            <input type="number" id="student-id" placeholder="Masukkan NIS" pattern="\d*" required>
+                            <label for="apiKey">API Key:</label>
+                            <input type="password" id="apiKey" placeholder="Masukkan API Key Anda">
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="student-purpose">Tujuan Ikut Ujian</label>
-                            <select id="student-purpose" required>
-                                <option value="" disabled selected>Pilih tujuan</option>
-                                <option value="Tugas Sekolah">Tugas Sekolah</option>
-                                <option value="Tugas Ulangan">Tugas Ulangan</option>
-                                <option value="Tes dan Belajar">Tes dan Belajar</option>
+                        <button id="generateQuestionsBtn">Generate Soal</button>
+                        <div class="ai-results" id="aiResults"></div>
+                    </div>
+                    
+                    <div class="question-list-container">
+                        <h3>Daftar Soal</h3>
+                        <div class="filter-controls">
+                            <select id="filterCategory">
+                                <option value="all">Semua Kategori</option>
+                                <option value="agama">AGAMA</option>
+                                <option value="ppkn">PPKN</option>
+                                <option value="sejarah">SEJARAH</option>
+                                <option value="ipa">IPA</option>
+                                <option value="ips">IPS</option>
+                                <option value="matematika">MATEMATIKA</option>
+                                <option value="bahasa_indonesia">BAHASA INDONESIA</option>
+                                <option value="bahasa_inggris">BAHASA INGGRIS</option>
+                                <option value="materi_extra">MATERI EXTRA</option>
+                                <option value="materi_khusus">MATERI KHUSUS</option>
+                                <option value="ujian_logika">UJIAN LOGIKA</option>
+                                <option value="ujian_cpns">UJIAN CPNS/P3K</option>
                             </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="student-level">Tingkat Sekolah</label>
-                            <select id="student-level" required>
-                                <option value="" disabled selected>Pilih tingkat</option>
-                                <option value="SD">SD</option>
-                                <option value="SMP">SMP</option>
-                                <option value="SMA/SMK">SMA/SMK</option>
+                            <select id="filterLevel">
+                                <option value="all">Semua Tingkat</option>
+                                <option value="mudah">Mudah</option>
+                                <option value="sedang">Sedang</option>
+                                <option value="sulit">Sulit</option>
                             </select>
+                            <button id="applyFilterBtn">Terapkan Filter</button>
                         </div>
+                        <div class="question-list" id="questionList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Panel Modal -->
+        <div class="modal" id="adminPanelModal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Kontrol Panel Admin</h2>
+                <div class="input-group">
+                    <input type="password" id="adminCode" placeholder="Masukkan Kode Admin">
+                    <button id="verifyAdminCodeBtn">Verifikasi</button>
+                </div>
+                <div class="notification" id="adminNotification"></div>
+                
+                <div class="admin-content" id="adminContent" style="display: none;">
+                    <div class="tab-container">
+                        <button class="tab-btn active" data-tab="codeTab">Pengaturan Kode</button>
+                        <button class="tab-btn" data-tab="textTab">Pengaturan Teks</button>
+                        <button class="tab-btn" data-tab="examTab">Pengaturan Ujian</button>
+                        <button class="tab-btn" data-tab="dataTab">Data Peserta</button>
                     </div>
                     
-                    <!-- Form untuk Umum -->
-                    <div id="general-form" class="hidden">
-                        <div class="form-group">
-                            <label for="address">Alamat</label>
-                            <div class="gps-container">
-                                <input type="text" id="address" placeholder="Masukkan alamat lengkap" required>
-                                <button type="button" id="gps-btn" class="gps-btn">
-                                    <i class="fas fa-map-marker-alt"></i> Gunakan GPS
-                                </button>
+                    <div class="tab-content active" id="codeTab">
+                        <div class="code-section">
+                            <h3>Kode Login</h3>
+                            <div class="input-group">
+                                <input type="password" id="newLoginCode" placeholder="Kode Login Baru">
+                                <input type="password" id="currentLoginCode" placeholder="Kode Login Lama" value="12345">
+                                <button id="saveLoginCodeBtn">Simpan Kode</button>
                             </div>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="phone">Nomor WhatsApp Aktif</label>
-                            <input type="tel" id="phone" placeholder="Masukkan nomor WhatsApp" pattern="[0-9]{10,13}" required>
+                        <div class="code-section">
+                            <h3>Kode Ujian CPNS/P3K</h3>
+                            <div class="input-group">
+                                <input type="password" id="newCpnsCode" placeholder="Kode Ujian Baru">
+                                <input type="password" id="currentCpnsCode" placeholder="Kode Ujian Lama" value="OPENLOCK-1945">
+                                <button id="saveCpnsCodeBtn">Simpan Kode</button>
+                            </div>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="email">Alamat Email</label>
-                            <input type="email" id="email" placeholder="Masukkan alamat email" pattern="[a-z0-9._%+-]+@(gmail|yahoo|hotmail)\.com" required>
+                        <div class="code-section">
+                            <h3>Kode Bank Soal</h3>
+                            <div class="input-group">
+                                <input type="password" id="newBankSoalCode" placeholder="Kode Soal Baru">
+                                <input type="password" id="currentBankSoalCode" placeholder="Kode Soal Lama" value="OPENLOCK-1926">
+                                <button id="saveBankSoalCodeBtn">Simpan Kode</button>
+                            </div>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="general-purpose">Tujuan Ikut Ujian</label>
-                            <select id="general-purpose" required>
-                                <option value="" disabled selected>Pilih tujuan</option>
-                                <option value="Tes IQ">Tes IQ</option>
-                                <option value="Ujian CPNS/P3K">Ujian CPNS/P3K</option>
-                            </select>
+                        <div class="code-section">
+                            <h3>Kode Kontrol Panel Admin</h3>
+                            <div class="input-group">
+                                <input type="password" id="newAdminCode" placeholder="Kode Admin Baru">
+                                <input type="password" id="currentAdminCode" placeholder="Kode Admin Lama" value="65614222">
+                                <button id="saveAdminCodeBtn">Simpan Kode Admin</button>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="info-text">Informasi Berkala</label>
-                        <textarea id="info-text" rows="3" readonly>Silakan isi semua data dengan benar. Data yang Anda berikan akan digunakan untuk keperluan sertifikat dan validasi peserta.</textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-block">Simpan & Ikut Ujian</button>
-                </form>
-            </div>
-        </div>
-        
-        <!-- Halaman Pilihan Ujian -->
-        <div id="exam-options-page" class="page hidden">
-            <div class="logo">
-                <img src="assets/images/logo.png" alt="Pergunu Situbondo">
-                <h1>Pilihan Ujian</h1>
-            </div>
-            
-            <div class="card slide-in">
-                <!-- Opsi untuk Pelajar -->
-                <div id="student-options" class="hidden">
-                    <h3 style="text-align: center; margin-bottom: 20px;">Pilih Kelas dan Mata Ujian</h3>
-                    
-                    <div class="form-group">
-                        <label for="student-grade">Tingkat Kelas</label>
-                        <select id="student-grade" class="roman-option" required>
-                            <!-- Opsi akan diisi oleh JavaScript -->
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Pilih Mata Ujian</label>
-                        <div class="options-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
-                            <button type="button" class="btn exam-option" data-subject="AGAMA">AGAMA</button>
-                            <button type="button" class="btn exam-option" data-subject="PPKN">PPKN</button>
-                            <button type="button" class="btn exam-option" data-subject="SEJARAH">SEJARAH</button>
-                            <button type="button" class="btn exam-option" data-subject="IPA">IPA</button>
-                            <button type="button" class="btn exam-option" data-subject="IPS">IPS</button>
-                            <button type="button" class="btn exam-option" data-subject="MATEMATIKA">MATEMATIKA</button>
-                            <button type="button" class="btn exam-option" data-subject="BAHASA INDONESIA">BAHASA INDONESIA</button>
-                            <button type="button" class="btn exam-option" data-subject="BAHASA INGGRIS">BAHASA INGGRIS</button>
-                            <button type="button" class="btn exam-option" data-subject="MATERI EXTRA">MATERI EXTRA</button>
-                            <button type="button" class="btn exam-option" data-subject="MATERI KHUSUS">MATERI KHUSUS</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Opsi untuk Umum -->
-                <div id="general-options" class="hidden">
-                    <h3 style="text-align: center; margin-bottom: 20px;">Pilih Jenis Ujian</h3>
-                    
-                    <div class="options-grid" style="display: flex; flex-direction: column; gap: 10px;">
-                        <button type="button" class="btn exam-option" data-subject="UJIAN LOGIKA">UJIAN LOGIKA</button>
-                        <button type="button" class="btn exam-option" data-subject="UJIAN CPNS/P3K">UJIAN CPNS/P3K</button>
-                    </div>
-                    
-                    <!-- Form Kode Lisensi untuk CPNS -->
-                    <div id="license-form" class="hidden" style="margin-top: 20px;">
+                    <div class="tab-content" id="textTab">
                         <div class="form-group">
-                            <label for="license-code">Kode Lisensi Ujian CPNS/P3K</label>
-                            <input type="password" id="license-code" placeholder="Masukkan kode lisensi">
+                            <label for="greetingTextEdit">Teks Sambutan:</label>
+                            <textarea id="greetingTextEdit" rows="3"></textarea>
                         </div>
-                        <button type="button" id="verify-license" class="btn btn-block">Verifikasi Kode</button>
-                    </div>
-                </div>
-                
-                <div id="exam-info-text" style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.1); border-radius: 8px;">
-                    <!-- Informasi ujian akan diisi oleh admin -->
-                </div>
-                
-                <button id="start-exam-btn" class="btn btn-block hidden" style="margin-top: 20px;">Mulai Ujian Sekarang</button>
-            </div>
-        </div>
-        
-        <!-- Halaman Ujian -->
-        <div id="exam-page" class="page hidden">
-            <div class="logo">
-                <img src="assets/images/logo.png" alt="Pergunu Situbondo">
-                <h1 id="exam-title">Ujian Online</h1>
-            </div>
-            
-            <div class="timer" id="exam-timer">120:00</div>
-            
-            <div class="card">
-                <div class="question-container">
-                    <div class="question" id="question-text">Memuat soal...</div>
-                    
-                    <div class="options" id="options-container">
-                        <!-- Opsi jawaban akan diisi oleh JavaScript -->
+                        <div class="form-group">
+                            <label for="periodicInfoEdit">Teks Informasi Berkala:</label>
+                            <textarea id="periodicInfoEdit" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="chairmanNameEdit">Nama Ketua:</label>
+                            <input type="text" id="chairmanNameEdit" value="Moh. Nuril Hudha, S.Pd., M.Si.">
+                        </div>
+                        <div class="form-group">
+                            <label for="motivationTextEdit">Teks Motivasi (Format JSON):</label>
+                            <textarea id="motivationTextEdit" rows="6">
+{
+    "90-100": "Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.",
+    "80-89": "Bagus sekali! Anda telah menunjukkan pemahaman yang mendalam tentang materi ujian.",
+    "70-79": "Baik! Anda memiliki pemahaman yang cukup baik tentang materi ini.",
+    "60-69": "Cukup. Masih ada ruang untuk meningkatkan pemahaman Anda.",
+    "0-59": "Jangan menyerah! Gunakan hasil ini sebagai motivasi untuk belajar lebih giat lagi."
+}
+                            </textarea>
+                        </div>
+                        <button id="saveTextSettingsBtn">Simpan Pengaturan Teks</button>
                     </div>
                     
-                    <div class="explanation" id="explanation-text">
-                        <!-- Penjelasan jawaban akan diisi oleh JavaScript -->
-                    </div>
-                </div>
-                
-                <div class="navigation-buttons">
-                    <button id="finish-exam-btn" class="btn btn-danger">Selesaikan Ujian Sekarang</button>
-                    <button id="skip-question-btn" class="btn btn-warning">Lewati Soal</button>
-                    <button id="unanswered-btn" class="btn btn-info">Soal Belum Dijawab</button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Halaman Hasil Ujian -->
-        <div id="result-page" class="page hidden">
-            <div class="logo">
-                <img src="assets/images/logo.png" alt="Pergunu Situbondo">
-                <h1>Hasil Ujian</h1>
-            </div>
-            
-            <div class="card slide-in">
-                <div class="result-container">
-                    <h2>Selamat! Anda telah menyelesaikan ujian.</h2>
-                    <div class="result-score" id="result-score">0</div>
-                    <p id="result-message">Memuat hasil...</p>
-                    
-                    <div style="margin: 30px 0;">
-                        <button id="view-certificate-btn" class="btn btn-success">Lihat Sertifikat</button>
-                        <button id="retake-exam-btn" class="btn btn-warning">Ulangi Ujian</button>
-                    </div>
-                    
-                    <div id="result-details" style="text-align: left; margin-top: 20px;">
-                        <h3>Detail Hasil:</h3>
-                        <p>Jumlah Soal: <span id="total-questions">0</span></p>
-                        <p>Jawaban Benar: <span id="correct-answers">0</span></p>
-                        <p>Jawaban Salah: <span id="wrong-answers">0</span></p>
-                        <p>Tidak Dijawab: <span id="unanswered-questions">0</span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Halaman Sertifikat -->
-        <div id="certificate-page" class="page hidden">
-            <div class="certificate-container" id="certificate-print">
-                <div class="certificate-title">SERTIFIKAT PRESTASI</div>
-                <div class="certificate-subtitle">Diberikan Kepada</div>
-                <div class="certificate-divider"></div>
-                
-                <div class="certificate-name" id="certificate-name">NAMA PESERTA</div>
-                <div class="certificate-divider"></div>
-                
-                <div class="certificate-text">
-                    Atas Partisipasi & Pencapaian Luar Biasa dalam <strong>Ujian Pergunu Situbondo</strong>
-                </div>
-                
-                <div class="certificate-text">
-                    Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, sertifikat ini diberikan sebagai motivasi untuk terus berkembang.
-                </div>
-                
-                <div class="certificate-score" id="certificate-score">Nilai: 100</div>
-                
-                <div class="certificate-text" id="motivation-text">
-                    Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.
-                </div>
-                
-                <div class="certificate-footer">
-                    <div class="certificate-signature">
-                        <div style="margin-top: 50px;">Ketua Pergunu Situbondo</div>
-                        <div class="signature-line"></div>
-                        <div style="font-weight: 600; margin-top: 5px;" id="chairman-name">Moh. Nuril Hudha, S.Pd., M.Si.</div>
-                    </div>
-                    
-                    <div class="certificate-date">
-                        <div style="margin-bottom: 10px;">Ditetapkan di: Situbondo</div>
-                        <div>Periode: <span id="certificate-date">16 Mei 2025</span></div>
-                    </div>
-                    
-                    <div>
-                        <img src="assets/images/BARCODE.png" alt="Barcode" class="certificate-barcode">
-                        <div class="certificate-code" id="certificate-code">Kode Sertifikat</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 20px;" class="no-print">
-                <button id="print-certificate-btn" class="btn btn-success">
-                    <i class="fas fa-print"></i> Cetak Sertifikat
-                </button>
-                <button id="back-to-result-btn" class="btn btn-info">
-                    <i class="fas fa-arrow-left"></i> Kembali ke Hasil
-                </button>
-            </div>
-        </div>
-        
-        <!-- Panel Admin -->
-        <div id="admin-page" class="page hidden">
-            <div class="logo">
-                <img src="assets/images/logo.png" alt="Pergunu Situbondo">
-                <h1>Kontrol Panel Admin</h1>
-            </div>
-            
-            <div class="card slide-in">
-                <div class="admin-panel">
-                    <div class="admin-tabs">
-                        <div class="admin-tab active" data-tab="login-code">Kode Login</div>
-                        <div class="admin-tab" data-tab="exam-code">Kode Ujian CPNS</div>
-                        <div class="admin-tab" data-tab="question-code">Kode Bank Soal</div>
-                        <div class="admin-tab" data-tab="admin-code">Kode Admin</div>
-                        <div class="admin-tab" data-tab="settings">Pengaturan</div>
-                    </div>
-                    
-                    <!-- Tab Kode Login -->
-                    <div class="admin-content active" id="login-code-content">
+                    <div class="tab-content" id="examTab">
                         <div class="form-group">
-                            <label for="new-login-code">Kode Login Baru</label>
-                            <input type="password" id="new-login-code" placeholder="Masukkan kode login baru">
+                            <label for="examTimerEdit">Timer Ujian (menit):</label>
+                            <input type="number" id="examTimerEdit" value="120" min="5">
                         </div>
-                        
                         <div class="form-group">
-                            <label for="current-login-code">Kode Login Lama</label>
-                            <input type="password" id="current-login-code" placeholder="Masukkan kode login lama">
-                        </div>
-                        
-                        <button id="save-login-code" class="btn btn-block">Simpan Kode</button>
-                    </div>
-                    
-                    <!-- Tab Kode Ujian CPNS -->
-                    <div class="admin-content" id="exam-code-content">
-                        <div class="form-group">
-                            <label for="new-exam-code">Kode Ujian CPNS Baru</label>
-                            <input type="password" id="new-exam-code" placeholder="Masukkan kode ujian baru">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="current-exam-code">Kode Ujian CPNS Lama</label>
-                            <input type="password" id="current-exam-code" placeholder="Masukkan kode ujian lama">
-                        </div>
-                        
-                        <button id="save-exam-code" class="btn btn-block">Simpan Kode</button>
-                    </div>
-                    
-                    <!-- Tab Kode Bank Soal -->
-                    <div class="admin-content" id="question-code-content">
-                        <div class="form-group">
-                            <label for="new-question-code">Kode Bank Soal Baru</label>
-                            <input type="password" id="new-question-code" placeholder="Masukkan kode bank soal baru">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="current-question-code">Kode Bank Soal Lama</label>
-                            <input type="password" id="current-question-code" placeholder="Masukkan kode bank soal lama">
-                        </div>
-                        
-                        <button id="save-question-code" class="btn btn-block">Simpan Kode</button>
-                    </div>
-                    
-                    <!-- Tab Kode Admin -->
-                    <div class="admin-content" id="admin-code-content">
-                        <div class="form-group">
-                            <label for="new-admin-code">Kode Admin Baru</label>
-                            <input type="password" id="new-admin-code" placeholder="Masukkan kode admin baru">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="current-admin-code">Kode Admin Lama</label>
-                            <input type="password" id="current-admin-code" placeholder="Masukkan kode admin lama">
-                        </div>
-                        
-                        <button id="save-admin-code" class="btn btn-block">Simpan Kode Admin</button>
-                    </div>
-                    
-                    <!-- Tab Pengaturan -->
-                    <div class="admin-content" id="settings-content">
-                        <div class="form-group">
-                            <label for="exam-timer-setting">Timer Ujian (menit)</label>
-                            <input type="number" id="exam-timer-setting" min="5" max="300" value="120">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="chairman-name-setting">Nama Ketua Pergunu</label>
-                            <input type="text" id="chairman-name-setting" value="Moh. Nuril Hudha, S.Pd., M.Si.">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="welcome-message-setting">Pesan Sambutan</label>
-                            <textarea id="welcome-message-setting" rows="3">Selamat datang di sistem ujian online Pergunu Situbondo. Silakan masukkan kode login untuk melanjutkan.</textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="info-text-setting">Informasi Berkala</label>
-                            <textarea id="info-text-setting" rows="3">Silakan isi semua data dengan benar. Data yang Anda berikan akan digunakan untuk keperluan sertifikat dan validasi peserta.</textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="motivation-texts-setting">Teks Motivasi (pisahkan dengan garis baru)</label>
-                            <textarea id="motivation-texts-setting" rows="5">Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.
-Bagus! Anda telah menunjukkan pemahaman yang baik. Tingkatkan terus kemampuan Anda.
-Cukup baik. Masih ada ruang untuk perbaikan. Terus belajar dan berlatih.
-Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="question-point-setting">Point per Soal</label>
-                            <select id="question-point-setting">
+                            <label for="questionPoints">Point per Soal:</label>
+                            <select id="questionPoints">
                                 <option value="1">1 Point</option>
                                 <option value="2">2 Point</option>
                                 <option value="3">3 Point</option>
                                 <option value="4">4 Point</option>
                                 <option value="5">5 Point</option>
+                                <option value="6">6 Point</option>
+                                <option value="7">7 Point</option>
+                                <option value="8">8 Point</option>
+                                <option value="9">9 Point</option>
                                 <option value="10">10 Point</option>
                             </select>
                         </div>
-                        
                         <div class="form-group">
-                            <label for="question-count-setting">Jumlah Soal</label>
-                            <select id="question-count-setting">
+                            <label for="questionCount">Jumlah Soal:</label>
+                            <select id="questionCount">
                                 <option value="5">5 Soal</option>
                                 <option value="10">10 Soal</option>
                                 <option value="15">15 Soal</option>
@@ -1243,1568 +567,90 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
                                 <option value="25">25 Soal</option>
                                 <option value="30">30 Soal</option>
                                 <option value="50">50 Soal</option>
+                                <option value="75">75 Soal</option>
                                 <option value="100">100 Soal</option>
                                 <option value="150">150 Soal</option>
                             </select>
                         </div>
-                        
                         <div class="form-group">
-                            <label>Aktifkan Jenis Ujian</label>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 10px;">
-                                <!-- Checkbox untuk mengaktifkan/menonaktifkan jenis ujian -->
-                                <label style="display: flex; align-items: center;">
-                                    <input type="checkbox" class="exam-toggle" data-exam="AGAMA" checked> AGAMA
-                                </label>
-                                <label style="display: flex; align-items: center;">
-                                    <input type="checkbox" class="exam-toggle" data-exam="PPKN" checked> PPKN
-                                </label>
-                                <label style="display: flex; align-items: center;">
-                                    <input type="checkbox" class="exam-toggle" data-exam="SEJARAH" checked> SEJARAH
-                                </label>
-                                <label style="display: flex; align-items: center;">
-                                    <input type="checkbox" class="exam-toggle" data-exam="IPA" checked> IPA
-                                </label>
-                                <label style="display: flex; align-items: center;">
-                                    <input type="checkbox" class="exam-toggle" data-exam="IPS" checked> IPS
-                                </label>
-                                <label style="display: flex; align-items: center;">
-                                    <input type="checkbox" class="exam-toggle" data-exam="MATEMATIKA" checked> MATEMATIKA
-                                </label>
-                                <label style="display: flex; align-items: center;">
-                                    <input type="checkbox" class="exam-toggle" data-exam="BAHASA INDONESIA" checked> BAHASA INDONESIA
-                                </label>
-                                <label style="display: flex; align-items: center;">
-                                    <input type="checkbox" class="exam-toggle" data-exam="BAHASA INGGRIS" checked> BAHASA INGGRIS
-                                </label>
-                                <label style="display: flex; align-items: center;">
-                                    <input type="checkbox" class="exam-toggle" data-exam="MATERI EXTRA" checked> MATERI EXTRA
-                                </label>
-                                <label style="display: flex; align-items: center;">
-                                    <input type="checkbox" class="exam-toggle" data-exam="MATERI KHUSUS" checked> MATERI KHUSUS
-                                </label>
-                                <label style="display: flex; align-items: center;">
-                                    <input type="checkbox" class="exam-toggle" data-exam="UJIAN LOGIKA" checked> UJIAN LOGIKA
-                                </label>
-                                <label style="display: flex; align-items: center;">
-                                    <input type="checkbox" class="exam-toggle" data-exam="UJIAN CPNS/P3K" checked> UJIAN CPNS/P3K
-                                </label>
+                            <label>Aktifkan Jenis Ujian:</label>
+                            <div class="checkbox-grid">
+                                <div><input type="checkbox" id="agamaEnabled" checked><label for="agamaEnabled">AGAMA</label></div>
+                                <div><input type="checkbox" id="ppknEnabled" checked><label for="ppknEnabled">PPKN</label></div>
+                                <div><input type="checkbox" id="sejarahEnabled" checked><label for="sejarahEnabled">SEJARAH</label></div>
+                                <div><input type="checkbox" id="ipaEnabled" checked><label for="ipaEnabled">IPA</label></div>
+                                <div><input type="checkbox" id="ipsEnabled" checked><label for="ipsEnabled">IPS</label></div>
+                                <div><input type="checkbox" id="matematikaEnabled" checked><label for="matematikaEnabled">MATEMATIKA</label></div>
+                                <div><input type="checkbox" id="bahasa_indonesiaEnabled" checked><label for="bahasa_indonesiaEnabled">BAHASA INDONESIA</label></div>
+                                <div><input type="checkbox" id="bahasa_inggrisEnabled" checked><label for="bahasa_inggrisEnabled">BAHASA INGGRIS</label></div>
+                                <div><input type="checkbox" id="materi_extraEnabled" checked><label for="materi_extraEnabled">MATERI EXTRA</label></div>
+                                <div><input type="checkbox" id="materi_khususEnabled" checked><label for="materi_khususEnabled">MATERI KHUSUS</label></div>
+                                <div><input type="checkbox" id="ujian_logikaEnabled" checked><label for="ujian_logikaEnabled">UJIAN LOGIKA</label></div>
+                                <div><input type="checkbox" id="ujian_cpnsEnabled" checked><label for="ujian_cpnsEnabled">UJIAN CPNS/P3K</label></div>
                             </div>
                         </div>
-                        
-                        <button id="save-settings" class="btn btn-block">Simpan Pengaturan</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Bank Soal -->
-        <div id="question-bank-page" class="page hidden">
-            <div class="logo">
-                <img src="assets/images/logo.png" alt="Pergunu Situbondo">
-                <h1>Bank Soal</h1>
-            </div>
-            
-            <div class="card slide-in">
-                <div class="admin-panel">
-                    <div class="admin-tabs">
-                        <div class="admin-tab active" data-tab="manage-questions">Kelola Soal</div>
-                        <div class="admin-tab" data-tab="add-question">Tambah Soal</div>
-                        <div class="admin-tab" data-tab="import-questions">Impor Soal</div>
+                        <div class="form-group">
+                            <label for="randomizeQuestions">Acak Urutan Soal:</label>
+                            <select id="randomizeQuestions">
+                                <option value="true">Ya</option>
+                                <option value="false">Tidak</option>
+                            </select>
+                        </div>
+                        <button id="saveExamSettingsBtn">Simpan Pengaturan Ujian</button>
                     </div>
                     
-                    <!-- Tab Kelola Soal -->
-                    <div class="admin-content active" id="manage-questions-content">
-                        <div class="form-group">
-                            <label for="filter-subject">Filter Berdasarkan Mata Ujian</label>
-                            <select id="filter-subject">
-                                <option value="">Semua Mata Ujian</option>
-                                <option value="AGAMA">AGAMA</option>
-                                <option value="PPKN">PPKN</option>
-                                <option value="SEJARAH">SEJARAH</option>
-                                <option value="IPA">IPA</option>
-                                <option value="IPS">IPS</option>
-                                <option value="MATEMATIKA">MATEMATIKA</option>
-                                <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
-                                <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
-                                <option value="MATERI EXTRA">MATERI EXTRA</option>
-                                <option value="MATERI KHUSUS">MATERI KHUSUS</option>
-                                <option value="UJIAN LOGIKA">UJIAN LOGIKA</option>
-                                <option value="UJIAN CPNS/P3K">UJIAN CPNS/P3K</option>
+                    <div class="tab-content" id="dataTab">
+                        <div class="data-actions">
+                            <button id="exportDataBtn">Export Data</button>
+                            <select id="exportFormat">
+                                <option value="excel">Excel</option>
+                                <option value="csv">CSV</option>
+                                <option value="json">JSON</option>
                             </select>
                         </div>
-                        
-                        <div id="questions-list" style="max-height: 400px; overflow-y: auto; margin-top: 20px;">
-                            <!-- Daftar soal akan diisi oleh JavaScript -->
-                            <div style="text-align: center; padding: 20px;">
-                                <div class="spinner"></div>
-                                <p>Memuat soal...</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Tab Tambah Soal -->
-                    <div class="admin-content" id="add-question-content">
-                        <div class="form-group">
-                            <label for="question-subject">Mata Ujian</label>
-                            <select id="question-subject" required>
-                                <option value="" disabled selected>Pilih mata ujian</option>
-                                <option value="AGAMA">AGAMA</option>
-                                <option value="PPKN">PPKN</option>
-                                <option value="SEJARAH">SEJARAH</option>
-                                <option value="IPA">IPA</option>
-                                <option value="IPS">IPS</option>
-                                <option value="MATEMATIKA">MATEMATIKA</option>
-                                <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
-                                <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
-                                <option value="MATERI EXTRA">MATERI EXTRA</option>
-                                <option value="MATERI KHUSUS">MATERI KHUSUS</option>
-                                <option value="UJIAN LOGIKA">UJIAN LOGIKA</option>
-                                <option value="UJIAN CPNS/P3K">UJIAN CPNS/P3K</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="question-text">Pertanyaan</label>
-                            <textarea id="question-text" rows="3" required placeholder="Masukkan pertanyaan"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="question-image">Gambar (Opsional)</label>
-                            <input type="file" id="question-image" accept="image/*">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Opsi Jawaban</label>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
-                                <div>
-                                    <label for="option-a">A</label>
-                                    <input type="text" id="option-a" required placeholder="Opsi A">
-                                </div>
-                                <div>
-                                    <label for="option-b">B</label>
-                                    <input type="text" id="option-b" required placeholder="Opsi B">
-                                </div>
-                                <div>
-                                    <label for="option-c">C</label>
-                                    <input type="text" id="option-c" required placeholder="Opsi C">
-                                </div>
-                                <div>
-                                    <label for="option-d">D</label>
-                                    <input type="text" id="option-d" required placeholder="Opsi D">
-                                </div>
-                                <div>
-                                    <label for="option-e">E</label>
-                                    <input type="text" id="option-e" placeholder="Opsi E (Opsional)">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="correct-answer">Jawaban Benar</label>
-                            <select id="correct-answer" required>
-                                <option value="" disabled selected>Pilih jawaban benar</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                                <option value="E">E</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="explanation">Penjelasan Jawaban</label>
-                            <textarea id="explanation" rows="3" placeholder="Masukkan penjelasan jawaban (opsional)"></textarea>
-                        </div>
-                        
-                        <button id="save-question" class="btn btn-block">Simpan Soal</button>
-                    </div>
-                    
-                    <!-- Tab Impor Soal -->
-                    <div class="admin-content" id="import-questions-content">
-                        <div class="form-group">
-                            <label for="ai-prompt">Prompt AI untuk Generate Soal</label>
-                            <textarea id="ai-prompt" rows="5" placeholder="Contoh: Buatkan 5 soal pilihan ganda tentang sejarah kemerdekaan Indonesia dengan tingkat kesulitan menengah"></textarea>
-                            <small>Anda perlu menambahkan API key AI di bagian kode untuk fitur ini</small>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="ai-subject">Mata Ujian untuk Hasil Generate</label>
-                            <select id="ai-subject">
-                                <option value="SEJARAH">SEJARAH</option>
-                                <option value="AGAMA">AGAMA</option>
-                                <option value="PPKN">PPKN</option>
-                                <option value="IPA">IPA</option>
-                                <option value="IPS">IPS</option>
-                                <option value="MATEMATIKA">MATEMATIKA</option>
-                                <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
-                                <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
-                                <option value="MATERI EXTRA">MATERI EXTRA</option>
-                                <option value="MATERI KHUSUS">MATERI KHUSUS</option>
-                                <option value="UJIAN LOGIKA">UJIAN LOGIKA</option>
-                                <option value="UJIAN CPNS/P3K">UJIAN CPNS/P3K</option>
-                            </select>
-                        </div>
-                        
-                        <button id="generate-questions" class="btn btn-block">Generate Soal dengan AI</button>
-                        
-                        <div id="ai-results" style="margin-top: 20px; display: none;">
-                            <h3>Hasil Generate:</h3>
-                            <div id="generated-questions" style="max-height: 300px; overflow-y: auto; margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.1); border-radius: 8px;">
-                                <!-- Hasil generate soal akan muncul di sini -->
-                            </div>
-                            
-                            <button id="save-generated-questions" class="btn btn-block" style="margin-top: 15px;">Simpan Soal yang Dipilih</button>
+                        <div class="participant-table-container">
+                            <table class="participant-table" id="participantTable">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Status</th>
+                                        <th>Tingkat</th>
+                                        <th>Jenis Ujian</th>
+                                        <th>Nilai</th>
+                                        <th>Tanggal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="participantTableBody">
+                                    <!-- Data peserta akan dimuat di sini -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <!-- Tombol Mengambang -->
-    <div class="floating-buttons">
-        <button class="floating-btn" id="share-btn" title="Bagikan">
-            <i class="fas fa-share-alt"></i>
-        </button>
-        
-        <button class="floating-btn" id="whatsapp-btn" title="Chat WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </button>
-        
-        <button class="floating-btn" id="question-bank-btn" title="Bank Soal">
-            <i class="fas fa-book"></i>
-        </button>
-        
-        <button class="floating-btn" id="admin-btn" title="Admin">
-            <i class="fas fa-cog"></i>
-        </button>
-    </div>
-    
-    <!-- Notifikasi -->
-    <div class="notification" id="notification"></div>
-    
-    <!-- Audio Elements -->
-    <audio id="correct-sound" src="assets/audio/jawabanbenar.mp3"></audio>
-    <audio id="wrong-sound" src="assets/audio/jawabansalah.mp3"></audio>
-    <audio id="applause-sound" src="assets/audio/applause.mp3"></audio>
-    <audio id="button-sound" src="assets/audio/audiotombol.mp3"></audio>
-    
-    <!-- Modal untuk Share -->
-    <div id="share-modal" class="modal hidden">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3>Bagikan Website</h3>
-            <div id="share-links">
-                <!-- Link share akan diisi oleh JavaScript -->
+
+        <!-- Share Modal -->
+        <div class="modal" id="shareModal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Bagikan Ujian Online</h2>
+                <div class="social-share">
+                    <button class="social-btn facebook"><i class="fab fa-facebook-f"></i> Facebook</button>
+                    <button class="social-btn twitter"><i class="fab fa-twitter"></i> Twitter</button>
+                    <button class="social-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                    <button class="social-btn telegram"><i class="fab fa-telegram-plane"></i> Telegram</button>
+                </div>
+                <div class="link-share">
+                    <label for="shareLink">Link:</label>
+                    <input type="text" id="shareLink" readonly>
+                    <button id="copyLinkBtn">Salin Link</button>
+                </div>
             </div>
         </div>
     </div>
-    
-    <!-- Modal untuk Bank Soal -->
-    <div id="question-bank-modal" class="modal hidden">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3>Masukkan Kode Bank Soal</h3>
-            <div class="form-group">
-                <input type="password" id="bank-code-input" placeholder="Masukkan kode bank soal">
-            </div>
-            <button id="submit-bank-code" class="btn btn-block">Masuk</button>
-        </div>
-    </div>
-    
-    <!-- Modal untuk Admin -->
-    <div id="admin-modal" class="modal hidden">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3>Masukkan Kode Admin</h3>
-            <div class="form-group">
-                <input type="password" id="admin-code-input" placeholder="Masukkan kode admin">
-            </div>
-            <button id="submit-admin-code" class="btn btn-block">Masuk</button>
-        </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        // KODE DEFAULT (JANGAN DITAMPILKAN KE PUBLIK)
-        const DEFAULT_LOGIN_CODE = "12345";
-        const DEFAULT_EXAM_CODE = "OPENLOCK-1945";
-        const DEFAULT_BANK_CODE = "OPENLOCK-1926";
-        const DEFAULT_ADMIN_CODE = "65614222";
-
-        // Inisialisasi variabel
-        let currentPage = "login";
-        let participantData = {};
-        let examData = {};
-        let questions = [];
-        let currentQuestionIndex = 0;
-        let answeredQuestions = {};
-        let timerInterval;
-        let timeLeft = 120 * 60; // 120 menit dalam detik
-        let examStarted = false;
-        
-        // Data contoh soal (dalam aplikasi nyata, ini akan diambil dari database)
-        const sampleQuestions = {
-            "AGAMA": [
-                {
-                    question: "Apa kitab suci agama Islam?",
-                    options: ["A. Alkitab", "B. Tripitaka", "C. Al-Quran", "D. Weda", "E. Talmud"],
-                    correctAnswer: "C",
-                    explanation: "Kitab suci agama Islam adalah Al-Quran yang diturunkan kepada Nabi Muhammad SAW."
-                }
-            ],
-            "PPKN": [
-                {
-                    question: "Pancasila sebagai dasar negara tercantum dalam?",
-                    options: ["A. Pembukaan UUD 1945", "B. Batang Tubuh UUD 1945", "C. Penjelasan UUD 1945", "D. Keputusan Presiden", "E. Tap MPR"],
-                    correctAnswer: "A",
-                    explanation: "Pancasila sebagai dasar negara tercantum dalam Pembukaan UUD 1945 alinea keempat."
-                }
-            ],
-            "SEJARAH": [
-                {
-                    question: "Kapan Indonesia merdeka?",
-                    options: ["A. 16 Agustus 1945", "B. 17 Agustus 1945", "C. 18 Agustus 1945", "D. 19 Agustus 1945", "E. 20 Agustus 1945"],
-                    correctAnswer: "B",
-                    explanation: "Indonesia merdeka pada tanggal 17 Agustus 1945 yang dibacakan oleh Soekarno-Hatta."
-                }
-            ],
-            "IPA": [
-                {
-                    question: "Planet terdekat dari matahari adalah?",
-                    options: ["A. Venus", "B. Bumi", "C. Mars", "D. Merkurius", "E. Jupiter"],
-                    correctAnswer: "D",
-                    explanation: "Merkurius adalah planet terdekat dari matahari dalam tata surya kita."
-                }
-            ],
-            "IPS": [
-                {
-                    question: "Ibu kota negara Jepang adalah?",
-                    options: ["A. Beijing", "B. Seoul", "C. Bangkok", "D. Tokyo", "E. Jakarta"],
-                    correctAnswer: "D",
-                    explanation: "Ibu kota negara Jepang adalah Tokyo yang merupakan salah satu kota terpadat di dunia."
-                }
-            ],
-            "MATEMATIKA": [
-                {
-                    question: "Berapa hasil dari 7 x 8?",
-                    options: ["A. 48", "B. 54", "C. 56", "D. 64", "E. 72"],
-                    correctAnswer: "C",
-                    explanation: "Hasil dari 7 dikali 8 adalah 56."
-                }
-            ],
-            "BAHASA INDONESIA": [
-                {
-                    question: "Kata 'membaca' termasuk jenis kata apa?",
-                    options: ["A. Kata benda", "B. Kata sifat", "C. Kata kerja", "D. Kata keterangan", "E. Kata ganti"],
-                    correctAnswer: "C",
-                    explanation: "Kata 'membaca' termasuk jenis kata kerja karena menunjukkan suatu aktivitas."
-                }
-            ],
-            "BAHASA INGGRIS": [
-                {
-                    question: "What is the past tense of 'go'?",
-                    options: ["A. Goed", "B. Went", "C. Gone", "D. Going", "E. Goes"],
-                    correctAnswer: "B",
-                    explanation: "The past tense of 'go' is 'went'. Example: 'I went to school yesterday.'"
-                }
-            ],
-            "MATERI EXTRA": [
-                {
-                    question: "Siapa pencipta lagu Indonesia Raya?",
-                    options: ["A. W.R. Supratman", "B. Ismail Marzuki", "C. C. Simanjuntak", "D. Kusbini", "E. Ibu Sud"],
-                    correctAnswer: "A",
-                    explanation: "Lagu Indonesia Raya diciptakan oleh Wage Rudolf Supratman dan pertama kali diperdengarkan pada 28 Oktober 1928."
-                }
-            ],
-            "MATERI KHUSUS": [
-                {
-                    question: "Apa nama organisasi kepanduan di Indonesia?",
-                    options: ["A. Pramuka", "B. Pandu", "C. Scout", "D. Kepanduan", "E. Gerakan Pemuda"],
-                    correctAnswer: "A",
-                    explanation: "Organisasi kepanduan di Indonesia bernama Pramuka (Praja Muda Karana)."
-                }
-            ],
-            "UJIAN LOGIKA": [
-                {
-                    question: "Jika semua manusia adalah makhluk hidup, dan Budi adalah manusia, maka:",
-                    options: ["A. Budi adalah makhluk hidup", "B. Budi bukan makhluk hidup", "C. Beberapa manusia bukan makhluk hidup", "D. Tidak dapat disimpulkan", "E. Semua makhluk hidup adalah Budi"],
-                    correctAnswer: "A",
-                    explanation: "Dari premis yang diberikan, dapat disimpulkan bahwa Budi adalah makhluk hidup."
-                }
-            ],
-            "UJIAN CPNS/P3K": [
-                {
-                    question: "Negara Indonesia adalah negara hukum, hal ini tercantum dalam UUD 1945 pasal:",
-                    options: ["A. Pasal 1 ayat (1)", "B. Pasal 1 ayat (2)", "C. Pasal 1 ayat (3)", "D. Pasal 2 ayat (1)", "E. Pasal 3 ayat (1)"],
-                    correctAnswer: "C",
-                    explanation: "Pasal 1 ayat (3) UUD 1945 menyatakan bahwa 'Negara Indonesia adalah negara hukum'."
-                }
-            ]
-        };
-
-        // Inisialisasi aplikasi saat halaman dimuat
-        document.addEventListener('DOMContentLoaded', function() {
-            // Inisialisasi particles.js
-            particlesJS('particles-js', {
-                particles: {
-                    number: { value: 80, density: { enable: true, value_area: 800 } },
-                    color: { value: "#ffffff" },
-                    shape: { type: "circle" },
-                    opacity: { value: 0.5, random: true },
-                    size: { value: 3, random: true },
-                    line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
-                    move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
-                },
-                interactivity: {
-                    detect_on: "canvas",
-                    events: {
-                        onhover: { enable: true, mode: "repulse" },
-                        onclick: { enable: true, mode: "push" }
-                    }
-                }
-            });
-
-            // Set halaman awal
-            showPage('login');
-
-            // Event listeners
-            document.getElementById('login-btn').addEventListener('click', handleLogin);
-            document.getElementById('agree-rules').addEventListener('change', function() {
-                document.getElementById('continue-btn').disabled = !this.checked;
-            });
-            document.getElementById('continue-btn').addEventListener('click', function() {
-                showPage('participant');
-            });
-            
-            // Toggle form peserta berdasarkan status
-            document.querySelectorAll('input[name="status"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (this.value === 'pelajar') {
-                        document.getElementById('student-form').classList.remove('hidden');
-                        document.getElementById('general-form').classList.add('hidden');
-                    } else {
-                        document.getElementById('student-form').classList.add('hidden');
-                        document.getElementById('general-form').classList.remove('hidden');
-                    }
-                });
-            });
-            
-            // Form peserta
-            document.getElementById('participant-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                saveParticipantData();
-            });
-            
-            // GPS button
-            document.getElementById('gps-btn').addEventListener('click', getLocation);
-            
-            // Tombol pilihan ujian
-            document.querySelectorAll('.exam-option').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    selectExamOption(this);
-                });
-            });
-            
-            // Verifikasi kode lisensi
-            document.getElementById('verify-license').addEventListener('click', verifyLicense);
-            
-            // Mulai ujian
-            document.getElementById('start-exam-btn').addEventListener('click', startExam);
-            
-            // Navigasi ujian
-            document.getElementById('finish-exam-btn').addEventListener('click', finishExam);
-            document.getElementById('skip-question-btn').addEventListener('click', skipQuestion);
-            document.getElementById('unanswered-btn').addEventListener('click', showUnanswered);
-            
-            // Hasil ujian
-            document.getElementById('view-certificate-btn').addEventListener('click', function() {
-                showPage('certificate');
-            });
-            document.getElementById('retake-exam-btn').addEventListener('click', function() {
-                showPage('exam-options');
-            });
-            
-            // Sertifikat
-            document.getElementById('print-certificate-btn').addEventListener('click', printCertificate);
-            document.getElementById('back-to-result-btn').addEventListener('click', function() {
-                showPage('result');
-            });
-            
-            // Tombol mengambang
-            document.getElementById('share-btn').addEventListener('click', showShareModal);
-            document.getElementById('whatsapp-btn').addEventListener('click', openWhatsApp);
-            document.getElementById('question-bank-btn').addEventListener('click', showQuestionBankModal);
-            document.getElementById('admin-btn').addEventListener('click', showAdminModal);
-            
-            // Panel admin
-            setupAdminTabs();
-            document.getElementById('save-login-code').addEventListener('click', saveLoginCode);
-            document.getElementById('save-exam-code').addEventListener('click', saveExamCode);
-            document.getElementById('save-question-code').addEventListener('click', saveQuestionCode);
-            document.getElementById('save-admin-code').addEventListener('click', saveAdminCode);
-            document.getElementById('save-settings').addEventListener('click', saveSettings);
-            
-            // Bank soal
-            document.getElementById('filter-subject').addEventListener('change', filterQuestions);
-            document.getElementById('save-question').addEventListener('click', saveQuestion);
-            document.getElementById('generate-questions').addEventListener('click', generateQuestionsWithAI);
-            document.getElementById('save-generated-questions').addEventListener('click', saveGeneratedQuestions);
-            
-            // Modal
-            document.querySelectorAll('.close-modal').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    this.closest('.modal').classList.add('hidden');
-                });
-            });
-            
-            document.getElementById('submit-bank-code').addEventListener('click', function() {
-                const code = document.getElementById('bank-code-input').value;
-                if (code === DEFAULT_BANK_CODE || code === localStorage.getItem('bankCode')) {
-                    document.getElementById('question-bank-modal').classList.add('hidden');
-                    showPage('question-bank');
-                } else {
-                    showNotification('Kode bank soal salah!', 'error');
-                }
-            });
-            
-            document.getElementById('submit-admin-code').addEventListener('click', function() {
-                const code = document.getElementById('admin-code-input').value;
-                if (code === DEFAULT_ADMIN_CODE || code === localStorage.getItem('adminCode')) {
-                    document.getElementById('admin-modal').classList.add('hidden');
-                    showPage('admin');
-                } else {
-                    showNotification('Kode admin salah!', 'error');
-                }
-            });
-            
-            // Load settings
-            loadSettings();
-            
-            // Play opening sound
-            const buttonSound = document.getElementById('button-sound');
-            buttonSound.play().catch(e => console.log('Autoplay prevented:', e));
-        });
-
-        // Fungsi untuk menampilkan halaman tertentu
-        function showPage(page) {
-            // Sembunyikan semua halaman
-            document.querySelectorAll('.page').forEach(p => {
-                p.classList.add('hidden');
-            });
-            
-            // Tampilkan halaman yang diminta
-            document.getElementById(`${page}-page`).classList.remove('hidden');
-            
-            // Sembunyikan tombol mengambang di halaman sertifikat
-            const floatingButtons = document.querySelector('.floating-buttons');
-            if (page === 'certificate') {
-                floatingButtons.style.display = 'none';
-            } else {
-                floatingButtons.style.display = 'flex';
-            }
-            
-            // Lakukan inisialisasi khusus halaman
-            switch(page) {
-                case 'participant':
-                    initParticipantPage();
-                    break;
-                case 'exam-options':
-                    initExamOptionsPage();
-                    break;
-                case 'exam':
-                    // Inisialisasi sudah dilakukan di startExam()
-                    break;
-                case 'result':
-                    showExamResult();
-                    break;
-                case 'certificate':
-                    generateCertificate();
-                    break;
-                case 'admin':
-                    initAdminPage();
-                    break;
-                case 'question-bank':
-                    initQuestionBankPage();
-                    break;
-            }
-            
-            // Perbarui currentPage
-            currentPage = page;
-        }
-
-        // Fungsi untuk menangani login
-        function handleLogin() {
-            const loginCode = document.getElementById('login-code').value;
-            const savedCode = localStorage.getItem('loginCode') || DEFAULT_LOGIN_CODE;
-            
-            if (loginCode === savedCode) {
-                playButtonSound();
-                showPage('rules');
-            } else {
-                showNotification('Kode login salah!', 'error');
-            }
-        }
-
-        // Fungsi untuk inisialisasi halaman peserta
-        function initParticipantPage() {
-            // Reset form
-            document.getElementById('participant-form').reset();
-            document.getElementById('student-form').classList.remove('hidden');
-            document.getElementById('general-form').classList.add('hidden');
-        }
-
-        // Fungsi untuk menyimpan data peserta
-        function saveParticipantData() {
-            const status = document.querySelector('input[name="status"]:checked').value;
-            
-            participantData = {
-                fullName: document.getElementById('full-name').value,
-                status: status,
-                purpose: status === 'pelajar' ? document.getElementById('student-purpose').value : document.getElementById('general-purpose').value,
-                timestamp: new Date().toISOString()
-            };
-            
-            if (status === 'pelajar') {
-                participantData.schoolName = document.getElementById('school-name').value;
-                participantData.studentId = document.getElementById('student-id').value;
-                participantData.schoolLevel = document.getElementById('student-level').value;
-            } else {
-                participantData.address = document.getElementById('address').value;
-                participantData.phone = document.getElementById('phone').value;
-                participantData.email = document.getElementById('email').value;
-            }
-            
-            // Simpan data peserta ke localStorage (simulasi database)
-            saveParticipantToDatabase(participantData);
-            
-            playButtonSound();
-            showPage('exam-options');
-        }
-
-        // Fungsi untuk inisialisasi halaman pilihan ujian
-        function initExamOptionsPage() {
-            const isStudent = participantData.status === 'pelajar';
-            
-            document.getElementById('student-options').classList.toggle('hidden', !isStudent);
-            document.getElementById('general-options').classList.toggle('hidden', isStudent);
-            document.getElementById('license-form').classList.add('hidden');
-            document.getElementById('start-exam-btn').classList.add('hidden');
-            
-            // Isi opsi kelas untuk pelajar
-            if (isStudent) {
-                const gradeSelect = document.getElementById('student-grade');
-                gradeSelect.innerHTML = '';
-                
-                let grades = [];
-                if (participantData.schoolLevel === 'SD') {
-                    grades = ['Kelas IV', 'Kelas V', 'Kelas VI'];
-                } else if (participantData.schoolLevel === 'SMP') {
-                    grades = ['Kelas VII', 'Kelas VIII', 'Kelas IX'];
-                } else {
-                    grades = ['Kelas X', 'Kelas XI', 'Kelas XII'];
-                }
-                
-                grades.forEach(grade => {
-                    const option = document.createElement('option');
-                    option.value = grade;
-                    option.textContent = grade;
-                    gradeSelect.appendChild(option);
-                });
-            }
-            
-            // Reset pilihan ujian
-            document.querySelectorAll('.exam-option').forEach(btn => {
-                btn.classList.remove('btn-success');
-            });
-        }
-
-        // Fungsi untuk memilih opsi ujian
-        function selectExamOption(button) {
-            const subject = button.getAttribute('data-subject');
-            
-            // Jika memilih CPNS, tampilkan form kode lisensi
-            if (subject === 'UJIAN CPNS/P3K') {
-                document.getElementById('license-form').classList.remove('hidden');
-                document.getElementById('start-exam-btn').classList.add('hidden');
-            } else {
-                document.getElementById('license-form').classList.add('hidden');
-                document.getElementById('start-exam-btn').classList.remove('hidden');
-            }
-            
-            // Set data ujian
-            examData = {
-                subject: subject,
-                grade: participantData.status === 'pelajar' ? document.getElementById('student-grade').value : null
-            };
-            
-            // Highlight tombol yang dipilih
-            document.querySelectorAll('.exam-option').forEach(btn => {
-                btn.classList.remove('btn-success');
-            });
-            button.classList.add('btn-success');
-            
-            playButtonSound();
-        }
-
-        // Fungsi untuk verifikasi kode lisensi
-        function verifyLicense() {
-            const licenseCode = document.getElementById('license-code').value;
-            const savedCode = localStorage.getItem('examCode') || DEFAULT_EXAM_CODE;
-            
-            if (licenseCode === savedCode) {
-                document.getElementById('start-exam-btn').classList.remove('hidden');
-                showNotification('Kode lisensi valid!', 'success');
-                playButtonSound();
-            } else {
-                showNotification('Kode lisensi salah!', 'error');
-            }
-        }
-
-        // Fungsi untuk memulai ujian
-        function startExam() {
-            // Ambil soal berdasarkan subjek
-            questions = sampleQuestions[examData.subject] || [];
-            
-            // Acak urutan soal jika diatur di admin
-            if (localStorage.getItem('randomizeQuestions') === 'true') {
-                questions = shuffleArray(questions);
-            }
-            
-            // Batasi jumlah soal sesuai setting
-            const questionCount = parseInt(localStorage.getItem('questionCount') || 10);
-            questions = questions.slice(0, questionCount);
-            
-            // Set timer
-            timeLeft = parseInt(localStorage.getItem('examTimer') || 120) * 60;
-            
-            // Reset jawaban
-            answeredQuestions = {};
-            currentQuestionIndex = 0;
-            examStarted = true;
-            
-            // Update judul ujian
-            document.getElementById('exam-title').textContent = `Ujian ${examData.subject}`;
-            
-            // Mulai timer
-            startTimer();
-            
-            // Tampilkan soal pertama
-            showQuestion();
-            
-            playButtonSound();
-            showPage('exam');
-        }
-
-        // Fungsi untuk menampilkan soal
-        function showQuestion() {
-            if (currentQuestionIndex >= questions.length) {
-                finishExam();
-                return;
-            }
-            
-            const question = questions[currentQuestionIndex];
-            const optionsContainer = document.getElementById('options-container');
-            
-            // Tampilkan pertanyaan
-            document.getElementById('question-text').textContent = `${currentQuestionIndex + 1}. ${question.question}`;
-            
-            // Tampilkan opsi jawaban
-            optionsContainer.innerHTML = '';
-            question.options.forEach((option, index) => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'option';
-                optionElement.textContent = option;
-                optionElement.setAttribute('data-option', String.fromCharCode(65 + index));
-                
-                // Tandai jika sudah dijawab
-                if (answeredQuestions[currentQuestionIndex]) {
-                    const selectedOption = answeredQuestions[currentQuestionIndex];
-                    const isCorrect = selectedOption === question.correctAnswer;
-                    
-                    if (option.startsWith(selectedOption)) {
-                        optionElement.classList.add(isCorrect ? 'selected' : 'wrong');
-                    } else if (option.startsWith(question.correctAnswer)) {
-                        optionElement.classList.add('selected');
-                    }
-                }
-                
-                optionElement.addEventListener('click', function() {
-                    if (!answeredQuestions[currentQuestionIndex]) {
-                        selectAnswer(this);
-                    }
-                });
-                
-                optionsContainer.appendChild(optionElement);
-            });
-            
-            // Tampilkan penjelasan jika sudah dijawab
-            const explanationElement = document.getElementById('explanation-text');
-            if (answeredQuestions[currentQuestionIndex]) {
-                explanationElement.style.display = 'block';
-                explanationElement.textContent = question.explanation || 'Tidak ada penjelasan tersedia.';
-            } else {
-                explanationElement.style.display = 'none';
-            }
-        }
-
-        // Fungsi untuk memilih jawaban
-        function selectAnswer(optionElement) {
-            const selectedOption = optionElement.getAttribute('data-option');
-            const question = questions[currentQuestionIndex];
-            
-            // Simpan jawaban
-            answeredQuestions[currentQuestionIndex] = selectedOption;
-            
-            // Tandai jawaban benar/salah
-            const isCorrect = selectedOption === question.correctAnswer;
-            
-            if (isCorrect) {
-                optionElement.classList.add('selected');
-                document.getElementById('correct-sound').play();
-            } else {
-                optionElement.classList.add('wrong');
-                document.getElementById('wrong-sound').play();
-                
-                // Tandai juga jawaban yang benar
-                document.querySelectorAll('.option').forEach(opt => {
-                    if (opt.getAttribute('data-option') === question.correctAnswer) {
-                        opt.classList.add('selected');
-                    }
-                });
-            }
-            
-            // Tampilkan penjelasan
-            const explanationElement = document.getElementById('explanation-text');
-            explanationElement.style.display = 'block';
-            explanationElement.textContent = question.explanation || 'Tidak ada penjelasan tersedia.';
-        }
-
-        // Fungsi untuk memulai timer
-        function startTimer() {
-            clearInterval(timerInterval);
-            
-            timerInterval = setInterval(function() {
-                timeLeft--;
-                updateTimerDisplay();
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    finishExam(true);
-                } else if (timeLeft === 10 * 60) {
-                    // 10 menit tersisa
-                    showNotification('Perhatian! Ujian akan berakhir dalam waktu 10 menit. Mohon pastikan semua jawaban telah diselesaikan dan diperiksa sebelum waktu habis. Terima kasih atas partisipasi Anda.', 'warning');
-                }
-            }, 1000);
-        }
-
-        // Fungsi untuk memperbarui tampilan timer
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            const timerElement = document.getElementById('exam-timer');
-            
-            timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            
-            // Ubah style jika waktu hampir habis
-            timerElement.className = 'timer';
-            if (timeLeft <= 10 * 60) {
-                timerElement.classList.add('warning');
-            }
-            if (timeLeft <= 1 * 60) {
-                timerElement.classList.remove('warning');
-                timerElement.classList.add('danger');
-            }
-        }
-
-        // Fungsi untuk melewatkan soal
-        function skipQuestion() {
-            currentQuestionIndex++;
-            showQuestion();
-            playButtonSound();
-        }
-
-        // Fungsi untuk menampilkan soal yang belum dijawab
-        function showUnanswered() {
-            const unansweredIndexes = [];
-            
-            for (let i = 0; i < questions.length; i++) {
-                if (!answeredQuestions[i]) {
-                    unansweredIndexes.push(i);
-                }
-            }
-            
-            if (unansweredIndexes.length > 0) {
-                currentQuestionIndex = unansweredIndexes[0];
-                showQuestion();
-                showNotification(`Masih ada ${unansweredIndexes.length} soal yang belum dijawab.`, 'info');
-            } else {
-                showNotification('Semua soal sudah dijawab.', 'success');
-            }
-            
-            playButtonSound();
-        }
-
-        // Fungsi untuk menyelesaikan ujian
-        function finishExam(timeout = false) {
-            clearInterval(timerInterval);
-            examStarted = false;
-            
-            // Hitung hasil
-            const totalQuestions = questions.length;
-            let correctAnswers = 0;
-            
-            for (let i = 0; i < totalQuestions; i++) {
-                if (answeredQuestions[i] === questions[i].correctAnswer) {
-                    correctAnswers++;
-                }
-            }
-            
-            const wrongAnswers = Object.keys(answeredQuestions).length - correctAnswers;
-            const unansweredQuestions = totalQuestions - Object.keys(answeredQuestions).length;
-            
-            // Simpan hasil
-            const result = {
-                participant: participantData,
-                exam: examData,
-                score: Math.round((correctAnswers / totalQuestions) * 100),
-                totalQuestions,
-                correctAnswers,
-                wrongAnswers,
-                unansweredQuestions,
-                timestamp: new Date().toISOString(),
-                timeout
-            };
-            
-            // Simpan hasil ke database (simulasi)
-            saveExamResultToDatabase(result);
-            
-            // Play applause sound
-            document.getElementById('applause-sound').play();
-            
-            // Tampilkan halaman hasil
-            showPage('result');
-        }
-
-        // Fungsi untuk menampilkan hasil ujian
-        function showExamResult() {
-            // Ambil hasil terakhir dari database (simulasi)
-            const results = JSON.parse(localStorage.getItem('examResults') || '[]');
-            const result = results[results.length - 1];
-            
-            if (!result) return;
-            
-            // Tampilkan hasil
-            document.getElementById('result-score').textContent = result.score;
-            document.getElementById('total-questions').textContent = result.totalQuestions;
-            document.getElementById('correct-answers').textContent = result.correctAnswers;
-            document.getElementById('wrong-answers').textContent = result.wrongAnswers;
-            document.getElementById('unanswered-questions').textContent = result.unansweredQuestions;
-            
-            // Tampilkan pesan berdasarkan skor
-            const motivationTexts = (localStorage.getItem('motivationTexts') || "Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.\nBagus! Anda telah menunjukkan pemahaman yang baik. Tingkatkan terus kemampuan Anda.\nCukup baik. Masih ada ruang untuk perbaikan. Terus belajar dan berlatih.\nAnda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!").split('\n');
-            
-            let messageIndex = 0;
-            if (result.score >= 90) messageIndex = 0;
-            else if (result.score >= 70) messageIndex = 1;
-            else if (result.score >= 50) messageIndex = 2;
-            else messageIndex = 3;
-            
-            document.getElementById('result-message').textContent = motivationTexts[messageIndex] || motivationTexts[0];
-        }
-
-        // Fungsi untuk menghasilkan sertifikat
-        function generateCertificate() {
-            // Ambil hasil terakhir dari database (simulasi)
-            const results = JSON.parse(localStorage.getItem('examResults') || '[]');
-            const result = results[results.length - 1];
-            
-            if (!result) return;
-            
-            // Format tanggal
-            const date = new Date(result.timestamp);
-            const formattedDate = date.toLocaleDateString('id-ID', { 
-                day: 'numeric', 
-                month: 'long', 
-                year: 'numeric' 
-            });
-            
-            // Generate kode sertifikat
-            const participant = result.participant;
-            const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + 
-                              Math.random().toString(36).substring(2, 6).toUpperCase();
-            
-            const certCode = `${participant.fullName.toUpperCase().replace(/ /g, '')}/${participant.status.toUpperCase()}/${participant.schoolLevel || 'UMUM'}/${result.exam.subject}/${formattedDate.replace(/ /g, '')}/${randomCode}/PERGUNU-STB`;
-            
-            // Isi data sertifikat
-            document.getElementById('certificate-name').textContent = participant.fullName;
-            document.getElementById('certificate-score').textContent = `Nilai: ${result.score}`;
-            document.getElementById('certificate-date').textContent = formattedDate;
-            document.getElementById('certificate-code').textContent = certCode;
-            document.getElementById('chairman-name').textContent = localStorage.getItem('chairmanName') || "Moh. Nuril Hudha, S.Pd., M.Si.";
-            
-            // Tampilkan pesan motivasi
-            const motivationTexts = (localStorage.getItem('motivationTexts') || "Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.\nBagus! Anda telah menunjukkan pemahaman yang baik. Tingkatkan terus kemampuan Anda.\nCukup baik. Masih ada ruang untuk perbaikan. Terus belajar dan berlatih.\nAnda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!").split('\n');
-            
-            let messageIndex = 0;
-            if (result.score >= 90) messageIndex = 0;
-            else if (result.score >= 70) messageIndex = 1;
-            else if (result.score >= 50) messageIndex = 2;
-            else messageIndex = 3;
-            
-            document.getElementById('motivation-text').textContent = motivationTexts[messageIndex] || motivationTexts[0];
-        }
-
-        // Fungsi untuk mencetak sertifikat
-        function printCertificate() {
-            window.print();
-        }
-
-        // Fungsi untuk menampilkan notifikasi
-        function showNotification(message, type = 'info') {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.style.display = 'block';
-            
-            // Set warna berdasarkan jenis notifikasi
-            notification.style.backgroundColor = type === 'error' ? 'rgba(220, 53, 69, 0.9)' : 
-                                               type === 'success' ? 'rgba(40, 167, 69, 0.9)' :
-                                               type === 'warning' ? 'rgba(255, 193, 7, 0.9)' :
-                                               'rgba(23, 162, 184, 0.9)';
-            
-            // Sembunyikan setelah 3 detik
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
-        }
-
-        // Fungsi untuk memainkan suara tombol
-        function playButtonSound() {
-            const sound = document.getElementById('button-sound');
-            sound.currentTime = 0;
-            sound.play().catch(e => console.log('Audio play prevented:', e));
-        }
-
-        // Fungsi untuk menyimpan data peserta ke database (simulasi)
-        function saveParticipantToDatabase(data) {
-            const participants = JSON.parse(localStorage.getItem('participants') || '[]');
-            participants.push(data);
-            localStorage.setItem('participants', JSON.stringify(participants));
-        }
-
-        // Fungsi untuk menyimpan hasil ujian ke database (simulasi)
-        function saveExamResultToDatabase(data) {
-            const results = JSON.parse(localStorage.getItem('examResults') || '[]');
-            results.push(data);
-            localStorage.setItem('examResults', JSON.stringify(results));
-        }
-
-        // Fungsi untuk mendapatkan lokasi GPS
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        // Gunakan API geocoding untuk mendapatkan alamat dari koordinat
-                        getAddressFromCoordinates(position.coords.latitude, position.coords.longitude);
-                    },
-                    function(error) {
-                        showNotification('Tidak dapat mendapatkan lokasi: ' + error.message, 'error');
-                    }
-                );
-            } else {
-                showNotification('Geolocation tidak didukung oleh browser Anda.', 'error');
-            }
-        }
-
-        // Fungsi untuk mendapatkan alamat dari koordinat (menggunakan Nominatim API)
-        function getAddressFromCoordinates(lat, lon) {
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-                .then(response => response.json())
-                .then(data => {
-                    const address = data.display_name || 'Lokasi tidak diketahui';
-                    document.getElementById('address').value = address;
-                    showNotification('Lokasi berhasil ditemukan!', 'success');
-                })
-                .catch(error => {
-                    console.error('Error getting address:', error);
-                    showNotification('Gagal mendapatkan alamat dari koordinat.', 'error');
-                });
-        }
-
-        // Fungsi untuk mengacak array
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        // Fungsi untuk menampilkan modal share
-        function showShareModal() {
-            // Di aplikasi nyata, ini akan berisi link yang bisa diatur di admin
-            const shareLinks = [
-                { name: 'Facebook', icon: 'fab fa-facebook-f', url: '#' },
-                { name: 'Twitter', icon: 'fab fa-twitter', url: '#' },
-                { name: 'WhatsApp', icon: 'fab fa-whatsapp', url: '#' },
-                { name: 'Telegram', icon: 'fab fa-telegram', url: '#' },
-                { name: 'Email', icon: 'fas fa-envelope', url: '#' }
-            ];
-            
-            const linksContainer = document.getElementById('share-links');
-            linksContainer.innerHTML = '';
-            
-            shareLinks.forEach(link => {
-                const linkElement = document.createElement('a');
-                linkElement.href = link.url;
-                linkElement.className = 'btn';
-                linkElement.style.margin = '5px';
-                linkElement.innerHTML = `<i class="${link.icon}"></i> ${link.name}`;
-                linksContainer.appendChild(linkElement);
-            });
-            
-            document.getElementById('share-modal').classList.remove('hidden');
-            playButtonSound();
-        }
-
-        // Fungsi untuk membuka WhatsApp
-        function openWhatsApp() {
-            const phone = '6285647709114';
-            const message = 'Assalamualaikum mas admin, saya mau tanya sesuatu nih…';
-            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
-            playButtonSound();
-        }
-
-        // Fungsi untuk menampilkan modal bank soal
-        function showQuestionBankModal() {
-            document.getElementById('question-bank-modal').classList.remove('hidden');
-            playButtonSound();
-        }
-
-        // Fungsi untuk menampilkan modal admin
-        function showAdminModal() {
-            document.getElementById('admin-modal').classList.remove('hidden');
-            playButtonSound();
-        }
-
-        // Fungsi untuk mengatur tab admin
-        function setupAdminTabs() {
-            document.querySelectorAll('.admin-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    // Hapus active dari semua tab dan content
-                    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
-                    
-                    // Tambahkan active ke tab yang diklik
-                    this.classList.add('active');
-                    
-                    // Tampilkan content yang sesuai
-                    const tabId = this.getAttribute('data-tab');
-                    document.getElementById(`${tabId}-content`).classList.add('active');
-                    
-                    playButtonSound();
-                });
-            });
-        }
-
-        // Fungsi untuk menyimpan kode login
-        function saveLoginCode() {
-            const newCode = document.getElementById('new-login-code').value;
-            const currentCode = document.getElementById('current-login-code').value;
-            const savedCode = localStorage.getItem('loginCode') || DEFAULT_LOGIN_CODE;
-            
-            if (currentCode === savedCode) {
-                localStorage.setItem('loginCode', newCode);
-                showNotification('Kode login berhasil diubah!', 'success');
-                document.getElementById('new-login-code').value = '';
-                document.getElementById('current-login-code').value = '';
-                playButtonSound();
-            } else {
-                showNotification('Kode login lama salah!', 'error');
-            }
-        }
-
-        // Fungsi untuk menyimpan kode ujian CPNS
-        function saveExamCode() {
-            const newCode = document.getElementById('new-exam-code').value;
-            const currentCode = document.getElementById('current-exam-code').value;
-            const savedCode = localStorage.getItem('examCode') || DEFAULT_EXAM_CODE;
-            
-            if (currentCode === savedCode) {
-                localStorage.setItem('examCode', newCode);
-                showNotification('Kode ujian CPNS berhasil diubah!', 'success');
-                document.getElementById('new-exam-code').value = '';
-                document.getElementById('current-exam-code').value = '';
-                playButtonSound();
-            } else {
-                showNotification('Kode ujian CPNS lama salah!', 'error');
-            }
-        }
-
-        // Fungsi untuk menyimpan kode bank soal
-        function saveQuestionCode() {
-            const newCode = document.getElementById('new-question-code').value;
-            const currentCode = document.getElementById('current-question-code').value;
-            const savedCode = localStorage.getItem('bankCode') || DEFAULT_BANK_CODE;
-            
-            if (currentCode === savedCode) {
-                localStorage.setItem('bankCode', newCode);
-                showNotification('Kode bank soal berhasil diubah!', 'success');
-                document.getElementById('new-question-code').value = '';
-                document.getElementById('current-question-code').value = '';
-                playButtonSound();
-            } else {
-                showNotification('Kode bank soal lama salah!', 'error');
-            }
-        }
-
-        // Fungsi untuk menyimpan kode admin
-        function saveAdminCode() {
-            const newCode = document.getElementById('new-admin-code').value;
-            const currentCode = document.getElementById('current-admin-code').value;
-            const savedCode = localStorage.getItem('adminCode') || DEFAULT_ADMIN_CODE;
-            
-            if (currentCode === savedCode) {
-                localStorage.setItem('adminCode', newCode);
-                showNotification('Kode admin berhasil diubah!', 'success');
-                document.getElementById('new-admin-code').value = '';
-                document.getElementById('current-admin-code').value = '';
-                playButtonSound();
-            } else {
-                showNotification('Kode admin lama salah!', 'error');
-            }
-        }
-
-        // Fungsi untuk menyimpan pengaturan
-        function saveSettings() {
-            localStorage.setItem('examTimer', document.getElementById('exam-timer-setting').value);
-            localStorage.setItem('chairmanName', document.getElementById('chairman-name-setting').value);
-            localStorage.setItem('welcomeMessage', document.getElementById('welcome-message-setting').value);
-            localStorage.setItem('infoText', document.getElementById('info-text-setting').value);
-            localStorage.setItem('motivationTexts', document.getElementById('motivation-texts-setting').value);
-            localStorage.setItem('questionPoint', document.getElementById('question-point-setting').value);
-            localStorage.setItem('questionCount', document.getElementById('question-count-setting').value);
-            
-            // Simpan status toggle ujian
-            document.querySelectorAll('.exam-toggle').forEach(toggle => {
-                const exam = toggle.getAttribute('data-exam');
-                localStorage.setItem(`examEnabled_${exam}`, toggle.checked);
-            });
-            
-            showNotification('Pengaturan berhasil disimpan!', 'success');
-            playButtonSound();
-        }
-
-        // Fungsi untuk memuat pengaturan
-        function loadSettings() {
-            // Update form dengan nilai dari localStorage
-            if (localStorage.getItem('examTimer')) {
-                document.getElementById('exam-timer-setting').value = localStorage.getItem('examTimer');
-            }
-            
-            if (localStorage.getItem('chairmanName')) {
-                document.getElementById('chairman-name-setting').value = localStorage.getItem('chairmanName');
-            }
-            
-            if (localStorage.getItem('welcomeMessage')) {
-                document.getElementById('welcome-message-setting').value = localStorage.getItem('welcomeMessage');
-                document.getElementById('welcome-message').textContent = localStorage.getItem('welcomeMessage');
-            }
-            
-            if (localStorage.getItem('infoText')) {
-                document.getElementById('info-text-setting').value = localStorage.getItem('infoText');
-                document.getElementById('info-text').textContent = localStorage.getItem('infoText');
-            }
-            
-            if (localStorage.getItem('motivationTexts')) {
-                document.getElementById('motivation-texts-setting').value = localStorage.getItem('motivationTexts');
-            }
-            
-            if (localStorage.getItem('questionPoint')) {
-                document.getElementById('question-point-setting').value = localStorage.getItem('questionPoint');
-            }
-            
-            if (localStorage.getItem('questionCount')) {
-                document.getElementById('question-count-setting').value = localStorage.getItem('questionCount');
-            }
-            
-            // Update toggle ujian
-            document.querySelectorAll('.exam-toggle').forEach(toggle => {
-                const exam = toggle.getAttribute('data-exam');
-                const isEnabled = localStorage.getItem(`examEnabled_${exam}`) !== 'false';
-                toggle.checked = isEnabled;
-            });
-        }
-
-        // Fungsi untuk inisialisasi halaman admin
-        function initAdminPage() {
-            // Pastikan sudah login sebagai admin
-            // Di aplikasi nyata, ini akan memiliki sistem autentikasi yang lebih aman
-            loadSettings();
-        }
-
-        // Fungsi untuk inisialisasi halaman bank soal
-        function initQuestionBankPage() {
-            // Pastikan sudah login sebagai admin
-            // Di aplikasi nyata, ini akan memiliki sistem autentikasi yang lebih aman
-            filterQuestions();
-        }
-
-        // Fungsi untuk memfilter soal berdasarkan mata ujian
-        function filterQuestions() {
-            const subject = document.getElementById('filter-subject').value;
-            const questionsList = document.getElementById('questions-list');
-            
-            questionsList.innerHTML = '<div style="text-align: center; padding: 20px;"><div class="spinner"></div><p>Memuat soal...</p></div>';
-            
-            // Simulasi loading
-            setTimeout(() => {
-                let filteredQuestions = [];
-                
-                // Gabungkan semua soal dari semua mata ujian
-                for (const [subj, qs] of Object.entries(sampleQuestions)) {
-                    if (!subject || subj === subject) {
-                        filteredQuestions = filteredQuestions.concat(qs.map(q => ({ ...q, subject: subj })));
-                    }
-                }
-                
-                // Tampilkan soal
-                if (filteredQuestions.length === 0) {
-                    questionsList.innerHTML = '<p>Tidak ada soal yang ditemukan.</p>';
-                    return;
-                }
-                
-                questionsList.innerHTML = '';
-                filteredQuestions.forEach((q, index) => {
-                    const questionElement = document.createElement('div');
-                    questionElement.className = 'card';
-                    questionElement.style.marginBottom = '15px';
-                    questionElement.style.padding = '15px';
-                    
-                    questionElement.innerHTML = `
-                        <h4>${q.subject} - Soal #${index + 1}</h4>
-                        <p><strong>${q.question}</strong></p>
-                        <div style="margin: 10px 0;">
-                            ${q.options.map(opt => `<div>${opt}</div>`).join('')}
-                        </div>
-                        <p><strong>Jawaban benar:</strong> ${q.correctAnswer}</p>
-                        <p><strong>Penjelasan:</strong> ${q.explanation || 'Tidak ada penjelasan'}</p>
-                        <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
-                            <button class="btn btn-warning edit-question" data-index="${index}" data-subject="${q.subject}" style="margin-right: 10px;">Edit</button>
-                            <button class="btn btn-danger delete-question" data-index="${index}" data-subject="${q.subject}">Hapus</button>
-                        </div>
-                    `;
-                    
-                    questionsList.appendChild(questionElement);
-                });
-                
-                // Tambahkan event listener untuk tombol edit dan hapus
-                document.querySelectorAll('.edit-question').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const index = this.getAttribute('data-index');
-                        const subject = this.getAttribute('data-subject');
-                        editQuestion(index, subject);
-                    });
-                });
-                
-                document.querySelectorAll('.delete-question').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const index = this.getAttribute('data-index');
-                        const subject = this.getAttribute('data-subject');
-                        deleteQuestion(index, subject);
-                    });
-                });
-            }, 1000);
-        }
-
-        // Fungsi untuk mengedit soal
-        function editQuestion(index, subject) {
-            // Di aplikasi nyata, ini akan mengambil soal dari database
-            const question = sampleQuestions[subject][index];
-            
-            // Isi form dengan data soal
-            document.getElementById('question-subject').value = subject;
-            document.getElementById('question-text').value = question.question;
-            document.getElementById('option-a').value = question.options[0].substring(3);
-            document.getElementById('option-b').value = question.options[1].substring(3);
-            document.getElementById('option-c').value = question.options[2].substring(3);
-            document.getElementById('option-d').value = question.options[3].substring(3);
-            document.getElementById('option-e').value = question.options[4] ? question.options[4].substring(3) : '';
-            document.getElementById('correct-answer').value = question.correctAnswer;
-            document.getElementById('explanation').value = question.explanation || '';
-            
-            // Pindah ke tab tambah soal
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
-            
-            document.querySelector('.admin-tab[data-tab="add-question"]').classList.add('active');
-            document.getElementById('add-question-content').classList.add('active');
-            
-            // Scroll ke form
-            document.getElementById('question-text').scrollIntoView({ behavior: 'smooth' });
-            
-            playButtonSound();
-        }
-
-        // Fungsi untuk menghapus soal
-        function deleteQuestion(index, subject) {
-            if (confirm('Apakah Anda yakin ingin menghapus soal ini?')) {
-                // Di aplikasi nyata, ini akan menghapus dari database
-                sampleQuestions[subject].splice(index, 1);
-                showNotification('Soal berhasil dihapus!', 'success');
-                filterQuestions();
-                playButtonSound();
-            }
-        }
-
-        // Fungsi untuk menyimpan soal
-        function saveQuestion() {
-            const subject = document.getElementById('question-subject').value;
-            const questionText = document.getElementById('question-text').value;
-            const options = [
-                `A. ${document.getElementById('option-a').value}`,
-                `B. ${document.getElementById('option-b').value}`,
-                `C. ${document.getElementById('option-c').value}`,
-                `D. ${document.getElementById('option-d').value}`
-            ];
-            
-            // Tambahkan opsi E jika diisi
-            if (document.getElementById('option-e').value) {
-                options.push(`E. ${document.getElementById('option-e').value}`);
-            }
-            
-            const correctAnswer = document.getElementById('correct-answer').value;
-            const explanation = document.getElementById('explanation').value;
-            
-            // Validasi
-            if (!subject || !questionText || !options[0] || !options[1] || !options[2] || !options[3] || !correctAnswer) {
-                showNotification('Harap isi semua field yang diperlukan!', 'error');
-                return;
-            }
-            
-            // Buat objek soal baru
-            const newQuestion = {
-                question: questionText,
-                options: options,
-                correctAnswer: correctAnswer,
-                explanation: explanation
-            };
-            
-            // Simpan soal (di aplikasi nyata ini akan disimpan ke database)
-            if (!sampleQuestions[subject]) {
-                sampleQuestions[subject] = [];
-            }
-            sampleQuestions[subject].push(newQuestion);
-            
-            // Reset form
-            document.getElementById('add-question-content').querySelector('form').reset();
-            
-            showNotification('Soal berhasil disimpan!', 'success');
-            playButtonSound();
-            
-            // Kembali ke tab kelola soal
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
-            
-            document.querySelector('.admin-tab[data-tab="manage-questions"]').classList.add('active');
-            document.getElementById('manage-questions-content').classList.add('active');
-            
-            // Perbarui daftar soal
-            filterQuestions();
-        }
-
-        // Fungsi untuk generate soal dengan AI
-        function generateQuestionsWithAI() {
-            const prompt = document.getElementById('ai-prompt').value;
-            const subject = document.getElementById('ai-subject').value;
-            
-            if (!prompt) {
-                showNotification('Harap masukkan prompt untuk AI!', 'error');
-                return;
-            }
-            
-            // Di aplikasi nyata, ini akan memanggil API AI
-            // Berikut adalah contoh implementasi dengan API OpenAI (Anda perlu menambahkan API key)
-            
-            /*
-            // UNCOMMENT DAN ISI API KEY ANDA DI BAWAH INI
-            const API_KEY = 'sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'; // Ganti dengan API key OpenAI Anda
-            
-            document.getElementById('ai-results').style.display = 'block';
-            document.getElementById('generated-questions').innerHTML = '<div style="text-align: center;"><div class="spinner"></div><p>Sedang generate soal...</p></div>';
-            
-            fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: 'gpt-3.5-turbo',
-                    messages: [
-                        {
-                            role: 'system',
-                            content: 'Anda adalah seorang ahli pembuat soal ujian. Buatkan soal pilihan ganda dengan format: Pertanyaan, 4 opsi jawaban (A-D), jawaban benar (huruf saja), dan penjelasan singkat.'
-                        },
-                        {
-                            role: 'user',
-                            content: prompt
-                        }
-                    ],
-                    temperature: 0.7
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                const content = data.choices[0].message.content;
-                document.getElementById('generated-questions').innerHTML = `<pre>${content}</pre>`;
-                
-                // Di aplikasi nyata, Anda perlu parsing hasilnya untuk disimpan sebagai soal
-                // Ini hanya contoh sederhana
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('generated-questions').innerHTML = '<p>Gagal generate soal. Pastikan API key valid.</p>';
-            });
-            */
-            
-            // Contoh hasil statis untuk demonstrasi (hapus di aplikasi nyata)
-            document.getElementById('ai-results').style.display = 'block';
-            document.getElementById('generated-questions').innerHTML = `
-                <p><strong>1. Apa ibukota Indonesia?</strong></p>
-                <p>A. Jakarta</p>
-                <p>B. Bandung</p>
-                <p>C. Surabaya</p>
-                <p>D. Medan</p>
-                <p><em>Jawaban benar: A</em></p>
-                <p><em>Penjelasan: Jakarta adalah ibukota Indonesia sejak tahun 1945.</em></p>
-                <hr>
-                <p><strong>2. Siapa presiden pertama Indonesia?</strong></p>
-                <p>A. Soeharto</p>
-                <p>B. Soekarno</p>
-                <p>C. Joko Widodo</p>
-                <p>D. Susilo Bambang Yudhoyono</p>
-                <p><em>Jawaban benar: B</em></p>
-                <p><em>Penjelasan: Soekarno adalah presiden pertama Indonesia yang menjabat dari tahun 1945 hingga 1967.</em></p>
-            `;
-            
-            showNotification('Fitur AI membutuhkan API key yang valid. Ini hanya contoh demonstrasi.', 'info');
-            playButtonSound();
-        }
-
-        // Fungsi untuk menyimpan soal yang dihasilkan AI
-        function saveGeneratedQuestions() {
-            // Di aplikasi nyata, ini akan parsing dan menyimpan soal yang dipilih dari hasil AI
-            showNotification('Soal berhasil disimpan! (simulasi)', 'success');
-            playButtonSound();
-            
-            // Sembunyikan hasil dan reset form
-            document.getElementById('ai-results').style.display = 'none';
-            document.getElementById('ai-prompt').value = '';
-            
-            // Perbarui daftar soal
-            filterQuestions();
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
