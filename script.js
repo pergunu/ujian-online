@@ -1,1279 +1,1347 @@
-// KODE DEFAULT (JANGAN DITAMPILKAN KE PUBLIK)
-const DEFAULT_LOGIN_CODE = "12345";
-const DEFAULT_EXAM_CODE = "OPENLOCK-1945";
-const DEFAULT_BANK_CODE = "OPENLOCK-1926";
-const DEFAULT_ADMIN_CODE = "65614222";
-
-// Inisialisasi variabel
-let currentPage = "login";
-let participantData = {};
-let examData = {};
-let questions = [];
-let currentQuestionIndex = 0;
-let answeredQuestions = {};
-let timerInterval;
-let timeLeft = 120 * 60; // 120 menit dalam detik
-let examStarted = false;
-
-// Data contoh soal
-const sampleQuestions = {
-    "AGAMA": [
-        {
-            question: "Apa kitab suci agama Islam?",
-            options: ["A. Alkitab", "B. Tripitaka", "C. Al-Quran", "D. Weda", "E. Talmud"],
-            correctAnswer: "C",
-            explanation: "Kitab suci agama Islam adalah Al-Quran yang diturunkan kepada Nabi Muhammad SAW."
-        }
-    ],
-    "PPKN": [
-        {
-            question: "Pancasila sebagai dasar negara tercantum dalam?",
-            options: ["A. Pembukaan UUD 1945", "B. Batang Tubuh UUD 1945", "C. Penjelasan UUD 1945", "D. Keputusan Presiden", "E. Tap MPR"],
-            correctAnswer: "A",
-            explanation: "Pancasila sebagai dasar negara tercantum dalam Pembukaan UUD 1945 alinea keempat."
-        }
-    ],
-    "SEJARAH": [
-        {
-            question: "Kapan Indonesia merdeka?",
-            options: ["A. 16 Agustus 1945", "B. 17 Agustus 1945", "C. 18 Agustus 1945", "D. 19 Agustus 1945", "E. 20 Agustus 1945"],
-            correctAnswer: "B",
-            explanation: "Indonesia merdeka pada tanggal 17 Agustus 1945 yang dibacakan oleh Soekarno-Hatta."
-        }
-    ],
-    "IPA": [
-        {
-            question: "Planet terdekat dari matahari adalah?",
-            options: ["A. Venus", "B. Bumi", "C. Mars", "D. Merkurius", "E. Jupiter"],
-            correctAnswer: "D",
-            explanation: "Merkurius adalah planet terdekat dari matahari dalam tata surya kita."
-        }
-    ],
-    "IPS": [
-        {
-            question: "Ibu kota negara Jepang adalah?",
-            options: ["A. Beijing", "B. Seoul", "C. Bangkok", "D. Tokyo", "E. Jakarta"],
-            correctAnswer: "D",
-            explanation: "Ibu kota negara Jepang adalah Tokyo yang merupakan salah satu kota terpadat di dunia."
-        }
-    ],
-    "MATEMATIKA": [
-        {
-            question: "Berapa hasil dari 7 x 8?",
-            options: ["A. 48", "B. 54", "C. 56", "D. 64", "E. 72"],
-            correctAnswer: "C",
-            explanation: "Hasil dari 7 dikali 8 adalah 56."
-        }
-    ],
-    "BAHASA INDONESIA": [
-        {
-            question: "Kata 'membaca' termasuk jenis kata apa?",
-            options: ["A. Kata benda", "B. Kata sifat", "C. Kata kerja", "D. Kata keterangan", "E. Kata ganti"],
-            correctAnswer: "C",
-            explanation: "Kata 'membaca' termasuk jenis kata kerja karena menunjukkan suatu aktivitas."
-        }
-    ],
-    "BAHASA INGGRIS": [
-        {
-            question: "What is the past tense of 'go'?",
-            options: ["A. Goed", "B. Went", "C. Gone", "D. Going", "E. Goes"],
-            correctAnswer: "B",
-            explanation: "The past tense of 'go' is 'went'. Example: 'I went to school yesterday.'"
-        }
-    ],
-    "MATERI EXTRA": [
-        {
-            question: "Siapa pencipta lagu Indonesia Raya?",
-            options: ["A. W.R. Supratman", "B. Ismail Marzuki", "C. C. Simanjuntak", "D. Kusbini", "E. Ibu Sud"],
-            correctAnswer: "A",
-            explanation: "Lagu Indonesia Raya diciptakan oleh Wage Rudolf Supratman dan pertama kali diperdengarkan pada 28 Oktober 1928."
-        }
-    ],
-    "MATERI KHUSUS": [
-        {
-            question: "Apa nama organisasi kepanduan di Indonesia?",
-            options: ["A. Pramuka", "B. Pandu", "C. Scout", "D. Kepanduan", "E. Gerakan Pemuda"],
-            correctAnswer: "A",
-            explanation: "Organisasi kepanduan di Indonesia bernama Pramuka (Praja Muda Karana)."
-        }
-    ],
-    "UJIAN LOGIKA": [
-        {
-            question: "Jika semua manusia adalah makhluk hidup, dan Budi adalah manusia, maka:",
-            options: ["A. Budi adalah makhluk hidup", "B. Budi bukan makhluk hidup", "C. Beberapa manusia bukan makhluk hidup", "D. Tidak dapat disimpulkan", "E. Semua makhluk hidup adalah Budi"],
-            correctAnswer: "A",
-            explanation: "Dari premis yang diberikan, dapat disimpulkan bahwa Budi adalah makhluk hidup."
-        }
-    ],
-    "UJIAN CPNS/P3K": [
-        {
-            question: "Negara Indonesia adalah negara hukum, hal ini tercantum dalam UUD 1945 pasal:",
-            options: ["A. Pasal 1 ayat (1)", "B. Pasal 1 ayat (2)", "C. Pasal 1 ayat (3)", "D. Pasal 2 ayat (1)", "E. Pasal 3 ayat (1)"],
-            correctAnswer: "C",
-            explanation: "Pasal 1 ayat (3) UUD 1945 menyatakan bahwa 'Negara Indonesia adalah negara hukum'."
-        }
-    ]
-};
-
-// Inisialisasi aplikasi saat halaman dimuat
+// Inisialisasi Aplikasi
 document.addEventListener('DOMContentLoaded', function() {
     // Inisialisasi particles.js
     particlesJS('particles-js', {
         particles: {
-            number: { value: 80, density: { enable: true, value_area: 800 } },
-            color: { value: "#ffffff" },
-            shape: { type: "circle" },
-            opacity: { value: 0.5, random: true },
-            size: { value: 3, random: true },
-            line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
-            move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+            number: {
+                value: 80,
+                density: {
+                    enable: true,
+                    value_area: 800
+                }
+            },
+            color: {
+                value: "#ffffff"
+            },
+            shape: {
+                type: "circle",
+                stroke: {
+                    width: 0,
+                    color: "#000000"
+                },
+                polygon: {
+                    nb_sides: 5
+                }
+            },
+            opacity: {
+                value: 0.5,
+                random: true,
+                anim: {
+                    enable: true,
+                    speed: 1,
+                    opacity_min: 0.1,
+                    sync: false
+                }
+            },
+            size: {
+                value: 3,
+                random: true,
+                anim: {
+                    enable: true,
+                    speed: 2,
+                    size_min: 0.1,
+                    sync: false
+                }
+            },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: "#ffffff",
+                opacity: 0.4,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 1,
+                direction: "none",
+                random: true,
+                straight: false,
+                out_mode: "out",
+                bounce: false,
+                attract: {
+                    enable: false,
+                    rotateX: 600,
+                    rotateY: 1200
+                }
+            }
         },
         interactivity: {
             detect_on: "canvas",
             events: {
-                onhover: { enable: true, mode: "repulse" },
-                onclick: { enable: true, mode: "push" }
-            }
-        }
-    });
-
-    // Set halaman awal
-    showPage('login');
-
-    // Event listeners
-    document.getElementById('login-btn').addEventListener('click', handleLogin);
-    document.getElementById('agree-rules').addEventListener('change', function() {
-        document.getElementById('continue-btn').disabled = !this.checked;
-    });
-    document.getElementById('continue-btn').addEventListener('click', function() {
-        showPage('participant');
-    });
-    
-    // Toggle form peserta berdasarkan status
-    document.querySelectorAll('input[name="status"]').forEach(radio => {
-        radio.addEventListener('change', function() {
-            if (this.value === 'pelajar') {
-                document.getElementById('student-form').classList.remove('hidden');
-                document.getElementById('general-form').classList.add('hidden');
-            } else {
-                document.getElementById('student-form').classList.add('hidden');
-                document.getElementById('general-form').classList.remove('hidden');
-            }
-        });
-    });
-    
-    // Form peserta
-    document.getElementById('participant-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        saveParticipantData();
-    });
-    
-    // GPS button
-    document.getElementById('gps-btn').addEventListener('click', getLocation);
-    
-    // Tombol pilihan ujian
-    document.querySelectorAll('.exam-option').forEach(btn => {
-        btn.addEventListener('click', function() {
-            selectExamOption(this);
-        });
-    });
-    
-    // Verifikasi kode lisensi
-    document.getElementById('verify-license').addEventListener('click', verifyLicense);
-    
-    // Mulai ujian
-    document.getElementById('start-exam-btn').addEventListener('click', startExam);
-    
-    // Navigasi ujian
-    document.getElementById('finish-exam-btn').addEventListener('click', finishExam);
-    document.getElementById('skip-question-btn').addEventListener('click', skipQuestion);
-    document.getElementById('unanswered-btn').addEventListener('click', showUnanswered);
-    
-    // Hasil ujian
-    document.getElementById('view-certificate-btn').addEventListener('click', function() {
-        showPage('certificate');
-    });
-    document.getElementById('retake-exam-btn').addEventListener('click', function() {
-        showPage('exam-options');
-    });
-    
-    // Sertifikat
-    document.getElementById('print-certificate-btn').addEventListener('click', printCertificate);
-    document.getElementById('back-to-result-btn').addEventListener('click', function() {
-        showPage('result');
-    });
-    
-    // Tombol mengambang
-    document.getElementById('share-btn').addEventListener('click', showShareModal);
-    document.getElementById('whatsapp-btn').addEventListener('click', openWhatsApp);
-    document.getElementById('question-bank-btn').addEventListener('click', showQuestionBankModal);
-    document.getElementById('admin-btn').addEventListener('click', showAdminModal);
-    
-    // Panel admin
-    setupAdminTabs();
-    document.getElementById('save-login-code').addEventListener('click', saveLoginCode);
-    document.getElementById('save-exam-code').addEventListener('click', saveExamCode);
-    document.getElementById('save-question-code').addEventListener('click', saveQuestionCode);
-    document.getElementById('save-admin-code').addEventListener('click', saveAdminCode);
-    document.getElementById('save-settings').addEventListener('click', saveSettings);
-    
-    // Bank soal
-    document.getElementById('filter-subject').addEventListener('change', filterQuestions);
-    document.getElementById('save-question').addEventListener('click', saveQuestion);
-    document.getElementById('generate-questions').addEventListener('click', generateQuestionsWithAI);
-    document.getElementById('save-generated-questions').addEventListener('click', saveGeneratedQuestions);
-    
-    // Modal
-    document.querySelectorAll('.close-modal').forEach(btn => {
-        btn.addEventListener('click', function() {
-            this.closest('.modal').classList.add('hidden');
-        });
-    });
-    
-    document.getElementById('submit-bank-code').addEventListener('click', function() {
-        const code = document.getElementById('bank-code-input').value;
-        if (code === DEFAULT_BANK_CODE || code === localStorage.getItem('bankCode')) {
-            document.getElementById('question-bank-modal').classList.add('hidden');
-            showPage('question-bank');
-        } else {
-            showNotification('Kode bank soal salah!', 'error');
-        }
-    });
-    
-    document.getElementById('submit-admin-code').addEventListener('click', function() {
-        const code = document.getElementById('admin-code-input').value;
-        if (code === DEFAULT_ADMIN_CODE || code === localStorage.getItem('adminCode')) {
-            document.getElementById('admin-modal').classList.add('hidden');
-            showPage('admin');
-        } else {
-            showNotification('Kode admin salah!', 'error');
-        }
-    });
-    
-    // Load settings
-    loadSettings();
-    
-    // Play opening sound
-    const buttonSound = document.getElementById('button-sound');
-    buttonSound.play().catch(e => console.log('Autoplay prevented:', e));
-});
-
-// Fungsi untuk menampilkan halaman tertentu
-function showPage(page) {
-    // Sembunyikan semua halaman
-    document.querySelectorAll('.page').forEach(p => {
-        p.classList.add('hidden');
-    });
-    
-    // Tampilkan halaman yang diminta
-    document.getElementById(`${page}-page`).classList.remove('hidden');
-    
-    // Sembunyikan tombol mengambang di halaman sertifikat
-    const floatingButtons = document.querySelector('.floating-buttons');
-    if (page === 'certificate') {
-        floatingButtons.style.display = 'none';
-    } else {
-        floatingButtons.style.display = 'flex';
-    }
-    
-    // Lakukan inisialisasi khusus halaman
-    switch(page) {
-        case 'participant':
-            initParticipantPage();
-            break;
-        case 'exam-options':
-            initExamOptionsPage();
-            break;
-        case 'exam':
-            // Inisialisasi sudah dilakukan di startExam()
-            break;
-        case 'result':
-            showExamResult();
-            break;
-        case 'certificate':
-            generateCertificate();
-            break;
-        case 'admin':
-            initAdminPage();
-            break;
-        case 'question-bank':
-            initQuestionBankPage();
-            break;
-    }
-    
-    // Perbarui currentPage
-    currentPage = page;
-}
-
-// Fungsi untuk menangani login
-function handleLogin() {
-    const loginCode = document.getElementById('login-code').value;
-    const savedCode = localStorage.getItem('loginCode') || DEFAULT_LOGIN_CODE;
-    
-    if (loginCode === savedCode) {
-        playButtonSound();
-        showPage('rules');
-    } else {
-        showNotification('Kode login salah!', 'error');
-    }
-}
-
-// Fungsi untuk inisialisasi halaman peserta
-function initParticipantPage() {
-    // Reset form
-    document.getElementById('participant-form').reset();
-    document.getElementById('student-form').classList.remove('hidden');
-    document.getElementById('general-form').classList.add('hidden');
-}
-
-// Fungsi untuk menyimpan data peserta
-function saveParticipantData() {
-    const status = document.querySelector('input[name="status"]:checked').value;
-    
-    participantData = {
-        fullName: document.getElementById('full-name').value,
-        status: status,
-        purpose: status === 'pelajar' ? document.getElementById('student-purpose').value : document.getElementById('general-purpose').value,
-        timestamp: new Date().toISOString()
-    };
-    
-    if (status === 'pelajar') {
-        participantData.schoolName = document.getElementById('school-name').value;
-        participantData.studentId = document.getElementById('student-id').value;
-        participantData.schoolLevel = document.getElementById('student-level').value;
-    } else {
-        participantData.address = document.getElementById('address').value;
-        participantData.phone = document.getElementById('phone').value;
-        participantData.email = document.getElementById('email').value;
-    }
-    
-    // Simpan data peserta ke localStorage (simulasi database)
-    saveParticipantToDatabase(participantData);
-    
-    playButtonSound();
-    showPage('exam-options');
-}
-
-// Fungsi untuk inisialisasi halaman pilihan ujian
-function initExamOptionsPage() {
-    const isStudent = participantData.status === 'pelajar';
-    
-    document.getElementById('student-options').classList.toggle('hidden', !isStudent);
-    document.getElementById('general-options').classList.toggle('hidden', isStudent);
-    document.getElementById('license-form').classList.add('hidden');
-    document.getElementById('start-exam-btn').classList.add('hidden');
-    
-    // Isi opsi kelas untuk pelajar
-    if (isStudent) {
-        const gradeSelect = document.getElementById('student-grade');
-        gradeSelect.innerHTML = '';
-        
-        let grades = [];
-        if (participantData.schoolLevel === 'SD') {
-            grades = ['Kelas IV', 'Kelas V', 'Kelas VI'];
-        } else if (participantData.schoolLevel === 'SMP') {
-            grades = ['Kelas VII', 'Kelas VIII', 'Kelas IX'];
-        } else {
-            grades = ['Kelas X', 'Kelas XI', 'Kelas XII'];
-        }
-        
-        grades.forEach(grade => {
-            const option = document.createElement('option');
-            option.value = grade;
-            option.textContent = grade;
-            gradeSelect.appendChild(option);
-        });
-    }
-    
-    // Reset pilihan ujian
-    document.querySelectorAll('.exam-option').forEach(btn => {
-        btn.classList.remove('btn-success');
-    });
-}
-
-// Fungsi untuk memilih opsi ujian
-function selectExamOption(button) {
-    const subject = button.getAttribute('data-subject');
-    
-    // Jika memilih CPNS, tampilkan form kode lisensi
-    if (subject === 'UJIAN CPNS/P3K') {
-        document.getElementById('license-form').classList.remove('hidden');
-        document.getElementById('start-exam-btn').classList.add('hidden');
-    } else {
-        document.getElementById('license-form').classList.add('hidden');
-        document.getElementById('start-exam-btn').classList.remove('hidden');
-    }
-    
-    // Set data ujian
-    examData = {
-        subject: subject,
-        grade: participantData.status === 'pelajar' ? document.getElementById('student-grade').value : null
-    };
-    
-    // Highlight tombol yang dipilih
-    document.querySelectorAll('.exam-option').forEach(btn => {
-        btn.classList.remove('btn-success');
-    });
-    button.classList.add('btn-success');
-    
-    playButtonSound();
-}
-
-// Fungsi untuk verifikasi kode lisensi
-function verifyLicense() {
-    const licenseCode = document.getElementById('license-code').value;
-    const savedCode = localStorage.getItem('examCode') || DEFAULT_EXAM_CODE;
-    
-    if (licenseCode === savedCode) {
-        document.getElementById('start-exam-btn').classList.remove('hidden');
-        showNotification('Kode lisensi valid!', 'success');
-        playButtonSound();
-    } else {
-        showNotification('Kode lisensi salah!', 'error');
-    }
-}
-
-// Fungsi untuk memulai ujian
-function startExam() {
-    // Ambil soal berdasarkan subjek
-    questions = sampleQuestions[examData.subject] || [];
-    
-    // Acak urutan soal jika diatur di admin
-    if (localStorage.getItem('randomizeQuestions') === 'true') {
-        questions = shuffleArray(questions);
-    }
-    
-    // Batasi jumlah soal sesuai setting
-    const questionCount = parseInt(localStorage.getItem('questionCount') || 10);
-    questions = questions.slice(0, questionCount);
-    
-    // Set timer
-    timeLeft = parseInt(localStorage.getItem('examTimer') || 120) * 60;
-    
-    // Reset jawaban
-    answeredQuestions = {};
-    currentQuestionIndex = 0;
-    examStarted = true;
-    
-    // Update judul ujian
-    document.getElementById('exam-title').textContent = `Ujian ${examData.subject}`;
-    
-    // Mulai timer
-    startTimer();
-    
-    // Tampilkan soal pertama
-    showQuestion();
-    
-    playButtonSound();
-    showPage('exam');
-}
-
-// Fungsi untuk menampilkan soal
-function showQuestion() {
-    if (currentQuestionIndex >= questions.length) {
-        finishExam();
-        return;
-    }
-    
-    const question = questions[currentQuestionIndex];
-    const optionsContainer = document.getElementById('options-container');
-    
-    // Tampilkan pertanyaan
-    document.getElementById('question-text').textContent = `${currentQuestionIndex + 1}. ${question.question}`;
-    
-    // Tampilkan opsi jawaban
-    optionsContainer.innerHTML = '';
-    question.options.forEach((option, index) => {
-        const optionElement = document.createElement('div');
-        optionElement.className = 'option';
-        optionElement.textContent = option;
-        optionElement.setAttribute('data-option', String.fromCharCode(65 + index));
-        
-        // Tandai jika sudah dijawab
-        if (answeredQuestions[currentQuestionIndex]) {
-            const selectedOption = answeredQuestions[currentQuestionIndex];
-            const isCorrect = selectedOption === question.correctAnswer;
-            
-            if (option.startsWith(selectedOption)) {
-                optionElement.classList.add(isCorrect ? 'selected' : 'wrong');
-            } else if (option.startsWith(question.correctAnswer)) {
-                optionElement.classList.add('selected');
-            }
-        }
-        
-        optionElement.addEventListener('click', function() {
-            if (!answeredQuestions[currentQuestionIndex]) {
-                selectAnswer(this);
-            }
-        });
-        
-        optionsContainer.appendChild(optionElement);
-    });
-    
-    // Tampilkan penjelasan jika sudah dijawab
-    const explanationElement = document.getElementById('explanation-text');
-    if (answeredQuestions[currentQuestionIndex]) {
-        explanationElement.style.display = 'block';
-        explanationElement.textContent = question.explanation || 'Tidak ada penjelasan tersedia.';
-    } else {
-        explanationElement.style.display = 'none';
-    }
-}
-
-// Fungsi untuk memilih jawaban
-function selectAnswer(optionElement) {
-    const selectedOption = optionElement.getAttribute('data-option');
-    const question = questions[currentQuestionIndex];
-    
-    // Simpan jawaban
-    answeredQuestions[currentQuestionIndex] = selectedOption;
-    
-    // Tandai jawaban benar/salah
-    const isCorrect = selectedOption === question.correctAnswer;
-    
-    if (isCorrect) {
-        optionElement.classList.add('selected');
-        document.getElementById('correct-sound').play();
-    } else {
-        optionElement.classList.add('wrong');
-        document.getElementById('wrong-sound').play();
-        
-        // Tandai juga jawaban yang benar
-        document.querySelectorAll('.option').forEach(opt => {
-            if (opt.getAttribute('data-option') === question.correctAnswer) {
-                opt.classList.add('selected');
-            }
-        });
-    }
-    
-    // Tampilkan penjelasan
-    const explanationElement = document.getElementById('explanation-text');
-    explanationElement.style.display = 'block';
-    explanationElement.textContent = question.explanation || 'Tidak ada penjelasan tersedia.';
-}
-
-// Fungsi untuk memulai timer
-function startTimer() {
-    clearInterval(timerInterval);
-    
-    timerInterval = setInterval(function() {
-        timeLeft--;
-        updateTimerDisplay();
-        
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            finishExam(true);
-        } else if (timeLeft === 10 * 60) {
-            // 10 menit tersisa
-            showNotification('Perhatian! Ujian akan berakhir dalam waktu 10 menit. Mohon pastikan semua jawaban telah diselesaikan dan diperiksa sebelum waktu habis. Terima kasih atas partisipasi Anda.', 'warning');
-        }
-    }, 1000);
-}
-
-// Fungsi untuk memperbarui tampilan timer
-function updateTimerDisplay() {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    const timerElement = document.getElementById('exam-timer');
-    
-    timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    
-    // Ubah style jika waktu hampir habis
-    timerElement.className = 'timer';
-    if (timeLeft <= 10 * 60) {
-        timerElement.classList.add('warning');
-    }
-    if (timeLeft <= 1 * 60) {
-        timerElement.classList.remove('warning');
-        timerElement.classList.add('danger');
-    }
-}
-
-// Fungsi untuk melewatkan soal
-function skipQuestion() {
-    currentQuestionIndex++;
-    showQuestion();
-    playButtonSound();
-}
-
-// Fungsi untuk menampilkan soal yang belum dijawab
-function showUnanswered() {
-    const unansweredIndexes = [];
-    
-    for (let i = 0; i < questions.length; i++) {
-        if (!answeredQuestions[i]) {
-            unansweredIndexes.push(i);
-        }
-    }
-    
-    if (unansweredIndexes.length > 0) {
-        currentQuestionIndex = unansweredIndexes[0];
-        showQuestion();
-        showNotification(`Masih ada ${unansweredIndexes.length} soal yang belum dijawab.`, 'info');
-    } else {
-        showNotification('Semua soal sudah dijawab.', 'success');
-    }
-    
-    playButtonSound();
-}
-
-// Fungsi untuk menyelesaikan ujian
-function finishExam(timeout = false) {
-    clearInterval(timerInterval);
-    examStarted = false;
-    
-    // Hitung hasil
-    const totalQuestions = questions.length;
-    let correctAnswers = 0;
-    
-    for (let i = 0; i < totalQuestions; i++) {
-        if (answeredQuestions[i] === questions[i].correctAnswer) {
-            correctAnswers++;
-        }
-    }
-    
-    const wrongAnswers = Object.keys(answeredQuestions).length - correctAnswers;
-    const unansweredQuestions = totalQuestions - Object.keys(answeredQuestions).length;
-    
-    // Simpan hasil
-    const result = {
-        participant: participantData,
-        exam: examData,
-        score: Math.round((correctAnswers / totalQuestions) * 100),
-        totalQuestions,
-        correctAnswers,
-        wrongAnswers,
-        unansweredQuestions,
-        timestamp: new Date().toISOString(),
-        timeout
-    };
-    
-    // Simpan hasil ke database (simulasi)
-    saveExamResultToDatabase(result);
-    
-    // Play applause sound
-    document.getElementById('applause-sound').play();
-    
-    // Tampilkan halaman hasil
-    showPage('result');
-}
-
-// Fungsi untuk menampilkan hasil ujian
-function showExamResult() {
-    // Ambil hasil terakhir dari database (simulasi)
-    const results = JSON.parse(localStorage.getItem('examResults') || '[]');
-    const result = results[results.length - 1];
-    
-    if (!result) return;
-    
-    // Tampilkan hasil
-    document.getElementById('result-score').textContent = result.score;
-    document.getElementById('total-questions').textContent = result.totalQuestions;
-    document.getElementById('correct-answers').textContent = result.correctAnswers;
-    document.getElementById('wrong-answers').textContent = result.wrongAnswers;
-    document.getElementById('unanswered-questions').textContent = result.unansweredQuestions;
-    
-    // Tampilkan pesan berdasarkan skor
-    const motivationTexts = (localStorage.getItem('motivationTexts') || "Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.\nBagus! Anda telah menunjukkan pemahaman yang baik. Tingkatkan terus kemampuan Anda.\nCukup baik. Masih ada ruang untuk perbaikan. Terus belajar dan berlatih.\nAnda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!").split('\n');
-    
-    let messageIndex = 0;
-    if (result.score >= 90) messageIndex = 0;
-    else if (result.score >= 70) messageIndex = 1;
-    else if (result.score >= 50) messageIndex = 2;
-    else messageIndex = 3;
-    
-    document.getElementById('result-message').textContent = motivationTexts[messageIndex] || motivationTexts[0];
-}
-
-// Fungsi untuk menghasilkan sertifikat
-function generateCertificate() {
-    // Ambil hasil terakhir dari database (simulasi)
-    const results = JSON.parse(localStorage.getItem('examResults') || '[]');
-    const result = results[results.length - 1];
-    
-    if (!result) return;
-    
-    // Format tanggal
-    const date = new Date(result.timestamp);
-    const formattedDate = date.toLocaleDateString('id-ID', { 
-        day: 'numeric', 
-        month: 'long', 
-        year: 'numeric' 
-    });
-    
-    // Generate kode sertifikat
-    const participant = result.participant;
-    const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + 
-                      Math.random().toString(36).substring(2, 6).toUpperCase();
-    
-    const certCode = `${participant.fullName.toUpperCase().replace(/ /g, '')}/${participant.status.toUpperCase()}/${participant.schoolLevel || 'UMUM'}/${result.exam.subject}/${formattedDate.replace(/ /g, '')}/${randomCode}/PERGUNU-STB`;
-    
-    // Isi data sertifikat
-    document.getElementById('certificate-name').textContent = participant.fullName;
-    document.getElementById('certificate-score').textContent = `Nilai: ${result.score}`;
-    document.getElementById('certificate-date').textContent = formattedDate;
-    document.getElementById('certificate-code').textContent = certCode;
-    document.getElementById('chairman-name').textContent = localStorage.getItem('chairmanName') || "Moh. Nuril Hudha, S.Pd., M.Si.";
-    
-    // Tampilkan pesan motivasi
-    const motivationTexts = (localStorage.getItem('motivationTexts') || "Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.\nBagus! Anda telah menunjukkan pemahaman yang baik. Tingkatkan terus kemampuan Anda.\nCukup baik. Masih ada ruang untuk perbaikan. Terus belajar dan berlatih.\nAnda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!").split('\n');
-    
-    let messageIndex = 0;
-    if (result.score >= 90) messageIndex = 0;
-    else if (result.score >= 70) messageIndex = 1;
-    else if (result.score >= 50) messageIndex = 2;
-    else messageIndex = 3;
-    
-    document.getElementById('motivation-text').textContent = motivationTexts[messageIndex] || motivationTexts[0];
-}
-
-// Fungsi untuk mencetak sertifikat
-function printCertificate() {
-    window.print();
-}
-
-// Fungsi untuk menampilkan notifikasi
-function showNotification(message, type = 'info') {
-    const notification = document.getElementById('notification');
-    notification.textContent = message;
-    notification.style.display = 'block';
-    
-    // Set warna berdasarkan jenis notifikasi
-    notification.style.backgroundColor = type === 'error' ? 'rgba(220, 53, 69, 0.9)' : 
-                                       type === 'success' ? 'rgba(40, 167, 69, 0.9)' :
-                                       type === 'warning' ? 'rgba(255, 193, 7, 0.9)' :
-                                       'rgba(23, 162, 184, 0.9)';
-    
-    // Sembunyikan setelah 3 detik
-    setTimeout(() => {
-        notification.style.display = 'none';
-    }, 3000);
-}
-
-// Fungsi untuk memainkan suara tombol
-function playButtonSound() {
-    const sound = document.getElementById('button-sound');
-    sound.currentTime = 0;
-    sound.play().catch(e => console.log('Audio play prevented:', e));
-}
-
-// Fungsi untuk menyimpan data peserta ke database (simulasi)
-function saveParticipantToDatabase(data) {
-    const participants = JSON.parse(localStorage.getItem('participants') || '[]');
-    participants.push(data);
-    localStorage.setItem('participants', JSON.stringify(participants));
-}
-
-// Fungsi untuk menyimpan hasil ujian ke database (simulasi)
-function saveExamResultToDatabase(data) {
-    const results = JSON.parse(localStorage.getItem('examResults') || '[]');
-    results.push(data);
-    localStorage.setItem('examResults', JSON.stringify(results));
-}
-
-// Fungsi untuk mendapatkan lokasi GPS
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            function(position) {
-                // Gunakan API geocoding untuk mendapatkan alamat dari koordinat
-                getAddressFromCoordinates(position.coords.latitude, position.coords.longitude);
+                onhover: {
+                    enable: true,
+                    mode: "grab"
+                },
+                onclick: {
+                    enable: true,
+                    mode: "push"
+                },
+                resize: true
             },
-            function(error) {
-                showNotification('Tidak dapat mendapatkan lokasi: ' + error.message, 'error');
+            modes: {
+                grab: {
+                    distance: 140,
+                    line_linked: {
+                        opacity: 1
+                    }
+                },
+                bubble: {
+                    distance: 400,
+                    size: 40,
+                    duration: 2,
+                    opacity: 8,
+                    speed: 3
+                },
+                repulse: {
+                    distance: 200,
+                    duration: 0.4
+                },
+                push: {
+                    particles_nb: 4
+                },
+                remove: {
+                    particles_nb: 2
+                }
             }
-        );
-    } else {
-        showNotification('Geolocation tidak didukung oleh browser Anda.', 'error');
-    }
-}
-
-// Fungsi untuk mendapatkan alamat dari koordinat (menggunakan Nominatim API)
-function getAddressFromCoordinates(lat, lon) {
-    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-        .then(response => response.json())
-        .then(data => {
-            const address = data.display_name || 'Lokasi tidak diketahui';
-            document.getElementById('address').value = address;
-            showNotification('Lokasi berhasil ditemukan!', 'success');
-        })
-        .catch(error => {
-            console.error('Error getting address:', error);
-            showNotification('Gagal mendapatkan alamat dari koordinat.', 'error');
-        });
-}
-
-// Fungsi untuk mengacak array
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-// Fungsi untuk menampilkan modal share
-function showShareModal() {
-    // Di aplikasi nyata, ini akan berisi link yang bisa diatur di admin
-    const shareLinks = [
-        { name: 'Facebook', icon: 'fab fa-facebook-f', url: '#' },
-        { name: 'Twitter', icon: 'fab fa-twitter', url: '#' },
-        { name: 'WhatsApp', icon: 'fab fa-whatsapp', url: '#' },
-        { name: 'Telegram', icon: 'fab fa-telegram', url: '#' },
-        { name: 'Email', icon: 'fas fa-envelope', url: '#' }
-    ];
-    
-    const linksContainer = document.getElementById('share-links');
-    linksContainer.innerHTML = '';
-    
-    shareLinks.forEach(link => {
-        const linkElement = document.createElement('a');
-        linkElement.href = link.url;
-        linkElement.className = 'btn';
-        linkElement.style.margin = '5px';
-        linkElement.innerHTML = `<i class="${link.icon}"></i> ${link.name}`;
-        linksContainer.appendChild(linkElement);
+        },
+        retina_detect: true
     });
-    
-    document.getElementById('share-modal').classList.remove('hidden');
-    playButtonSound();
-}
 
-// Fungsi untuk membuka WhatsApp
-function openWhatsApp() {
-    const phone = '6285647709114';
-    const message = 'Assalamualaikum mas admin, saya mau tanya sesuatu nih…';
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
-    playButtonSound();
-}
-
-// Fungsi untuk menampilkan modal bank soal
-function showQuestionBankModal() {
-    document.getElementById('question-bank-modal').classList.remove('hidden');
-    playButtonSound();
-}
-
-// Fungsi untuk menampilkan modal admin
-function showAdminModal() {
-    document.getElementById('admin-modal').classList.remove('hidden');
-    playButtonSound();
-}
-
-// Fungsi untuk mengatur tab admin
-function setupAdminTabs() {
-    document.querySelectorAll('.admin-tab').forEach(tab => {
-        tab.addEventListener('click', function() {
-            // Hapus active dari semua tab dan content
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
-            
-            // Tambahkan active ke tab yang diklik
-            this.classList.add('active');
-            
-            // Tampilkan content yang sesuai
-            const tabId = this.getAttribute('data-tab');
-            document.getElementById(`${tabId}-content`).classList.add('active');
-            
-            playButtonSound();
-        });
-    });
-}
-
-// Fungsi untuk menyimpan kode login
-function saveLoginCode() {
-    const newCode = document.getElementById('new-login-code').value;
-    const currentCode = document.getElementById('current-login-code').value;
-    const savedCode = localStorage.getItem('loginCode') || DEFAULT_LOGIN_CODE;
-    
-    if (currentCode === savedCode) {
-        localStorage.setItem('loginCode', newCode);
-        showNotification('Kode login berhasil diubah!', 'success');
-        document.getElementById('new-login-code').value = '';
-        document.getElementById('current-login-code').value = '';
-        playButtonSound();
-    } else {
-        showNotification('Kode login lama salah!', 'error');
-    }
-}
-
-// Fungsi untuk menyimpan kode ujian CPNS
-function saveExamCode() {
-    const newCode = document.getElementById('new-exam-code').value;
-    const currentCode = document.getElementById('current-exam-code').value;
-    const savedCode = localStorage.getItem('examCode') || DEFAULT_EXAM_CODE;
-    
-    if (currentCode === savedCode) {
-        localStorage.setItem('examCode', newCode);
-        showNotification('Kode ujian CPNS berhasil diubah!', 'success');
-        document.getElementById('new-exam-code').value = '';
-        document.getElementById('current-exam-code').value = '';
-        playButtonSound();
-    } else {
-        showNotification('Kode ujian CPNS lama salah!', 'error');
-    }
-}
-
-// Fungsi untuk menyimpan kode bank soal
-function saveQuestionCode() {
-    const newCode = document.getElementById('new-question-code').value;
-    const currentCode = document.getElementById('current-question-code').value;
-    const savedCode = localStorage.getItem('bankCode') || DEFAULT_BANK_CODE;
-    
-    if (currentCode === savedCode) {
-        localStorage.setItem('bankCode', newCode);
-        showNotification('Kode bank soal berhasil diubah!', 'success');
-        document.getElementById('new-question-code').value = '';
-        document.getElementById('current-question-code').value = '';
-        playButtonSound();
-    } else {
-        showNotification('Kode bank soal lama salah!', 'error');
-    }
-}
-
-// Fungsi untuk menyimpan kode admin
-function saveAdminCode() {
-    const newCode = document.getElementById('new-admin-code').value;
-    const currentCode = document.getElementById('current-admin-code').value;
-    const savedCode = localStorage.getItem('adminCode') || DEFAULT_ADMIN_CODE;
-    
-    if (currentCode === savedCode) {
-        localStorage.setItem('adminCode', newCode);
-        showNotification('Kode admin berhasil diubah!', 'success');
-        document.getElementById('new-admin-code').value = '';
-        document.getElementById('current-admin-code').value = '';
-        playButtonSound();
-    } else {
-        showNotification('Kode admin lama salah!', 'error');
-    }
-}
-
-// Fungsi untuk menyimpan pengaturan
-function saveSettings() {
-    localStorage.setItem('examTimer', document.getElementById('exam-timer-setting').value);
-    localStorage.setItem('chairmanName', document.getElementById('chairman-name-setting').value);
-    localStorage.setItem('welcomeMessage', document.getElementById('welcome-message-setting').value);
-    localStorage.setItem('infoText', document.getElementById('info-text-setting').value);
-    localStorage.setItem('motivationTexts', document.getElementById('motivation-texts-setting').value);
-    localStorage.setItem('questionPoint', document.getElementById('question-point-setting').value);
-    localStorage.setItem('questionCount', document.getElementById('question-count-setting').value);
-    
-    // Simpan status toggle ujian
-    document.querySelectorAll('.exam-toggle').forEach(toggle => {
-        const exam = toggle.getAttribute('data-exam');
-        localStorage.setItem(`examEnabled_${exam}`, toggle.checked);
-    });
-    
-    showNotification('Pengaturan berhasil disimpan!', 'success');
-    playButtonSound();
-}
-
-// Fungsi untuk memuat pengaturan
-function loadSettings() {
-    // Update form dengan nilai dari localStorage
-    if (localStorage.getItem('examTimer')) {
-        document.getElementById('exam-timer-setting').value = localStorage.getItem('examTimer');
-    }
-    
-    if (localStorage.getItem('chairmanName')) {
-        document.getElementById('chairman-name-setting').value = localStorage.getItem('chairmanName');
-    }
-    
-    if (localStorage.getItem('welcomeMessage')) {
-        document.getElementById('welcome-message-setting').value = localStorage.getItem('welcomeMessage');
-        document.getElementById('welcome-message').textContent = localStorage.getItem('welcomeMessage');
-    }
-    
-    if (localStorage.getItem('infoText')) {
-        document.getElementById('info-text-setting').value = localStorage.getItem('infoText');
-        document.getElementById('info-text').textContent = localStorage.getItem('infoText');
-    }
-    
-    if (localStorage.getItem('motivationTexts')) {
-        document.getElementById('motivation-texts-setting').value = localStorage.getItem('motivationTexts');
-    }
-    
-    if (localStorage.getItem('questionPoint')) {
-        document.getElementById('question-point-setting').value = localStorage.getItem('questionPoint');
-    }
-    
-    if (localStorage.getItem('questionCount')) {
-        document.getElementById('question-count-setting').value = localStorage.getItem('questionCount');
-    }
-    
-    // Update toggle ujian
-    document.querySelectorAll('.exam-toggle').forEach(toggle => {
-        const exam = toggle.getAttribute('data-exam');
-        const isEnabled = localStorage.getItem(`examEnabled_${exam}`) !== 'false';
-        toggle.checked = isEnabled;
-    });
-}
-
-// Fungsi untuk inisialisasi halaman admin
-function initAdminPage() {
-    // Pastikan sudah login sebagai admin
-    // Di aplikasi nyata, ini akan memiliki sistem autentikasi yang lebih aman
-    loadSettings();
-}
-
-// Fungsi untuk inisialisasi halaman bank soal
-function initQuestionBankPage() {
-    // Pastikan sudah login sebagai admin
-    // Di aplikasi nyata, ini akan memiliki sistem autentikasi yang lebih aman
-    filterQuestions();
-}
-
-// Fungsi untuk memfilter soal berdasarkan mata ujian
-function filterQuestions() {
-    const subject = document.getElementById('filter-subject').value;
-    const questionsList = document.getElementById('questions-list');
-    
-    questionsList.innerHTML = '<div style="text-align: center; padding: 20px;"><div class="spinner"></div><p>Memuat soal...</p></div>';
-    
-    // Simulasi loading
-    setTimeout(() => {
-        let filteredQuestions = [];
-        
-        // Gabungkan semua soal dari semua mata ujian
-        for (const [subj, qs] of Object.entries(sampleQuestions)) {
-            if (!subject || subj === subject) {
-                filteredQuestions = filteredQuestions.concat(qs.map(q => ({ ...q, subject: subj })));
+    // Main App Logic
+    const app = {
+        currentScreen: 'opening',
+        participantData: {},
+        examData: {},
+        results: {},
+        questions: [],
+        currentQuestionIndex: 0,
+        answeredQuestions: [],
+        unansweredQuestions: [],
+        timer: null,
+        timeLeft: 120 * 60, // 120 menit dalam detik
+        settings: {
+            loginCode: '12345',
+            cpnsCode: 'OPENLOCK-1945',
+            bankSoalCode: 'OPENLOCK-1926',
+            adminCode: '65614222',
+            greetingText: 'Selamat Datang di Ujian Online Pergunu Situbondo',
+            chairmanName: 'Moh. Nuril Hudha, S.Pd., M.Si.',
+            motivationTexts: [
+                { minScore: 90, text: 'Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.' },
+                { minScore: 80, text: 'Hebat! Anda memiliki pemahaman yang sangat baik tentang materi ini.' },
+                { minScore: 70, text: 'Baik! Anda memiliki pemahaman yang cukup tentang materi ini.' },
+                { minScore: 60, text: 'Cukup! Anda bisa lebih baik lagi dengan belajar lebih giat.' },
+                { minScore: 0, text: 'Jangan menyerah! Teruslah belajar dan tingkatkan kemampuan Anda.' }
+            ],
+            periodicInfo: 'Informasi berkala akan ditampilkan di sini. Admin dapat mengedit teks ini melalui panel kontrol.',
+            examTimer: 120, // menit
+            questionPoints: 1,
+            questionCount: 10,
+            randomizeQuestions: true,
+            enabledExams: {
+                agama: true,
+                ppkn: true,
+                sejarah: true,
+                ipa: true,
+                ips: true,
+                matematika: true,
+                bahasa_indonesia: true,
+                bahasa_inggris: true,
+                materi_extra: true,
+                materi_khusus: true,
+                ujian_logika: true,
+                ujian_cpns: true
             }
-        }
-        
+        },
+        participants: [],
+
+        // Inisialisasi aplikasi
+        init: function() {
+            this.loadSampleQuestions();
+            this.setupEventListeners();
+            this.updateGreetingText();
+            this.playOpeningAudio();
+        },
+
+        // Memuat contoh soal
+        loadSampleQuestions: function() {
+            // Contoh soal untuk berbagai kategori
+            this.questions = {
+                agama: [
+                    {
+                        question: "Siapakah nabi terakhir dalam Islam?",
+                        options: ["A. Nabi Musa", "B. Nabi Isa", "C. Nabi Muhammad", "D. Nabi Ibrahim"],
+                        correctAnswer: "C",
+                        explanation: "Nabi Muhammad SAW adalah nabi terakhir yang diutus Allah SWT."
+                    }
+                ],
+                ppkn: [
+                    {
+                        question: "Pancasila sebagai dasar negara tercantum dalam?",
+                        options: ["A. Pembukaan UUD 1945", "B. Batang Tubuh UUD 1945", "C. Penjelasan UUD 1945", "D. Keputusan Presiden"],
+                        correctAnswer: "A",
+                        explanation: "Pancasila sebagai dasar negara tercantum dalam alinea keempat Pembukaan UUD 1945."
+                    }
+                ],
+                // Tambahkan contoh soal untuk kategori lainnya...
+                ujian_cpns: [
+                    {
+                        question: "Tes Wawasan Kebangsaan biasanya menguji pengetahuan tentang?",
+                        options: ["A. Pancasila", "B. UUD 1945", "C. Bhinneka Tunggal Ika", "D. Semua benar"],
+                        correctAnswer: "D",
+                        explanation: "Tes Wawasan Kebangsaan menguji pengetahuan tentang Pancasila, UUD 1945, Bhinneka Tunggal Ika, dan NKRI."
+                    }
+                ]
+            };
+        },
+
+        // Setup event listeners
+        setupEventListeners: function() {
+            // Login screen
+            document.getElementById('login-btn').addEventListener('click', this.handleLogin.bind(this));
+            
+            // Terms screen
+            document.getElementById('agree-terms').addEventListener('change', function() {
+                document.getElementById('continue-btn').disabled = !this.checked;
+            });
+            document.getElementById('continue-btn').addEventListener('click', this.goToDataForm.bind(this));
+            
+            // Participant form
+            document.querySelectorAll('input[name="status"]').forEach(radio => {
+                radio.addEventListener('change', this.toggleParticipantFields.bind(this));
+            });
+            document.getElementById('participant-form').addEventListener('submit', this.saveParticipantData.bind(this));
+            document.getElementById('get-location').addEventListener('click', this.getLocation.bind(this));
+            
+            // Level selection
+            document.querySelectorAll('.level-btn').forEach(btn => {
+                btn.addEventListener('click', this.selectLevel.bind(this));
+            });
+            document.querySelectorAll('.subject-btn').forEach(btn => {
+                btn.addEventListener('click', this.selectSubject.bind(this));
+            });
+            document.getElementById('verify-license').addEventListener('click', this.verifyLicense.bind(this));
+            document.getElementById('start-exam-btn').addEventListener('click', this.startExam.bind(this));
+            
+            // Exam screen
+            document.getElementById('finish-exam-btn').addEventListener('click', this.finishExam.bind(this));
+            document.getElementById('skip-question-btn').addEventListener('click', this.skipQuestion.bind(this));
+            document.getElementById('unanswered-btn').addEventListener('click', this.showUnanswered.bind(this));
+            
+            // Results screen
+            document.getElementById('print-certificate-btn').addEventListener('click', this.showCertificate.bind(this));
+            document.getElementById('retake-exam-btn').addEventListener('click', this.retakeExam.bind(this));
+            
+            // Certificate screen
+            document.getElementById('back-to-results-btn').addEventListener('click', this.backToResults.bind(this));
+            document.getElementById('print-btn').addEventListener('click', this.printCertificate.bind(this));
+            
+            // Floating buttons
+            document.getElementById('share-btn').addEventListener('click', this.showShareModal.bind(this));
+            document.getElementById('whatsapp-btn').addEventListener('click', this.openWhatsApp.bind(this));
+            document.getElementById('bank-soal-btn').addEventListener('click', this.showBankSoalModal.bind(this));
+            document.getElementById('admin-btn').addEventListener('click', this.showAdminModal.bind(this));
+            
+            // Modals
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', this.closeModal.bind(this));
+            });
+            document.getElementById('copy-url').addEventListener('click', this.copyUrl.bind(this));
+            
+            // Bank Soal
+            document.getElementById('bank-soal-login-btn').addEventListener('click', this.loginBankSoal.bind(this));
+            document.querySelectorAll('.bank-soal-tabs .tab-btn').forEach(btn => {
+                btn.addEventListener('click', this.switchBankSoalTab.bind(this));
+            });
+            document.getElementById('save-question-btn').addEventListener('click', this.saveQuestion.bind(this));
+            document.getElementById('clear-form-btn').addEventListener('click', this.clearQuestionForm.bind(this));
+            document.getElementById('generate-questions-btn').addEventListener('click', this.generateQuestions.bind(this));
+            
+            // Admin Panel
+            document.getElementById('admin-login-btn').addEventListener('click', this.loginAdmin.bind(this));
+            document.querySelectorAll('.admin-tabs .tab-btn').forEach(btn => {
+                btn.addEventListener('click', this.switchAdminTab.bind(this));
+            });
+            document.getElementById('save-login-code').addEventListener('click', this.saveLoginCode.bind(this));
+            document.getElementById('save-cpns-code').addEventListener('click', this.saveCpnsCode.bind(this));
+            document.getElementById('save-bank-code').addEventListener('click', this.saveBankCode.bind(this));
+            document.getElementById('save-admin-code').addEventListener('click', this.saveAdminCode.bind(this));
+            document.getElementById('save-exam-settings').addEventListener('click', this.saveExamSettings.bind(this));
+            document.getElementById('save-text-settings').addEventListener('click', this.saveTextSettings.bind(this));
+            document.getElementById('export-data-btn').addEventListener('click', this.exportData.bind(this));
+            
+            // Play button sound on all buttons
+            document.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', this.playButtonSound.bind(this));
+            });
+        },
+
+        // Fungsi untuk memainkan suara tombol
+        playButtonSound: function() {
+            const audio = document.getElementById('button-audio');
+            audio.currentTime = 0;
+            audio.play();
+        },
+
+        // Fungsi untuk memainkan audio pembuka
+        playOpeningAudio: function() {
+            const audio = document.getElementById('opening-audio');
+            audio.play().catch(e => console.log('Autoplay prevented:', e));
+        },
+
+        // Update teks sambutan
+        updateGreetingText: function() {
+            document.getElementById('greeting-text').textContent = this.settings.greetingText;
+            document.getElementById('edit-greeting-text').value = this.settings.greetingText;
+            document.getElementById('edit-chairman-name').value = this.settings.chairmanName;
+            document.getElementById('edit-motivation-text').value = JSON.stringify(this.settings.motivationTexts);
+            document.getElementById('edit-periodic-info').value = this.settings.periodicInfo;
+            document.getElementById('periodic-info').innerHTML = `<p>${this.settings.periodicInfo}</p>`;
+        },
+
+        // Handle login
+        handleLogin: function() {
+            const loginCode = document.getElementById('login-code').value;
+            if (loginCode === this.settings.loginCode) {
+                this.goToScreen('terms');
+            } else {
+                alert('Kode login salah. Silakan coba lagi.');
+            }
+        },
+
+        // Navigasi antar layar
+        goToScreen: function(screenName) {
+            // Animasi keluar untuk layar saat ini
+            const currentScreen = document.getElementById(`${this.currentScreen}-screen`);
+            currentScreen.classList.add('slide-out');
+            
+            // Set timeout untuk animasi
+            setTimeout(() => {
+                currentScreen.classList.remove('active', 'slide-out');
+                
+                // Animasi masuk untuk layar baru
+                const newScreen = document.getElementById(`${screenName}-screen`);
+                newScreen.classList.add('active', 'slide-in');
+                
+                // Hapus class animasi setelah selesai
+                setTimeout(() => {
+                    newScreen.classList.remove('slide-in');
+                }, 500);
+                
+                this.currentScreen = screenName;
+                
+                // Scroll ke atas
+                window.scrollTo(0, 0);
+            }, 500);
+        },
+
+        // Ke form data peserta
+        goToDataForm: function() {
+            this.goToScreen('data-form');
+        },
+
+        // Toggle form berdasarkan status peserta
+        toggleParticipantFields: function() {
+            const isStudent = document.getElementById('student').checked;
+            document.getElementById('student-fields').style.display = isStudent ? 'block' : 'none';
+            document.getElementById('general-fields').style.display = isStudent ? 'none' : 'block';
+        },
+
+        // Dapatkan lokasi GPS
+        getLocation: function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        
+                        // Gunakan API geocoding untuk mendapatkan alamat
+                        this.reverseGeocode(latitude, longitude);
+                    },
+                    error => {
+                        console.error('Error getting location:', error);
+                        alert('Tidak dapat mendapatkan lokasi. Silakan masukkan alamat secara manual.');
+                    }
+                );
+            } else {
+                alert('Geolocation tidak didukung oleh browser Anda.');
+            }
+        },
+
+        // Reverse geocoding untuk mendapatkan alamat dari koordinat
+        reverseGeocode: async function(lat, lng) {
+            // NOTE: Di sini Anda perlu mengganti dengan API Key Geocoding yang sebenarnya
+            const apiKey = 'YOUR_GOOGLE_MAPS_API_KEY'; // Ganti dengan API key Anda
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.results && data.results.length > 0) {
+                    document.getElementById('address').value = data.results[0].formatted_address;
+                } else {
+                    alert('Alamat tidak ditemukan. Silakan masukkan secara manual.');
+                }
+            } catch (error) {
+                console.error('Error fetching geocode:', error);
+                alert('Gagal mendapatkan alamat. Silakan masukkan secara manual.');
+            }
+        },
+
+        // Simpan data peserta
+        saveParticipantData: function(e) {
+            e.preventDefault();
+            
+            const isStudent = document.getElementById('student').checked;
+            this.participantData = {
+                fullname: document.getElementById('fullname').value,
+                status: isStudent ? 'pelajar' : 'umum',
+                timestamp: new Date().toISOString()
+            };
+            
+            if (isStudent) {
+                this.participantData.school = document.getElementById('school').value;
+                this.participantData.nis = document.getElementById('nis').value;
+                this.participantData.purpose = document.getElementById('student-purpose').value;
+                this.participantData.level = document.getElementById('student-level').value;
+            } else {
+                this.participantData.address = document.getElementById('address').value;
+                this.participantData.whatsapp = document.getElementById('whatsapp').value;
+                this.participantData.email = document.getElementById('email').value;
+                this.participantData.purpose = document.getElementById('general-purpose').value;
+            }
+            
+            // Simpan ke daftar peserta
+            this.participants.push({...this.participantData});
+            this.updateParticipantsTable();
+            
+            this.goToScreen('level-selection');
+            
+            // Siapkan pilihan level berdasarkan status
+            this.prepareLevelSelection();
+        },
+
+        // Siapkan pilihan level
+        prepareLevelSelection: function() {
+            const isStudent = this.participantData.status === 'pelajar';
+            document.getElementById('student-level-selection').style.display = isStudent ? 'block' : 'none';
+            document.getElementById('general-level-selection').style.display = isStudent ? 'none' : 'block';
+            
+            // Siapkan tombol level untuk pelajar
+            if (isStudent) {
+                const levelButtons = document.querySelectorAll('.level-btn');
+                levelButtons.forEach(btn => btn.style.display = 'none');
+                
+                const selectedLevel = this.participantData.level;
+                let levels = [];
+                
+                if (selectedLevel === 'sd') {
+                    levels = [4, 5, 6];
+                } else if (selectedLevel === 'smp') {
+                    levels = [7, 8, 9];
+                } else if (selectedLevel === 'sma') {
+                    levels = [10, 11, 12];
+                }
+                
+                levelButtons.forEach(btn => {
+                    if (levels.includes(parseInt(btn.dataset.level))) {
+                        btn.style.display = 'inline-block';
+                    }
+                });
+            }
+            
+            // Reset pilihan
+            this.examData = {};
+            document.getElementById('start-exam-btn').disabled = true;
+        },
+
+        // Pilih level
+        selectLevel: function(e) {
+            document.querySelectorAll('.level-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            e.target.classList.add('active');
+            this.examData.level = e.target.dataset.level;
+            
+            this.checkExamReady();
+        },
+
+        // Pilih subjek/mata ujian
+        selectSubject: function(e) {
+            document.querySelectorAll('.subject-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            e.target.classList.add('active');
+            this.examData.subject = e.target.dataset.subject;
+            
+            // Tampilkan form lisensi jika CPNS
+            document.getElementById('cpns-license-container').style.display = 
+                this.examData.subject === 'ujian-cpns' ? 'block' : 'none';
+            
+            this.checkExamReady();
+        },
+
+        // Verifikasi lisensi CPNS
+        verifyLicense: function() {
+            const licenseCode = document.getElementById('license-code').value;
+            if (licenseCode === this.settings.cpnsCode) {
+                this.examData.licenseVerified = true;
+                this.checkExamReady();
+            } else {
+                alert('Kode lisensi salah. Silakan coba lagi.');
+            }
+        },
+
+        // Cek apakah ujian siap dimulai
+        checkExamReady: function() {
+            let ready = false;
+            
+            if (this.participantData.status === 'pelajar') {
+                ready = this.examData.level && this.examData.subject;
+            } else {
+                if (this.examData.subject === 'ujian-cpns') {
+                    ready = this.examData.subject && this.examData.licenseVerified;
+                } else {
+                    ready = !!this.examData.subject;
+                }
+            }
+            
+            document.getElementById('start-exam-btn').disabled = !ready;
+        },
+
+        // Mulai ujian
+        startExam: function() {
+            this.goToScreen('exam');
+            
+            // Siapkan soal
+            this.prepareQuestions();
+            
+            // Mulai timer
+            this.startTimer();
+            
+            // Tampilkan soal pertama
+            this.showQuestion(0);
+        },
+
+        // Siapkan soal untuk ujian
+        prepareQuestions: function() {
+            // Ambil soal dari bank soal berdasarkan kategori
+            const categoryQuestions = this.questions[this.examData.subject] || [];
+            
+            // Acak urutan soal jika diatur
+            if (this.settings.randomizeQuestions) {
+                this.shuffleArray(categoryQuestions);
+            }
+            
+            // Batasi jumlah soal sesuai setting
+            this.questionsForExam = categoryQuestions.slice(0, this.settings.questionCount);
+            
+            // Inisialisasi array untuk melacak jawaban
+            this.answeredQuestions = [];
+            this.unansweredQuestions = [...Array(this.questionsForExam.length).keys()]; // [0, 1, 2, ...]
+            
+            // Reset indeks soal saat ini
+            this.currentQuestionIndex = 0;
+        },
+
+        // Fungsi untuk mengacak array
+        shuffleArray: function(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        },
+
         // Tampilkan soal
-        if (filteredQuestions.length === 0) {
-            questionsList.innerHTML = '<p>Tidak ada soal yang ditemukan.</p>';
-            return;
-        }
-        
-        questionsList.innerHTML = '';
-        filteredQuestions.forEach((q, index) => {
-            const questionElement = document.createElement('div');
-            questionElement.className = 'card';
-            questionElement.style.marginBottom = '15px';
-            questionElement.style.padding = '15px';
+        showQuestion: function(index) {
+            if (index < 0 || index >= this.questionsForExam.length) return;
             
-            questionElement.innerHTML = `
-                <h4>${q.subject} - Soal #${index + 1}</h4>
-                <p><strong>${q.question}</strong></p>
-                <div style="margin: 10px 0;">
-                    ${q.options.map(opt => `<div>${opt}</div>`).join('')}
-                </div>
-                <p><strong>Jawaban benar:</strong> ${q.correctAnswer}</p>
-                <p><strong>Penjelasan:</strong> ${q.explanation || 'Tidak ada penjelasan'}</p>
-                <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
-                    <button class="btn btn-warning edit-question" data-index="${index}" data-subject="${q.subject}" style="margin-right: 10px;">Edit</button>
-                    <button class="btn btn-danger delete-question" data-index="${index}" data-subject="${q.subject}">Hapus</button>
-                </div>
+            this.currentQuestionIndex = index;
+            const question = this.questionsForExam[index];
+            
+            // Update tampilan
+            document.getElementById('current-question').textContent = index + 1;
+            document.getElementById('total-questions').textContent = this.questionsForExam.length;
+            document.getElementById('question-text').textContent = question.question;
+            
+            // Kosongkan container opsi
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            // Tambahkan opsi jawaban
+            question.options.forEach((option, i) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.innerHTML = `
+                    <input type="radio" id="option-${i}" name="answer" value="${option.charAt(0)}">
+                    <label for="option-${i}">${option}</label>
+                `;
+                
+                // Tambahkan event listener untuk memeriksa jawaban
+                optionElement.querySelector('input').addEventListener('change', (e) => {
+                    this.checkAnswer(e.target.value, question.correctAnswer, optionElement);
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Periksa apakah soal sudah dijawab
+            const answeredQuestion = this.answeredQuestions.find(q => q.index === index);
+            if (answeredQuestion) {
+                const selectedOption = document.querySelector(`input[value="${answeredQuestion.answer}"]`);
+                if (selectedOption) {
+                    selectedOption.checked = true;
+                    
+                    // Tampilkan penjelasan
+                    this.showExplanation(question.explanation);
+                }
+            }
+        },
+
+        // Periksa jawaban
+        checkAnswer: function(selectedAnswer, correctAnswer, optionElement) {
+            const isCorrect = selectedAnswer === correctAnswer;
+            
+            // Mainkan suara feedback
+            const audio = document.getElementById(isCorrect ? 'correct-audio' : 'wrong-audio');
+            audio.currentTime = 0;
+            audio.play();
+            
+            // Tampilkan feedback visual
+            optionElement.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            // Jika benar, tampilkan penjelasan
+            if (isCorrect) {
+                const question = this.questionsForExam[this.currentQuestionIndex];
+                this.showExplanation(question.explanation);
+            }
+            
+            // Simpan jawaban
+            this.saveAnswer(this.currentQuestionIndex, selectedAnswer, isCorrect);
+        },
+
+        // Tampilkan penjelasan jawaban
+        showExplanation: function(explanation) {
+            // Hapus penjelasan sebelumnya jika ada
+            const oldExplanation = document.querySelector('.explanation');
+            if (oldExplanation) oldExplanation.remove();
+            
+            // Tambahkan penjelasan baru
+            const explanationElement = document.createElement('div');
+            explanationElement.className = 'explanation';
+            explanationElement.textContent = explanation;
+            
+            document.getElementById('options-container').appendChild(explanationElement);
+        },
+
+        // Simpan jawaban
+        saveAnswer: function(questionIndex, answer, isCorrect) {
+            // Hapus dari unanswered jika ada
+            this.unansweredQuestions = this.unansweredQuestions.filter(i => i !== questionIndex);
+            
+            // Tambahkan ke answered atau update jika sudah ada
+            const existingAnswerIndex = this.answeredQuestions.findIndex(q => q.index === questionIndex);
+            
+            if (existingAnswerIndex >= 0) {
+                this.answeredQuestions[existingAnswerIndex] = { index: questionIndex, answer, isCorrect };
+            } else {
+                this.answeredQuestions.push({ index: questionIndex, answer, isCorrect });
+            }
+        },
+
+        // Mulai timer
+        startTimer: function() {
+            // Set waktu ujian dalam detik
+            this.timeLeft = this.settings.examTimer * 60;
+            
+            // Hapus timer sebelumnya jika ada
+            if (this.timer) clearInterval(this.timer);
+            
+            // Update timer setiap detik
+            this.timer = setInterval(() => {
+                this.timeLeft--;
+                this.updateTimerDisplay();
+                
+                // Cek jika waktu habis
+                if (this.timeLeft <= 0) {
+                    clearInterval(this.timer);
+                    this.finishExam(true);
+                }
+                
+                // Tampilkan peringatan jika sisa 10 menit
+                if (this.timeLeft === 10 * 60) {
+                    this.showTimeWarning();
+                }
+                
+                // Hilangkan peringatan jika sisa 1 menit
+                if (this.timeLeft === 1 * 60) {
+                    this.hideTimeWarning();
+                }
+            }, 1000);
+            
+            this.updateTimerDisplay();
+        },
+
+        // Update tampilan timer
+        updateTimerDisplay: function() {
+            const minutes = Math.floor(this.timeLeft / 60);
+            const seconds = this.timeLeft % 60;
+            
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Ubah style jika sisa 10 menit
+            const timerContainer = document.querySelector('.timer-container');
+            if (this.timeLeft <= 10 * 60) {
+                timerContainer.classList.add('warning');
+            } else {
+                timerContainer.classList.remove('warning');
+            }
+        },
+
+        // Tampilkan peringatan waktu
+        showTimeWarning: function() {
+            const warningElement = document.getElementById('time-warning');
+            warningElement.style.display = 'block';
+            
+            // Sembunyikan setelah beberapa detik
+            setTimeout(() => {
+                warningElement.style.display = 'none';
+            }, 5 * 60 * 1000); // Sembunyikan setelah 5 menit
+        },
+
+        // Sembunyikan peringatan waktu
+        hideTimeWarning: function() {
+            document.getElementById('time-warning').style.display = 'none';
+        },
+
+        // Lewati soal
+        skipQuestion: function() {
+            const nextIndex = (this.currentQuestionIndex + 1) % this.questionsForExam.length;
+            this.showQuestion(nextIndex);
+        },
+
+        // Tampilkan soal yang belum dijawab
+        showUnanswered: function() {
+            if (this.unansweredQuestions.length > 0) {
+                this.showQuestion(this.unansweredQuestions[0]);
+            } else {
+                alert('Semua soal sudah dijawab.');
+            }
+        },
+
+        // Selesaikan ujian
+        finishExam: function(timeout = false) {
+            // Hentikan timer
+            clearInterval(this.timer);
+            
+            // Hitung hasil
+            this.calculateResults();
+            
+            // Tampilkan hasil
+            this.showResults();
+            
+            // Jika timeout, tampilkan pesan
+            if (timeout) {
+                alert('Waktu ujian telah habis. Jawaban yang sudah dikirim akan diperiksa.');
+            }
+        },
+
+        // Hitung hasil ujian
+        calculateResults: function() {
+            const totalQuestions = this.questionsForExam.length;
+            let correctAnswers = 0;
+            
+            // Hitung jawaban benar
+            this.answeredQuestions.forEach(q => {
+                if (q.isCorrect) correctAnswers++;
+            });
+            
+            // Simpan hasil
+            this.results = {
+                totalQuestions,
+                correctAnswers,
+                wrongAnswers: this.answeredQuestions.length - correctAnswers,
+                unanswered: totalQuestions - this.answeredQuestions.length,
+                score: Math.round((correctAnswers / totalQuestions) * 100),
+                timestamp: new Date().toISOString()
+            };
+            
+            // Tambahkan ke data peserta
+            const participantIndex = this.participants.findIndex(p => 
+                p.fullname === this.participantData.fullname && 
+                p.timestamp === this.participantData.timestamp
+            );
+            
+            if (participantIndex >= 0) {
+                this.participants[participantIndex].examResults = this.results;
+                this.updateParticipantsTable();
+            }
+        },
+
+        // Tampilkan hasil ujian
+        showResults: function() {
+            this.goToScreen('results');
+            
+            // Update tampilan hasil
+            document.getElementById('total-questions-result').textContent = this.results.totalQuestions;
+            document.getElementById('correct-answers').textContent = this.results.correctAnswers;
+            document.getElementById('wrong-answers').textContent = this.results.wrongAnswers;
+            document.getElementById('unanswered-questions').textContent = this.results.unanswered;
+            document.getElementById('final-score').textContent = this.results.score;
+        },
+
+        // Tampilkan sertifikat
+        showCertificate: function() {
+            this.goToScreen('certificate');
+            
+            // Sembunyikan tombol floating saat cetak sertifikat
+            document.querySelector('.floating-buttons').style.display = 'none';
+            
+            // Update data sertifikat
+            document.getElementById('certificate-name').textContent = this.participantData.fullname;
+            document.getElementById('certificate-score').textContent = this.results.score;
+            
+            // Generate kode sertifikat
+            const certCode = this.generateCertificateCode();
+            document.getElementById('certificate-code').textContent = certCode;
+            
+            // Set periode
+            const date = new Date();
+            const formattedDate = `${date.getDate().toString().padStart(2, '0')}${(date.getMonth()+1).toString().padStart(2, '0')}${date.getFullYear()}`;
+            document.getElementById('certificate-period').textContent = `Ditetapkan di: Situbondo, ${formattedDate}`;
+            
+            // Set teks motivasi berdasarkan skor
+            const motivation = this.getMotivationText(this.results.score);
+            document.getElementById('certificate-motivation').textContent = motivation;
+            
+            // Mainkan suara applause
+            const audio = document.getElementById('applause-audio');
+            audio.currentTime = 0;
+            audio.play();
+        },
+
+        // Generate kode sertifikat
+        generateCertificateCode: function() {
+            const date = new Date();
+            const formattedDate = `${date.getDate().toString().padStart(2, '0')}${(date.getMonth()+1).toString().padStart(2, '0')}${date.getFullYear()}`;
+            
+            // Generate kode unik 8 digit
+            const uniqueCode = Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + 
+                              Math.random().toString(36).substring(2, 6).toUpperCase();
+            
+            return `${this.participantData.fullname.replace(/\s+/g, '-').toUpperCase()}/${this.participantData.status.toUpperCase()}/${this.examData.level || 'UMUM'}/${this.examData.subject.toUpperCase()}/${formattedDate}/${uniqueCode}/PERGUNU-STB`;
+        },
+
+        // Dapatkan teks motivasi berdasarkan skor
+        getMotivationText: function(score) {
+            for (const item of this.settings.motivationTexts) {
+                if (score >= item.minScore) {
+                    return item.text.replace('{score}', score);
+                }
+            }
+            return this.settings.motivationTexts[this.settings.motivationTexts.length - 1].text.replace('{score}', score);
+        },
+
+        // Kembali ke hasil ujian dari sertifikat
+        backToResults: function() {
+            // Tampilkan kembali tombol floating
+            document.querySelector('.floating-buttons').style.display = 'flex';
+            
+            this.goToScreen('results');
+        },
+
+        // Cetak sertifikat
+        printCertificate: function() {
+            const printContent = document.getElementById('certificate-print').innerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = originalContent;
+            
+            // Perbarui tampilan setelah cetak
+            this.showCertificate();
+        },
+
+        // Ulangi ujian
+        retakeExam: function() {
+            // Kembali ke pemilihan level
+            this.goToScreen('level-selection');
+        },
+
+        // Tampilkan modal share
+        showShareModal: function() {
+            document.getElementById('share-modal').style.display = 'block';
+            
+            // Update social links
+            const socialLinksContainer = document.getElementById('social-links');
+            socialLinksContainer.innerHTML = `
+                <a href="https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://wa.me/?text=${encodeURIComponent('Ikuti ujian online di: ' + window.location.href)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:?body=${encodeURIComponent('Ikuti ujian online di: ' + window.location.href)}" target="_blank"><i class="fas fa-envelope"></i></a>
             `;
             
-            questionsList.appendChild(questionElement);
-        });
-        
-        // Tambahkan event listener untuk tombol edit dan hapus
-        document.querySelectorAll('.edit-question').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const index = this.getAttribute('data-index');
-                const subject = this.getAttribute('data-subject');
-                editQuestion(index, subject);
-            });
-        });
-        
-        document.querySelectorAll('.delete-question').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const index = this.getAttribute('data-index');
-                const subject = this.getAttribute('data-subject');
-                deleteQuestion(index, subject);
-            });
-        });
-    }, 1000);
-}
-
-// Fungsi untuk mengedit soal
-function editQuestion(index, subject) {
-    // Di aplikasi nyata, ini akan mengambil soal dari database
-    const question = sampleQuestions[subject][index];
-    
-    // Isi form dengan data soal
-    document.getElementById('question-subject').value = subject;
-    document.getElementById('question-text').value = question.question;
-    document.getElementById('option-a').value = question.options[0].substring(3);
-    document.getElementById('option-b').value = question.options[1].substring(3);
-    document.getElementById('option-c').value = question.options[2].substring(3);
-    document.getElementById('option-d').value = question.options[3].substring(3);
-    document.getElementById('option-e').value = question.options[4] ? question.options[4].substring(3) : '';
-    document.getElementById('correct-answer').value = question.correctAnswer;
-    document.getElementById('explanation').value = question.explanation || '';
-    
-    // Pindah ke tab tambah soal
-    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
-    
-    document.querySelector('.admin-tab[data-tab="add-question"]').classList.add('active');
-    document.getElementById('add-question-content').classList.add('active');
-    
-    // Scroll ke form
-    document.getElementById('question-text').scrollIntoView({ behavior: 'smooth' });
-    
-    playButtonSound();
-}
-
-// Fungsi untuk menghapus soal
-function deleteQuestion(index, subject) {
-    if (confirm('Apakah Anda yakin ingin menghapus soal ini?')) {
-        // Di aplikasi nyata, ini akan menghapus dari database
-        sampleQuestions[subject].splice(index, 1);
-        showNotification('Soal berhasil dihapus!', 'success');
-        filterQuestions();
-        playButtonSound();
-    }
-}
-
-// Fungsi untuk menyimpan soal
-function saveQuestion() {
-    const subject = document.getElementById('question-subject').value;
-    const questionText = document.getElementById('question-text').value;
-    const options = [
-        `A. ${document.getElementById('option-a').value}`,
-        `B. ${document.getElementById('option-b').value}`,
-        `C. ${document.getElementById('option-c').value}`,
-        `D. ${document.getElementById('option-d').value}`
-    ];
-    
-    // Tambahkan opsi E jika diisi
-    if (document.getElementById('option-e').value) {
-        options.push(`E. ${document.getElementById('option-e').value}`);
-    }
-    
-    const correctAnswer = document.getElementById('correct-answer').value;
-    const explanation = document.getElementById('explanation').value;
-    
-    // Validasi
-    if (!subject || !questionText || !options[0] || !options[1] || !options[2] || !options[3] || !correctAnswer) {
-        showNotification('Harap isi semua field yang diperlukan!', 'error');
-        return;
-    }
-    
-    // Buat objek soal baru
-    const newQuestion = {
-        question: questionText,
-        options: options,
-        correctAnswer: correctAnswer,
-        explanation: explanation
-    };
-    
-    // Simpan soal (di aplikasi nyata ini akan disimpan ke database)
-    if (!sampleQuestions[subject]) {
-        sampleQuestions[subject] = [];
-    }
-    sampleQuestions[subject].push(newQuestion);
-    
-    // Reset form
-    document.getElementById('add-question-content').querySelector('form').reset();
-    
-    showNotification('Soal berhasil disimpan!', 'success');
-    playButtonSound();
-    
-    // Kembali ke tab kelola soal
-    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
-    
-    document.querySelector('.admin-tab[data-tab="manage-questions"]').classList.add('active');
-    document.getElementById('manage-questions-content').classList.add('active');
-    
-    // Perbarui daftar soal
-    filterQuestions();
-}
-
-// Fungsi untuk generate soal dengan AI
-function generateQuestionsWithAI() {
-    const prompt = document.getElementById('ai-prompt').value;
-    const subject = document.getElementById('ai-subject').value;
-    
-    if (!prompt) {
-        showNotification('Harap masukkan prompt untuk AI!', 'error');
-        return;
-    }
-    
-    // Di aplikasi nyata, ini akan memanggil API AI
-    // Berikut adalah contoh implementasi dengan API OpenAI (Anda perlu menambahkan API key)
-    
-    /*
-    // UNCOMMENT DAN ISI API KEY ANDA DI BAWAH INI
-    const API_KEY = 'sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'; // Ganti dengan API key OpenAI Anda
-    
-    document.getElementById('ai-results').style.display = 'block';
-    document.getElementById('generated-questions').innerHTML = '<div style="text-align: center;"><div class="spinner"></div><p>Sedang generate soal...</p></div>';
-    
-    fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${API_KEY}`
+            // Update share URL
+            document.getElementById('share-url').value = window.location.href;
         },
-        body: JSON.stringify({
-            model: 'gpt-3.5-turbo',
-            messages: [
-                {
-                    role: 'system',
-                    content: 'Anda adalah seorang ahli pembuat soal ujian. Buatkan soal pilihan ganda dengan format: Pertanyaan, 4 opsi jawaban (A-D), jawaban benar (huruf saja), dan penjelasan singkat.'
-                },
-                {
-                    role: 'user',
-                    content: prompt
-                }
-            ],
-            temperature: 0.7
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        const content = data.choices[0].message.content;
-        document.getElementById('generated-questions').innerHTML = `<pre>${content}</pre>`;
-        
-        // Di aplikasi nyata, Anda perlu parsing hasilnya untuk disimpan sebagai soal
-        // Ini hanya contoh sederhana
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        document.getElementById('generated-questions').innerHTML = '<p>Gagal generate soal. Pastikan API key valid.</p>';
-    });
-    */
-    
-    // Contoh hasil statis untuk demonstrasi (hapus di aplikasi nyata)
-    document.getElementById('ai-results').style.display = 'block';
-    document.getElementById('generated-questions').innerHTML = `
-        <p><strong>1. Apa ibukota Indonesia?</strong></p>
-        <p>A. Jakarta</p>
-        <p>B. Bandung</p>
-        <p>C. Surabaya</p>
-        <p>D. Medan</p>
-        <p><em>Jawaban benar: A</em></p>
-        <p><em>Penjelasan: Jakarta adalah ibukota Indonesia sejak tahun 1945.</em></p>
-        <hr>
-        <p><strong>2. Siapa presiden pertama Indonesia?</strong></p>
-        <p>A. Soeharto</p>
-        <p>B. Soekarno</p>
-        <p>C. Joko Widodo</p>
-        <p>D. Susilo Bambang Yudhoyono</p>
-        <p><em>Jawaban benar: B</em></p>
-        <p><em>Penjelasan: Soekarno adalah presiden pertama Indonesia yang menjabat dari tahun 1945 hingga 1967.</em></p>
-    `;
-    
-    showNotification('Fitur AI membutuhkan API key yang valid. Ini hanya contoh demonstrasi.', 'info');
-    playButtonSound();
-}
 
-// Fungsi untuk menyimpan soal yang dihasilkan AI
-function saveGeneratedQuestions() {
-    // Di aplikasi nyata, ini akan parsing dan menyimpan soal yang dipilih dari hasil AI
-    showNotification('Soal berhasil disimpan! (simulasi)', 'success');
-    playButtonSound();
-    
-    // Sembunyikan hasil dan reset form
-    document.getElementById('ai-results').style.display = 'none';
-    document.getElementById('ai-prompt').value = '';
-    
-    // Perbarui daftar soal
-    filterQuestions();
-}
+        // Buka WhatsApp admin
+        openWhatsApp: function() {
+            window.open(`https://wa.me/6285647709114?text=Assalamualaikum%20mas%20admin,%20saya%20mau%20tanya%20sesuatu%20nih...`, '_blank');
+        },
+
+        // Tampilkan modal bank soal
+        showBankSoalModal: function() {
+            document.getElementById('bank-soal-modal').style.display = 'block';
+            document.getElementById('bank-soal-content').style.display = 'none';
+            document.getElementById('bank-soal-code').value = '';
+        },
+
+        // Login ke bank soal
+        loginBankSoal: function() {
+            const code = document.getElementById('bank-soal-code').value;
+            if (code === this.settings.bankSoalCode) {
+                document.getElementById('bank-soal-content').style.display = 'block';
+            } else {
+                alert('Kode bank soal salah. Silakan coba lagi.');
+            }
+        },
+
+        // Ganti tab bank soal
+        switchBankSoalTab: function(e) {
+            const tabName = e.target.dataset.tab;
+            
+            // Update active tab button
+            document.querySelectorAll('.bank-soal-tabs .tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            e.target.classList.add('active');
+            
+            // Update active tab content
+            document.querySelectorAll('.bank-soal-modal .tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+        },
+
+        // Simpan soal ke bank soal
+        saveQuestion: function() {
+            const category = document.getElementById('question-category').value;
+            const level = document.getElementById('question-level').value;
+            const questionText = document.getElementById('question-text').value;
+            
+            // Validasi input
+            if (!questionText) {
+                alert('Pertanyaan tidak boleh kosong');
+                return;
+            }
+            
+            // Ambil opsi jawaban
+            const options = [
+                document.getElementById('option-a').value,
+                document.getElementById('option-b').value,
+                document.getElementById('option-c').value,
+                document.getElementById('option-d').value,
+                document.getElementById('option-e').value
+            ].filter(opt => opt.trim() !== '');
+            
+            if (options.length < 2) {
+                alert('Minimal harus ada 2 pilihan jawaban');
+                return;
+            }
+            
+            // Ambil jawaban yang benar
+            const correctAnswer = document.querySelector('input[name="correct-answer"]:checked').value;
+            
+            // Ambil penjelasan
+            const explanation = document.getElementById('explanation').value;
+            
+            // Buat objek soal
+            const question = {
+                question: questionText,
+                options: options.map((opt, i) => `${String.fromCharCode(65 + i)}. ${opt}`),
+                correctAnswer: correctAnswer.toUpperCase(),
+                explanation: explanation || 'Tidak ada penjelasan',
+                category,
+                level
+            };
+            
+            // Tambahkan ke bank soal
+            if (!this.questions[category]) {
+                this.questions[category] = [];
+            }
+            
+            this.questions[category].push(question);
+            
+            alert('Soal berhasil disimpan!');
+            this.clearQuestionForm();
+        },
+
+        // Bersihkan form soal
+        clearQuestionForm: function() {
+            document.getElementById('question-text').value = '';
+            document.getElementById('option-a').value = '';
+            document.getElementById('option-b').value = '';
+            document.getElementById('option-c').value = '';
+            document.getElementById('option-d').value = '';
+            document.getElementById('option-e').value = '';
+            document.getElementById('explanation').value = '';
+            document.querySelector('input[name="correct-answer"][value="a"]').checked = true;
+        },
+
+        // Generate soal menggunakan AI
+        generateQuestions: async function() {
+            const prompt = document.getElementById('ai-prompt').value;
+            const category = document.getElementById('ai-category').value;
+            const level = document.getElementById('ai-level').value;
+            const apiKey = document.getElementById('api-key').value;
+            
+            if (!prompt) {
+                alert('Prompt tidak boleh kosong');
+                return;
+            }
+            
+            if (!apiKey) {
+                alert('API Key tidak boleh kosong');
+                return;
+            }
+            
+            // NOTE: Di sini Anda perlu mengganti dengan API Key AI yang sebenarnya
+            // Ini adalah contoh implementasi menggunakan OpenAI API
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: "gpt-3.5-turbo",
+                        messages: [{
+                            role: "user",
+                            content: `Buatkan 5 soal pilihan ganda tentang ${prompt} untuk tingkat ${level}. Format setiap soal harus memiliki: pertanyaan, 4 pilihan jawaban (A-D), jawaban benar (huruf saja), dan penjelasan singkat. Format dalam JSON array.`
+                        }],
+                        temperature: 0.7
+                    })
+                });
+                
+                const data = await response.json();
+                const content = data.choices[0].message.content;
+                
+                // Coba parse hasil
+                try {
+                    // Ini adalah contoh parsing sederhana, mungkin perlu disesuaikan
+                    const questions = JSON.parse(content);
+                    this.displayGeneratedQuestions(questions, category, level);
+                } catch (e) {
+                    console.error('Error parsing AI response:', e);
+                    document.getElementById('ai-results').innerHTML = `<p>Hasil dari AI:</p><pre>${content}</pre>`;
+                }
+            } catch (error) {
+                console.error('Error calling AI API:', error);
+                alert('Gagal memproses permintaan AI. Silakan coba lagi.');
+            }
+        },
+
+        // Tampilkan hasil generate soal dari AI
+        displayGeneratedQuestions: function(questions, category, level) {
+            const resultsContainer = document.getElementById('ai-results');
+            resultsContainer.innerHTML = '<h4>Hasil Generate Soal:</h4>';
+            
+            questions.forEach((q, i) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'ai-question';
+                questionDiv.innerHTML = `
+                    <p><strong>Soal ${i+1}:</strong> ${q.question}</p>
+                    <p><strong>Pilihan:</strong> ${q.options.join(', ')}</p>
+                    <p><strong>Jawaban benar:</strong> ${q.correctAnswer}</p>
+                    <p><strong>Penjelasan:</strong> ${q.explanation}</p>
+                    <button class="btn-small save-ai-question" data-index="${i}">Simpan Soal Ini</button>
+                    <hr>
+                `;
+                
+                resultsContainer.appendChild(questionDiv);
+            });
+            
+            // Tambahkan event listener untuk tombol simpan
+            document.querySelectorAll('.save-ai-question').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = e.target.dataset.index;
+                    this.saveAiQuestion(questions[index], category, level);
+                    e.target.textContent = 'Tersimpan!';
+                    e.target.disabled = true;
+                });
+            });
+        },
+
+        // Simpan soal dari AI ke bank soal
+        saveAiQuestion: function(question, category, level) {
+            // Format ulang soal untuk disimpan
+            const formattedQuestion = {
+                question: question.question,
+                options: question.options.map((opt, i) => `${String.fromCharCode(65 + i)}. ${opt}`),
+                correctAnswer: question.correctAnswer.toUpperCase(),
+                explanation: question.explanation || 'Tidak ada penjelasan',
+                category,
+                level
+            };
+            
+            // Tambahkan ke bank soal
+            if (!this.questions[category]) {
+                this.questions[category] = [];
+            }
+            
+            this.questions[category].push(formattedQuestion);
+        },
+
+        // Tampilkan modal admin
+        showAdminModal: function() {
+            document.getElementById('admin-modal').style.display = 'block';
+            document.getElementById('admin-content').style.display = 'none';
+            document.getElementById('admin-code').value = '';
+        },
+
+        // Login ke admin panel
+        loginAdmin: function() {
+            const code = document.getElementById('admin-code').value;
+            if (code === this.settings.adminCode) {
+                document.getElementById('admin-content').style.display = 'block';
+                
+                // Update toggle status
+                Object.keys(this.settings.enabledExams).forEach(key => {
+                    document.getElementById(`toggle-${key}`).checked = this.settings.enabledExams[key];
+                });
+                
+                // Update other settings
+                document.getElementById('exam-timer').value = this.settings.examTimer;
+                document.getElementById('question-point').value = this.settings.questionPoints;
+                document.getElementById('question-count').value = this.settings.questionCount;
+                document.getElementById('randomize-questions').checked = this.settings.randomizeQuestions;
+            } else {
+                alert('Kode admin salah. Silakan coba lagi.');
+            }
+        },
+
+        // Ganti tab admin
+        switchAdminTab: function(e) {
+            const tabName = e.target.dataset.tab;
+            
+            // Update active tab button
+            document.querySelectorAll('.admin-tabs .tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            e.target.classList.add('active');
+            
+            // Update active tab content
+            document.querySelectorAll('.admin-modal .tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+        },
+
+        // Simpan kode login
+        saveLoginCode: function() {
+            const newCode = document.getElementById('new-login-code').value;
+            if (newCode) {
+                this.settings.loginCode = newCode;
+                document.getElementById('current-login-code').value = newCode;
+                alert('Kode login berhasil diubah!');
+            } else {
+                alert('Kode login baru tidak boleh kosong');
+            }
+        },
+
+        // Simpan kode CPNS
+        saveCpnsCode: function() {
+            const newCode = document.getElementById('new-cpns-code').value;
+            if (newCode) {
+                this.settings.cpnsCode = newCode;
+                document.getElementById('current-cpns-code').value = newCode;
+                alert('Kode ujian CPNS berhasil diubah!');
+            } else {
+                alert('Kode ujian CPNS baru tidak boleh kosong');
+            }
+        },
+
+        // Simpan kode bank soal
+        saveBankCode: function() {
+            const newCode = document.getElementById('new-bank-code').value;
+            if (newCode) {
+                this.settings.bankSoalCode = newCode;
+                document.getElementById('current-bank-code').value = newCode;
+                alert('Kode bank soal berhasil diubah!');
+            } else {
+                alert('Kode bank soal baru tidak boleh kosong');
+            }
+        },
+
+        // Simpan kode admin
+        saveAdminCode: function() {
+            const newCode = document.getElementById('new-admin-code').value;
+            if (newCode) {
+                this.settings.adminCode = newCode;
+                document.getElementById('current-admin-code').value = newCode;
+                alert('Kode admin berhasil diubah!');
+            } else {
+                alert('Kode admin baru tidak boleh kosong');
+            }
+        },
+
+        // Simpan pengaturan ujian
+        saveExamSettings: function() {
+            this.settings.examTimer = parseInt(document.getElementById('exam-timer').value) || 120;
+            this.settings.questionPoints = parseInt(document.getElementById('question-point').value) || 1;
+            this.settings.questionCount = parseInt(document.getElementById('question-count').value) || 10;
+            this.settings.randomizeQuestions = document.getElementById('randomize-questions').checked;
+            
+            // Update status enabled exams
+            Object.keys(this.settings.enabledExams).forEach(key => {
+                this.settings.enabledExams[key] = document.getElementById(`toggle-${key}`).checked;
+            });
+            
+            alert('Pengaturan ujian berhasil disimpan!');
+        },
+
+        // Simpan pengaturan teks
+        saveTextSettings: function() {
+            this.settings.greetingText = document.getElementById('edit-greeting-text').value;
+            this.settings.chairmanName = document.getElementById('edit-chairman-name').value;
+            
+            try {
+                this.settings.motivationTexts = JSON.parse(document.getElementById('edit-motivation-text').value);
+            } catch (e) {
+                console.error('Error parsing motivation texts:', e);
+                alert('Format teks motivasi tidak valid. Harus dalam format JSON array.');
+                return;
+            }
+            
+            this.settings.periodicInfo = document.getElementById('edit-periodic-info').value;
+            
+            // Update tampilan
+            this.updateGreetingText();
+            
+            alert('Pengaturan teks berhasil disimpan!');
+        },
+
+        // Update tabel peserta
+        updateParticipantsTable: function() {
+            const tableBody = document.querySelector('#participants-table tbody');
+            tableBody.innerHTML = '';
+            
+            this.participants.forEach((participant, index) => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${participant.fullname}</td>
+                    <td>${participant.status === 'pelajar' ? 'Pelajar' : 'Umum'}</td>
+                    <td>${participant.examResults ? participant.examResults.score + '%' : '-'}</td>
+                    <td>${new Date(participant.timestamp).toLocaleDateString()}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        },
+
+        // Export data peserta
+        exportData: function() {
+            const format = document.getElementById('export-format').value;
+            
+            // Format data untuk export
+            let exportData;
+            
+            if (format === 'excel' || format === 'csv') {
+                // Header CSV/Excel
+                let csv = 'No,Nama Lengkap,Status,Sekolah/Instansi,NIS/Nomor HP,Email,Tujuan Ujian,Tingkat/Kelas,Jenis Ujian,Skor,Tanggal\n';
+                
+                this.participants.forEach((p, i) => {
+                    csv += `${i + 1},"${p.fullname}",${p.status === 'pelajar' ? 'Pelajar' : 'Umum'},`;
+                    csv += p.status === 'pelajar' ? `"${p.school}","${p.nis}",-` : `-,"${p.whatsapp}","${p.email}"`;
+                    csv += `,"${p.purpose}",`;
+                    csv += p.status === 'pelajar' ? `Kelas ${p.level}` : 'Umum';
+                    csv += `,${p.examResults ? p.examResults.subject : '-'},`;
+                    csv += p.examResults ? `${p.examResults.score}%` : '-';
+                    csv += `,${new Date(p.timestamp).toLocaleDateString()}\n`;
+                });
+                
+                if (format === 'excel') {
+                    // Untuk Excel, kita bisa membuat file CSV dengan .xls extension
+                    exportData = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+                } else {
+                    exportData = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+                }
+            } else if (format === 'pdf') {
+                // Untuk PDF, kita bisa menggunakan library jsPDF
+                // Ini adalah contoh sederhana, mungkin perlu disesuaikan
+                alert('Export PDF akan dibuka di jendela baru. Harap izinkan pop-up.');
+                
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                doc.text('Daftar Peserta Ujian Online', 10, 10);
+                
+                let y = 20;
+                this.participants.forEach((p, i) => {
+                    doc.text(`${i + 1}. ${p.fullname} (${p.status === 'pelajar' ? 'Pelajar' : 'Umum'})`, 10, y);
+                    y += 7;
+                    
+                    if (p.status === 'pelajar') {
+                        doc.text(`   Sekolah: ${p.school}, NIS: ${p.nis}`, 10, y);
+                    } else {
+                        doc.text(`   WhatsApp: ${p.whatsapp}, Email: ${p.email}`, 10, y);
+                    }
+                    y += 7;
+                    
+                    doc.text(`   Ujian: ${p.examResults ? p.examResults.subject : '-'}, Skor: ${p.examResults ? p.examResults.score + '%' : '-'}`, 10, y);
+                    y += 7;
+                    
+                    doc.text(`   Tanggal: ${new Date(p.timestamp).toLocaleDateString()}`, 10, y);
+                    y += 10;
+                    
+                    if (y > 280) {
+                        doc.addPage();
+                        y = 20;
+                    }
+                });
+                
+                doc.save('daftar_peserta_ujian.pdf');
+                return;
+            }
+            
+            // Buat link download
+            const link = document.createElement('a');
+            link.setAttribute('href', exportData);
+            link.setAttribute('download', `daftar_peserta_ujian.${format === 'excel' ? 'xls' : format}`);
+            document.body.appendChild(link);
+            
+            // Trigger download
+            link.click();
+            document.body.removeChild(link);
+        },
+
+        // Tutup modal
+        closeModal: function() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+        },
+
+        // Salin URL
+        copyUrl: function() {
+            const urlInput = document.getElementById('share-url');
+            urlInput.select();
+            document.execCommand('copy');
+            
+            alert('URL berhasil disalin!');
+        }
+    };
+
+    // Jalankan aplikasi
+    app.init();
+});
