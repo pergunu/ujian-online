@@ -321,15 +321,14 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            padding: 60px;
-            border: 15px solid #f5f5f5;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            padding: 80px 100px;
             color: #333;
             text-align: center;
             min-height: 600px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
 
         .certificate-title {
@@ -340,16 +339,18 @@
             color: #8B4513;
             text-transform: uppercase;
             letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
         .certificate-subtitle {
             font-size: 1.2rem;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             color: #555;
+            font-style: italic;
         }
 
         .certificate-divider {
-            width: 150px;
+            width: 200px;
             height: 2px;
             background: linear-gradient(to right, transparent, #8B4513, transparent);
             margin: 20px auto;
@@ -357,21 +358,21 @@
 
         .certificate-name {
             font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            font-weight: 600;
+            font-size: 2.5rem;
+            font-weight: 700;
             margin: 30px 0;
             color: #000;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
         .certificate-text {
             font-size: 1.1rem;
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin: 15px auto;
             color: #444;
             max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .certificate-score {
@@ -387,7 +388,7 @@
         }
 
         .certificate-footer {
-            margin-top: 40px;
+            margin-top: 50px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
@@ -418,6 +419,7 @@
         .certificate-code {
             font-size: 0.8rem;
             color: #666;
+            font-family: monospace;
         }
 
         .floating-buttons {
@@ -443,6 +445,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
+            font-size: 1.2rem;
         }
 
         .floating-btn:hover {
@@ -554,7 +557,7 @@
             }
             
             .certificate-container {
-                padding: 30px;
+                padding: 40px;
                 min-height: 500px;
             }
             
@@ -602,8 +605,9 @@
             }
             
             .certificate-container {
-                padding: 20px;
+                padding: 30px 20px;
                 min-height: 400px;
+                background-size: contain;
             }
             
             .certificate-title {
@@ -771,7 +775,7 @@
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
-                padding: 0;
+                padding: 80px 100px;
                 margin: 0;
                 border: none;
                 box-shadow: none;
