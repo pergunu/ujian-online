@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS akan ditempatkan di sini */
+        /* CSS Styles */
         :root {
             --primary: #6a11cb;
             --secondary: #2575fc;
@@ -1783,7 +1783,7 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
             }
             
             // Batasi jumlah soal sesuai setting
-            const questionCount = parseInt(localStorage.getItem('questionCount') || 10;
+            const questionCount = parseInt(localStorage.getItem('questionCount') || 10);
             questions = questions.slice(0, questionCount);
             
             // Set timer
@@ -2000,7 +2000,7 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
         // Fungsi untuk menampilkan hasil ujian
         function showExamResult() {
             // Ambil hasil terakhir dari database (simulasi)
-            const results = JSON.parse(localStorage.getItem('examResults') || [];
+            const results = JSON.parse(localStorage.getItem('examResults') || '[]');
             const result = results[results.length - 1];
             
             if (!result) return;
@@ -2013,8 +2013,7 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
             document.getElementById('unanswered-questions').textContent = result.unansweredQuestions;
             
             // Tampilkan pesan berdasarkan skor
-            const motivationTexts = (localStorage.getItem('motivationTexts') || "Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.\nBagus! Anda telah menunjukkan pemahaman yang baik. Tingkatkan terus kemampuan Anda.\nCukup baik. Masih ada ruang untuk perbaikan. Terus belajar dan berlatih.\nAnda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!";
-            const messages = motivationTexts.split('\n');
+            const motivationTexts = (localStorage.getItem('motivationTexts') || "Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.\nBagus! Anda telah menunjukkan pemahaman yang baik. Tingkatkan terus kemampuan Anda.\nCukup baik. Masih ada ruang untuk perbaikan. Terus belajar dan berlatih.\nAnda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!").split('\n');
             
             let messageIndex = 0;
             if (result.score >= 90) messageIndex = 0;
@@ -2022,13 +2021,13 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
             else if (result.score >= 50) messageIndex = 2;
             else messageIndex = 3;
             
-            document.getElementById('result-message').textContent = messages[messageIndex] || messages[0];
+            document.getElementById('result-message').textContent = motivationTexts[messageIndex] || motivationTexts[0];
         }
 
         // Fungsi untuk menghasilkan sertifikat
         function generateCertificate() {
             // Ambil hasil terakhir dari database (simulasi)
-            const results = JSON.parse(localStorage.getItem('examResults') || []);
+            const results = JSON.parse(localStorage.getItem('examResults') || '[]');
             const result = results[results.length - 1];
             
             if (!result) return;
@@ -2064,7 +2063,7 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
             else if (result.score >= 50) messageIndex = 2;
             else messageIndex = 3;
             
-            document.getElementById('motivation-text').textContent = messages[messageIndex] || messages[0];
+            document.getElementById('motivation-text').textContent = motivationTexts[messageIndex] || motivationTexts[0];
         }
 
         // Fungsi untuk mencetak sertifikat
