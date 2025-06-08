@@ -18,8 +18,6 @@
             --warning: #ffc107;
             --danger: #dc3545;
             --info: #17a2b8;
-            --gold: #FFD700;
-            --silver: #C0C0C0;
         }
 
         * {
@@ -311,86 +309,71 @@
             color: white;
         }
 
-        /* Sertifikat yang diperbaiki */
+        /* Sertifikat Premium */
         .certificate-container {
-            width: 100%;
-            max-width: 900px;
-            margin: 30px auto;
-            position: relative;
             background-image: url('assets/images/certificate.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            padding: 60px;
-            border: 15px solid #f5f5f5;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin: 30px auto;
+            max-width: 800px;
+            position: relative;
             color: #333;
             text-align: center;
             min-height: 600px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
 
         .certificate-title {
             font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 20px;
-            color: #8B4513;
+            color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        .certificate-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            color: #555;
-        }
-
-        .certificate-divider {
-            width: 150px;
-            height: 2px;
-            background: linear-gradient(to right, transparent, #8B4513, transparent);
-            margin: 20px auto;
-        }
-
         .certificate-name {
             font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 600;
             margin: 30px 0;
             color: #000;
-            text-transform: uppercase;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            width: 80%;
         }
 
         .certificate-text {
             font-size: 1.1rem;
             line-height: 1.6;
             margin-bottom: 20px;
-            color: #444;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            width: 80%;
         }
 
         .certificate-score {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
             margin: 30px 0;
             color: var(--primary);
-            background: linear-gradient(to right, var(--gold), var(--silver));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-            padding: 0 20px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 20px;
+            border-radius: 8px;
         }
 
         .certificate-footer {
             margin-top: 40px;
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: center;
+            width: 80%;
         }
 
         .certificate-signature {
@@ -398,26 +381,15 @@
             flex: 1;
         }
 
-        .signature-line {
-            width: 200px;
-            height: 1px;
-            background: #000;
-            margin: 5px auto;
+        .certificate-barcode {
+            height: 80px;
+            flex: 1;
+            text-align: right;
         }
 
         .certificate-date {
             flex: 1;
-            text-align: center;
-        }
-
-        .certificate-barcode {
-            height: 80px;
-            margin-bottom: 10px;
-        }
-
-        .certificate-code {
-            font-size: 0.8rem;
-            color: #666;
+            text-align: left;
         }
 
         .floating-buttons {
@@ -462,7 +434,6 @@
             display: flex;
             margin-bottom: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            overflow-x: auto;
         }
 
         .admin-tab {
@@ -470,7 +441,6 @@
             cursor: pointer;
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
-            white-space: nowrap;
         }
 
         .admin-tab.active {
@@ -563,7 +533,7 @@
             }
             
             .certificate-name {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
             }
             
             .floating-buttons {
@@ -575,15 +545,6 @@
                 width: 45px;
                 height: 45px;
                 font-size: 1.2rem;
-            }
-
-            .navigation-buttons {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .navigation-buttons .btn {
-                width: 100%;
             }
         }
 
@@ -601,6 +562,15 @@
                 font-size: 14px;
             }
             
+            .navigation-buttons {
+                flex-direction: column;
+            }
+            
+            .navigation-buttons .btn {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+            
             .certificate-container {
                 padding: 20px;
                 min-height: 400px;
@@ -611,17 +581,25 @@
             }
             
             .certificate-name {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
+                width: 90%;
             }
             
             .certificate-text {
                 font-size: 1rem;
+                width: 90%;
             }
-
+            
             .certificate-footer {
                 flex-direction: column;
                 gap: 20px;
-                align-items: center;
+            }
+            
+            .certificate-signature,
+            .certificate-barcode,
+            .certificate-date {
+                text-align: center;
+                width: 100%;
             }
         }
 
@@ -753,27 +731,26 @@
             margin-right: 8px;
         }
 
-        /* Certificate print styles */
+        /* Print styles for certificate */
         @media print {
             body * {
                 visibility: hidden;
             }
-            #certificate-print, #certificate-print * {
+            .certificate-container, .certificate-container * {
                 visibility: visible;
             }
-            #certificate-print {
+            .certificate-container {
                 position: absolute;
                 left: 0;
                 top: 0;
                 width: 100%;
                 height: 100%;
                 background-image: url('assets/images/certificate.png');
-                background-size: cover;
-                background-position: center;
+                background-size: contain;
                 background-repeat: no-repeat;
-                padding: 0;
+                background-position: center;
                 margin: 0;
-                border: none;
+                padding: 0;
                 box-shadow: none;
             }
             .no-print {
@@ -960,7 +937,7 @@
                     
                     <div class="form-group">
                         <label>Pilih Mata Ujian</label>
-                        <div class="options-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                        <div class="options-grid">
                             <button type="button" class="btn exam-option" data-subject="AGAMA">AGAMA</button>
                             <button type="button" class="btn exam-option" data-subject="PPKN">PPKN</button>
                             <button type="button" class="btn exam-option" data-subject="SEJARAH">SEJARAH</button>
@@ -1065,11 +1042,9 @@
         <div id="certificate-page" class="page hidden">
             <div class="certificate-container" id="certificate-print">
                 <div class="certificate-title">SERTIFIKAT PRESTASI</div>
-                <div class="certificate-subtitle">Diberikan Kepada</div>
-                <div class="certificate-divider"></div>
+                <div style="font-size: 1.2rem; margin-bottom: 30px;">Diberikan Kepada</div>
                 
                 <div class="certificate-name" id="certificate-name">NAMA PESERTA</div>
-                <div class="certificate-divider"></div>
                 
                 <div class="certificate-text">
                     Atas Partisipasi & Pencapaian Luar Biasa dalam <strong>Ujian Pergunu Situbondo</strong>
@@ -1088,18 +1063,16 @@
                 <div class="certificate-footer">
                     <div class="certificate-signature">
                         <div style="margin-top: 50px;">Ketua Pergunu Situbondo</div>
-                        <div class="signature-line"></div>
                         <div style="font-weight: 600; margin-top: 5px;" id="chairman-name">Moh. Nuril Hudha, S.Pd., M.Si.</div>
                     </div>
                     
                     <div class="certificate-date">
-                        <div style="margin-bottom: 10px;">Ditetapkan di: Situbondo</div>
-                        <div>Periode: <span id="certificate-date">16 Mei 2025</span></div>
+                        <div style="margin-bottom: 10px;">Periode: <span id="certificate-date">16 Mei 2025</span></div>
                     </div>
                     
-                    <div>
+                    <div class="certificate-barcode">
                         <img src="assets/images/BARCODE.png" alt="Barcode" class="certificate-barcode">
-                        <div class="certificate-code" id="certificate-code">Kode Sertifikat</div>
+                        <div style="font-size: 0.8rem; margin-top: 5px;" id="certificate-code">Kode Sertifikat</div>
                     </div>
                 </div>
             </div>
@@ -1858,6 +1831,25 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
         function saveParticipantData() {
             const status = document.querySelector('input[name="status"]:checked').value;
             
+            // Validasi form
+            if (status === 'pelajar') {
+                if (!document.getElementById('school-name').value || 
+                    !document.getElementById('student-id').value || 
+                    !document.getElementById('student-purpose').value || 
+                    !document.getElementById('student-level').value) {
+                    showNotification('Harap isi semua data untuk peserta pelajar!', 'error');
+                    return;
+                }
+            } else {
+                if (!document.getElementById('address').value || 
+                    !document.getElementById('phone').value || 
+                    !document.getElementById('email').value || 
+                    !document.getElementById('general-purpose').value) {
+                    showNotification('Harap isi semua data untuk peserta umum!', 'error');
+                    return;
+                }
+            }
+            
             participantData = {
                 fullName: document.getElementById('full-name').value,
                 status: status,
@@ -1912,11 +1904,6 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
                     gradeSelect.appendChild(option);
                 });
             }
-            
-            // Reset pilihan ujian
-            document.querySelectorAll('.exam-option').forEach(btn => {
-                btn.classList.remove('btn-success');
-            });
         }
 
         // Fungsi untuk memilih opsi ujian
@@ -2239,7 +2226,7 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
             // Isi data sertifikat
             document.getElementById('certificate-name').textContent = participant.fullName;
             document.getElementById('certificate-score').textContent = `Nilai: ${result.score}`;
-            document.getElementById('certificate-date').textContent = formattedDate;
+            document.getElementById('certificate-date').textContent = `Ditetapkan di Situbondo, ${formattedDate}`;
             document.getElementById('certificate-code').textContent = certCode;
             document.getElementById('chairman-name').textContent = localStorage.getItem('chairmanName') || "Moh. Nuril Hudha, S.Pd., M.Si.";
             
@@ -2257,7 +2244,15 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
 
         // Fungsi untuk mencetak sertifikat
         function printCertificate() {
+            const printContent = document.getElementById('certificate-print').innerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = printContent;
             window.print();
+            document.body.innerHTML = originalContent;
+            
+            // Kembalikan ke halaman sebelumnya
+            showPage(currentPage);
         }
 
         // Fungsi untuk menampilkan notifikasi
