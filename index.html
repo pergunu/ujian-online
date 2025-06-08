@@ -615,6 +615,76 @@
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.5);
         }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: slideInRight 0.3s;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--danger);
+            transform: rotate(90deg);
+        }
+
+        /* Share links styles */
+        #share-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        #share-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        #share-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        #share-links a i {
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
@@ -703,12 +773,12 @@
                     <div id="student-form">
                         <div class="form-group">
                             <label for="school-name">Nama Sekolah</label>
-                            <input type="text" id="school-name" placeholder="Masukkan nama sekolah">
+                            <input type="text" id="school-name" placeholder="Masukkan nama sekolah" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="student-id">NIS (Nomor Induk Siswa)</label>
-                            <input type="number" id="student-id" placeholder="Masukkan NIS" pattern="\d*">
+                            <input type="number" id="student-id" placeholder="Masukkan NIS" pattern="\d*" required>
                         </div>
                         
                         <div class="form-group">
@@ -737,7 +807,7 @@
                         <div class="form-group">
                             <label for="address">Alamat</label>
                             <div class="gps-container">
-                                <input type="text" id="address" placeholder="Masukkan alamat lengkap">
+                                <input type="text" id="address" placeholder="Masukkan alamat lengkap" required>
                                 <button type="button" id="gps-btn" class="gps-btn">
                                     <i class="fas fa-map-marker-alt"></i> Gunakan GPS
                                 </button>
@@ -1546,8 +1616,12 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
             document.getElementById('unanswered-btn').addEventListener('click', showUnanswered);
             
             // Hasil ujian
-            document.getElementById('view-certificate-btn').addEventListener('click', showCertificate);
-            document.getElementById('retake-exam-btn').addEventListener('click', retakeExam);
+            document.getElementById('view-certificate-btn').addEventListener('click', function() {
+                showPage('certificate');
+            });
+            document.getElementById('retake-exam-btn').addEventListener('click', function() {
+                showPage('exam-options');
+            });
             
             // Sertifikat
             document.getElementById('print-certificate-btn').addEventListener('click', printCertificate);
@@ -1619,6 +1693,14 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
             
             // Tampilkan halaman yang diminta
             document.getElementById(`${page}-page`).classList.remove('hidden');
+            
+            // Sembunyikan tombol mengambang di halaman sertifikat
+            const floatingButtons = document.querySelector('.floating-buttons');
+            if (page === 'certificate') {
+                floatingButtons.style.display = 'none';
+            } else {
+                floatingButtons.style.display = 'flex';
+            }
             
             // Lakukan inisialisasi khusus halaman
             switch(page) {
@@ -2077,12 +2159,6 @@ Anda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!</textarea
             
             // Kembalikan ke halaman sebelumnya
             showPage(currentPage);
-        }
-
-        // Fungsi untuk mengulang ujian
-        function retakeExam() {
-            playButtonSound();
-            showPage('exam-options');
         }
 
         // Fungsi untuk menampilkan notifikasi
