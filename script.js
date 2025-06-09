@@ -1,4 +1,17 @@
 // Global Variables
+let currentPage = 'welcome-page';
+let participantData = {};
+let examData = {};
+let examResults = {};
+let questions = [];
+let currentQuestionIndex = 0;
+let timerInterval;
+let timeLeft = 120 * 60; // 120 menit dalam detik
+let answeredQuestions = {};
+let correctAnswers = 0;
+let wrongAnswers = 0;
+let unansweredQuestions = 0;
+let totalQuestions = 10;
 let currentScreen = 0;
 let participantData = {};
 let examQuestions = [];
@@ -44,13 +57,188 @@ let adminSettings = {
     randomizeQuestions: true
 };
 
-// Default codes
+// Default Codes
 const defaultCodes = {
-    loginCode: "12345",
-    cpnsCode: "OPENLOCK-1945",
-    bankSoalCode: "OPENLOCK-1926",
-    adminCode: "65614222"
+    login: '12345',
+    cpns: 'OPENLOCK-1945',
+    bankSoal: 'OPENLOCK-1926',
+    admin: '65614222'
 };
+
+// Data Soal Contoh (akan digantikan dengan data dari bank soal)
+const sampleQuestions = {
+    // ... (data soal tetap sama) ...
+};
+
+// Inisialisasi Aplikasi
+document.addEventListener('DOMContentLoaded', function() {
+    // ... (inisialisasi awal tetap sama) ...
+    
+    // Setup event listeners
+    setupEventListeners();
+    
+    // Load data dari localStorage jika ada
+    loadFromLocalStorage();
+});
+
+// Fungsi untuk Setup Event Listeners (diperbaiki)
+function setupEventListeners() {
+    // ... (event listeners lainnya tetap sama) ...
+    
+    // Event listeners untuk modal
+    document.querySelectorAll('.close-modal').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.closest('.modal').style.display = 'none';
+        });
+    });
+    
+    // Tutup modal saat klik di luar (diperbaiki)
+    window.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal')) {
+            e.target.style.display = 'none';
+        }
+    });
+    
+    // Event listener untuk modal kode akses (diperbaiki)
+    document.getElementById('verify-access-code-btn').addEventListener('click', function() {
+        const code = document.getElementById('input-access-code').value;
+        const type = document.getElementById('access-code-modal').getAttribute('data-type');
+        let valid = false;
+        
+        if (type === 'bankSoal' && (code === defaultCodes.bankSoal || code === localStorage.getItem('bankCode'))) {
+            valid = true;
+            document.getElementById('question-bank-modal').style.display = 'block';
+        } else if (type === 'admin' && (code === defaultCodes.admin || code === localStorage.getItem('adminCode'))) {
+            valid = true;
+            document.getElementById('admin-panel-modal').style.display = 'block';
+            loadAdminPanel();
+        }
+        
+        if (valid) {
+            document.getElementById('access-code-modal').style.display = 'none';
+        } else {
+            document.getElementById('access-code-error').textContent = "Kode akses salah. Silakan coba lagi.";
+            document.getElementById('access-code-error').style.display = 'block';
+        }
+    });
+    
+    // Event listener untuk tombol back to result (diperbaiki)
+    document.getElementById('back-to-result-btn').addEventListener('click', function() {
+        showPage('result-page');
+    });
+    
+    // Event listener untuk tombol AI di bank soal (diperbaiki)
+    document.getElementById('generate-ai-btn').addEventListener('click', function() {
+        generateQuestionsWithAI();
+    });
+}
+
+// ... (fungsi lainnya tetap sama) ...
+
+// Fungsi untuk Menampilkan Sertifikat (diperbaiki)
+function showCertificate() {
+    // Generate kode sertifikat
+    const now = new Date();
+    const dateStr = `${now.getDate()}${now.getMonth()+1}${now.getFullYear()}`;
+    const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + 
+                      Math.random().toString(36).substring(2, 6).toUpperCase();
+    
+    const certCode = `${participantData.fullname.toUpperCase().replace(/ /g, '')}/${
+        participantData.status.toUpperCase()}/${
+        participantData.status === 'pelajar' ? participantData.schoolLevel.toUpperCase() : 'UMUM'}/${
+        examData.subject.toUpperCase()}/${
+        dateStr}/${
+        randomCode}/PERGUNU-STB`;
+    
+    // Update data sertifikat dengan posisi yang benar
+    document.getElementById('certificate-name').textContent = participantData.fullname;
+    document.getElementById('certificate-score').textContent = examResults.totalScore;
+    document.getElementById('certificate-code').textContent = certCode;
+    
+    // Set tanggal
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const dateFormatted = now.toLocaleDateString('id-ID', options);
+    document.getElementById('certificate-date').textContent = dateFormatted;
+    
+    // Set pesan motivasi berdasarkan nilai
+    let motivation = "";
+    if (examResults.totalScore >= 90) {
+        motivation = getSetting('motivation90-100') || "Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.";
+    } else if (examResults.totalScore >= 80) {
+        motivation = getSetting('motivation80-89') || "Hasil yang sangat baik! Anda telah menguasai sebagian besar materi dengan baik.";
+    } else if (examResults.totalScore >= 70) {
+        motivation = getSetting('motivation70-79') || "Kerja bagus! Anda memiliki pemahaman yang baik tentang materi ini.";
+    } else if (examResults.totalScore >= 60) {
+        motivation = getSetting('motivation60-69') || "Hasil yang cukup baik. Ada ruang untuk perbaikan, terus belajar!";
+    } else if (examResults.totalScore >= 50) {
+        motivation = getSetting('motivation50-59') || "Anda telah berusaha, tetapi perlu belajar lebih giat lagi untuk hasil yang lebih baik.";
+    } else {
+        motivation = getSetting('motivationBelow50') || "Jangan menyerah! Gunakan hasil ini sebagai motivasi untuk belajar lebih giat lagi.";
+    }
+    
+    document.getElementById('certificate-motivation').textContent = motivation;
+    
+    // Set nama ketua
+    document.getElementById('certificate-chairman').textContent = getSetting('chairmanName') || "Moh. Nuril Hudha, S.Pd., M.Si.";
+    
+    // Tampilkan halaman sertifikat
+    showPage('certificate-page');
+}
+
+// Fungsi untuk Generate Soal dengan AI (diperbaiki)
+function generateQuestionsWithAI() {
+    const prompt = document.getElementById('ai-prompt').value;
+    const category = document.getElementById('ai-category').value;
+    const difficulty = document.getElementById('ai-level').value;
+    const count = document.getElementById('ai-count').value;
+    
+    if (!prompt || !category) {
+        alert("Harap isi prompt dan kategori!");
+        return;
+    }
+    
+    // Simulasi AI (dalam implementasi nyata, ini akan memanggil API AI)
+    const aiResult = document.getElementById('ai-result');
+    aiResult.innerHTML = '<p>Sedang memproses permintaan AI...</p>';
+    
+    setTimeout(() => {
+        // Contoh hasil AI
+        aiResult.innerHTML = `
+            <div class="ai-generated-question">
+                <h4>Contoh Soal Hasil Generate AI</h4>
+                <p><strong>Pertanyaan:</strong> Apa ibukota negara Indonesia?</p>
+                <p><strong>Opsi:</strong></p>
+                <ul>
+                    <li>A. Jakarta</li>
+                    <li>B. Bandung</li>
+                    <li>C. Surabaya</li>
+                    <li>D. Medan</li>
+                    <li>E. Bali</li>
+                </ul>
+                <p><strong>Jawaban Benar:</strong> A</p>
+                <p><strong>Penjelasan:</strong> Jakarta adalah ibukota negara Indonesia sejak tahun 1945.</p>
+                <button class="btn-small use-ai-question">Gunakan Soal Ini</button>
+            </div>
+        `;
+        
+        // Tambahkan event listener untuk tombol gunakan soal
+        document.querySelector('.use-ai-question')?.addEventListener('click', function() {
+            // Isi form dengan hasil AI
+            document.getElementById('question-category').value = category;
+            document.getElementById('question-text').value = "Apa ibukota negara Indonesia?";
+            document.getElementById('option-a-input').value = "Jakarta";
+            document.getElementById('option-b-input').value = "Bandung";
+            document.getElementById('option-c-input').value = "Surabaya";
+            document.getElementById('option-d-input').value = "Medan";
+            document.getElementById('option-e-input').value = "Bali";
+            document.getElementById('correct-answer').value = "A";
+            document.getElementById('explanation').value = "Jakarta adalah ibukota negara Indonesia sejak tahun 1945.";
+            
+            // Scroll ke form
+            document.getElementById('manual-tab').scrollIntoView();
+        });
+    }, 2000);
+}
 
 // Enhanced particle system
 let particles = [];
