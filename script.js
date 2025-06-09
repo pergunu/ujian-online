@@ -558,32 +558,16 @@ function setupEventListeners() {
         exportParticipants();
     });
     
-    // Event listener untuk modal kode akses (diperbaiki)
+    // Event listener untuk modal kode akses
     document.getElementById('verify-access-code-btn').addEventListener('click', function() {
-        const code = document.getElementById('input-access-code').value;
-        const type = document.getElementById('access-code-modal').getAttribute('data-type');
-        let valid = false;
-        
-        if (type === 'bankSoal' && (code === defaultCodes.bankSoal || code === localStorage.getItem('bankCode'))) {
-            valid = true;
-            document.getElementById('question-bank-modal').style.display = 'block';
-        } else if (type === 'admin' && (code === defaultCodes.admin || code === localStorage.getItem('adminCode'))) {
-            valid = true;
-            document.getElementById('admin-panel-modal').style.display = 'block';
-            loadAdminPanel();
-        }
-        
-        if (valid) {
-            document.getElementById('access-code-modal').style.display = 'none';
-        } else {
-            document.getElementById('access-code-error').textContent = "Kode akses salah. Silakan coba lagi.";
-            document.getElementById('access-code-error').style.display = 'block';
-        }
+        playButtonSound();
+        verifyAccessCode();
     });
     
-    // Event listener untuk tombol back to result (diperbaiki)
-    document.getElementById('back-to-result-btn').addEventListener('click', function() {
-        showPage('result-page');
+    // Event listener untuk modal share
+    document.getElementById('add-share-link-btn').addEventListener('click', function() {
+        playButtonSound();
+        addShareLink();
     });
 }
 
@@ -976,7 +960,7 @@ function showResults() {
     document.getElementById('applause-audio').play();
 }
 
-// Fungsi untuk Menampilkan Sertifikat (diperbaiki)
+// Fungsi untuk Menampilkan Sertifikat
 function showCertificate() {
     // Generate kode sertifikat
     const now = new Date();
@@ -991,7 +975,7 @@ function showCertificate() {
         dateStr}/${
         randomCode}/PERGUNU-STB`;
     
-    // Update data sertifikat dengan posisi yang benar
+    // Update data sertifikat
     document.getElementById('certificate-name').textContent = participantData.fullname;
     document.getElementById('certificate-score').textContent = examResults.totalScore;
     document.getElementById('certificate-code').textContent = certCode;
@@ -1052,7 +1036,37 @@ function showAccessCodeModal(type) {
     
     // Tampilkan modal
     modal.style.display = 'block';
-    modal.setAttribute('data-type', type);
+    
+    // Set fungsi verifikasi
+    document.getElementById('verify-access-code-btn').onclick = function() {
+        const code = input.value;
+        let valid = false;
+        
+        if (type === 'bankSoal' && code === defaultCodes.bankSoal) {
+            valid = true;
+        } else if (type === 'admin' && code === defaultCodes.admin) {
+            valid = true;
+        }
+        
+        if (valid) {
+            modal.style.display = 'none';
+            
+            if (type === 'bankSoal') {
+                document.getElementById('question-bank-modal').style.display = 'block';
+            } else if (type === 'admin') {
+                document.getElementById('admin-panel-modal').style.display = 'block';
+                loadAdminPanel();
+            }
+        } else {
+            errorElement.textContent = "Kode akses salah. Silakan coba lagi.";
+            errorElement.style.display = 'block';
+        }
+    };
+}
+
+// Fungsi untuk Verifikasi Kode Akses
+function verifyAccessCode() {
+    // Implementasi sudah di-handle dalam showAccessCodeModal
 }
 
 // Fungsi untuk Menampilkan Modal Share
@@ -1120,7 +1134,7 @@ function saveQuestion() {
     document.getElementById('question-form').reset();
 }
 
-// Fungsi untuk Generate Soal dengan AI (diperbaiki)
+// Fungsi untuk Generate Soal dengan AI
 function generateQuestionsWithAI() {
     const prompt = document.getElementById('ai-prompt').value;
     const category = document.getElementById('ai-category').value;
@@ -1133,6 +1147,7 @@ function generateQuestionsWithAI() {
     }
     
     // Simulasi AI (dalam implementasi nyata, ini akan memanggil API AI)
+    // Di sini kita hanya menampilkan contoh
     const aiResult = document.getElementById('ai-result');
     aiResult.innerHTML = '<p>Sedang memproses permintaan AI...</p>';
     
