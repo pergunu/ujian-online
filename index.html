@@ -3,30 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ujian Online PERGUNU Situbondo</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Ujian Online - Pergunu Situbondo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&family=Parisienne&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
-        /* Tambahan style untuk sertifikat */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #certificatePrint, #certificatePrint * {
-                visibility: visible;
-            }
-            #certificatePrint {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
+        /* CSS Styles */
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ff4d4d;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --info: #17a2b8;
+            --gold: #FFD700;
+            --silver: #C0C0C0;
         }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary), #00d2ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #fff, #ddd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ... (CSS lainnya tetap sama) ... */
+
+        /* Certificate styling yang diperbaiki */
+        .certificate-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 30px auto;
+            position: relative;
+            background-image: url('assets/images/certificate.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 60px;
+            border: 15px solid #f5f5f5;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            color: #333;
+            text-align: center;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .certificate-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #8B4513;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .certificate-code {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .certificate-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .certificate-divider {
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #8B4513, transparent);
+            margin: 20px auto;
+        }
+
+        .certificate-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            font-weight: 400;
+            margin: 20px 0;
+            color: #000;
+        }
+
+        .certificate-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #444;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .certificate-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 20px 0;
+            color: var(--primary);
+            background: linear-gradient(to right, var(--gold), var(--silver));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        .certificate-footer {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .certificate-signature {
+            text-align: center;
+            flex: 1;
+        }
+
+        .signature-line {
+            width: 200px;
+            height: 1px;
+            background: #000;
+            margin: 5px auto;
+        }
+
+        .certificate-date {
+            flex: 1;
+            text-align: center;
+        }
+
+        .certificate-barcode {
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        /* ... (CSS lainnya tetap sama) ... */
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: slideInRight 0.3s;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1;
+        }
+
+        .close-modal:hover {
+            color: var(--danger);
+            transform: rotate(90deg);
+        }
+
     </style>
 </head>
 <body>
@@ -322,6 +550,17 @@
         </div>
 
         <!-- Bank Soal Modal -->
+         <div id="question-bank-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Masukkan Kode Bank Soal</h3>
+            <div class="form-group">
+                <input type="password" id="bank-code-input" placeholder="Masukkan kode bank soal">
+            </div>
+            <button id="submit-bank-code" class="btn btn-block">Masuk</button>
+        </div>
+    </div>
+        
         <div class="modal" id="bankSoalModal">
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
@@ -632,6 +871,237 @@
         </div>
 
         <!-- Share Modal -->
+<div id="admin-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Masukkan Kode Admin</h3>
+            <div class="form-group">
+                <input type="password" id="admin-code-input" placeholder="Masukkan kode admin">
+            </div>
+            <button id="submit-admin-code" class="btn btn-block">Masuk</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // KODE DEFAULT (JANGAN DITAMPILKAN KE PUBLIK)
+        const DEFAULT_LOGIN_CODE = "12345";
+        const DEFAULT_EXAM_CODE = "OPENLOCK-1945";
+        const DEFAULT_BANK_CODE = "OPENLOCK-1926";
+        const DEFAULT_ADMIN_CODE = "65614222";
+
+        // Inisialisasi variabel
+        let currentPage = "login";
+        let participantData = {};
+        let examData = {};
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let answeredQuestions = {};
+        let timerInterval;
+        let timeLeft = 120 * 60; // 120 menit dalam detik
+        let examStarted = false;
+        
+        // Data contoh soal (dalam aplikasi nyata, ini akan diambil dari database)
+        const sampleQuestions = {
+            "AGAMA": [
+                {
+                    question: "Apa kitab suci agama Islam?",
+                    options: ["A. Alkitab", "B. Tripitaka", "C. Al-Quran", "D. Weda", "E. Talmud"],
+                    correctAnswer: "C",
+                    explanation: "Kitab suci agama Islam adalah Al-Quran yang diturunkan kepada Nabi Muhammad SAW."
+                }
+            ],
+            // ... (data soal lainnya tetap sama) ...
+        };
+
+        // Inisialisasi aplikasi saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inisialisasi particles.js
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: "#ffffff" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.5, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+                    move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "repulse" },
+                        onclick: { enable: true, mode: "push" }
+                    }
+                }
+            });
+
+            // Set halaman awal
+            showPage('login');
+
+            // Event listeners
+            document.getElementById('login-btn').addEventListener('click', handleLogin);
+            document.getElementById('agree-rules').addEventListener('change', function() {
+                document.getElementById('continue-btn').disabled = !this.checked;
+            });
+            document.getElementById('continue-btn').addEventListener('click', function() {
+                showPage('participant');
+            });
+            
+            // ... (event listeners lainnya tetap sama) ...
+            
+            // Tombol mengambang
+            document.getElementById('share-btn').addEventListener('click', showShareModal);
+            document.getElementById('whatsapp-btn').addEventListener('click', openWhatsApp);
+            document.getElementById('question-bank-btn').addEventListener('click', showQuestionBankModal);
+            document.getElementById('admin-btn').addEventListener('click', showAdminModal);
+            
+            // Modal
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.modal').classList.add('hidden');
+                });
+            });
+            
+            // Verifikasi kode bank soal
+            document.getElementById('submit-bank-code').addEventListener('click', function() {
+                const code = document.getElementById('bank-code-input').value;
+                if (code === DEFAULT_BANK_CODE || code === localStorage.getItem('bankCode')) {
+                    document.getElementById('question-bank-modal').classList.add('hidden');
+                    showPage('question-bank');
+                } else {
+                    showNotification('Kode bank soal salah!', 'error');
+                }
+            });
+            
+            // Verifikasi kode admin (diperbaiki)
+            document.getElementById('submit-admin-code').addEventListener('click', function() {
+                const code = document.getElementById('admin-code-input').value;
+                if (code === DEFAULT_ADMIN_CODE || code === localStorage.getItem('adminCode')) {
+                    document.getElementById('admin-modal').classList.add('hidden');
+                    showPage('admin');
+                } else {
+                    showNotification('Kode admin salah!', 'error');
+                }
+            });
+            
+            // Load settings
+            loadSettings();
+            
+            // Play opening sound
+            const buttonSound = document.getElementById('button-sound');
+            buttonSound.play().catch(e => console.log('Autoplay prevented:', e));
+        });
+
+        // ... (fungsi lainnya tetap sama) ...
+
+        // Fungsi untuk menghasilkan sertifikat (diperbaiki)
+        function generateCertificate() {
+            // Ambil hasil terakhir dari database (simulasi)
+            const results = JSON.parse(localStorage.getItem('examResults') || '[]');
+            const result = results[results.length - 1];
+            
+            if (!result) return;
+            
+            // Format tanggal
+            const date = new Date(result.timestamp);
+            const formattedDate = date.toLocaleDateString('id-ID', { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric' 
+            });
+            
+            // Generate kode sertifikat
+            const participant = result.participant;
+            const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + 
+                              Math.random().toString(36).substring(2, 6).toUpperCase();
+            
+            const certCode = `${participant.fullName.toUpperCase().replace(/ /g, '')}/${participant.status.toUpperCase()}/${participant.schoolLevel || 'UMUM'}/${result.exam.subject}/${formattedDate.replace(/ /g, '')}/${randomCode}/PERGUNU-STB`;
+            
+            // Isi data sertifikat
+            document.getElementById('certificate-name').textContent = participant.fullName;
+            document.getElementById('certificate-score').textContent = `Nilai: ${result.score}`;
+            document.getElementById('certificate-date').textContent = formattedDate;
+            document.getElementById('certificate-code').textContent = certCode;
+            document.getElementById('chairman-name').textContent = localStorage.getItem('chairmanName') || "Moh. Nuril Hudha, S.Pd., M.Si.";
+            
+            // Tampilkan pesan motivasi
+            const motivationTexts = (localStorage.getItem('motivationTexts') || "Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.\nBagus! Anda telah menunjukkan pemahaman yang baik. Tingkatkan terus kemampuan Anda.\nCukup baik. Masih ada ruang untuk perbaikan. Terus belajar dan berlatih.\nAnda perlu lebih banyak belajar lagi. Jangan menyerah, terus berusaha!").split('\n');
+            
+            let messageIndex = 0;
+            if (result.score >= 90) messageIndex = 0;
+            else if (result.score >= 70) messageIndex = 1;
+            else if (result.score >= 50) messageIndex = 2;
+            else messageIndex = 3;
+            
+            document.getElementById('motivation-text').textContent = motivationTexts[messageIndex] || motivationTexts[0];
+        }
+
+        // Fungsi untuk menampilkan modal bank soal
+        function showQuestionBankModal() {
+            document.getElementById('bank-code-input').value = '';
+            document.getElementById('question-bank-modal').classList.remove('hidden');
+            playButtonSound();
+        }
+
+        // Fungsi untuk menampilkan modal admin
+        function showAdminModal() {
+            document.getElementById('admin-code-input').value = '';
+            document.getElementById('admin-modal').classList.remove('hidden');
+            playButtonSound();
+        }
+
+        // Fungsi untuk generate soal dengan AI (diperbaiki)
+        function generateQuestionsWithAI() {
+            const prompt = document.getElementById('ai-prompt').value;
+            const subject = document.getElementById('ai-subject').value;
+            
+            if (!prompt) {
+                showNotification('Harap masukkan prompt untuk AI!', 'error');
+                return;
+            }
+            
+            document.getElementById('ai-results').style.display = 'block';
+            document.getElementById('generated-questions').innerHTML = '<div style="text-align: center;"><div class="spinner"></div><p>Sedang generate soal...</p></div>';
+            
+            // Simulasi AI (dalam implementasi nyata, ini akan memanggil API AI)
+            setTimeout(() => {
+                document.getElementById('generated-questions').innerHTML = `
+                    <p><strong>1. Apa ibukota Indonesia?</strong></p>
+                    <p>A. Jakarta</p>
+                    <p>B. Bandung</p>
+                    <p>C. Surabaya</p>
+                    <p>D. Medan</p>
+                    <p><em>Jawaban benar: A</em></p>
+                    <p><em>Penjelasan: Jakarta adalah ibukota Indonesia sejak tahun 1945.</em></p>
+                    <hr>
+                    <p><strong>2. Siapa presiden pertama Indonesia?</strong></p>
+                    <p>A. Soeharto</p>
+                    <p>B. Soekarno</p>
+                    <p>C. Joko Widodo</p>
+                    <p>D. Susilo Bambang Yudhoyono</p>
+                    <p><em>Jawaban benar: B</em></p>
+                    <p><em>Penjelasan: Soekarno adalah presiden pertama Indonesia yang menjabat dari tahun 1945 hingga 1967.</em></p>
+                `;
+                
+                showNotification('Fitur AI membutuhkan API key yang valid. Ini hanya contoh demonstrasi.', 'info');
+            }, 2000);
+        }
+
+        // Fungsi untuk menyimpan soal yang dihasilkan AI (diperbaiki)
+        function saveGeneratedQuestions() {
+            // Di aplikasi nyata, ini akan parsing dan menyimpan soal yang dipilih dari hasil AI
+            showNotification('Soal berhasil disimpan! (simulasi)', 'success');
+            playButtonSound();
+            
+            // Sembunyikan hasil dan reset form
+            document.getElementById('ai-results').style.display = 'none';
+            document.getElementById('ai-prompt').value = '';
+            
+            // Perbarui daftar soal
+            filterQuestions();
+        }
+        
         <div class="modal" id="shareModal">
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
