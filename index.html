@@ -7,500 +7,1791 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* CSS akan ditempatkan di file terpisah */
+        :root {
+            --color-primary: #6a11cb;
+            --color-secondary: #2575fc;
+            --color-tertiary: #00c6fb;
+            --color-success: #4CAF50;
+            --color-error: #f44336;
+            --color-warning: #ff9800;
+            --color-info: #2196F3;
+            --color-dark: #1a1a2e;
+            --color-light: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary), var(--color-tertiary));
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Particle Background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            height: 80px;
+            margin-bottom: 15px;
+        }
+
+        /* Card Styles */
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 50px;
+            background: linear-gradient(to right, var(--color-secondary), var(--color-tertiary));
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
+            margin: 5px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 117, 252, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-success {
+            background: linear-gradient(to right, var(--color-success), #2ecc71);
+        }
+
+        .btn-danger {
+            background: linear-gradient(to right, var(--color-error), #e74c3c);
+        }
+
+        .btn-warning {
+            background: linear-gradient(to right, var(--color-warning), #f39c12);
+        }
+
+        .btn-info {
+            background: linear-gradient(to right, var(--color-info), #3498db);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-secondary);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.2);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        /* Radio and Checkbox Styles */
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .radio-option, .checkbox-option {
+            display: none;
+        }
+
+        .radio-label, .checkbox-label {
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option:checked + .radio-label,
+        .checkbox-option:checked + .checkbox-label {
+            background: linear-gradient(to right, var(--color-secondary), var(--color-tertiary));
+            box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
+        }
+
+        /* Animation Classes */
+        .slide-in {
+            animation: slideIn 0.5s forwards;
+        }
+
+        .slide-out {
+            animation: slideOut 0.5s forwards;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .fade-out {
+            animation: fadeOut 0.5s forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(-100%); opacity: 0; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        /* Timer Styles */
+        .timer {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin: 20px 0;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .timer-warning {
+            color: var(--color-warning);
+            font-size: 28px;
+        }
+
+        .timer-danger {
+            color: var(--color-error);
+            font-size: 32px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            z-index: 1000;
+            animation: slideUp 0.5s forwards;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        @keyframes slideUp {
+            from { bottom: -50px; opacity: 0; }
+            to { bottom: 20px; opacity: 1; }
+        }
+
+        /* Question Styles */
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .option {
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .option.correct {
+            background: var(--color-success);
+            animation: correctAnswer 0.5s;
+        }
+
+        .option.incorrect {
+            background: var(--color-error);
+            animation: incorrectAnswer 0.5s;
+        }
+
+        @keyframes correctAnswer {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes incorrectAnswer {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-10px); }
+            40% { transform: translateX(10px); }
+            60% { transform: translateX(-10px); }
+            80% { transform: translateX(10px); }
+            100% { transform: translateX(0); }
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            display: none;
+        }
+
+        /* Certificate Styles */
+        .certificate {
+            background: white;
+            color: #333;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certificate::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/certificate.png') no-repeat center center;
+            background-size: cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .certificate-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .certificate-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--color-primary);
+        }
+
+        .certificate-recipient {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .certificate-body {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .certificate-score {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin: 20px 0;
+        }
+
+        .certificate-motivation {
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        .certificate-footer {
+            margin-top: 40px;
+        }
+
+        .certificate-signature {
+            margin-top: 50px;
+        }
+
+        .certificate-barcode {
+            margin-top: 20px;
+            height: 60px;
+        }
+
+        /* Floating Button Styles */
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .floating-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(to right, var(--color-secondary), var(--color-tertiary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .floating-btn .tooltip {
+            position: absolute;
+            right: 60px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .floating-btn:hover .tooltip {
+            opacity: 1;
+            right: 70px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            color: #333;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .certificate {
+                padding: 20px;
+            }
+            
+            .certificate-title {
+                font-size: 28px;
+            }
+            
+            .certificate-recipient {
+                font-size: 20px;
+            }
+            
+            .floating-buttons {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .floating-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .form-control {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            
+            .certificate {
+                padding: 15px;
+            }
+            
+            .certificate-title {
+                font-size: 24px;
+            }
+            
+            .certificate-recipient {
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Canvas untuk partikel animasi -->
-    <canvas id="particle-canvas"></canvas>
-
-    <!-- Notifikasi Opening -->
-    <div id="opening-notification" class="notification-modal">
-        <div class="notification-content">
-            <img src="https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/logo.png" alt="Logo PERGUNU" class="logo">
-            <h1 id="greeting-text">Selamat Datang di Ujian Online PERGUNU Situbondo</h1>
-            <p>Silakan masukkan kode login untuk melanjutkan</p>
-            <input type="password" id="login-code" placeholder="Masukkan Kode Login">
-            <button id="login-btn">Masuk</button>
-            <audio id="opening-audio" src="https://voca.ro/1a8eWbggFzfB"></audio>
+    <div id="particles-js"></div>
+    
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="card slide-in">
+            <div class="header">
+                <img src="https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/logo.png" alt="PERGUNU Logo" class="logo">
+                <h1>Ujian Online PERGUNU Situbondo</h1>
+            </div>
+            
+            <div id="greeting-message">
+                <p>Selamat datang di sistem ujian online PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="login-code" class="form-label">Kode Login</label>
+                <input type="password" id="login-code" class="form-control" placeholder="Masukkan kode login">
+                <small class="text-muted">Kode login diberikan oleh admin</small>
+            </div>
+            
+            <button id="login-btn" class="btn">Masuk</button>
         </div>
-    </div>
-
-    <!-- Form Persyaratan -->
-    <div id="terms-form" class="form-container hidden">
-        <div class="form-content">
-            <h2>Peraturan & Kebijakan Ujian Online</h2>
-            <div class="terms-box">
-                <p>1. Peserta wajib mengisi data dengan benar dan lengkap.</p>
-                <p>2. Waktu ujian adalah 120 menit dan tidak dapat diperpanjang.</p>
+        
+        <!-- Terms Screen (Hidden Initially) -->
+        <div id="terms-screen" class="card" style="display: none;">
+            <h2>Peraturan dan Kebijakan Ujian Online</h2>
+            <div class="terms-content" style="max-height: 300px; overflow-y: auto; margin: 20px 0; padding: 15px; background: rgba(0, 0, 0, 0.1); border-radius: 8px;">
+                <p>1. Ujian ini dikembangkan oleh Cendhanu Tim Kreator PERGUNU Situbondo.</p>
+                <p>2. Peserta wajib mengisi data diri dengan benar dan lengkap.</p>
                 <p>3. Dilarang keras melakukan kecurangan selama ujian berlangsung.</p>
-                <p>4. Hasil ujian akan dicetak dalam bentuk sertifikat digital.</p>
-                <p>5. Sistem ini dikembangkan oleh Cendhanu Tim Kreator PERGUNU Situbondo.</p>
-            </div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="agree-terms">
-                <label for="agree-terms">Saya menyetujui semua persyaratan di atas</label>
-            </div>
-            <button id="next-to-data" disabled>Lanjut Ikut Ujian</button>
-        </div>
-    </div>
-
-    <!-- Form Data Peserta -->
-    <div id="data-form" class="form-container hidden">
-        <div class="form-content">
-            <h2>Form Data Peserta</h2>
-            <div class="form-group">
-                <label for="fullname">Nama Lengkap:</label>
-                <input type="text" id="fullname" placeholder="Masukkan nama lengkap">
+                <p>4. Waktu ujian akan berjalan terus dan tidak dapat dihentikan.</p>
+                <p>5. Jawaban yang sudah dipilih tidak dapat diubah.</p>
+                <p>6. Soal yang tidak dijawab akan dianggap salah.</p>
+                <p>7. Hasil ujian akan ditampilkan setelah waktu habis atau peserta menyelesaikan ujian.</p>
+                <p>8. Sertifikat akan diberikan kepada peserta yang menyelesaikan ujian.</p>
+                <p>9. Keputusan panitia ujian bersifat mutlak dan tidak dapat diganggu gugat.</p>
             </div>
             
             <div class="form-group">
-                <label>Status:</label>
+                <input type="checkbox" id="agree-terms" class="checkbox-option">
+                <label for="agree-terms" class="checkbox-label">Saya menyetujui peraturan dan kebijakan ujian online ini</label>
+            </div>
+            
+            <button id="continue-btn" class="btn" disabled>Lanjut Ikut Ujian</button>
+        </div>
+        
+        <!-- Participant Form (Hidden Initially) -->
+        <div id="participant-form" class="card" style="display: none;">
+            <h2>Formulir Data Peserta</h2>
+            <p>Silakan isi data diri Anda dengan benar. Data ini akan digunakan untuk sertifikat ujian.</p>
+            
+            <div class="form-group">
+                <label for="fullname" class="form-label">Nama Lengkap</label>
+                <input type="text" id="fullname" class="form-control" placeholder="Masukkan nama lengkap">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Status</label>
                 <div class="radio-group">
-                    <input type="radio" id="pelajar" name="status" value="pelajar" checked>
-                    <label for="pelajar">Pelajar</label>
-                    <input type="radio" id="umum" name="status" value="umum">
-                    <label for="umum">Umum</label>
+                    <input type="radio" id="status-student" name="status" value="pelajar" class="radio-option" checked>
+                    <label for="status-student" class="radio-label">Pelajar</label>
+                    
+                    <input type="radio" id="status-general" name="status" value="umum" class="radio-option">
+                    <label for="status-general" class="radio-label">Umum</label>
                 </div>
             </div>
-
-            <!-- Form Pelajar -->
-            <div id="pelajar-form">
-                <div class="form-group">
-                    <label for="school">Nama Sekolah:</label>
-                    <input type="text" id="school" placeholder="Masukkan nama sekolah">
-                </div>
-                <div class="form-group">
-                    <label for="nis">NIS (Nomor Induk Siswa):</label>
-                    <input type="number" id="nis" placeholder="Masukkan NIS">
-                </div>
-                <div class="form-group">
-                    <label>Tujuan Ikut Ujian:</label>
-                    <select id="tujuan-pelajar">
-                        <option value="tugas-sekolah">Tugas Sekolah</option>
-                        <option value="tugas-ulangan">Tugas Ulangan</option>
-                        <option value="tes-belajar">Tes dan Belajar</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Tingkat Sekolah:</label>
-                    <div class="radio-group">
-                        <input type="radio" id="sd" name="tingkat" value="SD">
-                        <label for="sd">SD</label>
-                        <input type="radio" id="smp" name="tingkat" value="SMP">
-                        <label for="smp">SMP</label>
-                        <input type="radio" id="sma" name="tingkat" value="SMA/SMK">
-                        <label for="sma">SMA/SMK</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Form Umum -->
-            <div id="umum-form" class="hidden">
-                <div class="form-group">
-                    <label>Tujuan Ikut Ujian:</label>
-                    <select id="tujuan-umum">
-                        <option value="tes-iq">Tes IQ</option>
-                        <option value="cpns">Ujian CPNS/P3K</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <a href="https://pergunu.github.io/ujian-umum/" class="btn-umum">Klik untuk Ujian Umum</a>
-                </div>
-            </div>
-
-            <div class="info-box">
-                <p id="info-text">Informasi penting akan ditampilkan di sini oleh admin.</p>
-            </div>
-
-            <button id="save-data">Simpan & Ikut Ujian</button>
-        </div>
-    </div>
-
-    <!-- Form Pilihan Ujian -->
-    <div id="exam-options" class="form-container hidden">
-        <div class="form-content">
-            <h2>Pilihan Ujian</h2>
             
-            <!-- Tingkat Kelas -->
-            <div id="kelas-options" class="hidden">
-                <h3>Pilih Kelas:</h3>
-                <div class="button-group">
-                    <!-- Akan diisi oleh JavaScript berdasarkan pilihan -->
+            <!-- Student Fields -->
+            <div id="student-fields">
+                <div class="form-group">
+                    <label for="school-name" class="form-label">Nama Sekolah</label>
+                    <input type="text" id="school-name" class="form-control" placeholder="Masukkan nama sekolah">
+                </div>
+                
+                <div class="form-group">
+                    <label for="student-id" class="form-label">NIS (Nomor Induk Siswa)</label>
+                    <input type="number" id="student-id" class="form-control" placeholder="Masukkan NIS">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Tujuan Ikut Ujian</label>
+                    <div class="radio-group">
+                        <input type="radio" id="purpose-task" name="purpose" value="Tugas Sekolah" class="radio-option">
+                        <label for="purpose-task" class="radio-label">Tugas Sekolah</label>
+                        
+                        <input type="radio" id="purpose-exam" name="purpose" value="Tugas Ulangan" class="radio-option">
+                        <label for="purpose-exam" class="radio-label">Tugas Ulangan</label>
+                        
+                        <input type="radio" id="purpose-test" name="purpose" value="Tes dan Belajar" class="radio-option">
+                        <label for="purpose-test" class="radio-label">Tes dan Belajar</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Tingkat Sekolah</label>
+                    <div class="radio-group">
+                        <input type="radio" id="level-elementary" name="level" value="SD" class="radio-option">
+                        <label for="level-elementary" class="radio-label">SD</label>
+                        
+                        <input type="radio" id="level-junior" name="level" value="SMP" class="radio-option">
+                        <label for="level-junior" class="radio-label">SMP</label>
+                        
+                        <input type="radio" id="level-senior" name="level" value="SMA/SMK" class="radio-option">
+                        <label for="level-senior" class="radio-label">SMA/SMK</label>
+                    </div>
                 </div>
             </div>
-
-            <!-- Jenis Ujian -->
-            <div id="subject-options">
-                <h3>Pilih Jenis Ujian:</h3>
-                <div class="button-group">
-                    <button class="subject-btn" data-subject="agama">AGAMA</button>
-                    <button class="subject-btn" data-subject="ppkn">PPKN</button>
-                    <button class="subject-btn" data-subject="sejarah">SEJARAH</button>
-                    <button class="subject-btn" data-subject="ipa">IPA</button>
-                    <button class="subject-btn" data-subject="ips">IPS</button>
-                    <button class="subject-btn" data-subject="matematika">MATEMATIKA</button>
-                    <button class="subject-btn" data-subject="indonesia">BAHASA INDONESIA</button>
-                    <button class="subject-btn" data-subject="inggris">BAHASA INGGRIS</button>
-                    <button class="subject-btn" data-subject="extra">MATERI EXTRA</button>
-                    <button class="subject-btn" data-subject="khusus">MATERI KHUSUS</button>
+            
+            <!-- General Public Fields -->
+            <div id="general-fields" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label">Tujuan Ikut Ujian</label>
+                    <div class="radio-group">
+                        <input type="radio" id="purpose-iq" name="purpose-general" value="Tes IQ" class="radio-option">
+                        <label for="purpose-iq" class="radio-label">Tes IQ</label>
+                        
+                        <input type="radio" id="purpose-cpns" name="purpose-general" value="Ujian CPNS/P3K" class="radio-option">
+                        <label for="purpose-cpns" class="radio-label">Ujian CPNS/P3K</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <p>Untuk ujian umum, silakan kunjungi link berikut:</p>
+                    <a href="https://pergunu.github.io/ujian-umum/" class="btn btn-info" target="_blank">Ujian Umum</a>
                 </div>
             </div>
-
-            <button id="start-exam" disabled>Mulai Ujian Sekarang</button>
+            
+            <!-- Grade Selection (Will be shown based on school level) -->
+            <div id="grade-selection" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label">Kelas</label>
+                    <div class="radio-group" id="grade-options">
+                        <!-- Options will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Subject Selection -->
+            <div id="subject-selection" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label">Pilih Jenis Ujian</label>
+                    <div class="radio-group">
+                        <input type="radio" id="subject-religion" name="subject" value="AGAMA" class="radio-option">
+                        <label for="subject-religion" class="radio-label">AGAMA</label>
+                        
+                        <input type="radio" id="subject-civics" name="subject" value="PPKN" class="radio-option">
+                        <label for="subject-civics" class="radio-label">PPKN</label>
+                        
+                        <input type="radio" id="subject-history" name="subject" value="SEJARAH" class="radio-option">
+                        <label for="subject-history" class="radio-label">SEJARAH</label>
+                        
+                        <input type="radio" id="subject-science" name="subject" value="IPA" class="radio-option">
+                        <label for="subject-science" class="radio-label">IPA</label>
+                        
+                        <input type="radio" id="subject-social" name="subject" value="IPS" class="radio-option">
+                        <label for="subject-social" class="radio-label">IPS</label>
+                        
+                        <input type="radio" id="subject-math" name="subject" value="MATEMATIKA" class="radio-option">
+                        <label for="subject-math" class="radio-label">MATEMATIKA</label>
+                        
+                        <input type="radio" id="subject-indonesian" name="subject" value="BAHASA INDONESIA" class="radio-option">
+                        <label for="subject-indonesian" class="radio-label">BAHASA INDONESIA</label>
+                        
+                        <input type="radio" id="subject-english" name="subject" value="BAHASA INGGRIS" class="radio-option">
+                        <label for="subject-english" class="radio-label">BAHASA INGGRIS</label>
+                        
+                        <input type="radio" id="subject-extra" name="subject" value="MATERI EXTRA" class="radio-option">
+                        <label for="subject-extra" class="radio-label">MATERI EXTRA</label>
+                        
+                        <input type="radio" id="subject-special" name="subject" value="MATERI KHUSUS" class="radio-option">
+                        <label for="subject-special" class="radio-label">MATERI KHUSUS</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin Information -->
+            <div class="form-group" id="admin-info" style="margin-top: 30px;">
+                <p>Informasi berkala dari admin:</p>
+                <div style="padding: 15px; background: rgba(0, 0, 0, 0.1); border-radius: 8px;">
+                    <p id="admin-message">Tidak ada informasi terbaru saat ini.</p>
+                </div>
+            </div>
+            
+            <button id="save-participant-btn" class="btn" disabled>Simpan & Ikut Ujian</button>
+        </div>
+        
+        <!-- Exam Screen (Hidden Initially) -->
+        <div id="exam-screen" class="card" style="display: none;">
+            <div class="timer" id="exam-timer">02:00:00</div>
+            
+            <div class="question-container">
+                <div class="question" id="question-text">Memuat soal...</div>
+                
+                <div class="options" id="options-container">
+                    <!-- Options will be populated by JavaScript -->
+                </div>
+                
+                <div class="explanation" id="explanation-text">
+                    <!-- Explanation will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="exam-controls">
+                <button id="finish-exam-btn" class="btn btn-danger">Selesaikan Ujian Sekarang</button>
+                <button id="skip-question-btn" class="btn btn-warning">Lewati Soal</button>
+                <button id="unanswered-btn" class="btn btn-info">Soal Belum Dijawab</button>
+            </div>
+        </div>
+        
+        <!-- Results Screen (Hidden Initially) -->
+        <div id="results-screen" class="card" style="display: none;">
+            <h2>Hasil Ujian</h2>
+            
+            <div class="results-summary">
+                <p>Nama: <span id="result-name"></span></p>
+                <p>Status: <span id="result-status"></span></p>
+                <p>Tingkat: <span id="result-level"></span></p>
+                <p>Kelas: <span id="result-grade"></span></p>
+                <p>Mata Ujian: <span id="result-subject"></span></p>
+                <p>Jumlah Soal: <span id="total-questions"></span></p>
+                <p>Jawaban Benar: <span id="correct-answers"></span></p>
+                <p>Jawaban Salah: <span id="wrong-answers"></span></p>
+                <p>Tidak Dijawab: <span id="unanswered-questions"></span></p>
+                <p>Nilai: <span id="exam-score"></span></p>
+            </div>
+            
+            <div class="certificate-container" id="certificate-container" style="display: none;">
+                <!-- Certificate will be generated here -->
+            </div>
+            
+            <div class="result-actions">
+                <button id="print-certificate-btn" class="btn btn-success">Cetak Sertifikat</button>
+                <button id="retake-exam-btn" class="btn btn-info">Ulangi Ujian</button>
+            </div>
         </div>
     </div>
-
-    <!-- Halaman Ujian -->
-    <div id="exam-page" class="hidden">
-        <div class="exam-header">
-            <div class="timer-container">
-                <span id="timer">120:00</span>
-            </div>
-            <div class="exam-info">
-                <span id="current-question">1</span>/<span id="total-questions">10</span>
-            </div>
-        </div>
-
-        <div class="question-container">
-            <div class="question-text">
-                <!-- Pertanyaan akan diisi oleh JavaScript -->
-            </div>
-            <div class="options-container">
-                <!-- Opsi jawaban akan diisi oleh JavaScript -->
-            </div>
-        </div>
-
-        <div class="exam-footer">
-            <button id="finish-exam">Selesaikan Ujian Sekarang</button>
-            <button id="skip-question">Lewati Soal</button>
-            <button id="unanswered-questions">Soal Belum Dijawab</button>
-        </div>
-
-        <div id="time-warning" class="hidden">
-            <p>Perhatian! Ujian akan berakhir dalam waktu 10 menit. Mohon pastikan semua jawaban telah diselesaikan dan diperiksa sebelum waktu habis. Terima kasih atas partisipasi Anda.</p>
-        </div>
-
-        <audio id="correct-sound" src="https://voca.ro/1emZhDVU89XS"></audio>
-        <audio id="wrong-sound" src="https://voca.ro/17HW0ShxqM9B"></audio>
-    </div>
-
-    <!-- Hasil Ujian -->
-    <div id="result-page" class="hidden">
-        <div class="result-container">
-            <h2>Hasil Ujian Anda</h2>
-            <div class="result-details">
-                <div class="result-item">
-                    <span>Jumlah Soal:</span>
-                    <span id="total-answered">0</span>
-                </div>
-                <div class="result-item">
-                    <span>Jawaban Benar:</span>
-                    <span id="correct-answers">0</span>
-                </div>
-                <div class="result-item">
-                    <span>Jawaban Salah:</span>
-                    <span id="wrong-answers">0</span>
-                </div>
-                <div class="result-item score">
-                    <span>Nilai:</span>
-                    <span id="final-score">0</span>
-                </div>
-            </div>
-            <div class="motivation-text">
-                <p id="motivation-message">Pesan motivasi akan muncul di sini berdasarkan nilai Anda.</p>
-            </div>
-            <div class="result-buttons">
-                <button id="view-certificate">Lihat Sertifikat</button>
-                <button id="retake-exam">Ulangi Ujian</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Sertifikat -->
-    <div id="certificate-page" class="hidden">
-        <div class="certificate-container">
-            <img src="https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/certificate.png" alt="Background Sertifikat" class="certificate-bg">
-            <div class="certificate-content">
-                <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
-                <p class="certificate-given">Diberikan Kepada:</p>
-                <h2 class="certificate-name" id="cert-name">NAMA PESERTA</h2>
-                <p class="certificate-achievement">Atas Partisipasi & Pencapaian Luar Biasa dalam <strong>Ujian Pergunu Situbondo</strong></p>
-                <p class="certificate-description">Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, sertifikat ini diberikan sebagai motivasi untuk terus berkembang.</p>
-                <div class="certificate-score">
-                    <span>Nilai:</span>
-                    <span id="cert-score">100</span>
-                </div>
-                <p class="certificate-motivation" id="cert-motivation">Pesan motivasi khusus untuk Anda</p>
-                <div class="certificate-footer">
-                    <p class="certificate-date">Ditetapkan di: Situbondo, <span id="cert-date">16 Mei 2025</span></p>
-                    <p class="certificate-signature">Ketua Pergunu Situbondo</p>
-                    <p class="certificate-chairman">Moh. Nuril Hudha, S.Pd., M.Si.</p>
-                    <img src="https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/BARCODE.png" alt="Barcode" class="certificate-barcode">
-                </div>
-                <p class="certificate-code" id="cert-code">USWATUN HASANAH/PELAJAR/SMA/IPS/16052025/T9B3-S6M3/PERGUNU-STB</p>
-            </div>
-        </div>
-        <div class="certificate-buttons">
-            <button id="print-certificate"><i class="fas fa-print"></i> Cetak Sertifikat</button>
-            <button id="back-to-result"><i class="fas fa-arrow-left"></i> Kembali ke Hasil</button>
-        </div>
-    </div>
-
-    <!-- Tombol Mengambang -->
+    
+    <!-- Floating Buttons -->
     <div class="floating-buttons">
-        <button id="share-btn" class="floating-btn"><i class="fas fa-share-alt"></i></button>
-        <button id="whatsapp-btn" class="floating-btn"><i class="fab fa-whatsapp"></i></button>
-        <button id="bank-soal-btn" class="floating-btn"><i class="fas fa-book"></i></button>
-        <button id="admin-btn" class="floating-btn"><i class="fas fa-cog"></i></button>
+        <button class="floating-btn" id="share-btn">
+            <i class="fas fa-share-alt"></i>
+            <span class="tooltip">Bagikan</span>
+        </button>
+        
+        <button class="floating-btn" id="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+            <span class="tooltip">Chat Admin</span>
+        </button>
+        
+        <button class="floating-btn" id="question-bank-btn">
+            <i class="fas fa-book"></i>
+            <span class="tooltip">Bank Soal</span>
+        </button>
+        
+        <button class="floating-btn" id="admin-panel-btn">
+            <i class="fas fa-cog"></i>
+            <span class="tooltip">Admin Panel</span>
+        </button>
     </div>
-
-    <!-- Modal Bank Soal -->
-    <div id="bank-soal-modal" class="modal hidden">
+    
+    <!-- Modals -->
+    <!-- Share Modal -->
+    <div class="modal" id="share-modal">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Bank Soal</h2>
+            <div class="modal-header">
+                <h3 class="modal-title">Bagikan Ujian Online</h3>
+                <button class="modal-close" id="close-share-modal">&times;</button>
+            </div>
             <div class="modal-body">
-                <div class="access-form">
-                    <input type="password" id="bank-code" placeholder="Masukkan Kode Bank Soal">
-                    <button id="access-bank">Akses</button>
-                </div>
-                <div id="bank-content" class="hidden">
-                    <div class="bank-tabs">
-                        <button class="tab-btn active" data-tab="manual">Input Manual</button>
-                        <button class="tab-btn" data-tab="ai">Input AI</button>
-                    </div>
-                    
-                    <div id="manual-tab" class="tab-content active">
-                        <div class="form-group">
-                            <label for="subject-category">Kategori Ujian:</label>
-                            <select id="subject-category">
-                                <option value="agama">AGAMA</option>
-                                <option value="ppkn">PPKN</option>
-                                <option value="sejarah">SEJARAH</option>
-                                <option value="ipa">IPA</option>
-                                <option value="ips">IPS</option>
-                                <option value="matematika">MATEMATIKA</option>
-                                <option value="indonesia">BAHASA INDONESIA</option>
-                                <option value="inggris">BAHASA INGGRIS</option>
-                                <option value="extra">MATERI EXTRA</option>
-                                <option value="khusus">MATERI KHUSUS</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="question-text">Pertanyaan:</label>
-                            <textarea id="question-text" rows="3" placeholder="Masukkan pertanyaan"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Opsi Jawaban:</label>
-                            <input type="text" class="option-input" placeholder="Opsi A" data-option="a">
-                            <input type="text" class="option-input" placeholder="Opsi B" data-option="b">
-                            <input type="text" class="option-input" placeholder="Opsi C" data-option="c">
-                            <input type="text" class="option-input" placeholder="Opsi D" data-option="d">
-                            <input type="text" class="option-input" placeholder="Opsi E" data-option="e">
-                        </div>
-                        <div class="form-group">
-                            <label for="correct-answer">Jawaban Benar:</label>
-                            <select id="correct-answer">
-                                <option value="a">A</option>
-                                <option value="b">B</option>
-                                <option value="c">C</option>
-                                <option value="d">D</option>
-                                <option value="e">E</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="explanation">Penjelasan Jawaban:</label>
-                            <textarea id="explanation" rows="3" placeholder="Masukkan penjelasan jawaban"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="question-image">Gambar (Opsional):</label>
-                            <input type="file" id="question-image" accept="image/*">
-                        </div>
-                        <button id="save-question">Simpan Soal</button>
-                    </div>
-                    
-                    <div id="ai-tab" class="tab-content">
-                        <div class="form-group">
-                            <label for="ai-prompt">Prompt AI:</label>
-                            <textarea id="ai-prompt" rows="5" placeholder="Masukkan prompt untuk menghasilkan soal ujian, contoh: 'Buatkan 5 soal pilihan ganda tentang sejarah kemerdekaan Indonesia dengan tingkat kesulitan SMP'"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="api-key">API Key:</label>
-                            <input type="password" id="api-key" placeholder="Masukkan API Key Anda">
-                            <!-- TEMPAT UNTUK MEMASUKKAN API KEY -->
-                        </div>
-                        <button id="generate-questions">Generate Soal</button>
-                        <div id="ai-results" class="hidden">
-                            <!-- Hasil generasi AI akan muncul di sini -->
-                        </div>
-                    </div>
-                    
-                    <div class="question-list">
-                        <h3>Daftar Soal</h3>
-                        <div id="questions-container">
-                            <!-- Daftar soal akan muncul di sini -->
-                        </div>
-                    </div>
+                <p>Bagikan link ujian online ini melalui:</p>
+                <div class="share-options">
+                    <button class="btn" id="share-facebook"><i class="fab fa-facebook-f"></i> Facebook</button>
+                    <button class="btn" id="share-twitter"><i class="fab fa-twitter"></i> Twitter</button>
+                    <button class="btn" id="share-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                    <button class="btn" id="share-telegram"><i class="fab fa-telegram-plane"></i> Telegram</button>
+                    <button class="btn" id="copy-link"><i class="fas fa-copy"></i> Salin Link</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Modal Admin -->
-    <div id="admin-modal" class="modal hidden">
+    
+    <!-- Question Bank Modal -->
+    <div class="modal" id="question-bank-modal">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Kontrol Panel Admin</h2>
+            <div class="modal-header">
+                <h3 class="modal-title">Bank Soal</h3>
+                <button class="modal-close" id="close-question-bank-modal">&times;</button>
+            </div>
             <div class="modal-body">
-                <div class="access-form">
-                    <input type="password" id="admin-code" placeholder="Masukkan Kode Admin">
-                    <button id="access-admin">Akses</button>
+                <div class="form-group">
+                    <label for="question-bank-code" class="form-label">Kode Bank Soal</label>
+                    <input type="password" id="question-bank-code" class="form-control" placeholder="Masukkan kode bank soal">
+                    <button id="submit-question-bank-code" class="btn">Masuk</button>
                 </div>
-                <div id="admin-content" class="hidden">
-                    <div class="admin-tabs">
-                        <button class="tab-btn active" data-tab="kode">Pengaturan Kode</button>
-                        <button class="tab-btn" data-tab="ujian">Pengaturan Ujian</button>
-                        <button class="tab-btn" data-tab="teks">Pengaturan Teks</button>
-                        <button class="tab-btn" data-tab="peserta">Data Peserta</button>
-                    </div>
-                    
-                    <div id="kode-tab" class="tab-content active">
-                        <div class="form-group">
-                            <h3>Kode Login</h3>
-                            <input type="password" id="new-login-code" placeholder="Kode Login Baru">
-                            <input type="password" id="current-login-code" placeholder="Kode Login Lama" value="12345">
-                            <button id="save-login-code">Simpan Kode</button>
-                        </div>
-                        <div class="form-group">
-                            <h3>Kode Bank Soal</h3>
-                            <input type="password" id="new-bank-code" placeholder="Kode Bank Soal Baru">
-                            <input type="password" id="current-bank-code" placeholder="Kode Bank Soal Lama" value="OPENLOCK-1926">
-                            <button id="save-bank-code">Simpan Kode</button>
-                        </div>
-                        <div class="form-group">
-                            <h3>Kode Admin</h3>
-                            <input type="password" id="new-admin-code" placeholder="Kode Admin Baru">
-                            <input type="password" id="current-admin-code" placeholder="Kode Admin Lama" value="65614222">
-                            <button id="save-admin-code">Simpan Kode Admin</button>
-                        </div>
-                    </div>
-                    
-                    <div id="ujian-tab" class="tab-content">
-                        <div class="form-group">
-                            <h3>Enable/Disable Ujian</h3>
-                            <div class="toggle-container">
-                                <!-- Daftar toggle untuk setiap jenis ujian -->
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <h3>Pengaturan Timer</h3>
-                            <input type="number" id="exam-time" min="1" max="300" value="120">
-                            <span>menit</span>
-                            <button id="save-exam-time">Simpan</button>
-                        </div>
-                        <div class="form-group">
-                            <h3>Pengaturan Soal</h3>
-                            <label>Jumlah Soal:</label>
-                            <select id="question-count">
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="15">15</option>
-                                <option value="20">20</option>
-                                <option value="25">25</option>
-                                <option value="30">30</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                                <option value="150">150</option>
-                            </select>
-                            <button id="save-question-count">Simpan</button>
-                        </div>
-                        <div class="form-group">
-                            <h3>Acak Urutan Soal</h3>
-                            <button id="randomize-questions">Acak Sekarang</button>
-                        </div>
-                        <div class="form-group">
-                            <h3>Point Jawaban Benar</h3>
-                            <input type="number" id="point-value" min="1" max="10" value="1">
-                            <button id="save-point-value">Simpan</button>
-                        </div>
-                    </div>
-                    
-                    <div id="teks-tab" class="tab-content">
-                        <div class="form-group">
-                            <h3>Teks Pembuka</h3>
-                            <textarea id="greeting-text-edit" rows="3"></textarea>
-                            <button id="save-greeting-text">Simpan</button>
-                        </div>
-                        <div class="form-group">
-                            <h3>Nama Ketua</h3>
-                            <input type="text" id="chairman-name" value="Moh. Nuril Hudha, S.Pd., M.Si.">
-                            <button id="save-chairman-name">Simpan</button>
-                        </div>
-                        <div class="form-group">
-                            <h3>Teks Informasi Berkala</h3>
-                            <textarea id="info-text-edit" rows="3"></textarea>
-                            <button id="save-info-text">Simpan</button>
-                        </div>
-                        <div class="form-group">
-                            <h3>Pesan Motivasi</h3>
-                            <textarea id="motivation-text-edit" rows="5" placeholder="Masukkan pesan motivasi untuk berbagai tingkat nilai, pisahkan dengan baris baru"></textarea>
-                            <button id="save-motivation-text">Simpan</button>
-                        </div>
-                    </div>
-                    
-                    <div id="peserta-tab" class="tab-content">
-                        <div class="form-group">
-                            <h3>Data Peserta Ujian</h3>
-                            <div class="search-container">
-                                <input type="text" id="search-participant" placeholder="Cari peserta...">
-                                <button id="export-data">Export Data</button>
-                            </div>
-                            <div class="participant-list">
-                                <table id="participants-table">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Status</th>
-                                            <th>Tingkat</th>
-                                            <th>Ujian</th>
-                                            <th>Nilai</th>
-                                            <th>Tanggal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Data peserta akan diisi oleh JavaScript -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                
+                <div id="question-bank-content" style="display: none;">
+                    <!-- Question bank content will be loaded here -->
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Modal Share -->
-    <div id="share-modal" class="modal hidden">
+    
+    <!-- Admin Panel Modal -->
+    <div class="modal" id="admin-panel-modal">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Bagikan Website</h2>
+            <div class="modal-header">
+                <h3 class="modal-title">Kontrol Panel Admin</h3>
+                <button class="modal-close" id="close-admin-panel-modal">&times;</button>
+            </div>
             <div class="modal-body">
-                <div class="social-links">
-                    <!-- Link sosial media akan diisi oleh JavaScript -->
+                <div class="form-group">
+                    <label for="admin-panel-code" class="form-label">Kode Admin</label>
+                    <input type="password" id="admin-panel-code" class="form-control" placeholder="Masukkan kode admin">
+                    <button id="submit-admin-panel-code" class="btn">Masuk</button>
                 </div>
-                <div class="add-link-form">
-                    <input type="text" id="new-link-name" placeholder="Nama Platform">
-                    <input type="url" id="new-link-url" placeholder="URL">
-                    <button id="add-link">Tambah Link</button>
+                
+                <div id="admin-panel-content" style="display: none;">
+                    <!-- Admin panel content will be loaded here -->
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="time-warning" style="display: none;">
+        Perhatian! Ujian akan berakhir dalam waktu 10 menit. Mohon pastikan semua jawaban telah diselesaikan dan diperiksa sebelum waktu habis. Terima kasih atas partisipasi Anda.
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // JavaScript akan ditempatkan di file terpisah
+        // Global variables
+        let currentScreen = 'welcome';
+        let participantData = {};
+        let examData = {};
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let answeredQuestions = {};
+        let examTimer;
+        let examTimeLeft = 120 * 60; // 120 minutes in seconds
+        let audioOpening = new Audio('https://voca.ro/1a8eWbggFzfB');
+        let audioCorrect = new Audio('https://voca.ro/1emZhDVU89XS');
+        let audioWrong = new Audio('https://voca.ro/17HW0ShxqM9B');
+        let audioApplause = new Audio('https://voca.ro/13NRsLENyQRIs');
+        
+        // Default codes (should be changed in production)
+        const DEFAULT_LOGIN_CODE = '12345';
+        const DEFAULT_QUESTION_BANK_CODE = 'OPENLOCK-1926';
+        const DEFAULT_ADMIN_PANEL_CODE = '65614222';
+        
+        // Sample questions for demonstration
+        const SAMPLE_QUESTIONS = {
+            'AGAMA': [
+                {
+                    question: "Apa nama kitab suci agama Islam?",
+                    options: ["A. Alkitab", "B. Tripitaka", "C. Al-Quran", "D. Weda", "E. Talmud"],
+                    correctAnswer: 2, // Index of correct answer (0-based)
+                    explanation: "Kitab suci agama Islam adalah Al-Quran yang diturunkan kepada Nabi Muhammad SAW."
+                }
+            ],
+            'PPKN': [
+                {
+                    question: "Pancasila sebagai dasar negara tercantum dalam?",
+                    options: ["A. Pembukaan UUD 1945", "B. Batang Tubuh UUD 1945", "C. Penjelasan UUD 1945", "D. Keputusan Presiden", "E. Tap MPR"],
+                    correctAnswer: 0,
+                    explanation: "Pancasila sebagai dasar negara tercantum dalam Pembukaan UUD 1945 alinea keempat."
+                }
+            ],
+            'SEJARAH': [
+                {
+                    question: "Proklamasi Kemerdekaan Indonesia dilaksanakan pada tanggal?",
+                    options: ["A. 16 Agustus 1945", "B. 17 Agustus 1945", "C. 18 Agustus 1945", "D. 19 Agustus 1945", "E. 20 Agustus 1945"],
+                    correctAnswer: 1,
+                    explanation: "Proklamasi Kemerdekaan Indonesia dibacakan oleh Soekarno-Hatta pada 17 Agustus 1945."
+                }
+            ],
+            'IPA': [
+                {
+                    question: "Planet terdekat dari matahari adalah?",
+                    options: ["A. Venus", "B. Bumi", "C. Mars", "D. Merkurius", "E. Jupiter"],
+                    correctAnswer: 3,
+                    explanation: "Merkurius adalah planet terdekat dari matahari dalam tata surya kita."
+                }
+            ],
+            'IPS': [
+                {
+                    question: "Ibu kota negara Jepang adalah?",
+                    options: ["A. Osaka", "B. Kyoto", "C. Hiroshima", "D. Tokyo", "E. Nagasaki"],
+                    correctAnswer: 3,
+                    explanation: "Tokyo adalah ibu kota Jepang sekaligus kota terbesar di Jepang."
+                }
+            ],
+            'MATEMATIKA': [
+                {
+                    question: "Hasil dari 7 × 8 adalah?",
+                    options: ["A. 48", "B. 54", "C. 56", "D. 64", "E. 72"],
+                    correctAnswer: 2,
+                    explanation: "Perkalian 7 × 8 menghasilkan 56."
+                }
+            ],
+            'BAHASA INDONESIA': [
+                {
+                    question: "Kata 'membaca' termasuk dalam jenis kata?",
+                    options: ["A. Kata benda", "B. Kata sifat", "C. Kata kerja", "D. Kata keterangan", "E. Kata ganti"],
+                    correctAnswer: 2,
+                    explanation: "'Membaca' adalah kata kerja karena menunjukkan suatu aktivitas."
+                }
+            ],
+            'BAHASA INGGRIS': [
+                {
+                    question: "What is the English word for 'buku'?",
+                    options: ["A. Pen", "B. Book", "C. Table", "D. Chair", "E. Door"],
+                    correctAnswer: 1,
+                    explanation: "The English translation for 'buku' is 'book'."
+                }
+            ],
+            'MATERI EXTRA': [
+                {
+                    question: "Siapa pencipta lagu Indonesia Raya?",
+                    options: ["A. Ismail Marzuki", "B. W.R. Supratman", "C. C. Simanjuntak", "D. Kusbini", "E. Ibu Sud"],
+                    correctAnswer: 1,
+                    explanation: "Wage Rudolf Supratman adalah pencipta lagu Indonesia Raya."
+                }
+            ],
+            'MATERI KHUSUS': [
+                {
+                    question: "Siapa ketua PERGUNU Situbondo saat ini?",
+                    options: ["A. Moh. Nuril Hudha, S.Pd., M.Si.", "B. Dr. H. Ahmad Fauzi", "C. H. M. Yusuf", "D. Drs. H. Abdul Malik", "E. H. M. Amin"],
+                    correctAnswer: 0,
+                    explanation: "Ketua PERGUNU Situbondo saat ini adalah Moh. Nuril Hudha, S.Pd., M.Si."
+                }
+            ]
+        };
+        
+        // Motivational messages based on score
+        const MOTIVATIONAL_MESSAGES = {
+            '90-100': 'Sempurna! Anda sangat luar biasa dalam menguasai materi ini. Pertahankan prestasi ini.',
+            '80-89': 'Hasil yang sangat baik! Anda telah menunjukkan pemahaman yang mendalam tentang materi.',
+            '70-79': 'Kerja bagus! Anda memiliki pemahaman yang baik tentang materi ini.',
+            '60-69': 'Hasil yang cukup baik. Tingkatkan lagi pemahaman Anda untuk hasil yang lebih baik.',
+            '50-59': 'Anda sudah memahami dasar-dasarnya. Terus berlatih untuk meningkatkan pemahaman.',
+            '0-49': 'Jangan menyerah! Gunakan hasil ini sebagai motivasi untuk belajar lebih giat lagi.'
+        };
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize particles.js
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+            
+            // Play opening audio
+            audioOpening.play().catch(e => console.log("Autoplay prevented:", e));
+            
+            // Event listeners
+            document.getElementById('login-btn').addEventListener('click', handleLogin);
+            document.getElementById('agree-terms').addEventListener('change', toggleContinueButton);
+            document.getElementById('continue-btn').addEventListener('click', showParticipantForm);
+            
+            // Status radio buttons
+            document.querySelectorAll('input[name="status"]').forEach(radio => {
+                radio.addEventListener('change', toggleParticipantFields);
+            });
+            
+            // School level radio buttons
+            document.querySelectorAll('input[name="level"]').forEach(radio => {
+                radio.addEventListener('change', showGradeSelection);
+            });
+            
+            document.getElementById('save-participant-btn').addEventListener('click', startExam);
+            document.getElementById('finish-exam-btn').addEventListener('click', finishExam);
+            document.getElementById('skip-question-btn').addEventListener('click', skipQuestion);
+            document.getElementById('unanswered-btn').addEventListener('click', showUnansweredQuestions);
+            document.getElementById('print-certificate-btn').addEventListener('click', printCertificate);
+            document.getElementById('retake-exam-btn').addEventListener('click', retakeExam);
+            
+            // Floating buttons
+            document.getElementById('share-btn').addEventListener('click', showShareModal);
+            document.getElementById('whatsapp-btn').addEventListener('click', contactAdmin);
+            document.getElementById('question-bank-btn').addEventListener('click', showQuestionBankModal);
+            document.getElementById('admin-panel-btn').addEventListener('click', showAdminPanelModal);
+            
+            // Modal close buttons
+            document.getElementById('close-share-modal').addEventListener('click', hideShareModal);
+            document.getElementById('close-question-bank-modal').addEventListener('click', hideQuestionBankModal);
+            document.getElementById('close-admin-panel-modal').addEventListener('click', hideAdminPanelModal);
+            
+            // Modal submit buttons
+            document.getElementById('submit-question-bank-code').addEventListener('click', submitQuestionBankCode);
+            document.getElementById('submit-admin-panel-code').addEventListener('click', submitAdminPanelCode);
+            
+            // Check form validity when fields change
+            document.getElementById('fullname').addEventListener('input', checkParticipantFormValidity);
+            document.getElementById('school-name').addEventListener('input', checkParticipantFormValidity);
+            document.getElementById('student-id').addEventListener('input', checkParticipantFormValidity);
+            document.querySelectorAll('input[name="purpose"]').forEach(radio => {
+                radio.addEventListener('change', checkParticipantFormValidity);
+            });
+            document.querySelectorAll('input[name="level"]').forEach(radio => {
+                radio.addEventListener('change', checkParticipantFormValidity);
+            });
+            document.querySelectorAll('input[name="grade"]').forEach(radio => {
+                radio.addEventListener('change', checkParticipantFormValidity);
+            });
+            document.querySelectorAll('input[name="subject"]').forEach(radio => {
+                radio.addEventListener('change', checkParticipantFormValidity);
+            });
+        });
+        
+        // Functions
+        function handleLogin() {
+            const loginCode = document.getElementById('login-code').value;
+            
+            if (loginCode === DEFAULT_LOGIN_CODE) {
+                // Hide welcome screen with slide out animation
+                document.getElementById('welcome-screen').classList.add('slide-out');
+                
+                // Show terms screen after animation completes
+                setTimeout(() => {
+                    document.getElementById('welcome-screen').style.display = 'none';
+                    document.getElementById('terms-screen').style.display = 'block';
+                    document.getElementById('terms-screen').classList.add('slide-in');
+                    currentScreen = 'terms';
+                }, 500);
+            } else {
+                alert('Kode login salah. Silakan coba lagi.');
+            }
+        }
+        
+        function toggleContinueButton() {
+            const agreeCheckbox = document.getElementById('agree-terms');
+            document.getElementById('continue-btn').disabled = !agreeCheckbox.checked;
+        }
+        
+        function showParticipantForm() {
+            // Hide terms screen with slide out animation
+            document.getElementById('terms-screen').classList.add('slide-out');
+            
+            // Show participant form after animation completes
+            setTimeout(() => {
+                document.getElementById('terms-screen').style.display = 'none';
+                document.getElementById('participant-form').style.display = 'block';
+                document.getElementById('participant-form').classList.add('slide-in');
+                currentScreen = 'participant';
+            }, 500);
+        }
+        
+        function toggleParticipantFields() {
+            const status = document.querySelector('input[name="status"]:checked').value;
+            
+            if (status === 'pelajar') {
+                document.getElementById('student-fields').style.display = 'block';
+                document.getElementById('general-fields').style.display = 'none';
+            } else {
+                document.getElementById('student-fields').style.display = 'none';
+                document.getElementById('general-fields').style.display = 'block';
+                document.getElementById('grade-selection').style.display = 'none';
+                document.getElementById('subject-selection').style.display = 'none';
+            }
+            
+            checkParticipantFormValidity();
+        }
+        
+        function showGradeSelection() {
+            const level = document.querySelector('input[name="level"]:checked').value;
+            const gradeOptions = document.getElementById('grade-options');
+            
+            // Clear previous options
+            gradeOptions.innerHTML = '';
+            
+            // Add options based on level
+            if (level === 'SD') {
+                addGradeOption('grade-4', 'Kelas IV', '4');
+                addGradeOption('grade-5', 'Kelas V', '5');
+                addGradeOption('grade-6', 'Kelas VI', '6');
+            } else if (level === 'SMP') {
+                addGradeOption('grade-7', 'Kelas VII', '7');
+                addGradeOption('grade-8', 'Kelas VIII', '8');
+                addGradeOption('grade-9', 'Kelas IX', '9');
+            } else if (level === 'SMA/SMK') {
+                addGradeOption('grade-10', 'Kelas X', '10');
+                addGradeOption('grade-11', 'Kelas XI', '11');
+                addGradeOption('grade-12', 'Kelas XII', '12');
+            }
+            
+            document.getElementById('grade-selection').style.display = 'block';
+            checkParticipantFormValidity();
+        }
+        
+        function addGradeOption(id, label, value) {
+            const container = document.getElementById('grade-options');
+            
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.id = id;
+            radio.name = 'grade';
+            radio.value = value;
+            radio.className = 'radio-option';
+            
+            const radioLabel = document.createElement('label');
+            radioLabel.htmlFor = id;
+            radioLabel.className = 'radio-label';
+            radioLabel.textContent = label;
+            
+            radio.addEventListener('change', function() {
+                document.getElementById('subject-selection').style.display = 'block';
+                checkParticipantFormValidity();
+            });
+            
+            container.appendChild(radio);
+            container.appendChild(radioLabel);
+        }
+        
+        function checkParticipantFormValidity() {
+            const status = document.querySelector('input[name="status"]:checked').value;
+            let isValid = true;
+            
+            // Check common fields
+            if (!document.getElementById('fullname').value.trim()) {
+                isValid = false;
+            }
+            
+            // Check fields based on status
+            if (status === 'pelajar') {
+                if (!document.getElementById('school-name').value.trim()) {
+                    isValid = false;
+                }
+                
+                if (!document.getElementById('student-id').value.trim()) {
+                    isValid = false;
+                }
+                
+                if (!document.querySelector('input[name="purpose"]:checked')) {
+                    isValid = false;
+                }
+                
+                if (!document.querySelector('input[name="level"]:checked')) {
+                    isValid = false;
+                }
+                
+                if (!document.querySelector('input[name="grade"]:checked')) {
+                    isValid = false;
+                }
+                
+                if (!document.querySelector('input[name="subject"]:checked')) {
+                    isValid = false;
+                }
+            } else {
+                if (!document.querySelector('input[name="purpose-general"]:checked')) {
+                    isValid = false;
+                }
+            }
+            
+            document.getElementById('save-participant-btn').disabled = !isValid;
+        }
+        
+        function startExam() {
+            // Collect participant data
+            participantData = {
+                fullname: document.getElementById('fullname').value.trim(),
+                status: document.querySelector('input[name="status"]:checked').value,
+                purpose: document.querySelector('input[name="purpose"]:checked')?.value || 
+                        document.querySelector('input[name="purpose-general"]:checked')?.value,
+                level: document.querySelector('input[name="level"]:checked')?.value || null,
+                grade: document.querySelector('input[name="grade"]:checked')?.value || null,
+                subject: document.querySelector('input[name="subject"]:checked')?.value || null,
+                school: document.getElementById('school-name')?.value.trim() || null,
+                studentId: document.getElementById('student-id')?.value.trim() || null
+            };
+            
+            // For general public, redirect if needed
+            if (participantData.status === 'umum' && participantData.purpose === 'Ujian CPNS/P3K') {
+                window.location.href = 'https://pergunu.github.io/ujian-umum/';
+                return;
+            }
+            
+            // Load questions based on subject
+            if (participantData.subject && SAMPLE_QUESTIONS[participantData.subject]) {
+                questions = SAMPLE_QUESTIONS[participantData.subject];
+            } else {
+                // Default questions if subject not found
+                questions = SAMPLE_QUESTIONS['AGAMA'];
+            }
+            
+            // Initialize exam data
+            examData = {
+                startTime: new Date(),
+                answered: 0,
+                correct: 0,
+                wrong: 0,
+                unanswered: questions.length,
+                answers: Array(questions.length).fill(null)
+            };
+            
+            // Hide participant form with slide out animation
+            document.getElementById('participant-form').classList.add('slide-out');
+            
+            // Show exam screen after animation completes
+            setTimeout(() => {
+                document.getElementById('participant-form').style.display = 'none';
+                document.getElementById('exam-screen').style.display = 'block';
+                document.getElementById('exam-screen').classList.add('slide-in');
+                currentScreen = 'exam';
+                
+                // Start timer
+                startTimer();
+                
+                // Load first question
+                loadQuestion(0);
+            }, 500);
+        }
+        
+        function startTimer() {
+            // Update timer display immediately
+            updateTimerDisplay();
+            
+            // Start timer interval
+            examTimer = setInterval(function() {
+                examTimeLeft--;
+                updateTimerDisplay();
+                
+                // Check if time is up
+                if (examTimeLeft <= 0) {
+                    clearInterval(examTimer);
+                    finishExam();
+                }
+                
+                // Show warning when 10 minutes left
+                if (examTimeLeft === 600) { // 10 minutes = 600 seconds
+                    showTimeWarning();
+                }
+                
+                // Hide warning when 1 minute left
+                if (examTimeLeft === 60) {
+                    hideTimeWarning();
+                }
+            }, 1000);
+        }
+        
+        function updateTimerDisplay() {
+            const hours = Math.floor(examTimeLeft / 3600);
+            const minutes = Math.floor((examTimeLeft % 3600) / 60);
+            const seconds = examTimeLeft % 60;
+            
+            const timerElement = document.getElementById('exam-timer');
+            timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Change style based on remaining time
+            if (examTimeLeft <= 600) { // 10 minutes or less
+                timerElement.classList.add('timer-warning');
+                
+                if (examTimeLeft <= 60) { // 1 minute or less
+                    timerElement.classList.remove('timer-warning');
+                    timerElement.classList.add('timer-danger');
+                }
+            } else {
+                timerElement.classList.remove('timer-warning', 'timer-danger');
+            }
+        }
+        
+        function showTimeWarning() {
+            const notification = document.getElementById('time-warning');
+            notification.style.display = 'block';
+            
+            // Auto hide after 9 minutes (540 seconds)
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 540 * 1000);
+        }
+        
+        function hideTimeWarning() {
+            document.getElementById('time-warning').style.display = 'none';
+        }
+        
+        function loadQuestion(index) {
+            if (index < 0 || index >= questions.length) return;
+            
+            currentQuestionIndex = index;
+            const question = questions[index];
+            
+            // Update question text
+            document.getElementById('question-text').textContent = `Soal ${index + 1}: ${question.question}`;
+            
+            // Clear previous options
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            // Add new options
+            question.options.forEach((option, i) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                
+                // Check if this question was already answered
+                if (examData.answers[index] !== null) {
+                    if (examData.answers[index] === i) {
+                        if (i === question.correctAnswer) {
+                            optionElement.classList.add('correct');
+                        } else {
+                            optionElement.classList.add('incorrect');
+                        }
+                    } else if (i === question.correctAnswer) {
+                        optionElement.classList.add('correct');
+                    }
+                    
+                    // Show explanation if answered
+                    document.getElementById('explanation-text').style.display = 'block';
+                    document.getElementById('explanation-text').innerHTML = `<strong>Penjelasan:</strong> ${question.explanation}`;
+                } else {
+                    // Add click event for unanswered questions
+                    optionElement.addEventListener('click', function() {
+                        selectAnswer(index, i);
+                    });
+                }
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Hide explanation if question not answered
+            if (examData.answers[index] === null) {
+                document.getElementById('explanation-text').style.display = 'none';
+            }
+        }
+        
+        function selectAnswer(questionIndex, answerIndex) {
+            const question = questions[questionIndex];
+            
+            // Record answer
+            examData.answers[questionIndex] = answerIndex;
+            
+            // Update counters
+            examData.answered++;
+            examData.unanswered--;
+            
+            if (answerIndex === question.correctAnswer) {
+                examData.correct++;
+                audioCorrect.play().catch(e => console.log("Audio play prevented:", e));
+            } else {
+                examData.wrong++;
+                audioWrong.play().catch(e => console.log("Audio play prevented:", e));
+            }
+            
+            // Reload question to show result
+            loadQuestion(questionIndex);
+            
+            // Auto move to next question after delay if not last question
+            if (questionIndex < questions.length - 1) {
+                setTimeout(() => {
+                    loadQuestion(questionIndex + 1);
+                }, 2000);
+            }
+        }
+        
+        function skipQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                loadQuestion(currentQuestionIndex + 1);
+            }
+        }
+        
+        function showUnansweredQuestions() {
+            // Find first unanswered question
+            const unansweredIndex = examData.answers.findIndex(answer => answer === null);
+            
+            if (unansweredIndex !== -1) {
+                loadQuestion(unansweredIndex);
+            } else {
+                alert('Semua soal sudah dijawab.');
+            }
+        }
+        
+        function finishExam() {
+            clearInterval(examTimer);
+            
+            // Calculate unanswered questions
+            examData.unanswered = examData.answers.filter(answer => answer === null).length;
+            
+            // Hide exam screen with slide out animation
+            document.getElementById('exam-screen').classList.add('slide-out');
+            
+            // Show results screen after animation completes
+            setTimeout(() => {
+                document.getElementById('exam-screen').style.display = 'none';
+                document.getElementById('results-screen').style.display = 'block';
+                document.getElementById('results-screen').classList.add('slide-in');
+                currentScreen = 'results';
+                
+                // Display results
+                displayResults();
+                
+                // Generate certificate
+                generateCertificate();
+                
+                // Play applause sound
+                audioApplause.play().catch(e => console.log("Audio play prevented:", e));
+            }, 500);
+        }
+        
+        function displayResults() {
+            document.getElementById('result-name').textContent = participantData.fullname;
+            document.getElementById('result-status').textContent = participantData.status === 'pelajar' ? 'Pelajar' : 'Umum';
+            document.getElementById('result-level').textContent = participantData.level || '-';
+            document.getElementById('result-grade').textContent = participantData.grade ? `Kelas ${participantData.grade}` : '-';
+            document.getElementById('result-subject').textContent = participantData.subject || '-';
+            document.getElementById('total-questions').textContent = questions.length;
+            document.getElementById('correct-answers').textContent = examData.correct;
+            document.getElementById('wrong-answers').textContent = examData.wrong;
+            document.getElementById('unanswered-questions').textContent = examData.unanswered;
+            
+            // Calculate score (percentage)
+            const score = Math.round((examData.correct / questions.length) * 100);
+            document.getElementById('exam-score').textContent = `${score}%`;
+        }
+        
+        function generateCertificate() {
+            const certificateContainer = document.getElementById('certificate-container');
+            certificateContainer.innerHTML = '';
+            
+            // Calculate score
+            const score = Math.round((examData.correct / questions.length) * 100);
+            
+            // Get current date
+            const now = new Date();
+            const dateString = now.toLocaleDateString('id-ID', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            }).replace(/\//g, '');
+            
+            // Generate unique code
+            const uniqueCode = generateUniqueCode();
+            
+            // Get motivational message based on score
+            let motivation = '';
+            for (const range in MOTIVATIONAL_MESSAGES) {
+                const [min, max] = range.split('-').map(Number);
+                if (score >= min && score <= max) {
+                    motivation = MOTIVATIONAL_MESSAGES[range];
+                    break;
+                }
+            }
+            
+            // Create certificate HTML
+            const certificate = document.createElement('div');
+            certificate.className = 'certificate';
+            
+            certificate.innerHTML = `
+                <div class="certificate-content">
+                    <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
+                    <p>Diberikan Kepada</p>
+                    <h2 class="certificate-recipient">${formatName(participantData.fullname)}</h2>
+                    <p class="certificate-body">
+                        Atas Partisipasi & Pencapaian Luar Biasa dalam <strong>Ujian Pergunu Situbondo</strong>
+                    </p>
+                    <p class="certificate-body">
+                        Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, 
+                        sertifikat ini diberikan sebagai motivasi untuk terus berkembang.
+                    </p>
+                    <div class="certificate-score">Nilai: ${score}%</div>
+                    <p class="certificate-motivation">${motivation}</p>
+                    <div class="certificate-footer">
+                        <p>Ditetapkan di: Situbondo, ${now.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                        <div class="certificate-signature">
+                            <p>Ketua Pergunu Situbondo</p>
+                            <p><strong>Moh. Nuril Hudha, S.Pd., M.Si.</strong></p>
+                        </div>
+                        <img src="https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/BARCODE.png" alt="Barcode" class="certificate-barcode">
+                        <p>Kode Sertifikat: ${formatName(participantData.fullname)}/${participantData.status.toUpperCase()}/${participantData.level || 'UMUM'}/${participantData.subject || 'UMUM'}/${dateString}/${uniqueCode}/PERGUNU-STB</p>
+                    </div>
+                </div>
+            `;
+            
+            certificateContainer.appendChild(certificate);
+            certificateContainer.style.display = 'block';
+        }
+        
+        function formatName(name) {
+            return name.split(' ').map(word => 
+                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+            ).join(' ');
+        }
+        
+        function generateUniqueCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '';
+            
+            for (let i = 0; i < 4; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            result += '-';
+            
+            for (let i = 0; i < 4; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            return result;
+        }
+        
+        function printCertificate() {
+            // Hide floating buttons
+            document.querySelector('.floating-buttons').style.display = 'none';
+            
+            // Hide other elements in results screen
+            document.querySelector('.results-summary').style.display = 'none';
+            document.querySelector('.result-actions').style.display = 'none';
+            
+            // Print the certificate
+            window.print();
+            
+            // Show elements again after printing
+            setTimeout(() => {
+                document.querySelector('.floating-buttons').style.display = 'flex';
+                document.querySelector('.results-summary').style.display = 'block';
+                document.querySelector('.result-actions').style.display = 'block';
+            }, 500);
+        }
+        
+        function retakeExam() {
+            // Hide results screen with slide out animation
+            document.getElementById('results-screen').classList.add('slide-out');
+            
+            // Show participant form after animation completes
+            setTimeout(() => {
+                document.getElementById('results-screen').style.display = 'none';
+                document.getElementById('participant-form').style.display = 'block';
+                document.getElementById('participant-form').classList.add('slide-in');
+                currentScreen = 'participant';
+                
+                // Reset timer
+                examTimeLeft = 120 * 60;
+            }, 500);
+        }
+        
+        function showShareModal() {
+            document.getElementById('share-modal').style.display = 'flex';
+        }
+        
+        function hideShareModal() {
+            document.getElementById('share-modal').style.display = 'none';
+        }
+        
+        function contactAdmin() {
+            const message = encodeURIComponent("Assalamualaikum mas admin, saya mau tanya sesuatu nih...");
+            window.open(`https://wa.me/6285647709114?text=${message}`, '_blank');
+        }
+        
+        function showQuestionBankModal() {
+            document.getElementById('question-bank-modal').style.display = 'flex';
+        }
+        
+        function hideQuestionBankModal() {
+            document.getElementById('question-bank-modal').style.display = 'none';
+        }
+        
+        function submitQuestionBankCode() {
+            const code = document.getElementById('question-bank-code').value;
+            
+            if (code === DEFAULT_QUESTION_BANK_CODE) {
+                // Show question bank content
+                document.getElementById('question-bank-content').style.display = 'block';
+                
+                // TODO: Implement question bank functionality
+                document.getElementById('question-bank-content').innerHTML = `
+                    <h4>Bank Soal</h4>
+                    <p>Fitur ini memungkinkan admin untuk mengelola bank soal.</p>
+                    <p>Fitur lengkap akan diimplementasikan pada versi berikutnya.</p>
+                    <div class="form-group">
+                        <label class="form-label">API Key untuk Integrasi AI</label>
+                        <input type="text" id="ai-api-key" class="form-control" placeholder="Masukkan API Key AI Anda">
+                        <small class="text-muted">Gunakan API Key yang valid untuk mengaktifkan fitur AI</small>
+                    </div>
+                `;
+            } else {
+                alert('Kode bank soal salah. Silakan coba lagi.');
+            }
+        }
+        
+        function showAdminPanelModal() {
+            document.getElementById('admin-panel-modal').style.display = 'flex';
+        }
+        
+        function hideAdminPanelModal() {
+            document.getElementById('admin-panel-modal').style.display = 'none';
+        }
+        
+        function submitAdminPanelCode() {
+            const code = document.getElementById('admin-panel-code').value;
+            
+            if (code === DEFAULT_ADMIN_PANEL_CODE) {
+                // Show admin panel content
+                document.getElementById('admin-panel-content').style.display = 'block';
+                
+                // TODO: Implement admin panel functionality
+                document.getElementById('admin-panel-content').innerHTML = `
+                    <h4>Kontrol Panel Admin</h4>
+                    <p>Fitur ini memungkinkan admin untuk mengelola seluruh sistem ujian.</p>
+                    <p>Fitur lengkap akan diimplementasikan pada versi berikutnya.</p>
+                    
+                    <div class="admin-section">
+                        <h5>Pengaturan Kode</h5>
+                        <div class="form-group">
+                            <label for="new-login-code" class="form-label">Kode Login Baru</label>
+                            <input type="password" id="new-login-code" class="form-control" placeholder="Masukkan kode login baru">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new-question-bank-code" class="form-label">Kode Bank Soal Baru</label>
+                            <input type="password" id="new-question-bank-code" class="form-control" placeholder="Masukkan kode bank soal baru">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new-admin-code" class="form-label">Kode Admin Baru</label>
+                            <input type="password" id="new-admin-code" class="form-control" placeholder="Masukkan kode admin baru">
+                        </div>
+                        
+                        <button class="btn" id="save-codes-btn">Simpan Kode</button>
+                    </div>
+                    
+                    <div class="admin-section">
+                        <h5>Pengaturan Lainnya</h5>
+                        <p>Fitur pengaturan lainnya akan ditambahkan di sini.</p>
+                    </div>
+                `;
+            } else {
+                alert('Kode admin salah. Silakan coba lagi.');
+            }
+        }
     </script>
 </body>
 </html>
