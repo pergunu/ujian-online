@@ -336,26 +336,24 @@
             margin: 0 auto;
             position: relative;
             overflow: hidden;
-            page-break-after: always;
-        }
-
-        .certificate::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/certificate.png') no-repeat center center;
+            background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/certificate.png');
             background-size: cover;
-            opacity: 0.2;
-            z-index: 0;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .certificate-content {
             position: relative;
             z-index: 1;
             text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            margin: 20px;
         }
 
         .certificate-title {
@@ -529,6 +527,15 @@
                 padding: 0;
                 box-shadow: none;
                 border-radius: 0;
+                background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/certificate.png');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            .certificate-content {
+                background: rgba(255, 255, 255, 0.9);
+                padding: 40px;
+                margin: 50px;
             }
             .floating-buttons, .results-summary, .result-actions {
                 display: none !important;
@@ -547,6 +554,7 @@
             
             .certificate {
                 padding: 20px;
+                min-height: 500px;
             }
             
             .certificate-title {
@@ -582,6 +590,7 @@
             
             .certificate {
                 padding: 15px;
+                min-height: 400px;
             }
             
             .certificate-title {
@@ -591,6 +600,119 @@
             .certificate-recipient {
                 font-size: 18px;
             }
+        }
+
+        /* Admin Panel Specific Styles */
+        .admin-section {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .admin-section h5 {
+            color: var(--color-primary);
+            margin-bottom: 15px;
+        }
+
+        .admin-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .admin-control-group {
+            margin-bottom: 15px;
+        }
+
+        .admin-control-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .admin-control-input {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .admin-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--color-success);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        .participant-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .participant-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .participant-item:last-child {
+            border-bottom: none;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -891,7 +1013,96 @@
                 </div>
                 
                 <div id="question-bank-content" style="display: none;">
-                    <!-- Question bank content will be loaded here -->
+                    <h4>Bank Soal</h4>
+                    <div class="admin-section">
+                        <h5>Tambah Soal Baru</h5>
+                        <div class="form-group">
+                            <label class="form-label">Kategori Ujian</label>
+                            <select id="question-category" class="form-control" style="color: #333;">
+                                <option value="AGAMA">AGAMA</option>
+                                <option value="PPKN">PPKN</option>
+                                <option value="SEJARAH">SEJARAH</option>
+                                <option value="IPA">IPA</option>
+                                <option value="IPS">IPS</option>
+                                <option value="MATEMATIKA">MATEMATIKA</option>
+                                <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
+                                <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
+                                <option value="MATERI EXTRA">MATERI EXTRA</option>
+                                <option value="MATERI KHUSUS">MATERI KHUSUS</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Pertanyaan</label>
+                            <textarea id="question-text-input" class="form-control" rows="3" style="color: #333;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Opsi Jawaban</label>
+                            <div class="options-container">
+                                <input type="text" id="option-a" class="form-control" placeholder="Opsi A" style="color: #333; margin-bottom: 5px;">
+                                <input type="text" id="option-b" class="form-control" placeholder="Opsi B" style="color: #333; margin-bottom: 5px;">
+                                <input type="text" id="option-c" class="form-control" placeholder="Opsi C" style="color: #333; margin-bottom: 5px;">
+                                <input type="text" id="option-d" class="form-control" placeholder="Opsi D" style="color: #333; margin-bottom: 5px;">
+                                <input type="text" id="option-e" class="form-control" placeholder="Opsi E" style="color: #333;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Jawaban Benar</label>
+                            <select id="correct-answer" class="form-control" style="color: #333;">
+                                <option value="0">A</option>
+                                <option value="1">B</option>
+                                <option value="2">C</option>
+                                <option value="3">D</option>
+                                <option value="4">E</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Penjelasan</label>
+                            <textarea id="explanation-input" class="form-control" rows="3" style="color: #333;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Upload Gambar (Opsional)</label>
+                            <input type="file" id="question-image" class="form-control">
+                        </div>
+                        <button id="add-question-btn" class="btn btn-success">Tambah Soal</button>
+                    </div>
+                    
+                    <div class="admin-section">
+                        <h5>Generate Soal dengan AI</h5>
+                        <div class="form-group">
+                            <label class="form-label">API Key AI</label>
+                            <input type="text" id="ai-api-key" class="form-control" placeholder="Masukkan API Key AI Anda" style="color: #333;">
+                            <small class="text-muted">Gunakan API Key yang valid untuk mengaktifkan fitur AI</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Prompt</label>
+                            <textarea id="ai-prompt" class="form-control" rows="3" style="color: #333;" placeholder="Contoh: Buat 5 soal pilihan ganda tentang sejarah kemerdekaan Indonesia untuk tingkat SMA"></textarea>
+                        </div>
+                        <button id="generate-questions-btn" class="btn btn-info">Generate Soal</button>
+                    </div>
+                    
+                    <div class="admin-section">
+                        <h5>Daftar Soal</h5>
+                        <div class="form-group">
+                            <label class="form-label">Filter Kategori</label>
+                            <select id="filter-category" class="form-control" style="color: #333;">
+                                <option value="all">Semua Kategori</option>
+                                <option value="AGAMA">AGAMA</option>
+                                <option value="PPKN">PPKN</option>
+                                <option value="SEJARAH">SEJARAH</option>
+                                <option value="IPA">IPA</option>
+                                <option value="IPS">IPS</option>
+                                <option value="MATEMATIKA">MATEMATIKA</option>
+                                <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
+                                <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
+                                <option value="MATERI EXTRA">MATERI EXTRA</option>
+                                <option value="MATERI KHUSUS">MATERI KHUSUS</option>
+                            </select>
+                        </div>
+                        <div class="questions-list" style="max-height: 300px; overflow-y: auto; border: 1px solid #eee; border-radius: 8px; padding: 10px;">
+                            <!-- Questions will be loaded here -->
+                            <p id="no-questions-message">Belum ada soal yang tersedia.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -912,7 +1123,195 @@
                 </div>
                 
                 <div id="admin-panel-content" style="display: none;">
-                    <!-- Admin panel content will be loaded here -->
+                    <div class="admin-section">
+                        <h5>Pengaturan Kode</h5>
+                        <div class="form-group">
+                            <label class="form-label">Kode Login Baru</label>
+                            <input type="password" id="new-login-code" class="form-control" placeholder="Masukkan kode login baru" style="color: #333;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Kode Bank Soal Baru</label>
+                            <input type="password" id="new-question-bank-code" class="form-control" placeholder="Masukkan kode bank soal baru" style="color: #333;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Kode Admin Baru</label>
+                            <input type="password" id="new-admin-code" class="form-control" placeholder="Masukkan kode admin baru" style="color: #333;">
+                        </div>
+                        
+                        <button id="save-codes-btn" class="btn btn-success">Simpan Kode</button>
+                    </div>
+                    
+                    <div class="admin-section">
+                        <h5>Pengaturan Ujian</h5>
+                        <div class="admin-controls">
+                            <div class="admin-control-group">
+                                <label class="admin-control-label">Durasi Ujian (menit)</label>
+                                <input type="number" id="exam-duration" class="admin-control-input" value="120" min="5" max="300">
+                            </div>
+                            <div class="admin-control-group">
+                                <label class="admin-control-label">Jumlah Soal</label>
+                                <select id="question-count" class="admin-control-input">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="150">150</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="admin-control-group">
+                            <label class="admin-control-label">Acak Soal</label>
+                            <div class="admin-toggle">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="randomize-questions" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span id="randomize-status">Aktif</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-section">
+                        <h5>Pengaturan Konten</h5>
+                        <div class="form-group">
+                            <label class="form-label">Pesan Pembuka</label>
+                            <textarea id="greeting-message-input" class="form-control" rows="3" style="color: #333;">Selamat datang di sistem ujian online PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Pesan Informasi Berkala</label>
+                            <textarea id="admin-message-input" class="form-control" rows="3" style="color: #333;">Tidak ada informasi terbaru saat ini.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Nama Ketua PERGUNU</label>
+                            <input type="text" id="chairman-name" class="form-control" value="Moh. Nuril Hudha, S.Pd., M.Si." style="color: #333;">
+                        </div>
+                        <button id="save-content-btn" class="btn btn-success">Simpan Perubahan</button>
+                    </div>
+                    
+                    <div class="admin-section">
+                        <h5>Manajemen Peserta</h5>
+                        <div class="participant-list">
+                            <!-- Participant data will be loaded here -->
+                            <p id="no-participants-message">Belum ada data peserta.</p>
+                        </div>
+                        <div class="export-buttons">
+                            <button id="export-excel-btn" class="btn btn-info"><i class="fas fa-file-excel"></i> Export Excel</button>
+                            <button id="export-pdf-btn" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Export PDF</button>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-section">
+                        <h5>Aktifkan/Nonaktifkan Ujian</h5>
+                        <div class="admin-controls">
+                            <div class="admin-control-group">
+                                <label class="admin-control-label">AGAMA</label>
+                                <div class="admin-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="toggle-religion" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span id="religion-status">Aktif</span>
+                                </div>
+                            </div>
+                            <div class="admin-control-group">
+                                <label class="admin-control-label">PPKN</label>
+                                <div class="admin-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="toggle-civics" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span id="civics-status">Aktif</span>
+                                </div>
+                            </div>
+                            <div class="admin-control-group">
+                                <label class="admin-control-label">SEJARAH</label>
+                                <div class="admin-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="toggle-history" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span id="history-status">Aktif</span>
+                                </div>
+                            </div>
+                            <div class="admin-control-group">
+                                <label class="admin-control-label">IPA</label>
+                                <div class="admin-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="toggle-science" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span id="science-status">Aktif</span>
+                                </div>
+                            </div>
+                            <div class="admin-control-group">
+                                <label class="admin-control-label">IPS</label>
+                                <div class="admin-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="toggle-social" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span id="social-status">Aktif</span>
+                                </div>
+                            </div>
+                            <div class="admin-control-group">
+                                <label class="admin-control-label">MATEMATIKA</label>
+                                <div class="admin-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="toggle-math" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span id="math-status">Aktif</span>
+                                </div>
+                            </div>
+                            <div class="admin-control-group">
+                                <label class="admin-control-label">BAHASA INDONESIA</label>
+                                <div class="admin-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="toggle-indonesian" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span id="indonesian-status">Aktif</span>
+                                </div>
+                            </div>
+                            <div class="admin-control-group">
+                                <label class="admin-control-label">BAHASA INGGRIS</label>
+                                <div class="admin-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="toggle-english" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span id="english-status">Aktif</span>
+                                </div>
+                            </div>
+                            <div class="admin-control-group">
+                                <label class="admin-control-label">MATERI EXTRA</label>
+                                <div class="admin-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="toggle-extra" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span id="extra-status">Aktif</span>
+                                </div>
+                            </div>
+                            <div class="admin-control-group">
+                                <label class="admin-control-label">MATERI KHUSUS</label>
+                                <div class="admin-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="toggle-special" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span id="special-status">Aktif</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="save-settings-btn" class="btn btn-success">Simpan Pengaturan</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1205,6 +1604,14 @@
             });
             document.querySelectorAll('input[name="subject"]').forEach(radio => {
                 radio.addEventListener('change', checkParticipantFormValidity);
+            });
+
+            // Admin panel toggle switches
+            document.querySelectorAll('.toggle-switch input').forEach(toggle => {
+                toggle.addEventListener('change', function() {
+                    const statusElement = document.getElementById(`${this.id}-status`);
+                    statusElement.textContent = this.checked ? 'Aktif' : 'Nonaktif';
+                });
             });
         });
         
@@ -1759,18 +2166,6 @@
             if (code === DEFAULT_QUESTION_BANK_CODE) {
                 // Show question bank content
                 document.getElementById('question-bank-content').style.display = 'block';
-                
-                // TODO: Implement question bank functionality
-                document.getElementById('question-bank-content').innerHTML = `
-                    <h4>Bank Soal</h4>
-                    <p>Fitur ini memungkinkan admin untuk mengelola bank soal.</p>
-                    <p>Fitur lengkap akan diimplementasikan pada versi berikutnya.</p>
-                    <div class="form-group">
-                        <label class="form-label">API Key untuk Integrasi AI</label>
-                        <input type="text" id="ai-api-key" class="form-control" placeholder="Masukkan API Key AI Anda" style="color: #333;">
-                        <small class="text-muted">Gunakan API Key yang valid untuk mengaktifkan fitur AI</small>
-                    </div>
-                `;
             } else {
                 alert('Kode bank soal salah. Silakan coba lagi.');
             }
@@ -1790,38 +2185,6 @@
             if (code === DEFAULT_ADMIN_PANEL_CODE) {
                 // Show admin panel content
                 document.getElementById('admin-panel-content').style.display = 'block';
-                
-                // TODO: Implement admin panel functionality
-                document.getElementById('admin-panel-content').innerHTML = `
-                    <h4>Kontrol Panel Admin</h4>
-                    <p>Fitur ini memungkinkan admin untuk mengelola seluruh sistem ujian.</p>
-                    <p>Fitur lengkap akan diimplementasikan pada versi berikutnya.</p>
-                    
-                    <div class="admin-section">
-                        <h5>Pengaturan Kode</h5>
-                        <div class="form-group">
-                            <label for="new-login-code" class="form-label">Kode Login Baru</label>
-                            <input type="password" id="new-login-code" class="form-control" placeholder="Masukkan kode login baru" style="color: #333;">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="new-question-bank-code" class="form-label">Kode Bank Soal Baru</label>
-                            <input type="password" id="new-question-bank-code" class="form-control" placeholder="Masukkan kode bank soal baru" style="color: #333;">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="new-admin-code" class="form-label">Kode Admin Baru</label>
-                            <input type="password" id="new-admin-code" class="form-control" placeholder="Masukkan kode admin baru" style="color: #333;">
-                        </div>
-                        
-                        <button class="btn" id="save-codes-btn">Simpan Kode</button>
-                    </div>
-                    
-                    <div class="admin-section">
-                        <h5>Pengaturan Lainnya</h5>
-                        <p>Fitur pengaturan lainnya akan ditambahkan di sini.</p>
-                    </div>
-                `;
             } else {
                 alert('Kode admin salah. Silakan coba lagi.');
             }
