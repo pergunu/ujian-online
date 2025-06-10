@@ -336,6 +336,7 @@
             margin: 0 auto;
             position: relative;
             overflow: hidden;
+            page-break-after: always;
         }
 
         .certificate::before {
@@ -347,7 +348,7 @@
             bottom: 0;
             background: url('https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/certificate.png') no-repeat center center;
             background-size: cover;
-            opacity: 0.1;
+            opacity: 0.2;
             z-index: 0;
         }
 
@@ -504,6 +505,36 @@
             color: #666;
         }
 
+        /* Roman numeral styles */
+        .roman {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .certificate, .certificate * {
+                visibility: visible;
+            }
+            .certificate {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .floating-buttons, .results-summary, .result-actions {
+                display: none !important;
+            }
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .container {
@@ -575,7 +606,7 @@
             </div>
             
             <div id="greeting-message">
-                <p>Selamat datang di sistem ujian online PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.</p>
+                <p id="greeting-text">Selamat datang di sistem ujian online PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.</p>
             </div>
             
             <div class="form-group">
@@ -855,7 +886,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="question-bank-code" class="form-label">Kode Bank Soal</label>
-                    <input type="password" id="question-bank-code" class="form-control" placeholder="Masukkan kode bank soal">
+                    <input type="password" id="question-bank-code" class="form-control" placeholder="Masukkan kode bank soal" style="color: #333;">
                     <button id="submit-question-bank-code" class="btn">Masuk</button>
                 </div>
                 
@@ -876,7 +907,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="admin-panel-code" class="form-label">Kode Admin</label>
-                    <input type="password" id="admin-panel-code" class="form-control" placeholder="Masukkan kode admin">
+                    <input type="password" id="admin-panel-code" class="form-control" placeholder="Masukkan kode admin" style="color: #333;">
                     <button id="submit-admin-panel-code" class="btn">Masuk</button>
                 </div>
                 
@@ -1116,8 +1147,11 @@
                 "retina_detect": true
             });
             
-            // Play opening audio
-            audioOpening.play().catch(e => console.log("Autoplay prevented:", e));
+            // Play opening audio only once
+            if (!sessionStorage.getItem('audioPlayed')) {
+                audioOpening.play().catch(e => console.log("Autoplay prevented:", e));
+                sessionStorage.setItem('audioPlayed', 'true');
+            }
             
             // Event listeners
             document.getElementById('login-btn').addEventListener('click', handleLogin);
@@ -1237,17 +1271,17 @@
             
             // Add options based on level
             if (level === 'SD') {
-                addGradeOption('grade-4', 'Kelas IV', '4');
-                addGradeOption('grade-5', 'Kelas V', '5');
-                addGradeOption('grade-6', 'Kelas VI', '6');
+                addGradeOption('grade-4', 'Kelas <span class="roman">IV</span>', '4');
+                addGradeOption('grade-5', 'Kelas <span class="roman">V</span>', '5');
+                addGradeOption('grade-6', 'Kelas <span class="roman">VI</span>', '6');
             } else if (level === 'SMP') {
-                addGradeOption('grade-7', 'Kelas VII', '7');
-                addGradeOption('grade-8', 'Kelas VIII', '8');
-                addGradeOption('grade-9', 'Kelas IX', '9');
+                addGradeOption('grade-7', 'Kelas <span class="roman">VII</span>', '7');
+                addGradeOption('grade-8', 'Kelas <span class="roman">VIII</span>', '8');
+                addGradeOption('grade-9', 'Kelas <span class="roman">IX</span>', '9');
             } else if (level === 'SMA/SMK') {
-                addGradeOption('grade-10', 'Kelas X', '10');
-                addGradeOption('grade-11', 'Kelas XI', '11');
-                addGradeOption('grade-12', 'Kelas XII', '12');
+                addGradeOption('grade-10', 'Kelas <span class="roman">X</span>', '10');
+                addGradeOption('grade-11', 'Kelas <span class="roman">XI</span>', '11');
+                addGradeOption('grade-12', 'Kelas <span class="roman">XII</span>', '12');
             }
             
             document.getElementById('grade-selection').style.display = 'block';
@@ -1267,7 +1301,7 @@
             const radioLabel = document.createElement('label');
             radioLabel.htmlFor = id;
             radioLabel.className = 'radio-label';
-            radioLabel.textContent = label;
+            radioLabel.innerHTML = label;
             
             radio.addEventListener('change', function() {
                 document.getElementById('subject-selection').style.display = 'block';
@@ -1733,7 +1767,7 @@
                     <p>Fitur lengkap akan diimplementasikan pada versi berikutnya.</p>
                     <div class="form-group">
                         <label class="form-label">API Key untuk Integrasi AI</label>
-                        <input type="text" id="ai-api-key" class="form-control" placeholder="Masukkan API Key AI Anda">
+                        <input type="text" id="ai-api-key" class="form-control" placeholder="Masukkan API Key AI Anda" style="color: #333;">
                         <small class="text-muted">Gunakan API Key yang valid untuk mengaktifkan fitur AI</small>
                     </div>
                 `;
@@ -1767,17 +1801,17 @@
                         <h5>Pengaturan Kode</h5>
                         <div class="form-group">
                             <label for="new-login-code" class="form-label">Kode Login Baru</label>
-                            <input type="password" id="new-login-code" class="form-control" placeholder="Masukkan kode login baru">
+                            <input type="password" id="new-login-code" class="form-control" placeholder="Masukkan kode login baru" style="color: #333;">
                         </div>
                         
                         <div class="form-group">
                             <label for="new-question-bank-code" class="form-label">Kode Bank Soal Baru</label>
-                            <input type="password" id="new-question-bank-code" class="form-control" placeholder="Masukkan kode bank soal baru">
+                            <input type="password" id="new-question-bank-code" class="form-control" placeholder="Masukkan kode bank soal baru" style="color: #333;">
                         </div>
                         
                         <div class="form-group">
                             <label for="new-admin-code" class="form-label">Kode Admin Baru</label>
-                            <input type="password" id="new-admin-code" class="form-control" placeholder="Masukkan kode admin baru">
+                            <input type="password" id="new-admin-code" class="form-control" placeholder="Masukkan kode admin baru" style="color: #333;">
                         </div>
                         
                         <button class="btn" id="save-codes-btn">Simpan Kode</button>
