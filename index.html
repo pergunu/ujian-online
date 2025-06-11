@@ -336,11 +336,11 @@
             margin: 0 auto;
             position: relative;
             overflow: hidden;
-            background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/certificate.png');
+            background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/certificate.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            min-height: 600px;
+            min-height: 500px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -351,52 +351,55 @@
             z-index: 1;
             text-align: center;
             background: rgba(255, 255, 255, 0.9);
-            padding: 40px;
+            padding: 30px;
             border-radius: 10px;
             margin: 20px;
         }
 
         .certificate-title {
-            font-size: 36px;
+            font-size: 28px;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: var(--color-primary);
         }
 
         .certificate-recipient {
-            font-size: 24px;
-            margin-bottom: 30px;
+            font-size: 22px;
+            margin-bottom: 20px;
         }
 
         .certificate-body {
-            font-size: 18px;
+            font-size: 16px;
             line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .certificate-score {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--color-primary);
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         .certificate-motivation {
             font-style: italic;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            font-size: 14px;
         }
 
         .certificate-footer {
-            margin-top: 40px;
+            margin-top: 30px;
+            font-size: 12px;
         }
 
         .certificate-signature {
-            margin-top: 50px;
+            margin-top: 30px;
+            font-size: 14px;
         }
 
         .certificate-barcode {
-            margin-top: 20px;
-            height: 60px;
+            margin-top: 15px;
+            height: 50px;
         }
 
         /* Floating Button Styles */
@@ -469,9 +472,9 @@
             color: #333;
             border-radius: 15px;
             padding: 30px;
-            max-width: 500px;
             width: 90%;
-            max-height: 80vh;
+            max-width: 800px;
+            max-height: 90vh;
             overflow-y: auto;
             position: relative;
             animation: modalFadeIn 0.3s;
@@ -527,7 +530,7 @@
                 padding: 0;
                 box-shadow: none;
                 border-radius: 0;
-                background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/certificate.png');
+                background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/certificate.png');
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
@@ -535,10 +538,18 @@
             .certificate-content {
                 background: rgba(255, 255, 255, 0.9);
                 padding: 40px;
-                margin: 50px;
+                margin: 20px;
+                height: calc(100% - 40px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
             }
             .floating-buttons, .results-summary, .result-actions {
                 display: none !important;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 0;
             }
         }
 
@@ -554,11 +565,11 @@
             
             .certificate {
                 padding: 20px;
-                min-height: 500px;
+                min-height: 400px;
             }
             
             .certificate-title {
-                font-size: 28px;
+                font-size: 24px;
             }
             
             .certificate-recipient {
@@ -575,6 +586,11 @@
                 height: 45px;
                 font-size: 18px;
             }
+
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -590,11 +606,11 @@
             
             .certificate {
                 padding: 15px;
-                min-height: 400px;
+                min-height: 350px;
             }
             
             .certificate-title {
-                font-size: 24px;
+                font-size: 20px;
             }
             
             .certificate-recipient {
@@ -612,11 +628,12 @@
         .admin-section h5 {
             color: var(--color-primary);
             margin-bottom: 15px;
+            font-size: 18px;
         }
 
         .admin-controls {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
         }
 
@@ -628,11 +645,12 @@
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
+            font-size: 14px;
         }
 
         .admin-control-input {
             width: 100%;
-            padding: 8px 12px;
+            padding: 10px 12px;
             border-radius: 6px;
             border: 1px solid #ddd;
             font-size: 14px;
@@ -703,6 +721,7 @@
             border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
+            font-size: 14px;
         }
 
         .participant-item:last-child {
@@ -713,6 +732,56 @@
             display: flex;
             gap: 10px;
             margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* Question Bank Styles */
+        .questions-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .question-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .question-item:last-child {
+            border-bottom: none;
+        }
+
+        .options-container {
+            display: grid;
+            gap: 5px;
+        }
+
+        /* AI Generation Styles */
+        .ai-response {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        /* Loading Indicator */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,0,0,.3);
+            border-radius: 50%;
+            border-top-color: var(--color-primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -723,7 +792,7 @@
         <!-- Welcome Screen -->
         <div id="welcome-screen" class="card slide-in">
             <div class="header">
-                <img src="https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/logo.png" alt="PERGUNU Logo" class="logo">
+                <img src="https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/logo.png" alt="PERGUNU Logo" class="logo">
                 <h1>Ujian Online PERGUNU Situbondo</h1>
             </div>
             
@@ -1077,7 +1146,11 @@
                             <label class="form-label">Prompt</label>
                             <textarea id="ai-prompt" class="form-control" rows="3" style="color: #333;" placeholder="Contoh: Buat 5 soal pilihan ganda tentang sejarah kemerdekaan Indonesia untuk tingkat SMA"></textarea>
                         </div>
-                        <button id="generate-questions-btn" class="btn btn-info">Generate Soal</button>
+                        <button id="generate-questions-btn" class="btn btn-info">
+                            <span id="generate-text">Generate Soal</span>
+                            <span id="generate-loading" class="loading" style="display: none;"></span>
+                        </button>
+                        <div id="ai-response" class="ai-response" style="display: none;"></div>
                     </div>
                     
                     <div class="admin-section">
@@ -1098,7 +1171,7 @@
                                 <option value="MATERI KHUSUS">MATERI KHUSUS</option>
                             </select>
                         </div>
-                        <div class="questions-list" style="max-height: 300px; overflow-y: auto; border: 1px solid #eee; border-radius: 8px; padding: 10px;">
+                        <div class="questions-list">
                             <!-- Questions will be loaded here -->
                             <p id="no-questions-message">Belum ada soal yang tersedia.</p>
                         </div>
@@ -1613,6 +1686,11 @@
                     statusElement.textContent = this.checked ? 'Aktif' : 'Nonaktif';
                 });
             });
+
+            // Question bank buttons
+            document.getElementById('add-question-btn').addEventListener('click', addQuestionToBank);
+            document.getElementById('generate-questions-btn').addEventListener('click', generateQuestionsWithAI);
+            document.getElementById('filter-category').addEventListener('change', filterQuestions);
         });
         
         // Functions
@@ -2071,7 +2149,7 @@
                             <p>Ketua Pergunu Situbondo</p>
                             <p><strong>Moh. Nuril Hudha, S.Pd., M.Si.</strong></p>
                         </div>
-                        <img src="https://raw.githubusercontent.com/pergunu/ujian-online/refs/heads/main/assets/images/BARCODE.png" alt="Barcode" class="certificate-barcode">
+                        <img src="https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/BARCODE.png" alt="Barcode" class="certificate-barcode">
                         <p>Kode Sertifikat: ${formatName(participantData.fullname)}/${participantData.status.toUpperCase()}/${participantData.level || 'UMUM'}/${participantData.subject || 'UMUM'}/${dateString}/${uniqueCode}/PERGUNU-STB</p>
                     </div>
                 </div>
@@ -2187,6 +2265,217 @@
                 document.getElementById('admin-panel-content').style.display = 'block';
             } else {
                 alert('Kode admin salah. Silakan coba lagi.');
+            }
+        }
+
+        // Question Bank Functions
+        function addQuestionToBank() {
+            const category = document.getElementById('question-category').value;
+            const questionText = document.getElementById('question-text-input').value.trim();
+            const options = [
+                document.getElementById('option-a').value.trim(),
+                document.getElementById('option-b').value.trim(),
+                document.getElementById('option-c').value.trim(),
+                document.getElementById('option-d').value.trim(),
+                document.getElementById('option-e').value.trim()
+            ];
+            const correctAnswer = parseInt(document.getElementById('correct-answer').value);
+            const explanation = document.getElementById('explanation-input').value.trim();
+            
+            // Validate inputs
+            if (!questionText) {
+                alert('Pertanyaan tidak boleh kosong');
+                return;
+            }
+            
+            if (options.some(opt => !opt)) {
+                alert('Semua opsi jawaban harus diisi');
+                return;
+            }
+            
+            if (!explanation) {
+                alert('Penjelasan tidak boleh kosong');
+                return;
+            }
+            
+            // Add question to sample questions
+            if (!SAMPLE_QUESTIONS[category]) {
+                SAMPLE_QUESTIONS[category] = [];
+            }
+            
+            SAMPLE_QUESTIONS[category].push({
+                question: questionText,
+                options: options.map((opt, i) => `${String.fromCharCode(65 + i)}. ${opt}`),
+                correctAnswer: correctAnswer,
+                explanation: explanation
+            });
+            
+            // Clear form
+            document.getElementById('question-text-input').value = '';
+            document.getElementById('option-a').value = '';
+            document.getElementById('option-b').value = '';
+            document.getElementById('option-c').value = '';
+            document.getElementById('option-d').value = '';
+            document.getElementById('option-e').value = '';
+            document.getElementById('explanation-input').value = '';
+            
+            // Refresh questions list
+            filterQuestions();
+            
+            alert('Soal berhasil ditambahkan ke bank soal!');
+        }
+
+        async function generateQuestionsWithAI() {
+            const apiKey = document.getElementById('ai-api-key').value.trim();
+            const prompt = document.getElementById('ai-prompt').value.trim();
+            
+            if (!apiKey) {
+                alert('Masukkan API Key AI terlebih dahulu');
+                return;
+            }
+            
+            if (!prompt) {
+                alert('Masukkan prompt untuk generate soal');
+                return;
+            }
+            
+            // Show loading indicator
+            document.getElementById('generate-text').style.display = 'none';
+            document.getElementById('generate-loading').style.display = 'inline-block';
+            
+            try {
+                // In a real implementation, you would call an AI API here
+                // This is a simulation for demonstration purposes
+                
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Example response format (in a real app, this would come from the API)
+                const response = {
+                    questions: [
+                        {
+                            question: "Siapa yang memproklamasikan kemerdekaan Indonesia?",
+                            options: [
+                                "A. Soekarno-Hatta",
+                                "B. Soeharto",
+                                "C. B.J. Habibie",
+                                "D. Gus Dur",
+                                "E. Megawati"
+                            ],
+                            correctAnswer: 0,
+                            explanation: "Soekarno-Hatta adalah tokoh yang memproklamasikan kemerdekaan Indonesia pada 17 Agustus 1945."
+                        },
+                        {
+                            question: "Kapan Indonesia merdeka?",
+                            options: [
+                                "A. 17 Agustus 1945",
+                                "B. 27 Desember 1949",
+                                "C. 1 Juni 1945",
+                                "D. 10 November 1945",
+                                "E. 28 Oktober 1928"
+                            ],
+                            correctAnswer: 0,
+                            explanation: "Indonesia merdeka pada tanggal 17 Agustus 1945."
+                        }
+                    ]
+                };
+                
+                // Display the generated questions
+                const aiResponse = document.getElementById('ai-response');
+                aiResponse.innerHTML = '<h5>Soal yang Dihasilkan:</h5>';
+                
+                response.questions.forEach((q, i) => {
+                    aiResponse.innerHTML += `
+                        <div class="question-item">
+                            <p><strong>Soal ${i + 1}:</strong> ${q.question}</p>
+                            <p>${q.options.join('<br>')}</p>
+                            <p><strong>Jawaban:</strong> ${q.options[q.correctAnswer]}</p>
+                            <p><strong>Penjelasan:</strong> ${q.explanation}</p>
+                        </div>
+                    `;
+                });
+                
+                aiResponse.style.display = 'block';
+                
+                // Add button to save these questions
+                const saveBtn = document.createElement('button');
+                saveBtn.className = 'btn btn-success';
+                saveBtn.textContent = 'Simpan Soal ke Bank';
+                saveBtn.onclick = () => {
+                    const category = document.getElementById('question-category').value;
+                    if (!SAMPLE_QUESTIONS[category]) {
+                        SAMPLE_QUESTIONS[category] = [];
+                    }
+                    
+                    response.questions.forEach(q => {
+                        SAMPLE_QUESTIONS[category].push({
+                            question: q.question,
+                            options: q.options,
+                            correctAnswer: q.correctAnswer,
+                            explanation: q.explanation
+                        });
+                    });
+                    
+                    filterQuestions();
+                    aiResponse.style.display = 'none';
+                    alert('Soal berhasil disimpan ke bank soal!');
+                };
+                
+                aiResponse.appendChild(saveBtn);
+                
+            } catch (error) {
+                console.error('Error generating questions:', error);
+                alert('Gagal generate soal. Silakan coba lagi.');
+            } finally {
+                // Hide loading indicator
+                document.getElementById('generate-text').style.display = 'inline';
+                document.getElementById('generate-loading').style.display = 'none';
+            }
+        }
+
+        function filterQuestions() {
+            const category = document.getElementById('filter-category').value;
+            const questionsList = document.querySelector('.questions-list');
+            
+            questionsList.innerHTML = '';
+            
+            if (category === 'all') {
+                let hasQuestions = false;
+                
+                for (const cat in SAMPLE_QUESTIONS) {
+                    if (SAMPLE_QUESTIONS[cat].length > 0) {
+                        hasQuestions = true;
+                        questionsList.innerHTML += `<h6>${cat}</h6>`;
+                        
+                        SAMPLE_QUESTIONS[cat].forEach((q, i) => {
+                            questionsList.innerHTML += `
+                                <div class="question-item">
+                                    <p><strong>Soal ${i + 1}:</strong> ${q.question}</p>
+                                    <p>${q.options.join('<br>')}</p>
+                                    <p><strong>Jawaban:</strong> ${q.options[q.correctAnswer]}</p>
+                                    <p><strong>Penjelasan:</strong> ${q.explanation}</p>
+                                </div>
+                            `;
+                        });
+                    }
+                }
+                
+                if (!hasQuestions) {
+                    questionsList.innerHTML = '<p id="no-questions-message">Belum ada soal yang tersedia.</p>';
+                }
+            } else if (SAMPLE_QUESTIONS[category] && SAMPLE_QUESTIONS[category].length > 0) {
+                SAMPLE_QUESTIONS[category].forEach((q, i) => {
+                    questionsList.innerHTML += `
+                        <div class="question-item">
+                            <p><strong>Soal ${i + 1}:</strong> ${q.question}</p>
+                            <p>${q.options.join('<br>')}</p>
+                            <p><strong>Jawaban:</strong> ${q.options[q.correctAnswer]}</p>
+                            <p><strong>Penjelasan:</strong> ${q.explanation}</p>
+                        </div>
+                    `;
+                });
+            } else {
+                questionsList.innerHTML = '<p id="no-questions-message">Belum ada soal yang tersedia untuk kategori ini.</p>';
             }
         }
     </script>
