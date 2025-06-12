@@ -174,7 +174,7 @@
 
         .radio-option:checked + .radio-label,
         .checkbox-option:checked + .checkbox-label {
-            background: linear-gradient(to right, var(--color-secondary), var(--color-tertiary));
+            background: linear-gradient(to right, var(--color-secondary), var(--color-tertiary);
             box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
         }
 
@@ -338,7 +338,7 @@
             position: relative;
             overflow: hidden;
             background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/certificate.png');
-            background-size: contain;
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             display: flex;
@@ -369,9 +369,10 @@
         }
 
         .certificate-code {
-            font-size: 12px;
+            font-size: 14px;
             margin-bottom: 30px;
             color: #555;
+            letter-spacing: 1px;
         }
 
         .certificate-recipient {
@@ -415,7 +416,7 @@
 
         .certificate-barcode {
             margin: 15px auto;
-            height: 40px;
+            height: 60px; /* Increased barcode height */
         }
 
         /* Floating Button Styles */
@@ -547,7 +548,7 @@
                 box-shadow: none;
                 border-radius: 0;
                 background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/certificate.png');
-                background-size: contain;
+                background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
             }
@@ -1432,6 +1433,9 @@
         const DEFAULT_QUESTION_BANK_CODE = 'OPENLOCK-1926';
         const DEFAULT_ADMIN_PANEL_CODE = '65614222';
         
+        // Default OpenAI API Key (replace with your actual key)
+        const DEFAULT_OPENAI_API_KEY = 'sk-8837b***************aea8';
+        
         // Sample questions for demonstration
         const SAMPLE_QUESTIONS = {
             'AGAMA': [
@@ -1480,6 +1484,30 @@
                     options: ["A. 48", "B. 54", "C. 56", "D. 64", "E. 72"],
                     correctAnswer: 2,
                     explanation: "Perkalian 7 × 8 menghasilkan 56."
+                },
+                {
+                    question: "Berapakah hasil dari 15²?",
+                    options: ["A. 150", "B. 200", "C. 225", "D. 250", "E. 300"],
+                    correctAnswer: 2,
+                    explanation: "15 pangkat 2 (15²) adalah 15 × 15 = 225."
+                },
+                {
+                    question: "Jika sebuah segitiga memiliki alas 10 cm dan tinggi 8 cm, berapa luasnya?",
+                    options: ["A. 18 cm²", "B. 40 cm²", "C. 45 cm²", "D. 60 cm²", "E. 80 cm²"],
+                    correctAnswer: 1,
+                    explanation: "Luas segitiga = ½ × alas × tinggi = ½ × 10 × 8 = 40 cm²."
+                },
+                {
+                    question: "Berapakah hasil dari ¾ + ½?",
+                    options: ["A. ¼", "B. ½", "C. 1", "D. 1¼", "E. 1½"],
+                    correctAnswer: 3,
+                    explanation: "¾ + ½ = ¾ + 2/4 = 5/4 = 1¼."
+                },
+                {
+                    question: "Jika 3x + 5 = 20, berapakah nilai x?",
+                    options: ["A. 3", "B. 5", "C. 7", "D. 10", "E. 15"],
+                    correctAnswer: 1,
+                    explanation: "3x + 5 = 20 → 3x = 20 - 5 → 3x = 15 → x = 5."
                 }
             ],
             'BAHASA INDONESIA': [
@@ -1707,6 +1735,9 @@
             document.getElementById('add-question-btn').addEventListener('click', addQuestionToBank);
             document.getElementById('generate-questions-btn').addEventListener('click', generateQuestionsWithAI);
             document.getElementById('filter-category').addEventListener('change', filterQuestions);
+            
+            // Set default API key for AI (you can remove this in production)
+            document.getElementById('ai-api-key').value = DEFAULT_OPENAI_API_KEY;
         });
         
         // Functions
@@ -2131,6 +2162,9 @@
             // Generate unique code
             const uniqueCode = generateUniqueCode();
             
+            // Format certificate code
+            const certificateCode = `${formatName(participantData.fullname)}/${participantData.status.toUpperCase()}/${participantData.level || 'UMUM'}/${participantData.subject || 'UMUM'}/${dateString}/${uniqueCode}/PERGUNU-STB`;
+            
             // Get motivational message based on score
             let motivation = '';
             for (const range in MOTIVATIONAL_MESSAGES) {
@@ -2148,7 +2182,7 @@
             certificate.innerHTML = `
                 <div class="certificate-content">
                     <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
-                    <p class="certificate-code">Kode Sertifikat: ${formatName(participantData.fullname)}/${participantData.status.toUpperCase()}/${participantData.level || 'UMUM'}/${participantData.subject || 'UMUM'}/${dateString}/${uniqueCode}/PERGUNU-STB</p>
+                    <p class="certificate-code">${certificateCode}</p>
                     <p>Diberikan Kepada</p>
                     <h2 class="certificate-recipient">${formatName(participantData.fullname)}</h2>
                     <p class="certificate-body">
@@ -2342,9 +2376,15 @@
         }
 
         async function generateQuestionsWithAI() {
-            const apiKey = document.getElementById('ai-api-key').value.trim();
+            let apiKey = document.getElementById('ai-api-key').value.trim();
             const prompt = document.getElementById('ai-prompt').value.trim();
             const category = document.getElementById('question-category').value;
+            
+            // If no API key provided, use the default one
+            if (!apiKey && DEFAULT_OPENAI_API_KEY) {
+                apiKey = DEFAULT_OPENAI_API_KEY;
+                document.getElementById('ai-api-key').value = apiKey;
+            }
             
             if (!apiKey) {
                 alert('Masukkan API Key AI terlebih dahulu');
