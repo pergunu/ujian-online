@@ -529,14 +529,21 @@
             font-style: italic;
         }
 
-        /* Print Styles */
+        /* Print Styles - REVISED FOR BETTER PRINTING */
         @media print {
             body * {
                 visibility: hidden;
+                background: white !important;
+                color: black !important;
             }
-            .certificate, .certificate * {
+            
+            .certificate, 
+            .certificate * {
                 visibility: visible;
+                background: transparent !important;
+                color: #333 !important;
             }
+            
             .certificate {
                 position: absolute;
                 left: 0;
@@ -547,23 +554,30 @@
                 padding: 0;
                 box-shadow: none;
                 border-radius: 0;
-                background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/certificate.png');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
+                background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/certificate.png') !important;
+                background-size: cover !important;
+                background-position: center !important;
+                background-repeat: no-repeat !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
+            
             .certificate-content {
-                padding: 40px 60px;
-                margin: 0 auto;
-                width: 80%;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
+                padding: 40px 60px !important;
+                margin: 0 auto !important;
+                width: 80% !important;
+                height: 100% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
             }
-            .floating-buttons, .results-summary, .result-actions {
+            
+            .floating-buttons, 
+            .results-summary, 
+            .result-actions {
                 display: none !important;
             }
+            
             @page {
                 size: A4 portrait;
                 margin: 0;
@@ -1155,6 +1169,8 @@
                     <div class="admin-section">
                         <h5>Generate Soal dengan AI</h5>
                         <div class="form-group">
+                            <!-- TEMPAT UNTUK MEMASUKKAN API KEY SECARA MANUAL -->
+                            <!-- Ganti nilai value dengan API Key OpenAI Anda -->
                             <label class="form-label">API Key AI (Gunakan OpenAI API Key)</label>
                             <input type="text" id="ai-api-key" class="form-control" placeholder="Masukkan API Key AI Anda" style="color: #333;" value="sk-proj-XXXXXXXXXXXXXXXXXXXXXXXX">
                             <small class="text-muted">Dapatkan API Key dari <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a></small>
@@ -2343,12 +2359,13 @@
         }
 
         async function generateQuestionsWithAI() {
-            const apiKey = document.getElementById('ai-api-key').value.trim();
+            // Ganti API Key di bawah ini dengan API Key OpenAI Anda
+            const apiKey = document.getElementById('ai-api-key').value.trim() || "sk-proj-XXXXXXXXXXXXXXXXXXXXXXXX";
             const prompt = document.getElementById('ai-prompt').value.trim();
             const category = document.getElementById('question-category').value;
             
-            if (!apiKey) {
-                alert('Masukkan API Key AI terlebih dahulu');
+            if (!apiKey || apiKey === "sk-proj-XXXXXXXXXXXXXXXXXXXXXXXX") {
+                alert('Masukkan API Key AI yang valid terlebih dahulu');
                 return;
             }
             
