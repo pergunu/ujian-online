@@ -329,10 +329,11 @@
         .certificate {
             background: white;
             color: #333;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            max-width: 800px;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+            max-width: 210mm; /* A4 width */
+            min-height: 297mm; /* A4 height */
             margin: 0 auto;
             position: relative;
             overflow: hidden;
@@ -340,65 +341,73 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            min-height: 500px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            page-break-after: always;
         }
 
         .certificate-content {
             position: relative;
             z-index: 1;
             text-align: center;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 10px;
-            margin: 20px;
+            padding: 60px 80px;
+            margin: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .certificate-title {
-            font-size: 28px;
+            font-size: 36px;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 30px;
             color: var(--color-primary);
+            text-transform: uppercase;
         }
 
         .certificate-recipient {
-            font-size: 22px;
-            margin-bottom: 20px;
+            font-size: 28px;
+            margin: 30px 0;
+            font-weight: 600;
+            color: #333;
         }
 
         .certificate-body {
-            font-size: 16px;
+            font-size: 18px;
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin: 15px 0;
+            color: #333;
         }
 
         .certificate-score {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 700;
             color: var(--color-primary);
-            margin: 15px 0;
+            margin: 30px 0;
         }
 
         .certificate-motivation {
             font-style: italic;
-            margin-bottom: 20px;
-            font-size: 14px;
+            margin: 20px 0;
+            font-size: 16px;
+            color: #555;
         }
 
         .certificate-footer {
-            margin-top: 30px;
-            font-size: 12px;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #555;
         }
 
         .certificate-signature {
-            margin-top: 30px;
-            font-size: 14px;
+            margin-top: 60px;
+            font-size: 16px;
         }
 
         .certificate-barcode {
-            margin-top: 15px;
+            margin: 20px auto;
             height: 50px;
         }
 
@@ -536,10 +545,9 @@
                 background-repeat: no-repeat;
             }
             .certificate-content {
-                background: rgba(255, 255, 255, 0.9);
-                padding: 40px;
-                margin: 20px;
-                height: calc(100% - 40px);
+                padding: 60px 80px;
+                margin: 0;
+                height: 100%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -563,17 +571,16 @@
                 padding: 20px;
             }
             
-            .certificate {
-                padding: 20px;
-                min-height: 400px;
+            .certificate-content {
+                padding: 40px;
             }
             
             .certificate-title {
-                font-size: 24px;
+                font-size: 28px;
             }
             
             .certificate-recipient {
-                font-size: 20px;
+                font-size: 24px;
             }
             
             .floating-buttons {
@@ -604,17 +611,16 @@
                 font-size: 14px;
             }
             
-            .certificate {
-                padding: 15px;
-                min-height: 350px;
+            .certificate-content {
+                padding: 30px;
             }
             
             .certificate-title {
-                font-size: 20px;
+                font-size: 24px;
             }
             
             .certificate-recipient {
-                font-size: 18px;
+                font-size: 20px;
             }
         }
 
@@ -1138,13 +1144,8 @@
                     <div class="admin-section">
                         <h5>Generate Soal dengan AI</h5>
                         <div class="form-group">
-                            <!-- TANDA UNTUK MEMASUKKAN API KEY -->
-                            <!-- ==================================== -->
-                            <!-- Silakan masukkan API Key OpenAI Anda di sini -->
                             <label class="form-label">API Key AI (Gunakan OpenAI API Key)</label>
-                            <input type="text" id="sk-8837b24327bd4db99e36688951ceaea8" class="form-control" placeholder="Masukkan API Key AI Anda" style="color: #333;" value="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx">
-                            <!-- ==================================== -->
-                            <!-- Ganti "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" dengan API key Anda -->
+                            <input type="text" id="ai-api-key" class="form-control" placeholder="Masukkan API Key AI Anda" style="color: #333;">
                             <small class="text-muted">Dapatkan API Key dari <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a></small>
                         </div>
                         <div class="form-group">
@@ -2361,7 +2362,7 @@
                         messages: [
                             {
                                 role: "system",
-                                content: "Anda adalah asisten yang ahli dalam membuat soal ujian pilihan ganda. Buatlah soal dengan format yang jelas dan berikan penjelasan untuk jawaban yang benar."
+                                content: "Anda adalah asisten yang ahli dalam membuat soal ujian pilihan ganda. Buatlah soal dengan format yang jelas dan berikan penjelasan untuk jawaban yang benar. Format output harus berupa:\n\n1. Pertanyaan\nA. Opsi A\nB. Opsi B\nC. Opsi C\nD. Opsi D\nE. Opsi E\n\nJawaban: [Huruf opsi yang benar]\n\nPenjelasan: [Penjelasan singkat mengapa jawaban tersebut benar]"
                             },
                             {
                                 role: "user",
@@ -2402,13 +2403,30 @@
                         SAMPLE_QUESTIONS[category] = [];
                     }
                     
-                    // In a real implementation, you would parse the AI response into proper question format
-                    // For now, we'll just save the raw content
-                    SAMPLE_QUESTIONS[category].push({
-                        question: "Soal dari AI - " + prompt.substring(0, 30) + "...",
-                        options: ["A. Opsi A", "B. Opsi B", "C. Opsi C", "D. Opsi D", "E. Opsi E"],
-                        correctAnswer: 0,
-                        explanation: "Penjelasan dari AI: " + content.substring(0, 100) + "..."
+                    // Parse the AI response into questions
+                    const questionBlocks = content.split('\n\n').filter(block => block.trim() !== '');
+                    
+                    questionBlocks.forEach(block => {
+                        const lines = block.split('\n');
+                        if (lines.length < 7) return; // Skip if not a complete question
+                        
+                        const question = lines[0].replace(/^\d+\.\s*/, '').trim();
+                        const options = lines.slice(1, 6).filter(line => /^[A-E]\.\s/.test(line));
+                        const answerLine = lines.find(line => line.startsWith('Jawaban:'));
+                        const explanationLine = lines.find(line => line.startsWith('Penjelasan:'));
+                        
+                        if (!question || options.length < 5 || !answerLine || !explanationLine) return;
+                        
+                        const correctAnswer = answerLine.split(':')[1].trim().toUpperCase();
+                        const correctIndex = correctAnswer.charCodeAt(0) - 65; // Convert A-E to 0-4
+                        const explanation = explanationLine.split(':')[1].trim();
+                        
+                        SAMPLE_QUESTIONS[category].push({
+                            question: question,
+                            options: options,
+                            correctAnswer: correctIndex,
+                            explanation: explanation
+                        });
                     });
                     
                     filterQuestions();
