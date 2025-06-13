@@ -1586,6 +1586,13 @@
         Perhatian! Ujian akan berakhir dalam waktu 10 menit. Mohon pastikan semua jawaban telah diselesaikan dan diperiksa sebelum waktu habis. Terima kasih atas partisipasi Anda.
     </div>
 
+    <!-- Audio Elements -->
+    <audio id="button-sound" src="https://github.com/pergunu/pergunusmart/raw/main/assets/audio/audiotombol.mp3" preload="auto"></audio>
+    <audio id="correct-answer-sound" src="https://github.com/pergunu/pergunusmart/raw/main/assets/audio/jawabanbenar.mp3" preload="auto"></audio>
+    <audio id="wrong-answer-sound" src="https://github.com/pergunu/pergunusmart/raw/main/assets/audio/jawabansalah.mp3" preload="auto"></audio>
+    <audio id="certificate-sound" src="https://github.com/pergunu/pergunusmart/raw/main/assets/audio/applause.mp3" preload="auto"></audio>
+    <audio id="opening-sound" src="https://voca.ro/1a8eWbggFzfB" preload="auto"></audio>
+
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         // Global variables
@@ -1597,10 +1604,13 @@
         let answeredQuestions = {};
         let examTimer;
         let examTimeLeft = 120 * 60; // 120 minutes in seconds
-        let audioOpening = new Audio('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/audio/opening.mp3');
-        let audioCorrect = new Audio('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/audio/correct.mp3');
-        let audioWrong = new Audio('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/audio/wrong.mp3');
-        let audioApplause = new Audio('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/audio/applause.mp3');
+        
+        // Audio elements
+        const buttonSound = document.getElementById('button-sound');
+        const correctAnswerSound = document.getElementById('correct-answer-sound');
+        const wrongAnswerSound = document.getElementById('wrong-answer-sound');
+        const certificateSound = document.getElementById('certificate-sound');
+        const openingSound = document.getElementById('opening-sound');
         
         // Default codes (should be changed in production)
         const DEFAULT_LOGIN_CODE = '12345';
@@ -1889,11 +1899,16 @@
                 "retina_detect": true
             });
             
-            // Play opening audio only once
-            if (!sessionStorage.getItem('audioPlayed')) {
-                audioOpening.play().catch(e => console.log("Autoplay prevented:", e));
-                sessionStorage.setItem('audioPlayed', 'true');
-            }
+            // Event listeners for buttons with sound
+            document.querySelectorAll('button').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Play button sound if not disabled
+                    if (!this.disabled) {
+                        buttonSound.currentTime = 0;
+                        buttonSound.play().catch(e => console.log("Button sound prevented:", e));
+                    }
+                });
+            });
             
             // Event listeners
             document.getElementById('login-btn').addEventListener('click', handleLogin);
@@ -1982,6 +1997,9 @@
             const loginCode = document.getElementById('login-code').value;
             
             if (loginCode === DEFAULT_LOGIN_CODE) {
+                // Play opening sound
+                openingSound.play().catch(e => console.log("Opening sound prevented:", e));
+                
                 // Hide welcome screen with slide out animation
                 document.getElementById('welcome-screen').classList.add('slide-out');
                 
@@ -2305,10 +2323,14 @@
             
             if (answerIndex === question.correctAnswer) {
                 examData.correct++;
-                audioCorrect.play().catch(e => console.log("Audio play prevented:", e));
+                // Play correct answer sound
+                correctAnswerSound.currentTime = 0;
+                correctAnswerSound.play().catch(e => console.log("Correct answer sound prevented:", e));
             } else {
                 examData.wrong++;
-                audioWrong.play().catch(e => console.log("Audio play prevented:", e));
+                // Play wrong answer sound
+                wrongAnswerSound.currentTime = 0;
+                wrongAnswerSound.play().catch(e => console.log("Wrong answer sound prevented:", e));
             }
             
             // Reload question to show result
@@ -2373,8 +2395,9 @@
                 // Show celebration particles
                 showCelebration();
                 
-                // Play applause sound
-                audioApplause.play().catch(e => console.log("Audio play prevented:", e));
+                // Play certificate sound (applause)
+                certificateSound.currentTime = 0;
+                certificateSound.play().catch(e => console.log("Certificate sound prevented:", e));
             }, 500);
         }
         
