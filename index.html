@@ -335,12 +335,12 @@
             border-radius: 0;
             box-shadow: none;
             width: 210mm; /* A4 width */
-            height: 297mm; /* A4 height */
+            min-height: 297mm; /* A4 height */
             margin: 20px auto;
             position: relative;
             overflow: hidden;
             background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/certificate.png');
-            background-size: cover;
+            background-size: 100% 100%;
             background-position: center;
             background-repeat: no-repeat;
             display: flex;
@@ -562,7 +562,7 @@
                 box-shadow: none;
                 border-radius: 0;
                 background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/certificate.png') !important;
-                background-size: cover !important;
+                background-size: 100% 100% !important;
                 background-position: center !important;
                 background-repeat: no-repeat !important;
                 -webkit-print-color-adjust: exact;
