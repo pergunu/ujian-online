@@ -879,6 +879,24 @@
             background-color: #f9f9f9;
         }
 
+        /* Checkbox styles for participant selection */
+        .select-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .select-all-checkbox {
+            margin-right: 5px;
+        }
+
+        .participant-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
         /* Edit Question Modal */
         .edit-question-modal {
             display: none;
@@ -906,6 +924,41 @@
         }
 
         .edit-question-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Edit Participant Modal */
+        .edit-participant-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .edit-participant-content {
+            background: white;
+            color: #333;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .edit-participant-close {
             position: absolute;
             top: 15px;
             right: 15px;
@@ -1382,10 +1435,31 @@
                     
                     <div class="admin-section">
                         <h5>Manajemen Peserta</h5>
+                        <div class="participant-actions">
+                            <button id="select-all-participants" class="btn btn-info">
+                                <input type="checkbox" id="select-all-checkbox" class="select-all-checkbox">
+                                Pilih Semua
+                            </button>
+                            <button id="edit-selected-participants" class="btn btn-warning" disabled>
+                                <i class="fas fa-edit"></i> Edit Terpilih
+                            </button>
+                            <button id="delete-selected-participants" class="btn btn-danger" disabled>
+                                <i class="fas fa-trash"></i> Hapus Terpilih
+                            </button>
+                            <button id="export-selected-excel" class="btn btn-success" disabled>
+                                <i class="fas fa-file-excel"></i> Export Excel
+                            </button>
+                            <button id="export-selected-pdf" class="btn btn-danger" disabled>
+                                <i class="fas fa-file-pdf"></i> Export PDF
+                            </button>
+                        </div>
                         <div class="participant-list">
                             <table class="data-table">
                                 <thead>
                                     <tr>
+                                        <th width="30px">
+                                            <!-- Select all checkbox -->
+                                        </th>
                                         <th>Tanggal</th>
                                         <th>Nama</th>
                                         <th>Status</th>
@@ -1399,10 +1473,6 @@
                                     <!-- Participant data will be loaded here -->
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="export-buttons">
-                            <button id="export-excel-btn" class="btn btn-info"><i class="fas fa-file-excel"></i> Export Excel</button>
-                            <button id="export-pdf-btn" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Export PDF</button>
                         </div>
                     </div>
                     
@@ -1581,6 +1651,115 @@
         </div>
     </div>
     
+    <!-- Edit Participant Modal -->
+    <div class="edit-participant-modal" id="edit-participant-modal">
+        <div class="edit-participant-content">
+            <span class="edit-participant-close" id="close-edit-participant-modal">&times;</span>
+            <h3>Edit Data Peserta</h3>
+            
+            <div class="form-group">
+                <label for="edit-fullname" class="form-label">Nama Lengkap</label>
+                <input type="text" id="edit-fullname" class="form-control" style="color: #333;">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Status</label>
+                <div class="radio-group">
+                    <input type="radio" id="edit-status-student" name="edit-status" value="pelajar" class="radio-option" checked>
+                    <label for="edit-status-student" class="radio-label">Pelajar</label>
+                    
+                    <input type="radio" id="edit-status-general" name="edit-status" value="umum" class="radio-option">
+                    <label for="edit-status-general" class="radio-label">Umum</label>
+                </div>
+            </div>
+            
+            <div id="edit-student-fields">
+                <div class="form-group">
+                    <label for="edit-school-name" class="form-label">Nama Sekolah</label>
+                    <input type="text" id="edit-school-name" class="form-control" style="color: #333;">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-student-id" class="form-label">NIS (Nomor Induk Siswa)</label>
+                    <input type="number" id="edit-student-id" class="form-control" style="color: #333;">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Tujuan Ikut Ujian</label>
+                    <div class="radio-group">
+                        <input type="radio" id="edit-purpose-task" name="edit-purpose" value="Tugas Sekolah" class="radio-option">
+                        <label for="edit-purpose-task" class="radio-label">Tugas Sekolah</label>
+                        
+                        <input type="radio" id="edit-purpose-exam" name="edit-purpose" value="Tugas Ulangan" class="radio-option">
+                        <label for="edit-purpose-exam" class="radio-label">Tugas Ulangan</label>
+                        
+                        <input type="radio" id="edit-purpose-test" name="edit-purpose" value="Tes dan Belajar" class="radio-option">
+                        <label for="edit-purpose-test" class="radio-label">Tes dan Belajar</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Tingkat Sekolah</label>
+                    <div class="radio-group">
+                        <input type="radio" id="edit-level-elementary" name="edit-level" value="SD" class="radio-option">
+                        <label for="edit-level-elementary" class="radio-label">SD</label>
+                        
+                        <input type="radio" id="edit-level-junior" name="edit-level" value="SMP" class="radio-option">
+                        <label for="edit-level-junior" class="radio-label">SMP</label>
+                        
+                        <input type="radio" id="edit-level-senior" name="edit-level" value="SMA/SMK" class="radio-option">
+                        <label for="edit-level-senior" class="radio-label">SMA/SMK</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Kelas</label>
+                    <div class="radio-group" id="edit-grade-options">
+                        <!-- Options will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <div id="edit-general-fields" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label">Tujuan Ikut Ujian</label>
+                    <div class="radio-group">
+                        <input type="radio" id="edit-purpose-iq" name="edit-purpose-general" value="Tes IQ" class="radio-option">
+                        <label for="edit-purpose-iq" class="radio-label">Tes IQ</label>
+                        
+                        <input type="radio" id="edit-purpose-cpns" name="edit-purpose-general" value="Ujian CPNS/P3K" class="radio-option">
+                        <label for="edit-purpose-cpns" class="radio-label">Ujian CPNS/P3K</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Mata Ujian</label>
+                <select id="edit-subject" class="form-control" style="color: #333;">
+                    <option value="AGAMA">AGAMA</option>
+                    <option value="PPKN">PPKN</option>
+                    <option value="SEJARAH">SEJARAH</option>
+                    <option value="IPA">IPA</option>
+                    <option value="IPS">IPS</option>
+                    <option value="MATEMATIKA">MATEMATIKA</option>
+                    <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
+                    <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
+                    <option value="MATERI EXTRA">MATERI EXTRA</option>
+                    <option value="MATERI KHUSUS">MATERI KHUSUS</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-score" class="form-label">Nilai</label>
+                <input type="number" id="edit-score" class="form-control" min="0" max="100" style="color: #333;">
+            </div>
+            
+            <button id="save-edit-participant-btn" class="btn btn-success">Simpan Perubahan</button>
+            
+            <input type="hidden" id="edit-participant-index">
+        </div>
+    </div>
+    
     <!-- Notification -->
     <div class="notification" id="time-warning" style="display: none;">
         Perhatian! Ujian akan berakhir dalam waktu 10 menit. Mohon pastikan semua jawaban telah diselesaikan dan diperiksa sebelum waktu habis. Terima kasih atas partisipasi Anda.
@@ -1604,6 +1783,7 @@
         let answeredQuestions = {};
         let examTimer;
         let examTimeLeft = 120 * 60; // 120 minutes in seconds
+        let selectedParticipants = [];
         
         // Audio elements
         const buttonSound = document.getElementById('button-sound');
@@ -1943,6 +2123,7 @@
             document.getElementById('close-question-bank-modal').addEventListener('click', hideQuestionBankModal);
             document.getElementById('close-admin-panel-modal').addEventListener('click', hideAdminPanelModal);
             document.getElementById('close-edit-question-modal').addEventListener('click', hideEditQuestionModal);
+            document.getElementById('close-edit-participant-modal').addEventListener('click', hideEditParticipantModal);
             
             // Modal submit buttons
             document.getElementById('submit-question-bank-code').addEventListener('click', submitQuestionBankCode);
@@ -1987,6 +2168,22 @@
             document.getElementById('save-settings-btn').addEventListener('click', saveSettings);
             document.getElementById('export-excel-btn').addEventListener('click', exportToExcel);
             document.getElementById('export-pdf-btn').addEventListener('click', exportToPDF);
+            
+            // Participant management buttons
+            document.getElementById('select-all-participants').addEventListener('click', toggleSelectAllParticipants);
+            document.getElementById('edit-selected-participants').addEventListener('click', editSelectedParticipants);
+            document.getElementById('delete-selected-participants').addEventListener('click', deleteSelectedParticipants);
+            document.getElementById('export-selected-excel').addEventListener('click', exportSelectedToExcel);
+            document.getElementById('export-selected-pdf').addEventListener('click', exportSelectedToPDF);
+            
+            // Edit participant form
+            document.getElementById('save-edit-participant-btn').addEventListener('click', saveEditedParticipant);
+            document.querySelectorAll('input[name="edit-status"]').forEach(radio => {
+                radio.addEventListener('change', toggleEditParticipantFields);
+            });
+            document.querySelectorAll('input[name="edit-level"]').forEach(radio => {
+                radio.addEventListener('change', showEditGradeSelection);
+            });
             
             // Load participants data for admin panel
             loadParticipantsData();
@@ -2864,7 +3061,7 @@
             tableBody.innerHTML = '';
             
             if (participantsData.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Belum ada data peserta</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="8" style="text-align: center;">Belum ada data peserta</td></tr>';
                 return;
             }
             
@@ -2872,7 +3069,7 @@
             const sortedData = [...participantsData].sort((a, b) => 
                 new Date(b.examDate) - new Date(a.examDate));
             
-            sortedData.forEach(participant => {
+            sortedData.forEach((participant, index) => {
                 const date = new Date(participant.examDate);
                 const dateStr = date.toLocaleDateString('id-ID', {
                     day: '2-digit',
@@ -2883,7 +3080,11 @@
                 });
                 
                 const row = document.createElement('tr');
+                row.dataset.index = index;
                 row.innerHTML = `
+                    <td>
+                        <input type="checkbox" class="select-checkbox" data-index="${index}" onchange="toggleParticipantSelection(${index})">
+                    </td>
                     <td>${dateStr}</td>
                     <td>${participant.fullname}</td>
                     <td>${participant.status === 'pelajar' ? 'Pelajar' : 'Umum'}</td>
@@ -2895,6 +3096,288 @@
                 
                 tableBody.appendChild(row);
             });
+            
+            // Reset selected participants
+            selectedParticipants = [];
+            updateParticipantActionButtons();
+        }
+        
+        function toggleParticipantSelection(index) {
+            const checkbox = document.querySelector(`.select-checkbox[data-index="${index}"]`);
+            if (checkbox.checked) {
+                if (!selectedParticipants.includes(index)) {
+                    selectedParticipants.push(index);
+                }
+            } else {
+                selectedParticipants = selectedParticipants.filter(i => i !== index);
+            }
+            
+            // Update select all checkbox
+            updateSelectAllCheckbox();
+            
+            // Update action buttons
+            updateParticipantActionButtons();
+        }
+        
+        function toggleSelectAllParticipants() {
+            const selectAllCheckbox = document.getElementById('select-all-checkbox');
+            const checkboxes = document.querySelectorAll('.select-checkbox');
+            
+            selectAllCheckbox.checked = !selectAllCheckbox.checked;
+            const isChecked = selectAllCheckbox.checked;
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+                const index = parseInt(checkbox.dataset.index);
+                
+                if (isChecked) {
+                    if (!selectedParticipants.includes(index)) {
+                        selectedParticipants.push(index);
+                    }
+                } else {
+                    selectedParticipants = selectedParticipants.filter(i => i !== index);
+                }
+            });
+            
+            // Update action buttons
+            updateParticipantActionButtons();
+        }
+        
+        function updateSelectAllCheckbox() {
+            const checkboxes = document.querySelectorAll('.select-checkbox');
+            const selectAllCheckbox = document.getElementById('select-all-checkbox');
+            
+            if (checkboxes.length === 0) {
+                selectAllCheckbox.checked = false;
+                return;
+            }
+            
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            selectAllCheckbox.checked = allChecked;
+        }
+        
+        function updateParticipantActionButtons() {
+            const hasSelection = selectedParticipants.length > 0;
+            
+            document.getElementById('edit-selected-participants').disabled = !hasSelection;
+            document.getElementById('delete-selected-participants').disabled = !hasSelection;
+            document.getElementById('export-selected-excel').disabled = !hasSelection;
+            document.getElementById('export-selected-pdf').disabled = !hasSelection;
+        }
+        
+        function editSelectedParticipants() {
+            if (selectedParticipants.length === 0) return;
+            
+            // For now, we'll just edit the first selected participant
+            // In a real app, you might want to implement bulk editing
+            const index = selectedParticipants[0];
+            editParticipant(index);
+        }
+        
+        function editParticipant(index) {
+            const participant = participantsData[index];
+            
+            // Fill the edit form
+            document.getElementById('edit-fullname').value = participant.fullname;
+            
+            // Set status
+            if (participant.status === 'pelajar') {
+                document.getElementById('edit-status-student').checked = true;
+                document.getElementById('edit-student-fields').style.display = 'block';
+                document.getElementById('edit-general-fields').style.display = 'none';
+                
+                // Fill student fields
+                document.getElementById('edit-school-name').value = participant.school || '';
+                document.getElementById('edit-student-id').value = participant.studentId || '';
+                
+                // Set purpose
+                if (participant.purpose) {
+                    const purposeRadio = document.querySelector(`input[name="edit-purpose"][value="${participant.purpose}"]`);
+                    if (purposeRadio) purposeRadio.checked = true;
+                }
+                
+                // Set level
+                if (participant.level) {
+                    const levelRadio = document.querySelector(`input[name="edit-level"][value="${participant.level}"]`);
+                    if (levelRadio) levelRadio.checked = true;
+                    
+                    // Show grade selection
+                    showEditGradeSelection();
+                    
+                    // Set grade
+                    if (participant.grade) {
+                        const gradeRadio = document.querySelector(`input[name="edit-grade"][value="${participant.grade}"]`);
+                        if (gradeRadio) gradeRadio.checked = true;
+                    }
+                }
+            } else {
+                document.getElementById('edit-status-general').checked = true;
+                document.getElementById('edit-student-fields').style.display = 'none';
+                document.getElementById('edit-general-fields').style.display = 'block';
+                
+                // Set general purpose
+                if (participant.purpose) {
+                    const purposeRadio = document.querySelector(`input[name="edit-purpose-general"][value="${participant.purpose}"]`);
+                    if (purposeRadio) purposeRadio.checked = true;
+                }
+            }
+            
+            // Set subject
+            if (participant.subject) {
+                document.getElementById('edit-subject').value = participant.subject;
+            }
+            
+            // Set score
+            document.getElementById('edit-score').value = participant.score;
+            
+            // Store index for saving
+            document.getElementById('edit-participant-index').value = index;
+            
+            // Show the modal
+            document.getElementById('edit-participant-modal').style.display = 'flex';
+        }
+        
+        function toggleEditParticipantFields() {
+            const status = document.querySelector('input[name="edit-status"]:checked').value;
+            
+            if (status === 'pelajar') {
+                document.getElementById('edit-student-fields').style.display = 'block';
+                document.getElementById('edit-general-fields').style.display = 'none';
+            } else {
+                document.getElementById('edit-student-fields').style.display = 'none';
+                document.getElementById('edit-general-fields').style.display = 'block';
+            }
+        }
+        
+        function showEditGradeSelection() {
+            const level = document.querySelector('input[name="edit-level"]:checked')?.value;
+            const gradeOptions = document.getElementById('edit-grade-options');
+            
+            // Clear previous options
+            gradeOptions.innerHTML = '';
+            
+            if (!level) return;
+            
+            // Add options based on level
+            if (level === 'SD') {
+                addEditGradeOption('edit-grade-4', 'Kelas <span class="roman">IV</span>', '4');
+                addEditGradeOption('edit-grade-5', 'Kelas <span class="roman">V</span>', '5');
+                addEditGradeOption('edit-grade-6', 'Kelas <span class="roman">VI</span>', '6');
+            } else if (level === 'SMP') {
+                addEditGradeOption('edit-grade-7', 'Kelas <span class="roman">VII</span>', '7');
+                addEditGradeOption('edit-grade-8', 'Kelas <span class="roman">VIII</span>', '8');
+                addEditGradeOption('edit-grade-9', 'Kelas <span class="roman">IX</span>', '9');
+            } else if (level === 'SMA/SMK') {
+                addEditGradeOption('edit-grade-10', 'Kelas <span class="roman">X</span>', '10');
+                addEditGradeOption('edit-grade-11', 'Kelas <span class="roman">XI</span>', '11');
+                addEditGradeOption('edit-grade-12', 'Kelas <span class="roman">XII</span>', '12');
+            }
+        }
+        
+        function addEditGradeOption(id, label, value) {
+            const container = document.getElementById('edit-grade-options');
+            
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.id = id;
+            radio.name = 'edit-grade';
+            radio.value = value;
+            radio.className = 'radio-option';
+            
+            const radioLabel = document.createElement('label');
+            radioLabel.htmlFor = id;
+            radioLabel.className = 'radio-label';
+            radioLabel.innerHTML = label;
+            
+            container.appendChild(radio);
+            container.appendChild(radioLabel);
+        }
+        
+        function saveEditedParticipant() {
+            const index = document.getElementById('edit-participant-index').value;
+            if (!index) return;
+            
+            const participant = participantsData[index];
+            
+            // Update participant data
+            participant.fullname = document.getElementById('edit-fullname').value.trim();
+            participant.status = document.querySelector('input[name="edit-status"]:checked').value;
+            
+            if (participant.status === 'pelajar') {
+                participant.school = document.getElementById('edit-school-name').value.trim();
+                participant.studentId = document.getElementById('edit-student-id').value.trim();
+                participant.purpose = document.querySelector('input[name="edit-purpose"]:checked')?.value || '';
+                participant.level = document.querySelector('input[name="edit-level"]:checked')?.value || '';
+                participant.grade = document.querySelector('input[name="edit-grade"]:checked')?.value || '';
+            } else {
+                participant.purpose = document.querySelector('input[name="edit-purpose-general"]:checked')?.value || '';
+                participant.level = null;
+                participant.grade = null;
+                participant.school = null;
+                participant.studentId = null;
+            }
+            
+            participant.subject = document.getElementById('edit-subject').value;
+            participant.score = parseInt(document.getElementById('edit-score').value);
+            
+            // Save to localStorage
+            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+            
+            // Reload participants data
+            loadParticipantsData();
+            
+            // Hide modal
+            hideEditParticipantModal();
+            
+            alert('Perubahan data peserta berhasil disimpan!');
+        }
+        
+        function hideEditParticipantModal() {
+            document.getElementById('edit-participant-modal').style.display = 'none';
+        }
+        
+        function deleteSelectedParticipants() {
+            if (selectedParticipants.length === 0) return;
+            
+            if (!confirm(`Apakah Anda yakin ingin menghapus ${selectedParticipants.length} peserta terpilih?`)) {
+                return;
+            }
+            
+            // Sort in descending order to avoid index issues when deleting
+            const sortedIndices = [...selectedParticipants].sort((a, b) => b - a);
+            
+            // Delete participants
+            sortedIndices.forEach(index => {
+                participantsData.splice(index, 1);
+            });
+            
+            // Save to localStorage
+            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+            
+            // Reload participants data
+            loadParticipantsData();
+            
+            alert(`${sortedIndices.length} peserta berhasil dihapus!`);
+        }
+        
+        function exportSelectedToExcel() {
+            if (selectedParticipants.length === 0) return;
+            
+            // Get selected participants data
+            const selectedData = selectedParticipants.map(index => participantsData[index]);
+            
+            // In a real implementation, this would generate an Excel file
+            alert(`Fitur export ke Excel akan mengunduh file dengan ${selectedParticipants.length} peserta terpilih.`);
+        }
+        
+        function exportSelectedToPDF() {
+            if (selectedParticipants.length === 0) return;
+            
+            // Get selected participants data
+            const selectedData = selectedParticipants.map(index => participantsData[index]);
+            
+            // In a real implementation, this would generate a PDF file
+            alert(`Fitur export ke PDF akan mengunduh file dengan ${selectedParticipants.length} peserta terpilih.`);
         }
         
         function saveCodes() {
