@@ -46,6 +46,17 @@
             z-index: 0;
         }
 
+        #celebration-particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            pointer-events: none;
+            display: none;
+        }
+
         .container {
             position: relative;
             z-index: 1;
@@ -793,10 +804,36 @@
             padding: 10px;
             border-bottom: 1px solid #eee;
             font-size: 14px;
+            position: relative;
         }
 
         .question-item:last-child {
             border-bottom: none;
+        }
+
+        .question-actions {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            display: flex;
+            gap: 5px;
+        }
+
+        .question-action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .edit-btn {
+            color: var(--color-info);
+        }
+
+        .delete-btn {
+            color: var(--color-error);
         }
 
         .options-container {
@@ -818,10 +855,69 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+        }
+
+        .data-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Edit Question Modal */
+        .edit-question-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .edit-question-content {
+            background: white;
+            color: #333;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .edit-question-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
+    <div id="celebration-particles"></div>
     
     <div class="container">
         <!-- Welcome Screen -->
@@ -1287,8 +1383,22 @@
                     <div class="admin-section">
                         <h5>Manajemen Peserta</h5>
                         <div class="participant-list">
-                            <!-- Participant data will be loaded here -->
-                            <p id="no-participants-message">Belum ada data peserta.</p>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Nama</th>
+                                        <th>Status</th>
+                                        <th>Tingkat</th>
+                                        <th>Kelas</th>
+                                        <th>Mata Ujian</th>
+                                        <th>Nilai</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="participants-table-body">
+                                    <!-- Participant data will be loaded here -->
+                                </tbody>
+                            </table>
                         </div>
                         <div class="export-buttons">
                             <button id="export-excel-btn" class="btn btn-info"><i class="fas fa-file-excel"></i> Export Excel</button>
@@ -1407,6 +1517,70 @@
         </div>
     </div>
     
+    <!-- Edit Question Modal -->
+    <div class="edit-question-modal" id="edit-question-modal">
+        <div class="edit-question-content">
+            <span class="edit-question-close" id="close-edit-question-modal">&times;</span>
+            <h3>Edit Soal</h3>
+            
+            <div class="form-group">
+                <label class="form-label">Kategori Ujian</label>
+                <select id="edit-question-category" class="form-control" style="color: #333;">
+                    <option value="AGAMA">AGAMA</option>
+                    <option value="PPKN">PPKN</option>
+                    <option value="SEJARAH">SEJARAH</option>
+                    <option value="IPA">IPA</option>
+                    <option value="IPS">IPS</option>
+                    <option value="MATEMATIKA">MATEMATIKA</option>
+                    <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
+                    <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
+                    <option value="MATERI EXTRA">MATERI EXTRA</option>
+                    <option value="MATERI KHUSUS">MATERI KHUSUS</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Pertanyaan</label>
+                <textarea id="edit-question-text" class="form-control" rows="3" style="color: #333;"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Opsi Jawaban</label>
+                <div class="options-container">
+                    <input type="text" id="edit-option-a" class="form-control" placeholder="Opsi A" style="color: #333; margin-bottom: 5px;">
+                    <input type="text" id="edit-option-b" class="form-control" placeholder="Opsi B" style="color: #333; margin-bottom: 5px;">
+                    <input type="text" id="edit-option-c" class="form-control" placeholder="Opsi C" style="color: #333; margin-bottom: 5px;">
+                    <input type="text" id="edit-option-d" class="form-control" placeholder="Opsi D" style="color: #333; margin-bottom: 5px;">
+                    <input type="text" id="edit-option-e" class="form-control" placeholder="Opsi E" style="color: #333;">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Jawaban Benar</label>
+                <select id="edit-correct-answer" class="form-control" style="color: #333;">
+                    <option value="0">A</option>
+                    <option value="1">B</option>
+                    <option value="2">C</option>
+                    <option value="3">D</option>
+                    <option value="4">E</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Penjelasan</label>
+                <textarea id="edit-explanation" class="form-control" rows="3" style="color: #333;"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Upload Gambar (Opsional)</label>
+                <input type="file" id="edit-question-image" class="form-control">
+            </div>
+            
+            <div class="form-group" style="display: flex; justify-content: space-between;">
+                <button id="save-edit-question-btn" class="btn btn-success">Simpan Perubahan</button>
+                <button id="delete-question-btn" class="btn btn-danger">Hapus Soal</button>
+            </div>
+            
+            <input type="hidden" id="edit-question-index">
+            <input type="hidden" id="edit-question-original-category">
+        </div>
+    </div>
+    
     <!-- Notification -->
     <div class="notification" id="time-warning" style="display: none;">
         Perhatian! Ujian akan berakhir dalam waktu 10 menit. Mohon pastikan semua jawaban telah diselesaikan dan diperiksa sebelum waktu habis. Terima kasih atas partisipasi Anda.
@@ -1423,18 +1597,21 @@
         let answeredQuestions = {};
         let examTimer;
         let examTimeLeft = 120 * 60; // 120 minutes in seconds
-        let audioOpening = new Audio('https://voca.ro/1a8eWbggFzfB');
-        let audioCorrect = new Audio('https://voca.ro/1emZhDVU89XS');
-        let audioWrong = new Audio('https://voca.ro/17HW0ShxqM9B');
-        let audioApplause = new Audio('https://voca.ro/13NRsLENyQRIs');
+        let audioOpening = new Audio('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/audio/opening.mp3');
+        let audioCorrect = new Audio('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/audio/correct.mp3');
+        let audioWrong = new Audio('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/audio/wrong.mp3');
+        let audioApplause = new Audio('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/audio/applause.mp3');
         
         // Default codes (should be changed in production)
         const DEFAULT_LOGIN_CODE = '12345';
         const DEFAULT_QUESTION_BANK_CODE = 'OPENLOCK-1926';
         const DEFAULT_ADMIN_PANEL_CODE = '65614222';
         
+        // Store participants data
+        let participantsData = JSON.parse(localStorage.getItem('participantsData')) || [];
+        
         // Sample questions for demonstration
-        const SAMPLE_QUESTIONS = {
+        let SAMPLE_QUESTIONS = JSON.parse(localStorage.getItem('questionBank')) || {
             'AGAMA': [
                 {
                     question: "Apa nama kitab suci agama Islam?",
@@ -1529,7 +1706,7 @@
         
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize particles.js
+            // Initialize particles.js for background
             particlesJS('particles-js', {
                 "particles": {
                     "number": {
@@ -1636,6 +1813,82 @@
                 "retina_detect": true
             });
             
+            // Initialize celebration particles (hidden by default)
+            particlesJS('celebration-particles', {
+                "particles": {
+                    "number": {
+                        "value": 150,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF"]
+                    },
+                    "shape": {
+                        "type": ["circle", "triangle", "star"],
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.7,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 5,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 4,
+                            "size_min": 0.3,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": false
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 6,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": false
+                        },
+                        "onclick": {
+                            "enable": false
+                        },
+                        "resize": true
+                    }
+                },
+                "retina_detect": true
+            });
+            
             // Play opening audio only once
             if (!sessionStorage.getItem('audioPlayed')) {
                 audioOpening.play().catch(e => console.log("Autoplay prevented:", e));
@@ -1674,6 +1927,7 @@
             document.getElementById('close-share-modal').addEventListener('click', hideShareModal);
             document.getElementById('close-question-bank-modal').addEventListener('click', hideQuestionBankModal);
             document.getElementById('close-admin-panel-modal').addEventListener('click', hideAdminPanelModal);
+            document.getElementById('close-edit-question-modal').addEventListener('click', hideEditQuestionModal);
             
             // Modal submit buttons
             document.getElementById('submit-question-bank-code').addEventListener('click', submitQuestionBankCode);
@@ -1707,6 +1961,20 @@
             // Question bank buttons
             document.getElementById('add-question-btn').addEventListener('click', addQuestionToBank);
             document.getElementById('filter-category').addEventListener('change', filterQuestions);
+            
+            // Edit question modal buttons
+            document.getElementById('save-edit-question-btn').addEventListener('click', saveEditedQuestion);
+            document.getElementById('delete-question-btn').addEventListener('click', deleteQuestion);
+            
+            // Admin panel buttons
+            document.getElementById('save-codes-btn').addEventListener('click', saveCodes);
+            document.getElementById('save-content-btn').addEventListener('click', saveContent);
+            document.getElementById('save-settings-btn').addEventListener('click', saveSettings);
+            document.getElementById('export-excel-btn').addEventListener('click', exportToExcel);
+            document.getElementById('export-pdf-btn').addEventListener('click', exportToPDF);
+            
+            // Load participants data for admin panel
+            loadParticipantsData();
         });
         
         // Functions
@@ -1867,7 +2135,8 @@
                 grade: document.querySelector('input[name="grade"]:checked')?.value || null,
                 subject: document.querySelector('input[name="subject"]:checked')?.value || null,
                 school: document.getElementById('school-name')?.value.trim() || null,
-                studentId: document.getElementById('student-id')?.value.trim() || null
+                studentId: document.getElementById('student-id')?.value.trim() || null,
+                examDate: new Date().toISOString()
             };
             
             // For general public, redirect if needed
@@ -2076,6 +2345,15 @@
             // Calculate unanswered questions
             examData.unanswered = examData.answers.filter(answer => answer === null).length;
             
+            // Add participant to data store
+            const score = Math.round((examData.correct / questions.length) * 100);
+            participantsData.push({
+                ...participantData,
+                score: score,
+                examDate: new Date().toISOString()
+            });
+            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+            
             // Hide exam screen with slide out animation
             document.getElementById('exam-screen').classList.add('slide-out');
             
@@ -2091,6 +2369,9 @@
                 
                 // Generate certificate
                 generateCertificate();
+                
+                // Show celebration particles
+                showCelebration();
                 
                 // Play applause sound
                 audioApplause.play().catch(e => console.log("Audio play prevented:", e));
@@ -2174,6 +2455,16 @@
             
             certificateContainer.appendChild(certificate);
             certificateContainer.style.display = 'block';
+        }
+        
+        function showCelebration() {
+            // Show celebration particles
+            document.getElementById('celebration-particles').style.display = 'block';
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                document.getElementById('celebration-particles').style.display = 'none';
+            }, 5000);
         }
         
         function formatName(name) {
@@ -2327,6 +2618,9 @@
                 explanation: explanation
             });
             
+            // Save to localStorage
+            localStorage.setItem('questionBank', JSON.stringify(SAMPLE_QUESTIONS));
+            
             // Clear form
             document.getElementById('question-text-input').value = '';
             document.getElementById('option-a').value = '';
@@ -2357,14 +2651,25 @@
                         questionsList.innerHTML += `<h6>${cat}</h6>`;
                         
                         SAMPLE_QUESTIONS[cat].forEach((q, i) => {
-                            questionsList.innerHTML += `
-                                <div class="question-item">
-                                    <p><strong>Soal ${i + 1}:</strong> ${q.question}</p>
-                                    <p>${q.options.join('<br>')}</p>
-                                    <p><strong>Jawaban:</strong> ${q.options[q.correctAnswer]}</p>
-                                    <p><strong>Penjelasan:</strong> ${q.explanation}</p>
+                            const questionItem = document.createElement('div');
+                            questionItem.className = 'question-item';
+                            
+                            questionItem.innerHTML = `
+                                <p><strong>Soal ${i + 1}:</strong> ${q.question}</p>
+                                <p>${q.options.join('<br>')}</p>
+                                <p><strong>Jawaban:</strong> ${q.options[q.correctAnswer]}</p>
+                                <p><strong>Penjelasan:</strong> ${q.explanation}</p>
+                                <div class="question-actions">
+                                    <button class="question-action-btn edit-btn" data-category="${cat}" data-index="${i}">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="question-action-btn delete-btn" data-category="${cat}" data-index="${i}">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
                                 </div>
                             `;
+                            
+                            questionsList.appendChild(questionItem);
                         });
                     }
                 }
@@ -2374,18 +2679,247 @@
                 }
             } else if (SAMPLE_QUESTIONS[category] && SAMPLE_QUESTIONS[category].length > 0) {
                 SAMPLE_QUESTIONS[category].forEach((q, i) => {
-                    questionsList.innerHTML += `
-                        <div class="question-item">
-                            <p><strong>Soal ${i + 1}:</strong> ${q.question}</p>
-                            <p>${q.options.join('<br>')}</p>
-                            <p><strong>Jawaban:</strong> ${q.options[q.correctAnswer]}</p>
-                            <p><strong>Penjelasan:</strong> ${q.explanation}</p>
+                    const questionItem = document.createElement('div');
+                    questionItem.className = 'question-item';
+                    
+                    questionItem.innerHTML = `
+                        <p><strong>Soal ${i + 1}:</strong> ${q.question}</p>
+                        <p>${q.options.join('<br>')}</p>
+                        <p><strong>Jawaban:</strong> ${q.options[q.correctAnswer]}</p>
+                        <p><strong>Penjelasan:</strong> ${q.explanation}</p>
+                        <div class="question-actions">
+                            <button class="question-action-btn edit-btn" data-category="${category}" data-index="${i}">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="question-action-btn delete-btn" data-category="${category}" data-index="${i}">
+                                <i class="fas fa-trash"></i> Hapus
+                            </button>
                         </div>
                     `;
+                    
+                    questionsList.appendChild(questionItem);
                 });
             } else {
                 questionsList.innerHTML = '<p id="no-questions-message">Belum ada soal yang tersedia untuk kategori ini.</p>';
             }
+            
+            // Add event listeners to edit and delete buttons
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    const index = parseInt(this.getAttribute('data-index'));
+                    editQuestion(category, index);
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    const index = parseInt(this.getAttribute('data-index'));
+                    
+                    if (confirm('Apakah Anda yakin ingin menghapus soal ini?')) {
+                        deleteQuestion(category, index);
+                    }
+                });
+            });
+        }
+        
+        function editQuestion(category, index) {
+            const question = SAMPLE_QUESTIONS[category][index];
+            
+            // Fill the edit form
+            document.getElementById('edit-question-category').value = category;
+            document.getElementById('edit-question-text').value = question.question;
+            
+            // Extract option texts (remove "A. ", "B. ", etc.)
+            document.getElementById('edit-option-a').value = question.options[0].substring(3);
+            document.getElementById('edit-option-b').value = question.options[1].substring(3);
+            document.getElementById('edit-option-c').value = question.options[2].substring(3);
+            document.getElementById('edit-option-d').value = question.options[3].substring(3);
+            document.getElementById('edit-option-e').value = question.options[4]?.substring(3) || '';
+            
+            document.getElementById('edit-correct-answer').value = question.correctAnswer;
+            document.getElementById('edit-explanation').value = question.explanation;
+            
+            // Store original data for reference
+            document.getElementById('edit-question-index').value = index;
+            document.getElementById('edit-question-original-category').value = category;
+            
+            // Show the modal
+            document.getElementById('edit-question-modal').style.display = 'flex';
+        }
+        
+        function hideEditQuestionModal() {
+            document.getElementById('edit-question-modal').style.display = 'none';
+        }
+        
+        function saveEditedQuestion() {
+            const originalCategory = document.getElementById('edit-question-original-category').value;
+            const newCategory = document.getElementById('edit-question-category').value;
+            const index = parseInt(document.getElementById('edit-question-index').value);
+            const questionText = document.getElementById('edit-question-text').value.trim();
+            const options = [
+                document.getElementById('edit-option-a').value.trim(),
+                document.getElementById('edit-option-b').value.trim(),
+                document.getElementById('edit-option-c').value.trim(),
+                document.getElementById('edit-option-d').value.trim(),
+                document.getElementById('edit-option-e').value.trim()
+            ];
+            const correctAnswer = parseInt(document.getElementById('edit-correct-answer').value);
+            const explanation = document.getElementById('edit-explanation').value.trim();
+            
+            // Validate inputs
+            if (!questionText) {
+                alert('Pertanyaan tidak boleh kosong');
+                return;
+            }
+            
+            if (options.some(opt => !opt)) {
+                alert('Semua opsi jawaban harus diisi');
+                return;
+            }
+            
+            if (!explanation) {
+                alert('Penjelasan tidak boleh kosong');
+                return;
+            }
+            
+            // Create updated question
+            const updatedQuestion = {
+                question: questionText,
+                options: options.map((opt, i) => `${String.fromCharCode(65 + i)}. ${opt}`),
+                correctAnswer: correctAnswer,
+                explanation: explanation
+            };
+            
+            // If category changed, remove from old and add to new
+            if (originalCategory !== newCategory) {
+                SAMPLE_QUESTIONS[originalCategory].splice(index, 1);
+                
+                if (!SAMPLE_QUESTIONS[newCategory]) {
+                    SAMPLE_QUESTIONS[newCategory] = [];
+                }
+                
+                SAMPLE_QUESTIONS[newCategory].push(updatedQuestion);
+            } else {
+                // Just update the question
+                SAMPLE_QUESTIONS[originalCategory][index] = updatedQuestion;
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('questionBank', JSON.stringify(SAMPLE_QUESTIONS));
+            
+            // Refresh questions list
+            filterQuestions();
+            
+            // Hide modal
+            hideEditQuestionModal();
+            
+            alert('Perubahan soal berhasil disimpan!');
+        }
+        
+        function deleteQuestion(category, index) {
+            // Remove question from the array
+            SAMPLE_QUESTIONS[category].splice(index, 1);
+            
+            // If category is empty, remove it
+            if (SAMPLE_QUESTIONS[category].length === 0) {
+                delete SAMPLE_QUESTIONS[category];
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('questionBank', JSON.stringify(SAMPLE_QUESTIONS));
+            
+            // Refresh questions list
+            filterQuestions();
+            
+            alert('Soal berhasil dihapus!');
+        }
+        
+        function loadParticipantsData() {
+            const tableBody = document.getElementById('participants-table-body');
+            tableBody.innerHTML = '';
+            
+            if (participantsData.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Belum ada data peserta</td></tr>';
+                return;
+            }
+            
+            // Sort by date (newest first)
+            const sortedData = [...participantsData].sort((a, b) => 
+                new Date(b.examDate) - new Date(a.examDate));
+            
+            sortedData.forEach(participant => {
+                const date = new Date(participant.examDate);
+                const dateStr = date.toLocaleDateString('id-ID', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${dateStr}</td>
+                    <td>${participant.fullname}</td>
+                    <td>${participant.status === 'pelajar' ? 'Pelajar' : 'Umum'}</td>
+                    <td>${participant.level || '-'}</td>
+                    <td>${participant.grade ? `Kelas ${participant.grade}` : '-'}</td>
+                    <td>${participant.subject || '-'}</td>
+                    <td>${participant.score}%</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        function saveCodes() {
+            const newLoginCode = document.getElementById('new-login-code').value;
+            const newQuestionBankCode = document.getElementById('new-question-bank-code').value;
+            const newAdminCode = document.getElementById('new-admin-code').value;
+            
+            if (newLoginCode || newQuestionBankCode || newAdminCode) {
+                alert('Kode berhasil diubah! (Catatan: Dalam versi demo ini, perubahan kode tidak akan disimpan secara permanen)');
+                
+                // Clear the fields
+                document.getElementById('new-login-code').value = '';
+                document.getElementById('new-question-bank-code').value = '';
+                document.getElementById('new-admin-code').value = '';
+            } else {
+                alert('Silakan masukkan setidaknya satu kode baru');
+            }
+        }
+        
+        function saveContent() {
+            const greetingMessage = document.getElementById('greeting-message-input').value;
+            const adminMessage = document.getElementById('admin-message-input').value;
+            const chairmanName = document.getElementById('chairman-name').value;
+            
+            document.getElementById('greeting-text').textContent = greetingMessage;
+            document.getElementById('admin-message').textContent = adminMessage;
+            
+            alert('Perubahan konten berhasil disimpan!');
+        }
+        
+        function saveSettings() {
+            const examDuration = document.getElementById('exam-duration').value;
+            const questionCount = document.getElementById('question-count').value;
+            const randomizeQuestions = document.getElementById('randomize-questions').checked;
+            
+            examTimeLeft = examDuration * 60;
+            
+            alert('Pengaturan ujian berhasil disimpan!');
+        }
+        
+        function exportToExcel() {
+            // In a real implementation, this would generate an Excel file
+            alert('Fitur export ke Excel akan mengunduh file Excel dengan data peserta.');
+        }
+        
+        function exportToPDF() {
+            // In a real implementation, this would generate a PDF file
+            alert('Fitur export ke PDF akan mengunduh file PDF dengan data peserta.');
         }
     </script>
 </body>
