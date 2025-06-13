@@ -325,7 +325,7 @@
             display: none;
         }
 
-        /* Certificate Styles */
+        /* Certificate Styles - REVISED FOR PRINTING */
         .certificate {
             background: white;
             color: #333;
@@ -333,7 +333,7 @@
             border-radius: 0;
             box-shadow: none;
             width: 210mm; /* A4 width */
-            height: 297mm; /* A4 height */
+            min-height: 297mm; /* A4 height */
             margin: 20px auto;
             position: relative;
             overflow: hidden;
@@ -345,6 +345,8 @@
             flex-direction: column;
             justify-content: center;
             page-break-after: always;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .certificate-content {
@@ -2360,6 +2362,8 @@
 
         async function generateQuestionsWithAI() {
             // Ganti API Key di bawah ini dengan API Key OpenAI Anda
+            // TEMPAT UNTUK MEMASUKKAN API KEY SECARA MANUAL
+            // Ganti nilai apiKey dengan API Key OpenAI Anda yang valid
             const apiKey = document.getElementById('ai-api-key').value.trim() || "sk-proj-XXXXXXXXXXXXXXXXXXXXXXXX";
             const prompt = document.getElementById('ai-prompt').value.trim();
             const category = document.getElementById('question-category').value;
