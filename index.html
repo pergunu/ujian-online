@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ujian Online PERGUNU Situbondo</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
@@ -333,7 +334,7 @@
             border-radius: 0;
             box-shadow: none;
             width: 210mm; /* A4 width */
-            min-height: 297mm; /* A4 height */
+            height: 297mm; /* A4 height */
             margin: 20px auto;
             position: relative;
             overflow: hidden;
@@ -344,7 +345,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            page-break-after: always;
+            page-break-after: avoid;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
         }
@@ -378,10 +379,12 @@
         }
 
         .certificate-recipient {
-            font-size: 24px;
+            font-size: 36px;
             margin: 20px 0;
             font-weight: 600;
             color: #333;
+            font-family: 'Great Vibes', cursive;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
         .certificate-body {
@@ -418,7 +421,8 @@
 
         .certificate-barcode {
             margin: 15px auto;
-            height: 60px;
+            height: 80px;
+            width: auto;
         }
 
         /* Floating Button Styles */
@@ -562,6 +566,8 @@
                 background-repeat: no-repeat !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
+                page-break-after: avoid;
+                page-break-inside: avoid;
             }
             
             .certificate-content {
@@ -606,7 +612,7 @@
             }
             
             .certificate-recipient {
-                font-size: 20px;
+                font-size: 28px;
             }
             
             .floating-buttons {
@@ -647,7 +653,7 @@
             }
             
             .certificate-recipient {
-                font-size: 18px;
+                font-size: 24px;
             }
         }
 
@@ -790,16 +796,6 @@
         .options-container {
             display: grid;
             gap: 5px;
-        }
-
-        /* AI Generation Styles */
-        .ai-response {
-            margin-top: 15px;
-            padding: 15px;
-            background: #f5f5f5;
-            border-radius: 8px;
-            max-height: 200px;
-            overflow-y: auto;
         }
 
         /* Loading Indicator */
@@ -1166,26 +1162,6 @@
                             <input type="file" id="question-image" class="form-control">
                         </div>
                         <button id="add-question-btn" class="btn btn-success">Tambah Soal</button>
-                    </div>
-                    
-                    <div class="admin-section">
-                        <h5>Generate Soal dengan AI</h5>
-                        <div class="form-group">
-                            <!-- TEMPAT UNTUK MEMASUKKAN API KEY SECARA MANUAL -->
-                            <!-- Ganti nilai value dengan API Key OpenAI Anda -->
-                            <label class="form-label">API Key AI (Gunakan OpenAI API Key)</label>
-                            <input type="text" id="ai-api-key" class="form-control" placeholder="Masukkan API Key AI Anda" style="color: #333;" value="sk-proj-XXXXXXXXXXXXXXXXXXXXXXXX">
-                            <small class="text-muted">Dapatkan API Key dari <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a></small>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Prompt</label>
-                            <textarea id="ai-prompt" class="form-control" rows="3" style="color: #333;" placeholder="Contoh: Buat 5 soal pilihan ganda tentang sejarah kemerdekaan Indonesia untuk tingkat SMA"></textarea>
-                        </div>
-                        <button id="generate-questions-btn" class="btn btn-info">
-                            <span id="generate-text">Generate Soal</span>
-                            <span id="generate-loading" class="loading" style="display: none;"></span>
-                        </button>
-                        <div id="ai-response" class="ai-response" style="display: none;"></div>
                     </div>
                     
                     <div class="admin-section">
@@ -1724,7 +1700,6 @@
 
             // Question bank buttons
             document.getElementById('add-question-btn').addEventListener('click', addQuestionToBank);
-            document.getElementById('generate-questions-btn').addEventListener('click', generateQuestionsWithAI);
             document.getElementById('filter-category').addEventListener('change', filterQuestions);
         });
         
@@ -2280,6 +2255,7 @@
             if (code === DEFAULT_QUESTION_BANK_CODE) {
                 // Show question bank content
                 document.getElementById('question-bank-content').style.display = 'block';
+                filterQuestions();
             } else {
                 alert('Kode bank soal salah. Silakan coba lagi.');
             }
@@ -2358,198 +2334,6 @@
             filterQuestions();
             
             alert('Soal berhasil ditambahkan ke bank soal!');
-        }
-
-        async function generateQuestionsWithAI() {
-            // Ganti API Key di bawah ini dengan API Key OpenAI Anda
-            // TEMPAT UNTUK MEMASUKKAN API KEY SECARA MANUAL
-            // Ganti nilai apiKey dengan API Key OpenAI Anda yang valid
-            const apiKey = document.getElementById('ai-api-key').value.trim() || "sk-proj-XXXXXXXXXXXXXXXXXXXXXXXX";
-            const prompt = document.getElementById('ai-prompt').value.trim();
-            const category = document.getElementById('question-category').value;
-            
-            if (!apiKey || apiKey === "sk-proj-XXXXXXXXXXXXXXXXXXXXXXXX") {
-                alert('Masukkan API Key AI yang valid terlebih dahulu');
-                return;
-            }
-            
-            if (!prompt) {
-                alert('Masukkan prompt untuk generate soal');
-                return;
-            }
-            
-            // Show loading indicator
-            const generateBtn = document.getElementById('generate-questions-btn');
-            const generateText = document.getElementById('generate-text');
-            const generateLoading = document.getElementById('generate-loading');
-            
-            generateText.style.display = 'none';
-            generateLoading.style.display = 'inline-block';
-            generateBtn.disabled = true;
-            
-            const aiResponse = document.getElementById('ai-response');
-            aiResponse.innerHTML = '';
-            aiResponse.style.display = 'block';
-            
-            try {
-                // Validate API key format
-                if (!apiKey.startsWith('sk-') || apiKey.length < 30) {
-                    throw new Error('Format API Key tidak valid. Pastikan Anda menggunakan OpenAI API key yang benar.');
-                }
-                
-                // Prepare system message
-                const systemMessage = `Anda adalah asisten yang ahli dalam membuat soal ujian pilihan ganda untuk ${category}. 
-                Buatlah soal dengan format yang jelas dan berikan penjelasan untuk jawaban yang benar. 
-                Format output harus berupa:
-                
-                1. Pertanyaan
-                A. Opsi A
-                B. Opsi B
-                C. Opsi C
-                D. Opsi D
-                E. Opsi E
-                
-                Jawaban: [Huruf opsi yang benar]
-                
-                Penjelasan: [Penjelasan singkat mengapa jawaban tersebut benar]`;
-                
-                // Call OpenAI API
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
-                    },
-                    body: JSON.stringify({
-                        model: "gpt-3.5-turbo",
-                        messages: [
-                            {
-                                role: "system",
-                                content: systemMessage
-                            },
-                            {
-                                role: "user",
-                                content: prompt
-                            }
-                        ],
-                        temperature: 0.7
-                    })
-                });
-                
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error?.message || 'Gagal memproses permintaan ke OpenAI API');
-                }
-                
-                const data = await response.json();
-                const content = data.choices[0]?.message?.content;
-                
-                if (!content) {
-                    throw new Error('Tidak mendapatkan respons yang valid dari AI');
-                }
-                
-                // Display the generated content
-                aiResponse.innerHTML = `
-                    <h5>Soal yang Dihasilkan:</h5>
-                    <div class="question-item">
-                        <pre>${content}</pre>
-                    </div>
-                    <button id="save-ai-questions" class="btn btn-success" style="margin-top: 10px;">
-                        Simpan Soal ke Bank
-                    </button>
-                `;
-                
-                // Add event listener for save button
-                document.getElementById('save-ai-questions').addEventListener('click', () => {
-                    try {
-                        if (!SAMPLE_QUESTIONS[category]) {
-                            SAMPLE_QUESTIONS[category] = [];
-                        }
-                        
-                        // Parse the AI response
-                        const questionBlocks = content.split('\n\n').filter(block => block.trim() !== '');
-                        
-                        let questionsAdded = 0;
-                        
-                        questionBlocks.forEach(block => {
-                            const lines = block.split('\n').map(line => line.trim()).filter(line => line !== '');
-                            if (lines.length < 7) return;
-                            
-                            const questionMatch = lines[0].match(/^\d+\.\s*(.+)/);
-                            if (!questionMatch) return;
-                            
-                            const question = questionMatch[1];
-                            const options = [];
-                            
-                            // Extract options A-E
-                            for (let i = 1; i <= 5; i++) {
-                                const optionLine = lines[i];
-                                if (optionLine && /^[A-E]\.\s/.test(optionLine)) {
-                                    options.push(optionLine);
-                                } else {
-                                    return; // Skip if options are incomplete
-                                }
-                            }
-                            
-                            // Find answer line
-                            const answerLine = lines.find(line => line.startsWith('Jawaban:'));
-                            if (!answerLine) return;
-                            
-                            const answerMatch = answerLine.match(/Jawaban:\s*([A-E])/i);
-                            if (!answerMatch) return;
-                            
-                            const correctAnswer = answerMatch[1].toUpperCase();
-                            const correctIndex = correctAnswer.charCodeAt(0) - 65; // A=0, B=1, etc.
-                            
-                            // Find explanation line
-                            const explanationLine = lines.find(line => line.startsWith('Penjelasan:'));
-                            const explanation = explanationLine ? explanationLine.replace('Penjelasan:', '').trim() : 'Tidak ada penjelasan';
-                            
-                            // Add to question bank
-                            SAMPLE_QUESTIONS[category].push({
-                                question: question,
-                                options: options,
-                                correctAnswer: correctIndex,
-                                explanation: explanation
-                            });
-                            
-                            questionsAdded++;
-                        });
-                        
-                        if (questionsAdded > 0) {
-                            filterQuestions();
-                            alert(`Berhasil menambahkan ${questionsAdded} soal ke bank soal ${category}`);
-                            aiResponse.style.display = 'none';
-                        } else {
-                            alert('Tidak ada soal yang valid untuk disimpan. Pastikan format sesuai.');
-                        }
-                        
-                    } catch (error) {
-                        console.error('Error saving AI questions:', error);
-                        alert('Gagal menyimpan soal: ' + error.message);
-                    }
-                });
-                
-            } catch (error) {
-                console.error('Error generating questions:', error);
-                aiResponse.innerHTML = `
-                    <div style="color: var(--color-error);">
-                        <h5>Error:</h5>
-                        <p>${error.message}</p>
-                        <p>Pastikan:</p>
-                        <ul>
-                            <li>API Key valid dan aktif</li>
-                            <li>Koneksi internet stabil</li>
-                            <li>Format prompt jelas dan lengkap</li>
-                        </ul>
-                        <p>Dapatkan API Key dari <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a></p>
-                    </div>
-                `;
-            } finally {
-                generateText.style.display = 'inline';
-                generateLoading.style.display = 'none';
-                generateBtn.disabled = false;
-            }
         }
 
         function filterQuestions() {
