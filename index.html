@@ -981,7 +981,7 @@
             </div>
             
             <div id="greeting-message">
-                <p id="greeting-text">Selamat datang di sistem ujian online PERGUNU Situbondo. Silakan masukkan kode login 12345 untuk melanjutkan.</p>
+                <p id="greeting-text">Selamat datang di sistem ujian online PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.</p>
             </div>
             
             <div class="form-group">
@@ -1800,6 +1800,31 @@
         // Store participants data
         let participantsData = JSON.parse(localStorage.getItem('participantsData')) || [];
         
+        // Store admin settings
+        let adminSettings = JSON.parse(localStorage.getItem('adminSettings')) || {
+            loginCode: DEFAULT_LOGIN_CODE,
+            questionBankCode: DEFAULT_QUESTION_BANK_CODE,
+            adminCode: DEFAULT_ADMIN_PANEL_CODE,
+            examDuration: 120,
+            questionCount: 20,
+            randomizeQuestions: true,
+            greetingMessage: "Selamat datang di sistem ujian online PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.",
+            adminMessage: "Tidak ada informasi terbaru saat ini.",
+            chairmanName: "Moh. Nuril Hudha, S.Pd., M.Si.",
+            enabledSubjects: {
+                AGAMA: true,
+                PPKN: true,
+                SEJARAH: true,
+                IPA: true,
+                IPS: true,
+                MATEMATIKA: true,
+                BAHASA_INDONESIA: true,
+                BAHASA_INGGRIS: true,
+                MATERI_EXTRA: true,
+                MATERI_KHUSUS: true
+            }
+        };
+        
         // Sample questions for demonstration
         let SAMPLE_QUESTIONS = JSON.parse(localStorage.getItem('questionBank')) || {
             'AGAMA': [
@@ -2079,6 +2104,13 @@
                 "retina_detect": true
             });
             
+            // Load admin settings
+            loadAdminSettings();
+            
+            // Set greeting message from admin settings
+            document.getElementById('greeting-text').textContent = adminSettings.greetingMessage;
+            document.getElementById('admin-message').textContent = adminSettings.adminMessage;
+            
             // Event listeners for buttons with sound
             document.querySelectorAll('button').forEach(button => {
                 button.addEventListener('click', function() {
@@ -2166,8 +2198,6 @@
             document.getElementById('save-codes-btn').addEventListener('click', saveCodes);
             document.getElementById('save-content-btn').addEventListener('click', saveContent);
             document.getElementById('save-settings-btn').addEventListener('click', saveSettings);
-            document.getElementById('export-excel-btn').addEventListener('click', exportToExcel);
-            document.getElementById('export-pdf-btn').addEventListener('click', exportToPDF);
             
             // Participant management buttons
             document.getElementById('select-all-participants').addEventListener('click', toggleSelectAllParticipants);
@@ -2190,10 +2220,62 @@
         });
         
         // Functions
+        function loadAdminSettings() {
+            // Load exam duration
+            document.getElementById('exam-duration').value = adminSettings.examDuration;
+            
+            // Load question count
+            document.getElementById('question-count').value = adminSettings.questionCount;
+            
+            // Load randomize questions setting
+            document.getElementById('randomize-questions').checked = adminSettings.randomizeQuestions;
+            document.getElementById('randomize-status').textContent = adminSettings.randomizeQuestions ? 'Aktif' : 'Nonaktif';
+            
+            // Load greeting message
+            document.getElementById('greeting-message-input').value = adminSettings.greetingMessage;
+            
+            // Load admin message
+            document.getElementById('admin-message-input').value = adminSettings.adminMessage;
+            
+            // Load chairman name
+            document.getElementById('chairman-name').value = adminSettings.chairmanName;
+            
+            // Load subject toggles
+            document.getElementById('toggle-religion').checked = adminSettings.enabledSubjects.AGAMA;
+            document.getElementById('religion-status').textContent = adminSettings.enabledSubjects.AGAMA ? 'Aktif' : 'Nonaktif';
+            
+            document.getElementById('toggle-civics').checked = adminSettings.enabledSubjects.PPKN;
+            document.getElementById('civics-status').textContent = adminSettings.enabledSubjects.PPKN ? 'Aktif' : 'Nonaktif';
+            
+            document.getElementById('toggle-history').checked = adminSettings.enabledSubjects.SEJARAH;
+            document.getElementById('history-status').textContent = adminSettings.enabledSubjects.SEJARAH ? 'Aktif' : 'Nonaktif';
+            
+            document.getElementById('toggle-science').checked = adminSettings.enabledSubjects.IPA;
+            document.getElementById('science-status').textContent = adminSettings.enabledSubjects.IPA ? 'Aktif' : 'Nonaktif';
+            
+            document.getElementById('toggle-social').checked = adminSettings.enabledSubjects.IPS;
+            document.getElementById('social-status').textContent = adminSettings.enabledSubjects.IPS ? 'Aktif' : 'Nonaktif';
+            
+            document.getElementById('toggle-math').checked = adminSettings.enabledSubjects.MATEMATIKA;
+            document.getElementById('math-status').textContent = adminSettings.enabledSubjects.MATEMATIKA ? 'Aktif' : 'Nonaktif';
+            
+            document.getElementById('toggle-indonesian').checked = adminSettings.enabledSubjects.BAHASA_INDONESIA;
+            document.getElementById('indonesian-status').textContent = adminSettings.enabledSubjects.BAHASA_INDONESIA ? 'Aktif' : 'Nonaktif';
+            
+            document.getElementById('toggle-english').checked = adminSettings.enabledSubjects.BAHASA_INGGRIS;
+            document.getElementById('english-status').textContent = adminSettings.enabledSubjects.BAHASA_INGGRIS ? 'Aktif' : 'Nonaktif';
+            
+            document.getElementById('toggle-extra').checked = adminSettings.enabledSubjects.MATERI_EXTRA;
+            document.getElementById('extra-status').textContent = adminSettings.enabledSubjects.MATERI_EXTRA ? 'Aktif' : 'Nonaktif';
+            
+            document.getElementById('toggle-special').checked = adminSettings.enabledSubjects.MATERI_KHUSUS;
+            document.getElementById('special-status').textContent = adminSettings.enabledSubjects.MATERI_KHUSUS ? 'Aktif' : 'Nonaktif';
+        }
+        
         function handleLogin() {
             const loginCode = document.getElementById('login-code').value;
             
-            if (loginCode === DEFAULT_LOGIN_CODE) {
+            if (loginCode === adminSettings.loginCode) {
                 // Play opening sound
                 openingSound.play().catch(e => console.log("Opening sound prevented:", e));
                 
@@ -2368,6 +2450,13 @@
                 questions = SAMPLE_QUESTIONS['AGAMA'];
             }
             
+            // Randomize questions if setting is enabled
+            if (adminSettings.randomizeQuestions) {
+                questions = shuffleArray(questions).slice(0, adminSettings.questionCount);
+            } else {
+                questions = questions.slice(0, adminSettings.questionCount);
+            }
+            
             // Initialize exam data
             examData = {
                 startTime: new Date(),
@@ -2377,6 +2466,9 @@
                 unanswered: questions.length,
                 answers: Array(questions.length).fill(null)
             };
+            
+            // Set exam time from admin settings
+            examTimeLeft = adminSettings.examDuration * 60;
             
             // Hide participant form with slide out animation
             document.getElementById('participant-form').classList.add('slide-out');
@@ -2394,6 +2486,15 @@
                 // Load first question
                 loadQuestion(0);
             }, 500);
+        }
+        
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
         }
         
         function startTimer() {
@@ -2666,7 +2767,7 @@
                         <p>Ditetapkan di: Situbondo, ${now.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                         <div class="certificate-signature">
                             <p>Ketua Pergunu Situbondo</p>
-                            <p><strong>Moh. Nuril Hudha, S.Pd., M.Si.</strong></p>
+                            <p><strong>${adminSettings.chairmanName}</strong></p>
                         </div>
                         <img src="https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/BARCODE.png" alt="Barcode" class="certificate-barcode">
                     </div>
@@ -2741,7 +2842,7 @@
                 currentScreen = 'participant';
                 
                 // Reset timer
-                examTimeLeft = 120 * 60;
+                examTimeLeft = adminSettings.examDuration * 60;
             }, 500);
         }
         
@@ -2769,7 +2870,7 @@
         function submitQuestionBankCode() {
             const code = document.getElementById('question-bank-code').value;
             
-            if (code === DEFAULT_QUESTION_BANK_CODE) {
+            if (code === adminSettings.questionBankCode) {
                 // Show question bank content
                 document.getElementById('question-bank-content').style.display = 'block';
                 filterQuestions();
@@ -2789,7 +2890,7 @@
         function submitAdminPanelCode() {
             const code = document.getElementById('admin-panel-code').value;
             
-            if (code === DEFAULT_ADMIN_PANEL_CODE) {
+            if (code === adminSettings.adminCode) {
                 // Show admin panel content
                 document.getElementById('admin-panel-content').style.display = 'block';
             } else {
@@ -3385,16 +3486,25 @@
             const newQuestionBankCode = document.getElementById('new-question-bank-code').value;
             const newAdminCode = document.getElementById('new-admin-code').value;
             
-            if (newLoginCode || newQuestionBankCode || newAdminCode) {
-                alert('Kode berhasil diubah! (Catatan: Dalam versi demo ini, perubahan kode tidak akan disimpan secara permanen)');
-                
-                // Clear the fields
+            if (newLoginCode) {
+                adminSettings.loginCode = newLoginCode;
                 document.getElementById('new-login-code').value = '';
-                document.getElementById('new-question-bank-code').value = '';
-                document.getElementById('new-admin-code').value = '';
-            } else {
-                alert('Silakan masukkan setidaknya satu kode baru');
             }
+            
+            if (newQuestionBankCode) {
+                adminSettings.questionBankCode = newQuestionBankCode;
+                document.getElementById('new-question-bank-code').value = '';
+            }
+            
+            if (newAdminCode) {
+                adminSettings.adminCode = newAdminCode;
+                document.getElementById('new-admin-code').value = '';
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
+            
+            alert('Kode berhasil diubah!');
         }
         
         function saveContent() {
@@ -3402,30 +3512,49 @@
             const adminMessage = document.getElementById('admin-message-input').value;
             const chairmanName = document.getElementById('chairman-name').value;
             
+            // Update admin settings
+            adminSettings.greetingMessage = greetingMessage;
+            adminSettings.adminMessage = adminMessage;
+            adminSettings.chairmanName = chairmanName;
+            
+            // Update UI
             document.getElementById('greeting-text').textContent = greetingMessage;
             document.getElementById('admin-message').textContent = adminMessage;
+            
+            // Save to localStorage
+            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
             
             alert('Perubahan konten berhasil disimpan!');
         }
         
         function saveSettings() {
-            const examDuration = document.getElementById('exam-duration').value;
-            const questionCount = document.getElementById('question-count').value;
+            const examDuration = parseInt(document.getElementById('exam-duration').value);
+            const questionCount = parseInt(document.getElementById('question-count').value);
             const randomizeQuestions = document.getElementById('randomize-questions').checked;
             
-            examTimeLeft = examDuration * 60;
+            // Update admin settings
+            adminSettings.examDuration = examDuration;
+            adminSettings.questionCount = questionCount;
+            adminSettings.randomizeQuestions = randomizeQuestions;
             
-            alert('Pengaturan ujian berhasil disimpan!');
-        }
-        
-        function exportToExcel() {
-            // In a real implementation, this would generate an Excel file
-            alert('Fitur export ke Excel akan mengunduh file Excel dengan data peserta.');
-        }
-        
-        function exportToPDF() {
-            // In a real implementation, this would generate a PDF file
-            alert('Fitur export ke PDF akan mengunduh file PDF dengan data peserta.');
+            // Update subject toggles
+            adminSettings.enabledSubjects = {
+                AGAMA: document.getElementById('toggle-religion').checked,
+                PPKN: document.getElementById('toggle-civics').checked,
+                SEJARAH: document.getElementById('toggle-history').checked,
+                IPA: document.getElementById('toggle-science').checked,
+                IPS: document.getElementById('toggle-social').checked,
+                MATEMATIKA: document.getElementById('toggle-math').checked,
+                BAHASA_INDONESIA: document.getElementById('toggle-indonesian').checked,
+                BAHASA_INGGRIS: document.getElementById('toggle-english').checked,
+                MATERI_EXTRA: document.getElementById('toggle-extra').checked,
+                MATERI_KHUSUS: document.getElementById('toggle-special').checked
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
+            
+            alert('Pengaturan berhasil disimpan!');
         }
     </script>
 </body>
