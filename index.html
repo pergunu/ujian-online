@@ -1131,7 +1131,7 @@
                 
                 <div class="form-group">
                     <p>Untuk ujian umum, silakan kunjungi link berikut:</p>
-                    <a href="https://pergunu.github.io/ujian-umum/" class="btn btn-info" target="_blank">Ujian Umum</a>
+                    <a href="https://pergunu.github.io/pergunusmart/" class="btn btn-info" target="_blank">Ujian Umum</a>
                 </div>
             </div>
             
@@ -2410,6 +2410,7 @@
             radioLabel.className = 'radio-label';
             radioLabel.innerHTML = label;
             
+            // Add event listener for grade selection
             radio.addEventListener('change', function() {
                 document.getElementById('subject-selection').style.display = 'block';
                 checkParticipantFormValidity();
