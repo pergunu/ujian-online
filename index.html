@@ -897,6 +897,19 @@
             flex-wrap: wrap;
         }
 
+        /* Search Box */
+        .search-box {
+            margin-bottom: 15px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
         /* Edit Question Modal */
         .edit-question-modal {
             display: none;
@@ -965,6 +978,31 @@
             font-size: 24px;
             cursor: pointer;
             color: #666;
+        }
+
+        /* Certificate Validation Section */
+        .certificate-validation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+        }
+
+        .validation-result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .valid-certificate {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+
+        .invalid-certificate {
+            background-color: #f2dede;
+            color: #a94442;
         }
     </style>
 </head>
@@ -1046,7 +1084,7 @@
                 
                 <div class="form-group">
                     <label for="student-id" class="form-label">NIS (Nomor Induk Siswa)</label>
-                    <input type="number" id="student-id" class="form-control" placeholder="Masukkan NIS">
+                    <input type="text" id="student-id" class="form-control" placeholder="Masukkan NIS">
                 </div>
                 
                 <div class="form-group">
@@ -1435,6 +1473,9 @@
                     
                     <div class="admin-section">
                         <h5>Manajemen Peserta</h5>
+                        <div class="search-box">
+                            <input type="text" id="participant-search" class="search-input" placeholder="Cari peserta berdasarkan nama, NIS, atau kode sertifikat...">
+                        </div>
                         <div class="participant-actions">
                             <button id="select-all-participants" class="btn btn-info">
                                 <input type="checkbox" id="select-all-checkbox" class="select-all-checkbox">
@@ -1462,17 +1503,33 @@
                                         </th>
                                         <th>Tanggal</th>
                                         <th>Nama</th>
+                                        <th>NIS</th>
                                         <th>Status</th>
                                         <th>Tingkat</th>
                                         <th>Kelas</th>
                                         <th>Mata Ujian</th>
                                         <th>Nilai</th>
+                                        <th>Kode Sertifikat</th>
                                     </tr>
                                 </thead>
                                 <tbody id="participants-table-body">
                                     <!-- Participant data will be loaded here -->
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-section">
+                        <h5>Validasi Sertifikat</h5>
+                        <div class="certificate-validation">
+                            <div class="form-group">
+                                <label class="form-label">Masukkan Kode Sertifikat</label>
+                                <input type="text" id="certificate-code-input" class="form-control" placeholder="Masukkan kode sertifikat" style="color: #333;">
+                                <button id="validate-certificate-btn" class="btn btn-info">Validasi</button>
+                            </div>
+                            <div id="validation-result" class="validation-result" style="display: none;">
+                                <!-- Validation result will be shown here -->
+                            </div>
                         </div>
                     </div>
                     
@@ -1681,7 +1738,7 @@
                 
                 <div class="form-group">
                     <label for="edit-student-id" class="form-label">NIS (Nomor Induk Siswa)</label>
-                    <input type="number" id="edit-student-id" class="form-control" style="color: #333;">
+                    <input type="text" id="edit-student-id" class="form-control" style="color: #333;">
                 </div>
                 
                 <div class="form-group">
@@ -1752,6 +1809,11 @@
             <div class="form-group">
                 <label for="edit-score" class="form-label">Nilai</label>
                 <input type="number" id="edit-score" class="form-control" min="0" max="100" style="color: #333;">
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-certificate-code" class="form-label">Kode Sertifikat</label>
+                <input type="text" id="edit-certificate-code" class="form-control" style="color: #333;" readonly>
             </div>
             
             <button id="save-edit-participant-btn" class="btn btn-success">Simpan Perubahan</button>
@@ -2205,6 +2267,10 @@
             document.getElementById('delete-selected-participants').addEventListener('click', deleteSelectedParticipants);
             document.getElementById('export-selected-excel').addEventListener('click', exportSelectedToExcel);
             document.getElementById('export-selected-pdf').addEventListener('click', exportSelectedToPDF);
+            document.getElementById('validate-certificate-btn').addEventListener('click', validateCertificate);
+            
+            // Search functionality
+            document.getElementById('participant-search').addEventListener('input', searchParticipants);
             
             // Edit participant form
             document.getElementById('save-edit-participant-btn').addEventListener('click', saveEditedParticipant);
@@ -2665,12 +2731,16 @@
             // Calculate unanswered questions
             examData.unanswered = examData.answers.filter(answer => answer === null).length;
             
+            // Generate certificate code
+            const certificateCode = generateUniqueCode();
+            
             // Add participant to data store
             const score = Math.round((examData.correct / questions.length) * 100);
             participantsData.push({
                 ...participantData,
                 score: score,
-                examDate: new Date().toISOString()
+                examDate: new Date().toISOString(),
+                certificateCode: certificateCode
             });
             localStorage.setItem('participantsData', JSON.stringify(participantsData));
             
@@ -2688,7 +2758,7 @@
                 displayResults();
                 
                 // Generate certificate
-                generateCertificate();
+                generateCertificate(certificateCode);
                 
                 // Show celebration particles
                 showCelebration();
@@ -2715,7 +2785,7 @@
             document.getElementById('exam-score').textContent = `${score}%`;
         }
         
-        function generateCertificate() {
+        function generateCertificate(certificateCode) {
             const certificateContainer = document.getElementById('certificate-container');
             certificateContainer.innerHTML = '';
             
@@ -2729,9 +2799,6 @@
                 month: '2-digit',
                 year: 'numeric'
             }).replace(/\//g, '');
-            
-            // Generate unique code
-            const uniqueCode = generateUniqueCode();
             
             // Get motivational message based on score
             let motivation = '';
@@ -2750,7 +2817,7 @@
             certificate.innerHTML = `
                 <div class="certificate-content">
                     <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
-                    <p class="certificate-code">${formatName(participantData.fullname)}/${participantData.status.toUpperCase()}/${participantData.level || 'UMUM'}/${participantData.subject || 'UMUM'}/${dateString}/${uniqueCode}/PERGUNU-STB</p>
+                    <p class="certificate-code">${formatName(participantData.fullname)}/${participantData.status.toUpperCase()}/${participantData.level || 'UMUM'}/${participantData.subject || 'UMUM'}/${dateString}/${certificateCode}/PERGUNU-STB</p>
                     <p>Diberikan Kepada</p>
                     <h2 class="certificate-recipient">${formatName(participantData.fullname)}</h2>
                     <p class="certificate-body">
@@ -3162,7 +3229,7 @@
             tableBody.innerHTML = '';
             
             if (participantsData.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="8" style="text-align: center;">Belum ada data peserta</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="10" style="text-align: center;">Belum ada data peserta</td></tr>';
                 return;
             }
             
@@ -3188,11 +3255,13 @@
                     </td>
                     <td>${dateStr}</td>
                     <td>${participant.fullname}</td>
+                    <td>${participant.studentId || '-'}</td>
                     <td>${participant.status === 'pelajar' ? 'Pelajar' : 'Umum'}</td>
                     <td>${participant.level || '-'}</td>
                     <td>${participant.grade ? `Kelas ${participant.grade}` : '-'}</td>
                     <td>${participant.subject || '-'}</td>
                     <td>${participant.score}%</td>
+                    <td>${participant.certificateCode || '-'}</td>
                 `;
                 
                 tableBody.appendChild(row);
@@ -3330,6 +3399,9 @@
             
             // Set score
             document.getElementById('edit-score').value = participant.score;
+            
+            // Set certificate code
+            document.getElementById('edit-certificate-code').value = participant.certificateCode || '-';
             
             // Store index for saving
             document.getElementById('edit-participant-index').value = index;
@@ -3479,6 +3551,57 @@
             
             // In a real implementation, this would generate a PDF file
             alert(`Fitur export ke PDF akan mengunduh file dengan ${selectedParticipants.length} peserta terpilih.`);
+        }
+        
+        function searchParticipants() {
+            const searchTerm = document.getElementById('participant-search').value.toLowerCase();
+            const rows = document.querySelectorAll('#participants-table-body tr');
+            
+            rows.forEach(row => {
+                const index = parseInt(row.dataset.index);
+                const participant = participantsData[index];
+                const rowText = `
+                    ${participant.fullname.toLowerCase()} 
+                    ${participant.studentId || ''} 
+                    ${participant.certificateCode || ''}
+                `;
+                
+                if (rowText.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+        function validateCertificate() {
+            const code = document.getElementById('certificate-code-input').value.trim();
+            const validationResult = document.getElementById('validation-result');
+            
+            if (!code) {
+                alert('Silakan masukkan kode sertifikat');
+                return;
+            }
+            
+            // Find participant with this certificate code
+            const participant = participantsData.find(p => p.certificateCode === code);
+            
+            if (participant) {
+                validationResult.innerHTML = `
+                    <p class="valid-certificate">Sertifikat Valid!</p>
+                    <p>Nama: ${participant.fullname}</p>
+                    <p>Status: ${participant.status === 'pelajar' ? 'Pelajar' : 'Umum'}</p>
+                    <p>Tingkat: ${participant.level || '-'}</p>
+                    <p>Kelas: ${participant.grade ? `Kelas ${participant.grade}` : '-'}</p>
+                    <p>Mata Ujian: ${participant.subject || '-'}</p>
+                    <p>Nilai: ${participant.score}%</p>
+                    <p>Tanggal Ujian: ${new Date(participant.examDate).toLocaleDateString('id-ID')}</p>
+                `;
+                validationResult.style.display = 'block';
+            } else {
+                validationResult.innerHTML = '<p class="invalid-certificate">Sertifikat Tidak Valid!</p>';
+                validationResult.style.display = 'block';
+            }
         }
         
         function saveCodes() {
