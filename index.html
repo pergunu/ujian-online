@@ -1061,7 +1061,7 @@
             
             <div class="form-group">
                 <label for="fullname" class="form-label">Nama Lengkap</label>
-                <input type="text" id="fullname" class="form-control" placeholder="Masukkan nama lengkap">
+                <input type="text" id="fullname" class="form-control" placeholder="Masukkan nama lengkap" pattern="[A-Za-z ]+" title="Hanya huruf diperbolehkan" required>
             </div>
             
             <div class="form-group">
@@ -1084,7 +1084,7 @@
                 
                 <div class="form-group">
                     <label for="student-id" class="form-label">NIS (Nomor Induk Siswa)</label>
-                    <input type="text" id="student-id" class="form-control" placeholder="Masukkan NIS">
+                    <input type="text" id="student-id" class="form-control" placeholder="Masukkan NIS" pattern="[0-9]+" title="Hanya angka diperbolehkan" required>
                 </div>
                 
                 <div class="form-group">
@@ -1247,11 +1247,6 @@
     
     <!-- Floating Buttons -->
     <div class="floating-buttons">
-        <button class="floating-btn" id="share-btn">
-            <i class="fas fa-share-alt"></i>
-            <span class="tooltip">Bagikan</span>
-        </button>
-        
         <button class="floating-btn" id="whatsapp-btn">
             <i class="fab fa-whatsapp"></i>
             <span class="tooltip">Chat Admin</span>
@@ -1269,26 +1264,6 @@
     </div>
     
     <!-- Modals -->
-    <!-- Share Modal -->
-    <div class="modal" id="share-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Bagikan Ujian Online</h3>
-                <button class="modal-close" id="close-share-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Bagikan link ujian online ini melalui:</p>
-                <div class="share-options">
-                    <button class="btn" id="share-facebook"><i class="fab fa-facebook-f"></i> Facebook</button>
-                    <button class="btn" id="share-twitter"><i class="fab fa-twitter"></i> Twitter</button>
-                    <button class="btn" id="share-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
-                    <button class="btn" id="share-telegram"><i class="fab fa-telegram-plane"></i> Telegram</button>
-                    <button class="btn" id="copy-link"><i class="fas fa-copy"></i> Salin Link</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
     <!-- Question Bank Modal -->
     <div class="modal" id="question-bank-modal">
         <div class="modal-content">
@@ -1486,12 +1461,6 @@
                             </button>
                             <button id="delete-selected-participants" class="btn btn-danger" disabled>
                                 <i class="fas fa-trash"></i> Hapus Terpilih
-                            </button>
-                            <button id="export-selected-excel" class="btn btn-success" disabled>
-                                <i class="fas fa-file-excel"></i> Export Excel
-                            </button>
-                            <button id="export-selected-pdf" class="btn btn-danger" disabled>
-                                <i class="fas fa-file-pdf"></i> Export PDF
                             </button>
                         </div>
                         <div class="participant-list">
@@ -1716,7 +1685,7 @@
             
             <div class="form-group">
                 <label for="edit-fullname" class="form-label">Nama Lengkap</label>
-                <input type="text" id="edit-fullname" class="form-control" style="color: #333;">
+                <input type="text" id="edit-fullname" class="form-control" style="color: #333;" pattern="[A-Za-z ]+" title="Hanya huruf diperbolehkan" required>
             </div>
             
             <div class="form-group">
@@ -1738,7 +1707,7 @@
                 
                 <div class="form-group">
                     <label for="edit-student-id" class="form-label">NIS (Nomor Induk Siswa)</label>
-                    <input type="text" id="edit-student-id" class="form-control" style="color: #333;">
+                    <input type="text" id="edit-student-id" class="form-control" style="color: #333;" pattern="[0-9]+" title="Hanya angka diperbolehkan" required>
                 </div>
                 
                 <div class="form-group">
@@ -1832,7 +1801,7 @@
     <audio id="correct-answer-sound" src="https://github.com/pergunu/pergunusmart/raw/main/assets/audio/jawabanbenar.mp3" preload="auto"></audio>
     <audio id="wrong-answer-sound" src="https://github.com/pergunu/pergunusmart/raw/main/assets/audio/jawabansalah.mp3" preload="auto"></audio>
     <audio id="certificate-sound" src="https://github.com/pergunu/pergunusmart/raw/main/assets/audio/applause.mp3" preload="auto"></audio>
-    <audio id="opening-sound" src="https://voca.ro/1a8eWbggFzfB" preload="auto"></audio>
+    <audio id="opening-sound" src="https://github.com/pergunu/ujian-online/raw/main/assets/audio/opening.mp3" preload="auto"></audio>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
@@ -2207,13 +2176,11 @@
             document.getElementById('retake-exam-btn').addEventListener('click', retakeExam);
             
             // Floating buttons
-            document.getElementById('share-btn').addEventListener('click', showShareModal);
             document.getElementById('whatsapp-btn').addEventListener('click', contactAdmin);
             document.getElementById('question-bank-btn').addEventListener('click', showQuestionBankModal);
             document.getElementById('admin-panel-btn').addEventListener('click', showAdminPanelModal);
             
             // Modal close buttons
-            document.getElementById('close-share-modal').addEventListener('click', hideShareModal);
             document.getElementById('close-question-bank-modal').addEventListener('click', hideQuestionBankModal);
             document.getElementById('close-admin-panel-modal').addEventListener('click', hideAdminPanelModal);
             document.getElementById('close-edit-question-modal').addEventListener('click', hideEditQuestionModal);
@@ -2224,7 +2191,12 @@
             document.getElementById('submit-admin-panel-code').addEventListener('click', submitAdminPanelCode);
             
             // Check form validity when fields change
-            document.getElementById('fullname').addEventListener('input', checkParticipantFormValidity);
+            document.getElementById('fullname').addEventListener('input', function() {
+                // Convert input to uppercase automatically
+                this.value = this.value.toUpperCase();
+                checkParticipantFormValidity();
+            });
+            
             document.getElementById('school-name').addEventListener('input', checkParticipantFormValidity);
             document.getElementById('student-id').addEventListener('input', checkParticipantFormValidity);
             document.querySelectorAll('input[name="purpose"]').forEach(radio => {
@@ -2265,8 +2237,6 @@
             document.getElementById('select-all-participants').addEventListener('click', toggleSelectAllParticipants);
             document.getElementById('edit-selected-participants').addEventListener('click', editSelectedParticipants);
             document.getElementById('delete-selected-participants').addEventListener('click', deleteSelectedParticipants);
-            document.getElementById('export-selected-excel').addEventListener('click', exportSelectedToExcel);
-            document.getElementById('export-selected-pdf').addEventListener('click', exportSelectedToPDF);
             document.getElementById('validate-certificate-btn').addEventListener('click', validateCertificate);
             
             // Search functionality
@@ -2283,6 +2253,11 @@
             
             // Load participants data for admin panel
             loadParticipantsData();
+            
+            // Auto uppercase for edit fullname field
+            document.getElementById('edit-fullname').addEventListener('input', function() {
+                this.value = this.value.toUpperCase();
+            });
         });
         
         // Functions
@@ -2449,7 +2424,8 @@
             let isValid = true;
             
             // Check common fields
-            if (!document.getElementById('fullname').value.trim()) {
+            const fullname = document.getElementById('fullname').value.trim();
+            if (!fullname || !/^[A-Za-z ]+$/.test(fullname)) {
                 isValid = false;
             }
             
@@ -2459,7 +2435,8 @@
                     isValid = false;
                 }
                 
-                if (!document.getElementById('student-id').value.trim()) {
+                const studentId = document.getElementById('student-id').value.trim();
+                if (!studentId || !/^[0-9]+$/.test(studentId)) {
                     isValid = false;
                 }
                 
@@ -2913,14 +2890,6 @@
             }, 500);
         }
         
-        function showShareModal() {
-            document.getElementById('share-modal').style.display = 'flex';
-        }
-        
-        function hideShareModal() {
-            document.getElementById('share-modal').style.display = 'none';
-        }
-        
         function contactAdmin() {
             const message = encodeURIComponent("Assalamualaikum mas admin, saya mau tanya sesuatu nih...");
             window.open(`https://wa.me/6285647709114?text=${message}`, '_blank');
@@ -3331,8 +3300,6 @@
             
             document.getElementById('edit-selected-participants').disabled = !hasSelection;
             document.getElementById('delete-selected-participants').disabled = !hasSelection;
-            document.getElementById('export-selected-excel').disabled = !hasSelection;
-            document.getElementById('export-selected-pdf').disabled = !hasSelection;
         }
         
         function editSelectedParticipants() {
@@ -3531,26 +3498,6 @@
             loadParticipantsData();
             
             alert(`${sortedIndices.length} peserta berhasil dihapus!`);
-        }
-        
-        function exportSelectedToExcel() {
-            if (selectedParticipants.length === 0) return;
-            
-            // Get selected participants data
-            const selectedData = selectedParticipants.map(index => participantsData[index]);
-            
-            // In a real implementation, this would generate an Excel file
-            alert(`Fitur export ke Excel akan mengunduh file dengan ${selectedParticipants.length} peserta terpilih.`);
-        }
-        
-        function exportSelectedToPDF() {
-            if (selectedParticipants.length === 0) return;
-            
-            // Get selected participants data
-            const selectedData = selectedParticipants.map(index => participantsData[index]);
-            
-            // In a real implementation, this would generate a PDF file
-            alert(`Fitur export ke PDF akan mengunduh file dengan ${selectedParticipants.length} peserta terpilih.`);
         }
         
         function searchParticipants() {
