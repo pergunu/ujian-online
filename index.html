@@ -1829,10 +1829,10 @@
         const DEFAULT_ADMIN_PANEL_CODE = '65614222';
         
         // Store participants data
-        let participantsData = JSON.parse(localStorage.getItem('participantsData')) || [];
+        let participantsData = JSON.parse(localStorage.getItem('pergunuParticipantsData')) || [];
         
         // Store admin settings
-        let adminSettings = JSON.parse(localStorage.getItem('adminSettings')) || {
+        let adminSettings = JSON.parse(localStorage.getItem('pergunuAdminSettings')) || {
             loginCode: DEFAULT_LOGIN_CODE,
             questionBankCode: DEFAULT_QUESTION_BANK_CODE,
             adminCode: DEFAULT_ADMIN_PANEL_CODE,
@@ -1857,7 +1857,7 @@
         };
         
         // Sample questions for demonstration
-        let SAMPLE_QUESTIONS = JSON.parse(localStorage.getItem('questionBank')) || {
+        let SAMPLE_QUESTIONS = JSON.parse(localStorage.getItem('pergunuQuestionBank')) || {
             'AGAMA': [
                 {
                     question: "Apa nama kitab suci agama Islam?",
@@ -2714,13 +2714,29 @@
             
             // Add participant to data store
             const score = Math.round((examData.correct / questions.length) * 100);
-            participantsData.push({
+            const participantRecord = {
                 ...participantData,
                 score: score,
                 examDate: new Date().toISOString(),
-                certificateCode: certificateCode
-            });
-            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+                certificateCode: certificateCode,
+                answers: examData.answers,
+                questions: questions.map(q => ({
+                    question: q.question,
+                    correctAnswer: q.correctAnswer,
+                    selectedAnswer: examData.answers[questions.indexOf(q)]
+                }))
+            };
+            
+            participantsData.push(participantRecord);
+            
+            // Save to localStorage with unique key to prevent conflicts
+            try {
+                localStorage.setItem('pergunuParticipantsData', JSON.stringify(participantsData));
+                console.log('Participant data saved successfully');
+            } catch (e) {
+                console.error('Error saving participant data:', e);
+                // Implement fallback storage or error handling here
+            }
             
             // Hide exam screen with slide out animation
             document.getElementById('exam-screen').classList.add('slide-out');
@@ -2976,8 +2992,14 @@
                 explanation: explanation
             });
             
-            // Save to localStorage
-            localStorage.setItem('questionBank', JSON.stringify(SAMPLE_QUESTIONS));
+            // Save to localStorage with unique key
+            try {
+                localStorage.setItem('pergunuQuestionBank', JSON.stringify(SAMPLE_QUESTIONS));
+                console.log('Question bank saved successfully');
+            } catch (e) {
+                console.error('Error saving question bank:', e);
+                // Implement fallback storage or error handling here
+            }
             
             // Clear form
             document.getElementById('question-text-input').value = '';
@@ -3164,8 +3186,14 @@
                 SAMPLE_QUESTIONS[originalCategory][index] = updatedQuestion;
             }
             
-            // Save to localStorage
-            localStorage.setItem('questionBank', JSON.stringify(SAMPLE_QUESTIONS));
+            // Save to localStorage with unique key
+            try {
+                localStorage.setItem('pergunuQuestionBank', JSON.stringify(SAMPLE_QUESTIONS));
+                console.log('Question bank updated successfully');
+            } catch (e) {
+                console.error('Error updating question bank:', e);
+                // Implement fallback storage or error handling here
+            }
             
             // Refresh questions list
             filterQuestions();
@@ -3185,8 +3213,14 @@
                 delete SAMPLE_QUESTIONS[category];
             }
             
-            // Save to localStorage
-            localStorage.setItem('questionBank', JSON.stringify(SAMPLE_QUESTIONS));
+            // Save to localStorage with unique key
+            try {
+                localStorage.setItem('pergunuQuestionBank', JSON.stringify(SAMPLE_QUESTIONS));
+                console.log('Question deleted successfully');
+            } catch (e) {
+                console.error('Error deleting question:', e);
+                // Implement fallback storage or error handling here
+            }
             
             // Refresh questions list
             filterQuestions();
@@ -3461,8 +3495,14 @@
             participant.subject = document.getElementById('edit-subject').value;
             participant.score = parseInt(document.getElementById('edit-score').value);
             
-            // Save to localStorage
-            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+            // Save to localStorage with unique key
+            try {
+                localStorage.setItem('pergunuParticipantsData', JSON.stringify(participantsData));
+                console.log('Participant data updated successfully');
+            } catch (e) {
+                console.error('Error updating participant data:', e);
+                // Implement fallback storage or error handling here
+            }
             
             // Reload participants data
             loadParticipantsData();
@@ -3492,8 +3532,14 @@
                 participantsData.splice(index, 1);
             });
             
-            // Save to localStorage
-            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+            // Save to localStorage with unique key
+            try {
+                localStorage.setItem('pergunuParticipantsData', JSON.stringify(participantsData));
+                console.log('Participants deleted successfully');
+            } catch (e) {
+                console.error('Error deleting participants:', e);
+                // Implement fallback storage or error handling here
+            }
             
             // Reload participants data
             loadParticipantsData();
@@ -3572,8 +3618,14 @@
                 document.getElementById('new-admin-code').value = '';
             }
             
-            // Save to localStorage
-            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
+            // Save to localStorage with unique key
+            try {
+                localStorage.setItem('pergunuAdminSettings', JSON.stringify(adminSettings));
+                console.log('Codes saved successfully');
+            } catch (e) {
+                console.error('Error saving codes:', e);
+                // Implement fallback storage or error handling here
+            }
             
             alert('Kode berhasil diubah!');
         }
@@ -3592,8 +3644,14 @@
             document.getElementById('greeting-text').textContent = greetingMessage;
             document.getElementById('admin-message').textContent = adminMessage;
             
-            // Save to localStorage
-            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
+            // Save to localStorage with unique key
+            try {
+                localStorage.setItem('pergunuAdminSettings', JSON.stringify(adminSettings));
+                console.log('Content settings saved successfully');
+            } catch (e) {
+                console.error('Error saving content settings:', e);
+                // Implement fallback storage or error handling here
+            }
             
             alert('Perubahan konten berhasil disimpan!');
         }
@@ -3622,8 +3680,14 @@
                 MATERI_KHUSUS: document.getElementById('toggle-special').checked
             };
             
-            // Save to localStorage
-            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
+            // Save to localStorage with unique key
+            try {
+                localStorage.setItem('pergunuAdminSettings', JSON.stringify(adminSettings));
+                console.log('Settings saved successfully');
+            } catch (e) {
+                console.error('Error saving settings:', e);
+                // Implement fallback storage or error handling here
+            }
             
             alert('Pengaturan berhasil disimpan!');
         }
