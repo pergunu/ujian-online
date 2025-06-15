@@ -1069,9 +1069,6 @@
                 <div class="radio-group">
                     <input type="radio" id="status-student" name="status" value="pelajar" class="radio-option" checked>
                     <label for="status-student" class="radio-label">Pelajar</label>
-                    
-                    <input type="radio" id="status-general" name="status" value="umum" class="radio-option">
-                    <label for="status-general" class="radio-label">Umum</label>
                 </div>
             </div>
             
@@ -1116,25 +1113,6 @@
                 </div>
             </div>
             
-            <!-- General Public Fields -->
-            <div id="general-fields" style="display: none;">
-                <div class="form-group">
-                    <label class="form-label">Tujuan Ikut Ujian</label>
-                    <div class="radio-group">
-                        <input type="radio" id="purpose-iq" name="purpose-general" value="Tes IQ" class="radio-option">
-                        <label for="purpose-iq" class="radio-label">Tes IQ</label>
-                        
-                        <input type="radio" id="purpose-cpns" name="purpose-general" value="Ujian CPNS/P3K" class="radio-option">
-                        <label for="purpose-cpns" class="radio-label">Ujian CPNS/P3K</label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <p>Untuk ujian umum, silakan kunjungi link berikut:</p>
-                    <a href="https://pergunu.github.io/pergunusmart/" class="btn btn-info" target="_blank">Ujian Umum</a>
-                </div>
-            </div>
-            
             <!-- Grade Selection (Will be shown based on school level) -->
             <div id="grade-selection" style="display: none;">
                 <div class="form-group">
@@ -1150,15 +1128,6 @@
                 <div class="form-group">
                     <label class="form-label">Pilih Jenis Ujian</label>
                     <div class="radio-group">
-                        <input type="radio" id="subject-religion" name="subject" value="AGAMA" class="radio-option">
-                        <label for="subject-religion" class="radio-label">AGAMA</label>
-                        
-                        <input type="radio" id="subject-civics" name="subject" value="PPKN" class="radio-option">
-                        <label for="subject-civics" class="radio-label">PPKN</label>
-                        
-                        <input type="radio" id="subject-history" name="subject" value="SEJARAH" class="radio-option">
-                        <label for="subject-history" class="radio-label">SEJARAH</label>
-                        
                         <input type="radio" id="subject-science" name="subject" value="IPA" class="radio-option">
                         <label for="subject-science" class="radio-label">IPA</label>
                         
@@ -1173,12 +1142,6 @@
                         
                         <input type="radio" id="subject-english" name="subject" value="BAHASA INGGRIS" class="radio-option">
                         <label for="subject-english" class="radio-label">BAHASA INGGRIS</label>
-                        
-                        <input type="radio" id="subject-extra" name="subject" value="MATERI EXTRA" class="radio-option">
-                        <label for="subject-extra" class="radio-label">MATERI EXTRA</label>
-                        
-                        <input type="radio" id="subject-special" name="subject" value="MATERI KHUSUS" class="radio-option">
-                        <label for="subject-special" class="radio-label">MATERI KHUSUS</label>
                     </div>
                 </div>
             </div>
@@ -1285,16 +1248,11 @@
                         <div class="form-group">
                             <label class="form-label">Kategori Ujian</label>
                             <select id="question-category" class="form-control" style="color: #333;">
-                                <option value="AGAMA">AGAMA</option>
-                                <option value="PPKN">PPKN</option>
-                                <option value="SEJARAH">SEJARAH</option>
                                 <option value="IPA">IPA</option>
                                 <option value="IPS">IPS</option>
                                 <option value="MATEMATIKA">MATEMATIKA</option>
                                 <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
                                 <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
-                                <option value="MATERI EXTRA">MATERI EXTRA</option>
-                                <option value="MATERI KHUSUS">MATERI KHUSUS</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -1338,16 +1296,11 @@
                             <label class="form-label">Filter Kategori</label>
                             <select id="filter-category" class="form-control" style="color: #333;">
                                 <option value="all">Semua Kategori</option>
-                                <option value="AGAMA">AGAMA</option>
-                                <option value="PPKN">PPKN</option>
-                                <option value="SEJARAH">SEJARAH</option>
                                 <option value="IPA">IPA</option>
                                 <option value="IPS">IPS</option>
                                 <option value="MATEMATIKA">MATEMATIKA</option>
                                 <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
                                 <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
-                                <option value="MATERI EXTRA">MATERI EXTRA</option>
-                                <option value="MATERI KHUSUS">MATERI KHUSUS</option>
                             </select>
                         </div>
                         <div class="questions-list">
@@ -1506,36 +1459,6 @@
                         <h5>Aktifkan/Nonaktifkan Ujian</h5>
                         <div class="admin-controls">
                             <div class="admin-control-group">
-                                <label class="admin-control-label">AGAMA</label>
-                                <div class="admin-toggle">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="toggle-religion" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                    <span id="religion-status">Aktif</span>
-                                </div>
-                            </div>
-                            <div class="admin-control-group">
-                                <label class="admin-control-label">PPKN</label>
-                                <div class="admin-toggle">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="toggle-civics" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                    <span id="civics-status">Aktif</span>
-                                </div>
-                            </div>
-                            <div class="admin-control-group">
-                                <label class="admin-control-label">SEJARAH</label>
-                                <div class="admin-toggle">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="toggle-history" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                    <span id="history-status">Aktif</span>
-                                </div>
-                            </div>
-                            <div class="admin-control-group">
                                 <label class="admin-control-label">IPA</label>
                                 <div class="admin-toggle">
                                     <label class="toggle-switch">
@@ -1585,26 +1508,6 @@
                                     <span id="english-status">Aktif</span>
                                 </div>
                             </div>
-                            <div class="admin-control-group">
-                                <label class="admin-control-label">MATERI EXTRA</label>
-                                <div class="admin-toggle">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="toggle-extra" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                    <span id="extra-status">Aktif</span>
-                                </div>
-                            </div>
-                            <div class="admin-control-group">
-                                <label class="admin-control-label">MATERI KHUSUS</label>
-                                <div class="admin-toggle">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="toggle-special" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                    <span id="special-status">Aktif</span>
-                                </div>
-                            </div>
                         </div>
                         <button id="save-settings-btn" class="btn btn-success">Simpan Pengaturan</button>
                     </div>
@@ -1622,16 +1525,11 @@
             <div class="form-group">
                 <label class="form-label">Kategori Ujian</label>
                 <select id="edit-question-category" class="form-control" style="color: #333;">
-                    <option value="AGAMA">AGAMA</option>
-                    <option value="PPKN">PPKN</option>
-                    <option value="SEJARAH">SEJARAH</option>
                     <option value="IPA">IPA</option>
                     <option value="IPS">IPS</option>
                     <option value="MATEMATIKA">MATEMATIKA</option>
                     <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
                     <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
-                    <option value="MATERI EXTRA">MATERI EXTRA</option>
-                    <option value="MATERI KHUSUS">MATERI KHUSUS</option>
                 </select>
             </div>
             <div class="form-group">
@@ -1693,9 +1591,6 @@
                 <div class="radio-group">
                     <input type="radio" id="edit-status-student" name="edit-status" value="pelajar" class="radio-option" checked>
                     <label for="edit-status-student" class="radio-label">Pelajar</label>
-                    
-                    <input type="radio" id="edit-status-general" name="edit-status" value="umum" class="radio-option">
-                    <label for="edit-status-general" class="radio-label">Umum</label>
                 </div>
             </div>
             
@@ -1746,32 +1641,14 @@
                 </div>
             </div>
             
-            <div id="edit-general-fields" style="display: none;">
-                <div class="form-group">
-                    <label class="form-label">Tujuan Ikut Ujian</label>
-                    <div class="radio-group">
-                        <input type="radio" id="edit-purpose-iq" name="edit-purpose-general" value="Tes IQ" class="radio-option">
-                        <label for="edit-purpose-iq" class="radio-label">Tes IQ</label>
-                        
-                        <input type="radio" id="edit-purpose-cpns" name="edit-purpose-general" value="Ujian CPNS/P3K" class="radio-option">
-                        <label for="edit-purpose-cpns" class="radio-label">Ujian CPNS/P3K</label>
-                    </div>
-                </div>
-            </div>
-            
             <div class="form-group">
                 <label class="form-label">Mata Ujian</label>
                 <select id="edit-subject" class="form-control" style="color: #333;">
-                    <option value="AGAMA">AGAMA</option>
-                    <option value="PPKN">PPKN</option>
-                    <option value="SEJARAH">SEJARAH</option>
                     <option value="IPA">IPA</option>
                     <option value="IPS">IPS</option>
                     <option value="MATEMATIKA">MATEMATIKA</option>
                     <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
                     <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
-                    <option value="MATERI EXTRA">MATERI EXTRA</option>
-                    <option value="MATERI KHUSUS">MATERI KHUSUS</option>
                 </select>
             </div>
             
@@ -1829,10 +1706,10 @@
         const DEFAULT_ADMIN_PANEL_CODE = '65614222';
         
         // Store participants data
-        let participantsData = JSON.parse(localStorage.getItem('pergunuParticipantsData')) || [];
+        let participantsData = JSON.parse(localStorage.getItem('participantsData')) || [];
         
         // Store admin settings
-        let adminSettings = JSON.parse(localStorage.getItem('pergunuAdminSettings')) || {
+        let adminSettings = JSON.parse(localStorage.getItem('adminSettings')) || {
             loginCode: DEFAULT_LOGIN_CODE,
             questionBankCode: DEFAULT_QUESTION_BANK_CODE,
             adminCode: DEFAULT_ADMIN_PANEL_CODE,
@@ -1843,45 +1720,16 @@
             adminMessage: "Tidak ada informasi terbaru saat ini.",
             chairmanName: "Moh. Nuril Hudha, S.Pd., M.Si.",
             enabledSubjects: {
-                AGAMA: true,
-                PPKN: true,
-                SEJARAH: true,
                 IPA: true,
                 IPS: true,
                 MATEMATIKA: true,
                 BAHASA_INDONESIA: true,
-                BAHASA_INGGRIS: true,
-                MATERI_EXTRA: true,
-                MATERI_KHUSUS: true
+                BAHASA_INGGRIS: true
             }
         };
         
         // Sample questions for demonstration
-        let SAMPLE_QUESTIONS = JSON.parse(localStorage.getItem('pergunuQuestionBank')) || {
-            'AGAMA': [
-                {
-                    question: "Apa nama kitab suci agama Islam?",
-                    options: ["A. Alkitab", "B. Tripitaka", "C. Al-Quran", "D. Weda", "E. Talmud"],
-                    correctAnswer: 2, // Index of correct answer (0-based)
-                    explanation: "Kitab suci agama Islam adalah Al-Quran yang diturunkan kepada Nabi Muhammad SAW."
-                }
-            ],
-            'PPKN': [
-                {
-                    question: "Pancasila sebagai dasar negara tercantum dalam?",
-                    options: ["A. Pembukaan UUD 1945", "B. Batang Tubuh UUD 1945", "C. Penjelasan UUD 1945", "D. Keputusan Presiden", "E. Tap MPR"],
-                    correctAnswer: 0,
-                    explanation: "Pancasila sebagai dasar negara tercantum dalam Pembukaan UUD 1945 alinea keempat."
-                }
-            ],
-            'SEJARAH': [
-                {
-                    question: "Proklamasi Kemerdekaan Indonesia dilaksanakan pada tanggal?",
-                    options: ["A. 16 Agustus 1945", "B. 17 Agustus 1945", "C. 18 Agustus 1945", "D. 19 Agustus 1945", "E. 20 Agustus 1945"],
-                    correctAnswer: 1,
-                    explanation: "Proklamasi Kemerdekaan Indonesia dibacakan oleh Soekarno-Hatta pada 17 Agustus 1945."
-                }
-            ],
+        let SAMPLE_QUESTIONS = JSON.parse(localStorage.getItem('questionBank')) || {
             'IPA': [
                 {
                     question: "Planet terdekat dari matahari adalah?",
@@ -1920,22 +1768,6 @@
                     options: ["A. Pen", "B. Book", "C. Table", "D. Chair", "E. Door"],
                     correctAnswer: 1,
                     explanation: "The English translation for 'buku' is 'book'."
-                }
-            ],
-            'MATERI EXTRA': [
-                {
-                    question: "Siapa pencipta lagu Indonesia Raya?",
-                    options: ["A. Ismail Marzuki", "B. W.R. Supratman", "C. C. Simanjuntak", "D. Kusbini", "E. Ibu Sud"],
-                    correctAnswer: 1,
-                    explanation: "Wage Rudolf Supratman adalah pencipta lagu Indonesia Raya."
-                }
-            ],
-            'MATERI KHUSUS': [
-                {
-                    question: "Siapa ketua PERGUNU Situbondo saat ini?",
-                    options: ["A. Moh. Nuril Hudha, S.Pd., M.Si.", "B. Dr. H. Ahmad Fauzi", "C. H. M. Yusuf", "D. Drs. H. Abdul Malik", "E. H. M. Amin"],
-                    correctAnswer: 0,
-                    explanation: "Ketua PERGUNU Situbondo saat ini adalah Moh. Nuril Hudha, S.Pd., M.Si."
                 }
             ]
         };
@@ -2282,15 +2114,6 @@
             document.getElementById('chairman-name').value = adminSettings.chairmanName;
             
             // Load subject toggles
-            document.getElementById('toggle-religion').checked = adminSettings.enabledSubjects.AGAMA;
-            document.getElementById('religion-status').textContent = adminSettings.enabledSubjects.AGAMA ? 'Aktif' : 'Nonaktif';
-            
-            document.getElementById('toggle-civics').checked = adminSettings.enabledSubjects.PPKN;
-            document.getElementById('civics-status').textContent = adminSettings.enabledSubjects.PPKN ? 'Aktif' : 'Nonaktif';
-            
-            document.getElementById('toggle-history').checked = adminSettings.enabledSubjects.SEJARAH;
-            document.getElementById('history-status').textContent = adminSettings.enabledSubjects.SEJARAH ? 'Aktif' : 'Nonaktif';
-            
             document.getElementById('toggle-science').checked = adminSettings.enabledSubjects.IPA;
             document.getElementById('science-status').textContent = adminSettings.enabledSubjects.IPA ? 'Aktif' : 'Nonaktif';
             
@@ -2305,12 +2128,6 @@
             
             document.getElementById('toggle-english').checked = adminSettings.enabledSubjects.BAHASA_INGGRIS;
             document.getElementById('english-status').textContent = adminSettings.enabledSubjects.BAHASA_INGGRIS ? 'Aktif' : 'Nonaktif';
-            
-            document.getElementById('toggle-extra').checked = adminSettings.enabledSubjects.MATERI_EXTRA;
-            document.getElementById('extra-status').textContent = adminSettings.enabledSubjects.MATERI_EXTRA ? 'Aktif' : 'Nonaktif';
-            
-            document.getElementById('toggle-special').checked = adminSettings.enabledSubjects.MATERI_KHUSUS;
-            document.getElementById('special-status').textContent = adminSettings.enabledSubjects.MATERI_KHUSUS ? 'Aktif' : 'Nonaktif';
         }
         
         function handleLogin() {
@@ -2354,18 +2171,8 @@
         }
         
         function toggleParticipantFields() {
-            const status = document.querySelector('input[name="status"]:checked').value;
-            
-            if (status === 'pelajar') {
-                document.getElementById('student-fields').style.display = 'block';
-                document.getElementById('general-fields').style.display = 'none';
-            } else {
-                document.getElementById('student-fields').style.display = 'none';
-                document.getElementById('general-fields').style.display = 'block';
-                document.getElementById('grade-selection').style.display = 'none';
-                document.getElementById('subject-selection').style.display = 'none';
-            }
-            
+            // Only student status is available now
+            document.getElementById('student-fields').style.display = 'block';
             checkParticipantFormValidity();
         }
         
@@ -2421,7 +2228,6 @@
         }
         
         function checkParticipantFormValidity() {
-            const status = document.querySelector('input[name="status"]:checked').value;
             let isValid = true;
             
             // Check common fields
@@ -2430,36 +2236,30 @@
                 isValid = false;
             }
             
-            // Check fields based on status
-            if (status === 'pelajar') {
-                if (!document.getElementById('school-name').value.trim()) {
-                    isValid = false;
-                }
-                
-                const studentId = document.getElementById('student-id').value.trim();
-                if (!studentId || !/^[0-9]+$/.test(studentId)) {
-                    isValid = false;
-                }
-                
-                if (!document.querySelector('input[name="purpose"]:checked')) {
-                    isValid = false;
-                }
-                
-                if (!document.querySelector('input[name="level"]:checked')) {
-                    isValid = false;
-                }
-                
-                if (!document.querySelector('input[name="grade"]:checked')) {
-                    isValid = false;
-                }
-                
-                if (!document.querySelector('input[name="subject"]:checked')) {
-                    isValid = false;
-                }
-            } else {
-                if (!document.querySelector('input[name="purpose-general"]:checked')) {
-                    isValid = false;
-                }
+            // Check student fields
+            if (!document.getElementById('school-name').value.trim()) {
+                isValid = false;
+            }
+            
+            const studentId = document.getElementById('student-id').value.trim();
+            if (!studentId || !/^[0-9]+$/.test(studentId)) {
+                isValid = false;
+            }
+            
+            if (!document.querySelector('input[name="purpose"]:checked')) {
+                isValid = false;
+            }
+            
+            if (!document.querySelector('input[name="level"]:checked')) {
+                isValid = false;
+            }
+            
+            if (!document.querySelector('input[name="grade"]:checked')) {
+                isValid = false;
+            }
+            
+            if (!document.querySelector('input[name="subject"]:checked')) {
+                isValid = false;
             }
             
             document.getElementById('save-participant-btn').disabled = !isValid;
@@ -2469,29 +2269,22 @@
             // Collect participant data
             participantData = {
                 fullname: document.getElementById('fullname').value.trim(),
-                status: document.querySelector('input[name="status"]:checked').value,
-                purpose: document.querySelector('input[name="purpose"]:checked')?.value || 
-                        document.querySelector('input[name="purpose-general"]:checked')?.value,
-                level: document.querySelector('input[name="level"]:checked')?.value || null,
-                grade: document.querySelector('input[name="grade"]:checked')?.value || null,
-                subject: document.querySelector('input[name="subject"]:checked')?.value || null,
-                school: document.getElementById('school-name')?.value.trim() || null,
-                studentId: document.getElementById('student-id')?.value.trim() || null,
+                status: 'pelajar',
+                purpose: document.querySelector('input[name="purpose"]:checked')?.value,
+                level: document.querySelector('input[name="level"]:checked')?.value,
+                grade: document.querySelector('input[name="grade"]:checked')?.value,
+                subject: document.querySelector('input[name="subject"]:checked')?.value,
+                school: document.getElementById('school-name')?.value.trim(),
+                studentId: document.getElementById('student-id')?.value.trim(),
                 examDate: new Date().toISOString()
             };
-            
-            // For general public, redirect if needed
-            if (participantData.status === 'umum' && participantData.purpose === 'Ujian CPNS/P3K') {
-                window.location.href = 'https://pergunu.github.io/pergunusmart/';
-                return;
-            }
             
             // Load questions based on subject
             if (participantData.subject && SAMPLE_QUESTIONS[participantData.subject]) {
                 questions = SAMPLE_QUESTIONS[participantData.subject];
             } else {
                 // Default questions if subject not found
-                questions = SAMPLE_QUESTIONS['AGAMA'];
+                questions = SAMPLE_QUESTIONS['IPA'];
             }
             
             // Randomize questions if setting is enabled
@@ -2714,29 +2507,13 @@
             
             // Add participant to data store
             const score = Math.round((examData.correct / questions.length) * 100);
-            const participantRecord = {
+            participantsData.push({
                 ...participantData,
                 score: score,
                 examDate: new Date().toISOString(),
-                certificateCode: certificateCode,
-                answers: examData.answers,
-                questions: questions.map(q => ({
-                    question: q.question,
-                    correctAnswer: q.correctAnswer,
-                    selectedAnswer: examData.answers[questions.indexOf(q)]
-                }))
-            };
-            
-            participantsData.push(participantRecord);
-            
-            // Save to localStorage with unique key to prevent conflicts
-            try {
-                localStorage.setItem('pergunuParticipantsData', JSON.stringify(participantsData));
-                console.log('Participant data saved successfully');
-            } catch (e) {
-                console.error('Error saving participant data:', e);
-                // Implement fallback storage or error handling here
-            }
+                certificateCode: certificateCode
+            });
+            localStorage.setItem('participantsData', JSON.stringify(participantsData));
             
             // Hide exam screen with slide out animation
             document.getElementById('exam-screen').classList.add('slide-out');
@@ -2765,7 +2542,7 @@
         
         function displayResults() {
             document.getElementById('result-name').textContent = participantData.fullname;
-            document.getElementById('result-status').textContent = participantData.status === 'pelajar' ? 'Pelajar' : 'Umum';
+            document.getElementById('result-status').textContent = 'Pelajar';
             document.getElementById('result-level').textContent = participantData.level || '-';
             document.getElementById('result-grade').textContent = participantData.grade ? `Kelas ${participantData.grade}` : '-';
             document.getElementById('result-subject').textContent = participantData.subject || '-';
@@ -2811,7 +2588,7 @@
             certificate.innerHTML = `
                 <div class="certificate-content">
                     <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
-                    <p class="certificate-code">${formatName(participantData.fullname)}/${participantData.status.toUpperCase()}/${participantData.level || 'UMUM'}/${participantData.subject || 'UMUM'}/${dateString}/${certificateCode}/PERGUNU-STB</p>
+                    <p class="certificate-code">${formatName(participantData.fullname)}/PELAJAR/${participantData.level || 'UMUM'}/${participantData.subject || 'UMUM'}/${dateString}/${certificateCode}/PERGUNU-STB</p>
                     <p>Diberikan Kepada</p>
                     <h2 class="certificate-recipient">${formatName(participantData.fullname)}</h2>
                     <p class="certificate-body">
@@ -2992,14 +2769,8 @@
                 explanation: explanation
             });
             
-            // Save to localStorage with unique key
-            try {
-                localStorage.setItem('pergunuQuestionBank', JSON.stringify(SAMPLE_QUESTIONS));
-                console.log('Question bank saved successfully');
-            } catch (e) {
-                console.error('Error saving question bank:', e);
-                // Implement fallback storage or error handling here
-            }
+            // Save to localStorage
+            localStorage.setItem('questionBank', JSON.stringify(SAMPLE_QUESTIONS));
             
             // Clear form
             document.getElementById('question-text-input').value = '';
@@ -3186,14 +2957,8 @@
                 SAMPLE_QUESTIONS[originalCategory][index] = updatedQuestion;
             }
             
-            // Save to localStorage with unique key
-            try {
-                localStorage.setItem('pergunuQuestionBank', JSON.stringify(SAMPLE_QUESTIONS));
-                console.log('Question bank updated successfully');
-            } catch (e) {
-                console.error('Error updating question bank:', e);
-                // Implement fallback storage or error handling here
-            }
+            // Save to localStorage
+            localStorage.setItem('questionBank', JSON.stringify(SAMPLE_QUESTIONS));
             
             // Refresh questions list
             filterQuestions();
@@ -3213,14 +2978,8 @@
                 delete SAMPLE_QUESTIONS[category];
             }
             
-            // Save to localStorage with unique key
-            try {
-                localStorage.setItem('pergunuQuestionBank', JSON.stringify(SAMPLE_QUESTIONS));
-                console.log('Question deleted successfully');
-            } catch (e) {
-                console.error('Error deleting question:', e);
-                // Implement fallback storage or error handling here
-            }
+            // Save to localStorage
+            localStorage.setItem('questionBank', JSON.stringify(SAMPLE_QUESTIONS));
             
             // Refresh questions list
             filterQuestions();
@@ -3260,7 +3019,7 @@
                     <td>${dateStr}</td>
                     <td>${participant.fullname}</td>
                     <td>${participant.studentId || '-'}</td>
-                    <td>${participant.status === 'pelajar' ? 'Pelajar' : 'Umum'}</td>
+                    <td>Pelajar</td>
                     <td>${participant.level || '-'}</td>
                     <td>${participant.grade ? `Kelas ${participant.grade}` : '-'}</td>
                     <td>${participant.subject || '-'}</td>
@@ -3352,45 +3111,32 @@
             // Fill the edit form
             document.getElementById('edit-fullname').value = participant.fullname;
             
-            // Set status
-            if (participant.status === 'pelajar') {
-                document.getElementById('edit-status-student').checked = true;
-                document.getElementById('edit-student-fields').style.display = 'block';
-                document.getElementById('edit-general-fields').style.display = 'none';
+            // Set status to student (only option now)
+            document.getElementById('edit-status-student').checked = true;
+            document.getElementById('edit-student-fields').style.display = 'block';
+            
+            // Fill student fields
+            document.getElementById('edit-school-name').value = participant.school || '';
+            document.getElementById('edit-student-id').value = participant.studentId || '';
+            
+            // Set purpose
+            if (participant.purpose) {
+                const purposeRadio = document.querySelector(`input[name="edit-purpose"][value="${participant.purpose}"]`);
+                if (purposeRadio) purposeRadio.checked = true;
+            }
+            
+            // Set level
+            if (participant.level) {
+                const levelRadio = document.querySelector(`input[name="edit-level"][value="${participant.level}"]`);
+                if (levelRadio) levelRadio.checked = true;
                 
-                // Fill student fields
-                document.getElementById('edit-school-name').value = participant.school || '';
-                document.getElementById('edit-student-id').value = participant.studentId || '';
+                // Show grade selection
+                showEditGradeSelection();
                 
-                // Set purpose
-                if (participant.purpose) {
-                    const purposeRadio = document.querySelector(`input[name="edit-purpose"][value="${participant.purpose}"]`);
-                    if (purposeRadio) purposeRadio.checked = true;
-                }
-                
-                // Set level
-                if (participant.level) {
-                    const levelRadio = document.querySelector(`input[name="edit-level"][value="${participant.level}"]`);
-                    if (levelRadio) levelRadio.checked = true;
-                    
-                    // Show grade selection
-                    showEditGradeSelection();
-                    
-                    // Set grade
-                    if (participant.grade) {
-                        const gradeRadio = document.querySelector(`input[name="edit-grade"][value="${participant.grade}"]`);
-                        if (gradeRadio) gradeRadio.checked = true;
-                    }
-                }
-            } else {
-                document.getElementById('edit-status-general').checked = true;
-                document.getElementById('edit-student-fields').style.display = 'none';
-                document.getElementById('edit-general-fields').style.display = 'block';
-                
-                // Set general purpose
-                if (participant.purpose) {
-                    const purposeRadio = document.querySelector(`input[name="edit-purpose-general"][value="${participant.purpose}"]`);
-                    if (purposeRadio) purposeRadio.checked = true;
+                // Set grade
+                if (participant.grade) {
+                    const gradeRadio = document.querySelector(`input[name="edit-grade"][value="${participant.grade}"]`);
+                    if (gradeRadio) gradeRadio.checked = true;
                 }
             }
             
@@ -3413,15 +3159,8 @@
         }
         
         function toggleEditParticipantFields() {
-            const status = document.querySelector('input[name="edit-status"]:checked').value;
-            
-            if (status === 'pelajar') {
-                document.getElementById('edit-student-fields').style.display = 'block';
-                document.getElementById('edit-general-fields').style.display = 'none';
-            } else {
-                document.getElementById('edit-student-fields').style.display = 'none';
-                document.getElementById('edit-general-fields').style.display = 'block';
-            }
+            // Only student status is available now
+            document.getElementById('edit-student-fields').style.display = 'block';
         }
         
         function showEditGradeSelection() {
@@ -3476,33 +3215,17 @@
             
             // Update participant data
             participant.fullname = document.getElementById('edit-fullname').value.trim();
-            participant.status = document.querySelector('input[name="edit-status"]:checked').value;
-            
-            if (participant.status === 'pelajar') {
-                participant.school = document.getElementById('edit-school-name').value.trim();
-                participant.studentId = document.getElementById('edit-student-id').value.trim();
-                participant.purpose = document.querySelector('input[name="edit-purpose"]:checked')?.value || '';
-                participant.level = document.querySelector('input[name="edit-level"]:checked')?.value || '';
-                participant.grade = document.querySelector('input[name="edit-grade"]:checked')?.value || '';
-            } else {
-                participant.purpose = document.querySelector('input[name="edit-purpose-general"]:checked')?.value || '';
-                participant.level = null;
-                participant.grade = null;
-                participant.school = null;
-                participant.studentId = null;
-            }
-            
+            participant.status = 'pelajar';
+            participant.school = document.getElementById('edit-school-name').value.trim();
+            participant.studentId = document.getElementById('edit-student-id').value.trim();
+            participant.purpose = document.querySelector('input[name="edit-purpose"]:checked')?.value || '';
+            participant.level = document.querySelector('input[name="edit-level"]:checked')?.value || '';
+            participant.grade = document.querySelector('input[name="edit-grade"]:checked')?.value || '';
             participant.subject = document.getElementById('edit-subject').value;
             participant.score = parseInt(document.getElementById('edit-score').value);
             
-            // Save to localStorage with unique key
-            try {
-                localStorage.setItem('pergunuParticipantsData', JSON.stringify(participantsData));
-                console.log('Participant data updated successfully');
-            } catch (e) {
-                console.error('Error updating participant data:', e);
-                // Implement fallback storage or error handling here
-            }
+            // Save to localStorage
+            localStorage.setItem('participantsData', JSON.stringify(participantsData));
             
             // Reload participants data
             loadParticipantsData();
@@ -3532,14 +3255,8 @@
                 participantsData.splice(index, 1);
             });
             
-            // Save to localStorage with unique key
-            try {
-                localStorage.setItem('pergunuParticipantsData', JSON.stringify(participantsData));
-                console.log('Participants deleted successfully');
-            } catch (e) {
-                console.error('Error deleting participants:', e);
-                // Implement fallback storage or error handling here
-            }
+            // Save to localStorage
+            localStorage.setItem('participantsData', JSON.stringify(participantsData));
             
             // Reload participants data
             loadParticipantsData();
@@ -3584,7 +3301,7 @@
                 validationResult.innerHTML = `
                     <p class="valid-certificate">Sertifikat Valid!</p>
                     <p>Nama: ${participant.fullname}</p>
-                    <p>Status: ${participant.status === 'pelajar' ? 'Pelajar' : 'Umum'}</p>
+                    <p>Status: Pelajar</p>
                     <p>Tingkat: ${participant.level || '-'}</p>
                     <p>Kelas: ${participant.grade ? `Kelas ${participant.grade}` : '-'}</p>
                     <p>Mata Ujian: ${participant.subject || '-'}</p>
@@ -3618,14 +3335,8 @@
                 document.getElementById('new-admin-code').value = '';
             }
             
-            // Save to localStorage with unique key
-            try {
-                localStorage.setItem('pergunuAdminSettings', JSON.stringify(adminSettings));
-                console.log('Codes saved successfully');
-            } catch (e) {
-                console.error('Error saving codes:', e);
-                // Implement fallback storage or error handling here
-            }
+            // Save to localStorage
+            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
             
             alert('Kode berhasil diubah!');
         }
@@ -3644,14 +3355,8 @@
             document.getElementById('greeting-text').textContent = greetingMessage;
             document.getElementById('admin-message').textContent = adminMessage;
             
-            // Save to localStorage with unique key
-            try {
-                localStorage.setItem('pergunuAdminSettings', JSON.stringify(adminSettings));
-                console.log('Content settings saved successfully');
-            } catch (e) {
-                console.error('Error saving content settings:', e);
-                // Implement fallback storage or error handling here
-            }
+            // Save to localStorage
+            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
             
             alert('Perubahan konten berhasil disimpan!');
         }
@@ -3668,26 +3373,15 @@
             
             // Update subject toggles
             adminSettings.enabledSubjects = {
-                AGAMA: document.getElementById('toggle-religion').checked,
-                PPKN: document.getElementById('toggle-civics').checked,
-                SEJARAH: document.getElementById('toggle-history').checked,
                 IPA: document.getElementById('toggle-science').checked,
                 IPS: document.getElementById('toggle-social').checked,
                 MATEMATIKA: document.getElementById('toggle-math').checked,
                 BAHASA_INDONESIA: document.getElementById('toggle-indonesian').checked,
-                BAHASA_INGGRIS: document.getElementById('toggle-english').checked,
-                MATERI_EXTRA: document.getElementById('toggle-extra').checked,
-                MATERI_KHUSUS: document.getElementById('toggle-special').checked
+                BAHASA_INGGRIS: document.getElementById('toggle-english').checked
             };
             
-            // Save to localStorage with unique key
-            try {
-                localStorage.setItem('pergunuAdminSettings', JSON.stringify(adminSettings));
-                console.log('Settings saved successfully');
-            } catch (e) {
-                console.error('Error saving settings:', e);
-                // Implement fallback storage or error handling here
-            }
+            // Save to localStorage
+            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
             
             alert('Pengaturan berhasil disimpan!');
         }
