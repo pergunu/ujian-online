@@ -1226,15 +1226,6 @@
                         
                         <input type="radio" id="subject-social" name="subject" value="IPS" class="radio-option">
                         <label for="subject-social" class="radio-label">IPS</label>
-                        
-                        <input type="radio" id="subject-math" name="subject" value="MATEMATIKA" class="radio-option">
-                        <label for="subject-math" class="radio-label">MATEMATIKA</label>
-                        
-                        <input type="radio" id="subject-indonesian" name="subject" value="BAHASA INDONESIA" class="radio-option">
-                        <label for="subject-indonesian" class="radio-label">BAHASA INDONESIA</label>
-                        
-                        <input type="radio" id="subject-english" name="subject" value="BAHASA INGGRIS" class="radio-option">
-                        <label for="subject-english" class="radio-label">BAHASA INGGRIS</label>
                     </div>
                 </div>
             </div>
@@ -1352,9 +1343,6 @@
                             <select id="question-category" class="form-control" style="color: #333;">
                                 <option value="IPA">IPA</option>
                                 <option value="IPS">IPS</option>
-                                <option value="MATEMATIKA">MATEMATIKA</option>
-                                <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
-                                <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -1419,9 +1407,6 @@
                                         <option value="all">Semua Kategori</option>
                                         <option value="IPA">IPA</option>
                                         <option value="IPS">IPS</option>
-                                        <option value="MATEMATIKA">MATEMATIKA</option>
-                                        <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
-                                        <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
                                     </select>
                                 </div>
                             </div>
@@ -1601,36 +1586,6 @@
                                     <span id="social-status">Aktif</span>
                                 </div>
                             </div>
-                            <div class="admin-control-group">
-                                <label class="admin-control-label">MATEMATIKA</label>
-                                <div class="admin-toggle">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="toggle-math" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                    <span id="math-status">Aktif</span>
-                                </div>
-                            </div>
-                            <div class="admin-control-group">
-                                <label class="admin-control-label">BAHASA INDONESIA</label>
-                                <div class="admin-toggle">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="toggle-indonesian" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                    <span id="indonesian-status">Aktif</span>
-                                </div>
-                            </div>
-                            <div class="admin-control-group">
-                                <label class="admin-control-label">BAHASA INGGRIS</label>
-                                <div class="admin-toggle">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="toggle-english" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                    <span id="english-status">Aktif</span>
-                                </div>
-                            </div>
                         </div>
                         <button id="save-settings-btn" class="btn btn-success">Simpan Pengaturan</button>
                     </div>
@@ -1658,9 +1613,6 @@
                 <select id="edit-question-category" class="form-control" style="color: #333;">
                     <option value="IPA">IPA</option>
                     <option value="IPS">IPS</option>
-                    <option value="MATEMATIKA">MATEMATIKA</option>
-                    <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
-                    <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
                 </select>
             </div>
             <div class="form-group">
@@ -1785,9 +1737,6 @@
                 <select id="edit-subject" class="form-control" style="color: #333;">
                     <option value="IPA">IPA</option>
                     <option value="IPS">IPS</option>
-                    <option value="MATEMATIKA">MATEMATIKA</option>
-                    <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
-                    <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
                 </select>
             </div>
             
@@ -1860,10 +1809,7 @@
             chairmanName: "Moh. Nuril Hudha, S.Pd., M.Si.",
             enabledSubjects: {
                 IPA: true,
-                IPS: true,
-                MATEMATIKA: true,
-                BAHASA_INDONESIA: true,
-                BAHASA_INGGRIS: true
+                IPS: true
             }
         };
         
@@ -1871,24 +1817,15 @@
         let QUESTION_BANK = JSON.parse(localStorage.getItem('questionBank')) || {
             'SD': {
                 'IPA': [],
-                'IPS': [],
-                'MATEMATIKA': [],
-                'BAHASA INDONESIA': [],
-                'BAHASA INGGRIS': []
+                'IPS': []
             },
             'SMP': {
                 'IPA': [],
-                'IPS': [],
-                'MATEMATIKA': [],
-                'BAHASA INDONESIA': [],
-                'BAHASA INGGRIS': []
+                'IPS': []
             },
             'SMA/SMK': {
                 'IPA': [],
-                'IPS': [],
-                'MATEMATIKA': [],
-                'BAHASA INDONESIA': [],
-                'BAHASA INGGRIS': []
+                'IPS': []
             }
         };
         
@@ -1921,20 +1858,28 @@
                     image: null
                 });
                 
-                QUESTION_BANK['SMP']['MATEMATIKA'].push({
-                    question: "Hasil dari 7 × 8 adalah?",
-                    options: ["A. 48", "B. 54", "C. 56", "D. 64", "E. 72"],
-                    correctAnswer: 2,
-                    explanation: "Perkalian 7 × 8 menghasilkan 56.",
+                QUESTION_BANK['SMP']['IPS'].push({
+                    question: "Lembaga negara yang bertugas membuat undang-undang adalah?",
+                    options: ["A. Presiden", "B. DPR", "C. Mahkamah Agung", "D. BPK", "E. KPK"],
+                    correctAnswer: 1,
+                    explanation: "DPR (Dewan Perwakilan Rakyat) adalah lembaga negara yang bertugas membuat undang-undang.",
                     image: null
                 });
                 
                 // Sample questions for SMA
-                QUESTION_BANK['SMA/SMK']['BAHASA INGGRIS'].push({
-                    question: "What is the English word for 'buku'?",
-                    options: ["A. Pen", "B. Book", "C. Table", "D. Chair", "E. Door"],
+                QUESTION_BANK['SMA/SMK']['IPA'].push({
+                    question: "Proses pembuatan makanan pada tumbuhan hijau dengan bantuan cahaya matahari disebut?",
+                    options: ["A. Respirasi", "B. Fotosintesis", "C. Transpirasi", "D. Evaporasi", "E. Gutasi"],
                     correctAnswer: 1,
-                    explanation: "The English translation for 'buku' is 'book'.",
+                    explanation: "Fotosintesis adalah proses pembuatan makanan pada tumbuhan hijau dengan bantuan cahaya matahari.",
+                    image: null
+                });
+                
+                QUESTION_BANK['SMA/SMK']['IPS'].push({
+                    question: "Pasar dimana penjual dan pembeli berada di tempat yang berbeda disebut pasar?",
+                    options: ["A. Pasar konkret", "B. Pasar abstrak", "C. Pasar tradisional", "D. Pasar modern", "E. Pasar monopoli"],
+                    correctAnswer: 1,
+                    explanation: "Pasar abstrak adalah pasar dimana penjual dan pembeli berada di tempat yang berbeda.",
                     image: null
                 });
                 
@@ -2348,15 +2293,6 @@
             
             document.getElementById('toggle-social').checked = adminSettings.enabledSubjects.IPS;
             document.getElementById('social-status').textContent = adminSettings.enabledSubjects.IPS ? 'Aktif' : 'Nonaktif';
-            
-            document.getElementById('toggle-math').checked = adminSettings.enabledSubjects.MATEMATIKA;
-            document.getElementById('math-status').textContent = adminSettings.enabledSubjects.MATEMATIKA ? 'Aktif' : 'Nonaktif';
-            
-            document.getElementById('toggle-indonesian').checked = adminSettings.enabledSubjects.BAHASA_INDONESIA;
-            document.getElementById('indonesian-status').textContent = adminSettings.enabledSubjects.BAHASA_INDONESIA ? 'Aktif' : 'Nonaktif';
-            
-            document.getElementById('toggle-english').checked = adminSettings.enabledSubjects.BAHASA_INGGRIS;
-            document.getElementById('english-status').textContent = adminSettings.enabledSubjects.BAHASA_INGGRIS ? 'Aktif' : 'Nonaktif';
         }
         
         function handleLogin() {
@@ -3768,10 +3704,7 @@
             // Update subject toggles
             adminSettings.enabledSubjects = {
                 IPA: document.getElementById('toggle-science').checked,
-                IPS: document.getElementById('toggle-social').checked,
-                MATEMATIKA: document.getElementById('toggle-math').checked,
-                BAHASA_INDONESIA: document.getElementById('toggle-indonesian').checked,
-                BAHASA_INGGRIS: document.getElementById('toggle-english').checked
+                IPS: document.getElementById('toggle-social').checked
             };
             
             // Save to localStorage
