@@ -1884,7 +1884,7 @@
                 });
                 
                 // Save to localStorage
-                localStorage.setItem('questionBank', JSON.stringify(QUESTION_BANK));
+                saveQuestionBank();
             }
         }
         
@@ -2265,6 +2265,18 @@
             setTimeout(() => {
                 alertDiv.style.display = 'none';
             }, 5000);
+        }
+        
+        function saveQuestionBank() {
+            localStorage.setItem('questionBank', JSON.stringify(QUESTION_BANK));
+        }
+        
+        function saveParticipantsData() {
+            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+        }
+        
+        function saveAdminSettings() {
+            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
         }
         
         function loadAdminSettings() {
@@ -2693,7 +2705,7 @@
                 examDate: new Date().toISOString(),
                 certificateCode: certificateCode
             });
-            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+            saveParticipantsData();
             
             // Hide exam screen with slide out animation
             document.getElementById('exam-screen').classList.add('slide-out');
@@ -2958,7 +2970,7 @@
                     QUESTION_BANK[level][category].push(newQuestion);
                     
                     // Save to localStorage
-                    localStorage.setItem('questionBank', JSON.stringify(QUESTION_BANK));
+                    saveQuestionBank();
                     
                     // Clear form
                     clearQuestionForm();
@@ -2974,7 +2986,7 @@
                 QUESTION_BANK[level][category].push(newQuestion);
                 
                 // Save to localStorage
-                localStorage.setItem('questionBank', JSON.stringify(QUESTION_BANK));
+                saveQuestionBank();
                 
                 // Clear form
                 clearQuestionForm();
@@ -3270,7 +3282,7 @@
                     }
                     
                     // Save to localStorage
-                    localStorage.setItem('questionBank', JSON.stringify(QUESTION_BANK));
+                    saveQuestionBank();
                     
                     // Refresh questions list
                     filterQuestions();
@@ -3292,7 +3304,7 @@
                 }
                 
                 // Save to localStorage
-                localStorage.setItem('questionBank', JSON.stringify(QUESTION_BANK));
+                saveQuestionBank();
                 
                 // Refresh questions list
                 filterQuestions();
@@ -3309,7 +3321,7 @@
             QUESTION_BANK[level][category].splice(index, 1);
             
             // Save to localStorage
-            localStorage.setItem('questionBank', JSON.stringify(QUESTION_BANK));
+            saveQuestionBank();
             
             // Refresh questions list
             filterQuestions();
@@ -3555,7 +3567,7 @@
             participant.score = parseInt(document.getElementById('edit-score').value);
             
             // Save to localStorage
-            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+            saveParticipantsData();
             
             // Reload participants data
             loadParticipantsData();
@@ -3586,7 +3598,7 @@
             });
             
             // Save to localStorage
-            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+            saveParticipantsData();
             
             // Reload participants data
             loadParticipantsData();
@@ -3666,7 +3678,7 @@
             }
             
             // Save to localStorage
-            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
+            saveAdminSettings();
             
             alert('Kode berhasil diubah!');
         }
@@ -3686,7 +3698,7 @@
             document.getElementById('admin-message').textContent = adminMessage;
             
             // Save to localStorage
-            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
+            saveAdminSettings();
             
             alert('Perubahan konten berhasil disimpan!');
         }
@@ -3708,7 +3720,7 @@
             };
             
             // Save to localStorage
-            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
+            saveAdminSettings();
             
             alert('Pengaturan berhasil disimpan!');
         }
