@@ -3,22 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ujian Online PERGUNU Situbondo</title>
+    <title>Ujian Online PERGUNUSMART</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            --color-primary: #6a11cb;
-            --color-secondary: #2575fc;
-            --color-tertiary: #00c6fb;
+            --color-primary: #FF6B35;
+            --color-secondary: #FFA630;
+            --color-tertiary: #EF8A17;
+            --color-primary-dark: #D45B00;
+            --color-primary-light: #FF9E4F;
             --color-success: #4CAF50;
             --color-error: #f44336;
             --color-warning: #ff9800;
             --color-info: #2196F3;
             --color-dark: #1a1a2e;
             --color-light: #f8f9fa;
+            --color-card-bg: rgba(255, 255, 255, 0.08);
+            --color-card-border: rgba(255, 255, 255, 0.15);
+            --color-text-light: #FFFFFF;
+            --color-text-dark: #333333;
         }
 
         * {
@@ -29,8 +35,8 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary), var(--color-tertiary));
-            color: white;
+            background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary), var(--color-secondary));
+            color: var(--color-text-light);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
@@ -75,23 +81,25 @@
         .logo {
             height: 80px;
             margin-bottom: 15px;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
         }
 
         /* Card Styles */
         .card {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--color-card-bg);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             margin-bottom: 30px;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--color-card-border);
         }
 
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         /* Button Styles */
@@ -106,14 +114,15 @@
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 166, 48, 0.3);
             margin: 5px;
             text-align: center;
         }
 
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(37, 117, 252, 0.4);
+            box-shadow: 0 8px 20px rgba(255, 166, 48, 0.4);
+            background: linear-gradient(to right, var(--color-tertiary), var(--color-secondary));
         }
 
         .btn:active {
@@ -122,18 +131,22 @@
 
         .btn-success {
             background: linear-gradient(to right, var(--color-success), #2ecc71);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
         }
 
         .btn-danger {
             background: linear-gradient(to right, var(--color-error), #e74c3c);
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
         }
 
         .btn-warning {
             background: linear-gradient(to right, var(--color-warning), #f39c12);
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
         }
 
         .btn-info {
             background: linear-gradient(to right, var(--color-info), #3498db);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
         }
 
         /* Form Styles */
@@ -147,7 +160,7 @@
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             background: rgba(255, 255, 255, 0.1);
-            color: white;
+            color: var(--color-text-light);
             font-size: 16px;
             transition: all 0.3s ease;
         }
@@ -156,13 +169,14 @@
             outline: none;
             border-color: var(--color-secondary);
             background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.2);
+            box-shadow: 0 0 0 3px rgba(255, 166, 48, 0.2);
         }
 
         .form-label {
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
+            color: var(--color-text-light);
         }
 
         /* Radio and Checkbox Styles */
@@ -188,7 +202,7 @@
         .radio-option:checked + .radio-label,
         .checkbox-option:checked + .checkbox-label {
             background: linear-gradient(to right, var(--color-secondary), var(--color-tertiary));
-            box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 166, 48, 0.3);
         }
 
         /* Animation Classes */
@@ -234,7 +248,7 @@
             font-weight: 700;
             text-align: center;
             margin: 20px 0;
-            color: white;
+            color: var(--color-text-light);
             transition: all 0.3s ease;
         }
 
@@ -341,7 +355,7 @@
         /* Certificate Styles - REVISED FOR PRINTING */
         .certificate {
             background: white;
-            color: #333;
+            color: var(--color-text-dark);
             padding: 0;
             border-radius: 0;
             box-shadow: none;
@@ -350,7 +364,7 @@
             margin: 20px auto;
             position: relative;
             overflow: hidden;
-            background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/certificate.png');
+            background-image: url('https://raw.githubusercontent.com/pergunu/pergunusmart/main/assets/images/certificate.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -379,7 +393,7 @@
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 10px;
-            color: var(--color-primary);
+            color: var(--color-primary-dark);
             text-transform: uppercase;
         }
 
@@ -394,7 +408,7 @@
             font-size: 48px;
             margin: 20px 0;
             font-weight: 600;
-            color: #333;
+            color: var(--color-text-dark);
             font-family: 'Dancing Script', cursive;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
@@ -403,13 +417,13 @@
             font-size: 16px;
             line-height: 1.6;
             margin: 10px 0;
-            color: #333;
+            color: var(--color-text-dark);
         }
 
         .certificate-score {
             font-size: 28px;
             font-weight: 700;
-            color: var(--color-primary);
+            color: var(--color-primary-dark);
             margin: 20px 0;
         }
 
@@ -504,7 +518,7 @@
 
         .modal-content {
             background: white;
-            color: #333;
+            color: var(--color-text-dark);
             border-radius: 15px;
             padding: 30px;
             width: 90%;
@@ -530,7 +544,7 @@
         .modal-title {
             font-size: 24px;
             font-weight: 600;
-            color: var(--color-primary);
+            color: var(--color-primary-dark);
         }
 
         .modal-close {
@@ -572,7 +586,7 @@
                 padding: 0 !important;
                 box-shadow: none !important;
                 border-radius: 0 !important;
-                background-image: url('https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/certificate.png') !important;
+                background-image: url('https://raw.githubusercontent.com/pergunu/pergunusmart/main/assets/images/certificate.png') !important;
                 background-size: cover !important;
                 background-position: center !important;
                 background-repeat: no-repeat !important;
@@ -682,7 +696,7 @@
         }
 
         .admin-section h5 {
-            color: var(--color-primary);
+            color: var(--color-primary-dark);
             margin-bottom: 15px;
             font-size: 18px;
         }
@@ -702,6 +716,7 @@
             margin-bottom: 5px;
             font-weight: 500;
             font-size: 14px;
+            color: var(--color-text-dark);
         }
 
         .admin-control-input {
@@ -710,6 +725,7 @@
             border-radius: 6px;
             border: 1px solid #ddd;
             font-size: 14px;
+            color: var(--color-text-dark);
         }
 
         .admin-toggle {
@@ -784,13 +800,6 @@
             border-bottom: none;
         }
 
-        .export-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
         /* Question Bank Styles */
         .questions-list {
             max-height: 300px;
@@ -848,7 +857,7 @@
             height: 20px;
             border: 3px solid rgba(0,0,0,.3);
             border-radius: 50%;
-            border-top-color: var(--color-primary);
+            border-top-color: var(--color-primary-dark);
             animation: spin 1s ease-in-out infinite;
         }
 
@@ -881,33 +890,26 @@
 
         /* Checkbox styles for participant selection */
         .select-checkbox {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             cursor: pointer;
         }
 
         .select-all-checkbox {
-            margin-right: 5px;
+            margin-right: 10px;
         }
 
-        .participant-actions {
+        /* Bulk action controls */
+        .bulk-actions {
             display: flex;
             gap: 10px;
             margin-bottom: 15px;
-            flex-wrap: wrap;
+            align-items: center;
         }
 
-        /* Search Box */
-        .search-box {
-            margin-bottom: 15px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 10px 15px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
+        .selected-count {
             font-size: 14px;
+            color: #666;
         }
 
         /* Edit Question Modal */
@@ -926,7 +928,7 @@
 
         .edit-question-content {
             background: white;
-            color: #333;
+            color: var(--color-text-dark);
             border-radius: 15px;
             padding: 30px;
             width: 90%;
@@ -937,6 +939,68 @@
         }
 
         .edit-question-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        /* GPS Button Styles */
+        .gps-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 15px;
+            background: linear-gradient(to right, #4CAF50, #2ecc71);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        
+        .gps-btn i {
+            margin-right: 5px;
+        }
+        
+        .gps-result {
+            margin-top: 5px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        /* View Question Modal */
+        .view-question-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .view-question-content {
+            background: white;
+            color: var(--color-text-dark);
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .view-question-close {
             position: absolute;
             top: 15px;
             right: 15px;
@@ -961,7 +1025,7 @@
 
         .edit-participant-content {
             background: white;
-            color: #333;
+            color: var(--color-text-dark);
             border-radius: 15px;
             padding: 30px;
             width: 90%;
@@ -980,11 +1044,34 @@
             color: #666;
         }
 
-        /* Certificate Validation Section */
+        /* Search Box Styles */
+        .search-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px 10px 35px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            color: var(--color-text-dark);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        /* Certificate Validation Styles */
         .certificate-validation {
             margin-top: 20px;
             padding: 15px;
-            background-color: #f5f5f5;
+            background: #f5f5f5;
             border-radius: 8px;
         }
 
@@ -995,14 +1082,23 @@
             font-weight: bold;
         }
 
-        .valid-certificate {
-            background-color: #dff0d8;
-            color: #3c763d;
+        .valid {
+            background-color: #d4edda;
+            color: #155724;
         }
 
-        .invalid-certificate {
-            background-color: #f2dede;
-            color: #a94442;
+        .invalid {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Certificate Info Styles */
+        .certificate-info {
+            margin-top: 15px;
+            padding: 10px;
+            background: #e2e3e5;
+            border-radius: 5px;
+            font-size: 13px;
         }
     </style>
 </head>
@@ -1014,12 +1110,12 @@
         <!-- Welcome Screen -->
         <div id="welcome-screen" class="card slide-in">
             <div class="header">
-                <img src="https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/logo.png" alt="PERGUNU Logo" class="logo">
-                <h1>Ujian Online PERGUNU Situbondo</h1>
+                <img src="https://raw.githubusercontent.com/pergunu/pergunusmart/main/assets/images/logo.png" alt="PERGUNUSMART Logo" class="logo">
+                <h1>Ujian Online PERGUNUSMART</h1>
             </div>
             
             <div id="greeting-message">
-                <p id="greeting-text">Selamat datang di sistem ujian online PERGUNU Situbondo, Sistem tes kemampuan akademik untuk pelajar. Silakan masukkan kode login untuk melanjutkan.</p>
+                <p id="greeting-text">Selamat datang di sistem ujian online PERGUNUSMART. Silakan masukkan kode login (12345) untuk melanjutkan.</p>
             </div>
             
             <div class="form-group">
@@ -1035,7 +1131,7 @@
         <div id="terms-screen" class="card" style="display: none;">
             <h2>Peraturan dan Kebijakan Ujian Online</h2>
             <div class="terms-content" style="max-height: 300px; overflow-y: auto; margin: 20px 0; padding: 15px; background: rgba(0, 0, 0, 0.1); border-radius: 8px;">
-                <p>1. Ujian ini dikembangkan oleh Cendhanu Tim Kreator PERGUNU Situbondo.</p>
+                <p>1. Ujian ini dikembangkan oleh Cendhanu Tim Kreator PERGUNU.</p>
                 <p>2. Peserta wajib mengisi data diri dengan benar dan lengkap.</p>
                 <p>3. Dilarang keras melakukan kecurangan selama ujian berlangsung.</p>
                 <p>4. Waktu ujian akan berjalan terus dan tidak dapat dihentikan.</p>
@@ -1061,88 +1157,47 @@
             
             <div class="form-group">
                 <label for="fullname" class="form-label">Nama Lengkap</label>
-                <input type="text" id="fullname" class="form-control" placeholder="Masukkan nama lengkap" pattern="[A-Za-z ]+" title="Hanya huruf diperbolehkan" required>
+                <input type="text" id="fullname" class="form-control" placeholder="Masukkan nama lengkap" oninput="validateNameInput(this)">
             </div>
             
             <div class="form-group">
-                <label class="form-label">Status</label>
+                <label for="address" class="form-label">Alamat</label>
+                <input type="text" id="address" class="form-control" placeholder="Masukkan alamat lengkap">
+                <button id="get-location-btn" class="gps-btn">
+                    <i class="fas fa-map-marker-alt"></i> Gunakan GPS
+                </button>
+                <div id="gps-result" class="gps-result" style="display: none;"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone" class="form-label">Nomor WhatsApp Aktif</label>
+                <input type="tel" id="phone" class="form-control" placeholder="Masukkan nomor WhatsApp" pattern="[0-9]{10,13}" oninput="validatePhoneInput(this)">
+                <small class="text-muted">Contoh: 6281234567890 (10-13 digit)</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="form-label">Email Alamat</label>
+                <input type="email" id="email" class="form-control" placeholder="Masukkan alamat email" pattern="[a-z0-9._%+-]+@(gmail|yahoo|hotmail)\.com$">
+                <small class="text-muted">Hanya menerima @gmail.com, @yahoo.com, atau @hotmail.com</small>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Tujuan Ikut Ujian</label>
                 <div class="radio-group">
-                    <input type="radio" id="status-student" name="status" value="pelajar" class="radio-option" checked>
-                    <label for="status-student" class="radio-label">Pelajar</label>
+                    <input type="radio" id="purpose-iq" name="purpose" value="Tes IQ" class="radio-option" checked>
+                    <label for="purpose-iq" class="radio-label">Tes IQ</label>
+                    
+                    <input type="radio" id="purpose-cpns" name="purpose" value="Ujian CPNS/P3K" class="radio-option">
+                    <label for="purpose-cpns" class="radio-label">Ujian CPNS/P3K</label>
                 </div>
             </div>
             
-            <!-- Student Fields -->
-            <div id="student-fields">
+            <!-- CPNS License Code (Hidden Initially) -->
+            <div id="cpns-license-section" style="display: none;">
                 <div class="form-group">
-                    <label for="school-name" class="form-label">Nama Sekolah</label>
-                    <input type="text" id="school-name" class="form-control" placeholder="Masukkan nama sekolah">
-                </div>
-                
-                <div class="form-group">
-                    <label for="student-id" class="form-label">NIS (Nomor Induk Siswa)</label>
-                    <input type="text" id="student-id" class="form-control" placeholder="Masukkan NIS" pattern="[0-9]+" title="Hanya angka diperbolehkan" required>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Tujuan Ikut Ujian</label>
-                    <div class="radio-group">
-                        <input type="radio" id="purpose-task" name="purpose" value="Tugas Sekolah" class="radio-option">
-                        <label for="purpose-task" class="radio-label">Tugas Sekolah</label>
-                        
-                        <input type="radio" id="purpose-exam" name="purpose" value="Tugas Ulangan" class="radio-option">
-                        <label for="purpose-exam" class="radio-label">Tugas Ulangan</label>
-                        
-                        <input type="radio" id="purpose-test" name="purpose" value="Tes dan Belajar" class="radio-option">
-                        <label for="purpose-test" class="radio-label">Tes dan Belajar</label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Tingkat Sekolah</label>
-                    <div class="radio-group">
-                        <input type="radio" id="level-elementary" name="level" value="SD" class="radio-option">
-                        <label for="level-elementary" class="radio-label">SD</label>
-                        
-                        <input type="radio" id="level-junior" name="level" value="SMP" class="radio-option">
-                        <label for="level-junior" class="radio-label">SMP</label>
-                        
-                        <input type="radio" id="level-senior" name="level" value="SMA/SMK" class="radio-option">
-                        <label for="level-senior" class="radio-label">SMA/SMK</label>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Grade Selection (Will be shown based on school level) -->
-            <div id="grade-selection" style="display: none;">
-                <div class="form-group">
-                    <label class="form-label">Kelas</label>
-                    <div class="radio-group" id="grade-options">
-                        <!-- Options will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Subject Selection -->
-            <div id="subject-selection" style="display: none;">
-                <div class="form-group">
-                    <label class="form-label">Pilih Jenis Ujian</label>
-                    <div class="radio-group">
-                        <input type="radio" id="subject-science" name="subject" value="IPA" class="radio-option">
-                        <label for="subject-science" class="radio-label">IPA</label>
-                        
-                        <input type="radio" id="subject-social" name="subject" value="IPS" class="radio-option">
-                        <label for="subject-social" class="radio-label">IPS</label>
-                        
-                        <input type="radio" id="subject-math" name="subject" value="MATEMATIKA" class="radio-option">
-                        <label for="subject-math" class="radio-label">MATEMATIKA</label>
-                        
-                        <input type="radio" id="subject-indonesian" name="subject" value="BAHASA INDONESIA" class="radio-option">
-                        <label for="subject-indonesian" class="radio-label">BAHASA INDONESIA</label>
-                        
-                        <input type="radio" id="subject-english" name="subject" value="BAHASA INGGRIS" class="radio-option">
-                        <label for="subject-english" class="radio-label">BAHASA INGGRIS</label>
-                    </div>
+                    <label for="cpns-license" class="form-label">Kode Lisensi Ujian CPNS/P3K</label>
+                    <input type="password" id="cpns-license" class="form-control" placeholder="Masukkan kode lisensi">
+                    <small class="text-muted">Kode lisensi diberikan oleh admin</small>
                 </div>
             </div>
             
@@ -1154,7 +1209,7 @@
                 </div>
             </div>
             
-            <button id="save-participant-btn" class="btn" disabled>Simpan & Ikut Ujian</button>
+            <button id="save-participant-btn" class="btn" disabled>Mulai Ujian Sekarang</button>
         </div>
         
         <!-- Exam Screen (Hidden Initially) -->
@@ -1186,10 +1241,10 @@
             
             <div class="results-summary">
                 <p>Nama: <span id="result-name"></span></p>
-                <p>Status: <span id="result-status"></span></p>
-                <p>Tingkat: <span id="result-level"></span></p>
-                <p>Kelas: <span id="result-grade"></span></p>
-                <p>Mata Ujian: <span id="result-subject"></span></p>
+                <p>Alamat: <span id="result-address"></span></p>
+                <p>WhatsApp: <span id="result-phone"></span></p>
+                <p>Email: <span id="result-email"></span></p>
+                <p>Tujuan Ujian: <span id="result-purpose"></span></p>
                 <p>Jumlah Soal: <span id="total-questions"></span></p>
                 <p>Jawaban Benar: <span id="correct-answers"></span></p>
                 <p>Jawaban Salah: <span id="wrong-answers"></span></p>
@@ -1237,7 +1292,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="question-bank-code" class="form-label">Kode Bank Soal</label>
-                    <input type="password" id="question-bank-code" class="form-control" placeholder="Masukkan kode bank soal" style="color: #333;">
+                    <input type="password" id="question-bank-code" class="form-control" placeholder="Masukkan kode bank soal" style="color: var(--color-text-dark);">
                     <button id="submit-question-bank-code" class="btn">Masuk</button>
                 </div>
                 
@@ -1247,31 +1302,28 @@
                         <h5>Tambah Soal Baru</h5>
                         <div class="form-group">
                             <label class="form-label">Kategori Ujian</label>
-                            <select id="question-category" class="form-control" style="color: #333;">
-                                <option value="IPA">IPA</option>
-                                <option value="IPS">IPS</option>
-                                <option value="MATEMATIKA">MATEMATIKA</option>
-                                <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
-                                <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
+                            <select id="question-category" class="form-control" style="color: var(--color-text-dark);">
+                                <option value="TES_IQ">Tes IQ</option>
+                                <option value="CPNS_P3K">Ujian CPNS/P3K</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Pertanyaan</label>
-                            <textarea id="question-text-input" class="form-control" rows="3" style="color: #333;"></textarea>
+                            <textarea id="question-text-input" class="form-control" rows="3" style="color: var(--color-text-dark);"></textarea>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Opsi Jawaban</label>
                             <div class="options-container">
-                                <input type="text" id="option-a" class="form-control" placeholder="Opsi A" style="color: #333; margin-bottom: 5px;">
-                                <input type="text" id="option-b" class="form-control" placeholder="Opsi B" style="color: #333; margin-bottom: 5px;">
-                                <input type="text" id="option-c" class="form-control" placeholder="Opsi C" style="color: #333; margin-bottom: 5px;">
-                                <input type="text" id="option-d" class="form-control" placeholder="Opsi D" style="color: #333; margin-bottom: 5px;">
-                                <input type="text" id="option-e" class="form-control" placeholder="Opsi E" style="color: #333;">
+                                <input type="text" id="option-a" class="form-control" placeholder="Opsi A" style="color: var(--color-text-dark); margin-bottom: 5px;">
+                                <input type="text" id="option-b" class="form-control" placeholder="Opsi B" style="color: var(--color-text-dark); margin-bottom: 5px;">
+                                <input type="text" id="option-c" class="form-control" placeholder="Opsi C" style="color: var(--color-text-dark); margin-bottom: 5px;">
+                                <input type="text" id="option-d" class="form-control" placeholder="Opsi D" style="color: var(--color-text-dark); margin-bottom: 5px;">
+                                <input type="text" id="option-e" class="form-control" placeholder="Opsi E" style="color: var(--color-text-dark);">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Jawaban Benar</label>
-                            <select id="correct-answer" class="form-control" style="color: #333;">
+                            <select id="correct-answer" class="form-control" style="color: var(--color-text-dark);">
                                 <option value="0">A</option>
                                 <option value="1">B</option>
                                 <option value="2">C</option>
@@ -1281,7 +1333,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Penjelasan</label>
-                            <textarea id="explanation-input" class="form-control" rows="3" style="color: #333;"></textarea>
+                            <textarea id="explanation-input" class="form-control" rows="3" style="color: var(--color-text-dark);"></textarea>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Upload Gambar (Opsional)</label>
@@ -1294,13 +1346,10 @@
                         <h5>Daftar Soal</h5>
                         <div class="form-group">
                             <label class="form-label">Filter Kategori</label>
-                            <select id="filter-category" class="form-control" style="color: #333;">
+                            <select id="filter-category" class="form-control" style="color: var(--color-text-dark);">
                                 <option value="all">Semua Kategori</option>
-                                <option value="IPA">IPA</option>
-                                <option value="IPS">IPS</option>
-                                <option value="MATEMATIKA">MATEMATIKA</option>
-                                <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
-                                <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
+                                <option value="TES_IQ">Tes IQ</option>
+                                <option value="CPNS_P3K">Ujian CPNS/P3K</option>
                             </select>
                         </div>
                         <div class="questions-list">
@@ -1323,7 +1372,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="admin-panel-code" class="form-label">Kode Admin</label>
-                    <input type="password" id="admin-panel-code" class="form-control" placeholder="Masukkan kode admin" style="color: #333;">
+                    <input type="password" id="admin-panel-code" class="form-control" placeholder="Masukkan kode admin" style="color: var(--color-text-dark);">
                     <button id="submit-admin-panel-code" class="btn">Masuk</button>
                 </div>
                 
@@ -1332,17 +1381,22 @@
                         <h5>Pengaturan Kode</h5>
                         <div class="form-group">
                             <label class="form-label">Kode Login Baru</label>
-                            <input type="password" id="new-login-code" class="form-control" placeholder="Masukkan kode login baru" style="color: #333;">
+                            <input type="password" id="new-login-code" class="form-control" placeholder="Masukkan kode login baru" style="color: var(--color-text-dark);">
                         </div>
                         
                         <div class="form-group">
                             <label class="form-label">Kode Bank Soal Baru</label>
-                            <input type="password" id="new-question-bank-code" class="form-control" placeholder="Masukkan kode bank soal baru" style="color: #333;">
+                            <input type="password" id="new-question-bank-code" class="form-control" placeholder="Masukkan kode bank soal baru" style="color: var(--color-text-dark);">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Kode Ujian CPNS Baru</label>
+                            <input type="password" id="new-cpns-code" class="form-control" placeholder="Masukkan kode ujian CPNS baru" style="color: var(--color-text-dark);">
                         </div>
                         
                         <div class="form-group">
                             <label class="form-label">Kode Admin Baru</label>
-                            <input type="password" id="new-admin-code" class="form-control" placeholder="Masukkan kode admin baru" style="color: #333;">
+                            <input type="password" id="new-admin-code" class="form-control" placeholder="Masukkan kode admin baru" style="color: var(--color-text-dark);">
                         </div>
                         
                         <button id="save-codes-btn" class="btn btn-success">Simpan Kode</button>
@@ -1386,15 +1440,19 @@
                         <h5>Pengaturan Konten</h5>
                         <div class="form-group">
                             <label class="form-label">Pesan Pembuka</label>
-                            <textarea id="greeting-message-input" class="form-control" rows="3" style="color: #333;">Selamat datang di sistem ujian online PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.</textarea>
+                            <textarea id="greeting-message-input" class="form-control" rows="3" style="color: var(--color-text-dark);">Selamat datang di sistem ujian online PERGUNUSMART. Silakan masukkan kode login untuk melanjutkan.</textarea>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Pesan Informasi Berkala</label>
-                            <textarea id="admin-message-input" class="form-control" rows="3" style="color: #333;">Tidak ada informasi terbaru saat ini.</textarea>
+                            <textarea id="admin-message-input" class="form-control" rows="3" style="color: var(--color-text-dark);">Tidak ada informasi terbaru saat ini.</textarea>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Nama Ketua PERGUNU</label>
-                            <input type="text" id="chairman-name" class="form-control" value="Moh. Nuril Hudha, S.Pd., M.Si." style="color: #333;">
+                            <input type="text" id="chairman-name" class="form-control" value="Moh. Nuril Hudha, S.Pd., M.Si." style="color: var(--color-text-dark);">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Pesan Motivasi Sertifikat</label>
+                            <textarea id="motivation-message-input" class="form-control" rows="3" style="color: var(--color-text-dark);"></textarea>
                         </div>
                         <button id="save-content-btn" class="btn btn-success">Simpan Perubahan</button>
                     </div>
@@ -1402,36 +1460,28 @@
                     <div class="admin-section">
                         <h5>Manajemen Peserta</h5>
                         <div class="search-box">
-                            <input type="text" id="participant-search" class="search-input" placeholder="Cari peserta berdasarkan nama, NIS, atau kode sertifikat...">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="participant-search" class="form-control" placeholder="Cari peserta..." style="color: var(--color-text-dark);">
                         </div>
-                        <div class="participant-actions">
-                            <button id="select-all-participants" class="btn btn-info">
-                                <input type="checkbox" id="select-all-checkbox" class="select-all-checkbox">
-                                Pilih Semua
-                            </button>
-                            <button id="edit-selected-participants" class="btn btn-warning" disabled>
-                                <i class="fas fa-edit"></i> Edit Terpilih
-                            </button>
-                            <button id="delete-selected-participants" class="btn btn-danger" disabled>
-                                <i class="fas fa-trash"></i> Hapus Terpilih
-                            </button>
+                        <div class="bulk-actions">
+                            <input type="checkbox" id="select-all-participants" class="select-all-checkbox">
+                            <span class="selected-count" id="selected-count">0 dipilih</span>
+                            <button id="edit-selected-btn" class="btn btn-info" disabled><i class="fas fa-edit"></i> Edit</button>
+                            <button id="delete-selected-btn" class="btn btn-danger" disabled><i class="fas fa-trash"></i> Hapus</button>
                         </div>
                         <div class="participant-list">
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th width="30px">
-                                            <!-- Select all checkbox -->
-                                        </th>
+                                        <th><input type="checkbox" id="select-all-header" class="select-checkbox"></th>
                                         <th>Tanggal</th>
                                         <th>Nama</th>
-                                        <th>NIS</th>
-                                        <th>Status</th>
-                                        <th>Tingkat</th>
-                                        <th>Kelas</th>
-                                        <th>Mata Ujian</th>
+                                        <th>WhatsApp</th>
+                                        <th>Email</th>
+                                        <th>Tujuan Ujian</th>
                                         <th>Nilai</th>
                                         <th>Kode Sertifikat</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody id="participants-table-body">
@@ -1446,12 +1496,11 @@
                         <div class="certificate-validation">
                             <div class="form-group">
                                 <label class="form-label">Masukkan Kode Sertifikat</label>
-                                <input type="text" id="certificate-code-input" class="form-control" placeholder="Masukkan kode sertifikat" style="color: #333;">
+                                <input type="text" id="certificate-code-input" class="form-control" placeholder="Masukkan kode sertifikat" style="color: var(--color-text-dark);">
                                 <button id="validate-certificate-btn" class="btn btn-info">Validasi</button>
                             </div>
-                            <div id="validation-result" class="validation-result" style="display: none;">
-                                <!-- Validation result will be shown here -->
-                            </div>
+                            <div id="validation-result" class="validation-result" style="display: none;"></div>
+                            <div id="certificate-info" class="certificate-info" style="display: none;"></div>
                         </div>
                     </div>
                     
@@ -1459,53 +1508,23 @@
                         <h5>Aktifkan/Nonaktifkan Ujian</h5>
                         <div class="admin-controls">
                             <div class="admin-control-group">
-                                <label class="admin-control-label">IPA</label>
+                                <label class="admin-control-label">Tes IQ</label>
                                 <div class="admin-toggle">
                                     <label class="toggle-switch">
-                                        <input type="checkbox" id="toggle-science" checked>
+                                        <input type="checkbox" id="toggle-iq" checked>
                                         <span class="toggle-slider"></span>
                                     </label>
-                                    <span id="science-status">Aktif</span>
+                                    <span id="iq-status">Aktif</span>
                                 </div>
                             </div>
                             <div class="admin-control-group">
-                                <label class="admin-control-label">IPS</label>
+                                <label class="admin-control-label">Ujian CPNS/P3K</label>
                                 <div class="admin-toggle">
                                     <label class="toggle-switch">
-                                        <input type="checkbox" id="toggle-social" checked>
+                                        <input type="checkbox" id="toggle-cpns" checked>
                                         <span class="toggle-slider"></span>
                                     </label>
-                                    <span id="social-status">Aktif</span>
-                                </div>
-                            </div>
-                            <div class="admin-control-group">
-                                <label class="admin-control-label">MATEMATIKA</label>
-                                <div class="admin-toggle">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="toggle-math" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                    <span id="math-status">Aktif</span>
-                                </div>
-                            </div>
-                            <div class="admin-control-group">
-                                <label class="admin-control-label">BAHASA INDONESIA</label>
-                                <div class="admin-toggle">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="toggle-indonesian" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                    <span id="indonesian-status">Aktif</span>
-                                </div>
-                            </div>
-                            <div class="admin-control-group">
-                                <label class="admin-control-label">BAHASA INGGRIS</label>
-                                <div class="admin-toggle">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="toggle-english" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                    <span id="english-status">Aktif</span>
+                                    <span id="cpns-status">Aktif</span>
                                 </div>
                             </div>
                         </div>
@@ -1524,31 +1543,28 @@
             
             <div class="form-group">
                 <label class="form-label">Kategori Ujian</label>
-                <select id="edit-question-category" class="form-control" style="color: #333;">
-                    <option value="IPA">IPA</option>
-                    <option value="IPS">IPS</option>
-                    <option value="MATEMATIKA">MATEMATIKA</option>
-                    <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
-                    <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
+                <select id="edit-question-category" class="form-control" style="color: var(--color-text-dark);">
+                    <option value="TES_IQ">Tes IQ</option>
+                    <option value="CPNS_P3K">Ujian CPNS/P3K</option>
                 </select>
             </div>
             <div class="form-group">
                 <label class="form-label">Pertanyaan</label>
-                <textarea id="edit-question-text" class="form-control" rows="3" style="color: #333;"></textarea>
+                <textarea id="edit-question-text" class="form-control" rows="3" style="color: var(--color-text-dark);"></textarea>
             </div>
             <div class="form-group">
                 <label class="form-label">Opsi Jawaban</label>
                 <div class="options-container">
-                    <input type="text" id="edit-option-a" class="form-control" placeholder="Opsi A" style="color: #333; margin-bottom: 5px;">
-                    <input type="text" id="edit-option-b" class="form-control" placeholder="Opsi B" style="color: #333; margin-bottom: 5px;">
-                    <input type="text" id="edit-option-c" class="form-control" placeholder="Opsi C" style="color: #333; margin-bottom: 5px;">
-                    <input type="text" id="edit-option-d" class="form-control" placeholder="Opsi D" style="color: #333; margin-bottom: 5px;">
-                    <input type="text" id="edit-option-e" class="form-control" placeholder="Opsi E" style="color: #333;">
+                    <input type="text" id="edit-option-a" class="form-control" placeholder="Opsi A" style="color: var(--color-text-dark); margin-bottom: 5px;">
+                    <input type="text" id="edit-option-b" class="form-control" placeholder="Opsi B" style="color: var(--color-text-dark); margin-bottom: 5px;">
+                    <input type="text" id="edit-option-c" class="form-control" placeholder="Opsi C" style="color: var(--color-text-dark); margin-bottom: 5px;">
+                    <input type="text" id="edit-option-d" class="form-control" placeholder="Opsi D" style="color: var(--color-text-dark); margin-bottom: 5px;">
+                    <input type="text" id="edit-option-e" class="form-control" placeholder="Opsi E" style="color: var(--color-text-dark);">
                 </div>
             </div>
             <div class="form-group">
                 <label class="form-label">Jawaban Benar</label>
-                <select id="edit-correct-answer" class="form-control" style="color: #333;">
+                <select id="edit-correct-answer" class="form-control" style="color: var(--color-text-dark);">
                     <option value="0">A</option>
                     <option value="1">B</option>
                     <option value="2">C</option>
@@ -1558,7 +1574,7 @@
             </div>
             <div class="form-group">
                 <label class="form-label">Penjelasan</label>
-                <textarea id="edit-explanation" class="form-control" rows="3" style="color: #333;"></textarea>
+                <textarea id="edit-explanation" class="form-control" rows="3" style="color: var(--color-text-dark);"></textarea>
             </div>
             <div class="form-group">
                 <label class="form-label">Upload Gambar (Opsional)</label>
@@ -1575,96 +1591,88 @@
         </div>
     </div>
     
+    <!-- View Question Modal -->
+    <div class="view-question-modal" id="view-question-modal">
+        <div class="view-question-content">
+            <span class="view-question-close" id="close-view-question-modal">&times;</span>
+            <h3>Detail Soal</h3>
+            
+            <div class="form-group">
+                <label class="form-label">Kategori Ujian</label>
+                <p id="view-question-category" style="padding: 10px; background: #f5f5f5; border-radius: 5px;"></p>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Pertanyaan</label>
+                <p id="view-question-text" style="padding: 10px; background: #f5f5f5; border-radius: 5px;"></p>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Opsi Jawaban</label>
+                <div id="view-options-container" style="padding: 10px; background: #f5f5f5; border-radius: 5px;"></div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Jawaban Benar</label>
+                <p id="view-correct-answer" style="padding: 10px; background: #f5f5f5; border-radius: 5px;"></p>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Penjelasan</label>
+                <p id="view-explanation" style="padding: 10px; background: #f5f5f5; border-radius: 5px;"></p>
+            </div>
+        </div>
+    </div>
+    
     <!-- Edit Participant Modal -->
     <div class="edit-participant-modal" id="edit-participant-modal">
         <div class="edit-participant-content">
             <span class="edit-participant-close" id="close-edit-participant-modal">&times;</span>
             <h3>Edit Data Peserta</h3>
             
+            <input type="hidden" id="edit-participant-index">
+            
             <div class="form-group">
                 <label for="edit-fullname" class="form-label">Nama Lengkap</label>
-                <input type="text" id="edit-fullname" class="form-control" style="color: #333;" pattern="[A-Za-z ]+" title="Hanya huruf diperbolehkan" required>
+                <input type="text" id="edit-fullname" class="form-control" style="color: var(--color-text-dark);">
             </div>
             
             <div class="form-group">
-                <label class="form-label">Status</label>
+                <label for="edit-address" class="form-label">Alamat</label>
+                <input type="text" id="edit-address" class="form-control" style="color: var(--color-text-dark);">
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-phone" class="form-label">Nomor WhatsApp</label>
+                <input type="tel" id="edit-phone" class="form-control" style="color: var(--color-text-dark);">
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-email" class="form-label">Email</label>
+                <input type="email" id="edit-email" class="form-control" style="color: var(--color-text-dark);">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Tujuan Ujian</label>
                 <div class="radio-group">
-                    <input type="radio" id="edit-status-student" name="edit-status" value="pelajar" class="radio-option" checked>
-                    <label for="edit-status-student" class="radio-label">Pelajar</label>
-                </div>
-            </div>
-            
-            <div id="edit-student-fields">
-                <div class="form-group">
-                    <label for="edit-school-name" class="form-label">Nama Sekolah</label>
-                    <input type="text" id="edit-school-name" class="form-control" style="color: #333;">
-                </div>
-                
-                <div class="form-group">
-                    <label for="edit-student-id" class="form-label">NIS (Nomor Induk Siswa)</label>
-                    <input type="text" id="edit-student-id" class="form-control" style="color: #333;" pattern="[0-9]+" title="Hanya angka diperbolehkan" required>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Tujuan Ikut Ujian</label>
-                    <div class="radio-group">
-                        <input type="radio" id="edit-purpose-task" name="edit-purpose" value="Tugas Sekolah" class="radio-option">
-                        <label for="edit-purpose-task" class="radio-label">Tugas Sekolah</label>
-                        
-                        <input type="radio" id="edit-purpose-exam" name="edit-purpose" value="Tugas Ulangan" class="radio-option">
-                        <label for="edit-purpose-exam" class="radio-label">Tugas Ulangan</label>
-                        
-                        <input type="radio" id="edit-purpose-test" name="edit-purpose" value="Tes dan Belajar" class="radio-option">
-                        <label for="edit-purpose-test" class="radio-label">Tes dan Belajar</label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Tingkat Sekolah</label>
-                    <div class="radio-group">
-                        <input type="radio" id="edit-level-elementary" name="edit-level" value="SD" class="radio-option">
-                        <label for="edit-level-elementary" class="radio-label">SD</label>
-                        
-                        <input type="radio" id="edit-level-junior" name="edit-level" value="SMP" class="radio-option">
-                        <label for="edit-level-junior" class="radio-label">SMP</label>
-                        
-                        <input type="radio" id="edit-level-senior" name="edit-level" value="SMA/SMK" class="radio-option">
-                        <label for="edit-level-senior" class="radio-label">SMA/SMK</label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Kelas</label>
-                    <div class="radio-group" id="edit-grade-options">
-                        <!-- Options will be populated by JavaScript -->
-                    </div>
+                    <input type="radio" id="edit-purpose-iq" name="edit-purpose" value="Tes IQ" class="radio-option">
+                    <label for="edit-purpose-iq" class="radio-label">Tes IQ</label>
+                    
+                    <input type="radio" id="edit-purpose-cpns" name="edit-purpose" value="Ujian CPNS/P3K" class="radio-option">
+                    <label for="edit-purpose-cpns" class="radio-label">Ujian CPNS/P3K</label>
                 </div>
             </div>
             
             <div class="form-group">
-                <label class="form-label">Mata Ujian</label>
-                <select id="edit-subject" class="form-control" style="color: #333;">
-                    <option value="IPA">IPA</option>
-                    <option value="IPS">IPS</option>
-                    <option value="MATEMATIKA">MATEMATIKA</option>
-                    <option value="BAHASA INDONESIA">BAHASA INDONESIA</option>
-                    <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="edit-score" class="form-label">Nilai</label>
-                <input type="number" id="edit-score" class="form-control" min="0" max="100" style="color: #333;">
+                <label for="edit-score" class="form-label">Nilai (%)</label>
+                <input type="number" id="edit-score" class="form-control" min="0" max="100" style="color: var(--color-text-dark);">
             </div>
             
             <div class="form-group">
                 <label for="edit-certificate-code" class="form-label">Kode Sertifikat</label>
-                <input type="text" id="edit-certificate-code" class="form-control" style="color: #333;" readonly>
+                <input type="text" id="edit-certificate-code" class="form-control" style="color: var(--color-text-dark);" readonly>
             </div>
             
-            <button id="save-edit-participant-btn" class="btn btn-success">Simpan Perubahan</button>
-            
-            <input type="hidden" id="edit-participant-index">
+            <div class="form-group" style="display: flex; justify-content: space-between;">
+                <button id="save-edit-participant-btn" class="btn btn-success">Simpan Perubahan</button>
+                <button id="cancel-edit-participant-btn" class="btn btn-danger">Batal</button>
+            </div>
         </div>
     </div>
     
@@ -1674,11 +1682,11 @@
     </div>
 
     <!-- Audio Elements -->
-    <audio id="button-sound" src="https://github.com/pergunu/pergunusmart/raw/main/assets/audio/audiotombol.mp3" preload="auto"></audio>
-    <audio id="correct-answer-sound" src="https://github.com/pergunu/pergunusmart/raw/main/assets/audio/jawabanbenar.mp3" preload="auto"></audio>
-    <audio id="wrong-answer-sound" src="https://github.com/pergunu/pergunusmart/raw/main/assets/audio/jawabansalah.mp3" preload="auto"></audio>
-    <audio id="certificate-sound" src="https://github.com/pergunu/pergunusmart/raw/main/assets/audio/applause.mp3" preload="auto"></audio>
-    <audio id="opening-sound" src="https://github.com/pergunu/ujian-online/raw/main/assets/audio/opening.mp3" preload="auto"></audio>
+    <audio id="audio-opening" src="https://github.com/pergunu/pergunusmart/blob/main/assets/audio/opening.mp3?raw=true" preload="auto"></audio>
+    <audio id="audio-button-click" src="https://voca.ro/16oVT0NTCKF0" preload="auto"></audio>
+    <audio id="audio-correct" src="https://voca.ro/1emZhDVU89XS" preload="auto"></audio>
+    <audio id="audio-wrong" src="https://voca.ro/17HW0ShxqM9B" preload="auto"></audio>
+    <audio id="audio-applause" src="https://voca.ro/13NRsLENyQRIs" preload="auto"></audio>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
@@ -1691,86 +1699,134 @@
         let answeredQuestions = {};
         let examTimer;
         let examTimeLeft = 120 * 60; // 120 minutes in seconds
-        let selectedParticipants = [];
         
         // Audio elements
-        const buttonSound = document.getElementById('button-sound');
-        const correctAnswerSound = document.getElementById('correct-answer-sound');
-        const wrongAnswerSound = document.getElementById('wrong-answer-sound');
-        const certificateSound = document.getElementById('certificate-sound');
-        const openingSound = document.getElementById('opening-sound');
+        const audioOpening = document.getElementById('audio-opening');
+        const audioButtonClick = document.getElementById('audio-button-click');
+        const audioCorrect = document.getElementById('audio-correct');
+        const audioWrong = document.getElementById('audio-wrong');
+        const audioApplause = document.getElementById('audio-applause');
         
         // Default codes (should be changed in production)
         const DEFAULT_LOGIN_CODE = '12345';
         const DEFAULT_QUESTION_BANK_CODE = 'OPENLOCK-1926';
+        const DEFAULT_CPNS_LICENSE_CODE = 'OPENLOCK-1945';
         const DEFAULT_ADMIN_PANEL_CODE = '65614222';
         
-        // Store participants data
-        let participantsData = JSON.parse(localStorage.getItem('participantsData')) || [];
+        // Store participants data with enhanced storage mechanism
+        let participantsData = JSON.parse(localStorage.getItem('pergunusmart_participants')) || [];
         
-        // Store admin settings
-        let adminSettings = JSON.parse(localStorage.getItem('adminSettings')) || {
+        // Store admin settings with enhanced storage mechanism
+        let adminSettings = JSON.parse(localStorage.getItem('pergunusmart_admin_settings')) || {
             loginCode: DEFAULT_LOGIN_CODE,
             questionBankCode: DEFAULT_QUESTION_BANK_CODE,
-            adminCode: DEFAULT_ADMIN_PANEL_CODE,
+            cpnsLicenseCode: DEFAULT_CPNS_LICENSE_CODE,
+            adminPanelCode: DEFAULT_ADMIN_PANEL_CODE,
             examDuration: 120,
-            questionCount: 20,
+            questionCount: 30,
             randomizeQuestions: true,
-            greetingMessage: "Selamat datang di sistem ujian online PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.",
+            iqEnabled: true,
+            cpnsEnabled: true,
+            greetingMessage: "Selamat datang di sistem ujian online PERGUNUSMART. Silakan masukkan kode login untuk melanjutkan.",
             adminMessage: "Tidak ada informasi terbaru saat ini.",
             chairmanName: "Moh. Nuril Hudha, S.Pd., M.Si.",
-            enabledSubjects: {
-                IPA: true,
-                IPS: true,
-                MATEMATIKA: true,
-                BAHASA_INDONESIA: true,
-                BAHASA_INGGRIS: true
-            }
+            motivationMessage: ""
         };
         
-        // Sample questions for demonstration
-        let SAMPLE_QUESTIONS = JSON.parse(localStorage.getItem('questionBank')) || {
-            'IPA': [
-                {
-                    question: "Planet terdekat dari matahari adalah?",
-                    options: ["A. Venus", "B. Bumi", "C. Mars", "D. Merkurius", "E. Jupiter"],
-                    correctAnswer: 3,
-                    explanation: "Merkurius adalah planet terdekat dari matahari dalam tata surya kita."
+        // Initialize question bank if not exists - DIPERBAHARUI DENGAN SOAL LEBIH LENGKAP
+        function initializeQuestionBank() {
+            if (!localStorage.getItem('pergunusmart_question_bank')) {
+                const initialQuestions = {
+                    'TES_IQ': [
+                        {
+                            question: "Apa angka berikutnya dalam deret ini: 2, 4, 8, 16, ...?",
+                            options: ["A. 24", "B. 32", "C. 64", "D. 128", "E. 256"],
+                            correctAnswer: 1, // Index of correct answer (0-based)
+                            explanation: "Deret ini adalah kelipatan 2 (2^n), sehingga angka berikutnya adalah 32."
+                        },
+                        {
+                            question: "Jika semua manusia adalah makhluk hidup dan semua makhluk hidup akan mati, maka kesimpulannya adalah?",
+                            options: ["A. Manusia tidak akan mati", "B. Beberapa manusia tidak mati", "C. Semua manusia akan mati", "D. Tidak ada manusia yang mati", "E. Manusia adalah makhluk abadi"],
+                            correctAnswer: 2,
+                            explanation: "Berdasarkan premis yang diberikan, kesimpulan logis adalah semua manusia akan mati."
+                        },
+                        {
+                            question: "Apa sinonim dari kata 'Cerdik'?",
+                            options: ["A. Bodoh", "B. Pintar", "C. Licik", "D. Malas", "E. Lambat"],
+                            correctAnswer: 2,
+                            explanation: "Sinonim dari 'cerdik' adalah 'licik' yang berarti pandai menggunakan akal untuk mencapai tujuan."
+                        },
+                        {
+                            question: "Jika sebuah mobil berjalan dengan kecepatan 60 km/jam, berapa jarak yang ditempuh dalam 45 menit?",
+                            options: ["A. 30 km", "B. 45 km", "C. 60 km", "D. 75 km", "E. 90 km"],
+                            correctAnswer: 1,
+                            explanation: "45 menit adalah 0.75 jam. 60 km/jam × 0.75 jam = 45 km."
+                        },
+                        {
+                            question: "Manakah yang bukan termasuk dalam kelompoknya: Apel, Jeruk, Pisang, Wortel, Anggur?",
+                            options: ["A. Apel", "B. Jeruk", "C. Pisang", "D. Wortel", "E. Anggur"],
+                            correctAnswer: 3,
+                            explanation: "Wortel adalah sayuran, sementara yang lainnya adalah buah-buahan."
+                        }
+                    ],
+                    'CPNS_P3K': [
+                        {
+                            question: "Apa dasar negara Indonesia?",
+                            options: ["A. UUD 1945", "B. Pancasila", "C. Bhinneka Tunggal Ika", "D. NKRI", "E. Garuda Pancasila"],
+                            correctAnswer: 1,
+                            explanation: "Pancasila adalah dasar negara Indonesia yang tercantum dalam Pembukaan UUD 1945."
+                        },
+                        {
+                            question: "Lembaga negara yang bertugas memeriksa pengelolaan keuangan negara adalah?",
+                            options: ["A. KPK", "B. BPK", "C. KY", "D. DPR", "E. MK"],
+                            correctAnswer: 1,
+                            explanation: "Badan Pemeriksa Keuangan (BPK) adalah lembaga negara yang bertugas memeriksa pengelolaan keuangan negara."
+                        },
+                        {
+                            question: "Sistem pemerintahan Indonesia berdasarkan UUD 1945 adalah?",
+                            options: ["A. Presidensial", "B. Parlementer", "C. Monarki", "D. Federasi", "E. Komunis"],
+                            correctAnswer: 0,
+                            explanation: "Sistem pemerintahan Indonesia adalah presidensial dimana presiden berkedudukan sebagai kepala negara dan kepala pemerintahan."
+                        },
+                        {
+                            question: "Undang-Undang Dasar 1945 pertama kali disahkan pada tanggal?",
+                            options: ["A. 17 Agustus 1945", "B. 18 Agustus 1945", "C. 1 Juni 1945", "D. 22 Juni 1945", "E. 27 Desember 1949"],
+                            correctAnswer: 1,
+                            explanation: "UUD 1945 disahkan pada 18 Agustus 1945 oleh PPKI sehari setelah proklamasi kemerdekaan."
+                        },
+                        {
+                            question: "Lagu kebangsaan Indonesia Raya pertama kali diperdengarkan pada acara?",
+                            options: ["A. Proklamasi Kemerdekaan", "B. Sumpah Pemuda", "C. Konferensi Meja Bundar", "D. Pembentukan BPUPKI", "E. Penyerahan kedaulatan"],
+                            correctAnswer: 1,
+                            explanation: "Lagu Indonesia Raya pertama kali diperdengarkan pada Kongres Pemuda II (Sumpah Pemuda) tanggal 28 Oktober 1928."
+                        }
+                    ]
+                };
+                
+                try {
+                    localStorage.setItem('pergunusmart_question_bank', JSON.stringify(initialQuestions));
+                } catch (e) {
+                    console.error('Error initializing question bank:', e);
                 }
-            ],
-            'IPS': [
-                {
-                    question: "Ibu kota negara Jepang adalah?",
-                    options: ["A. Osaka", "B. Kyoto", "C. Hiroshima", "D. Tokyo", "E. Nagasaki"],
-                    correctAnswer: 3,
-                    explanation: "Tokyo adalah ibu kota Jepang sekaligus kota terbesar di Jepang."
-                }
-            ],
-            'MATEMATIKA': [
-                {
-                    question: "Hasil dari 7 × 8 adalah?",
-                    options: ["A. 48", "B. 54", "C. 56", "D. 64", "E. 72"],
-                    correctAnswer: 2,
-                    explanation: "Perkalian 7 × 8 menghasilkan 56."
-                }
-            ],
-            'BAHASA INDONESIA': [
-                {
-                    question: "Kata 'membaca' termasuk dalam jenis kata?",
-                    options: ["A. Kata benda", "B. Kata sifat", "C. Kata kerja", "D. Kata keterangan", "E. Kata ganti"],
-                    correctAnswer: 2,
-                    explanation: "'Membaca' adalah kata kerja karena menunjukkan suatu aktivitas."
-                }
-            ],
-            'BAHASA INGGRIS': [
-                {
-                    question: "What is the English word for 'buku'?",
-                    options: ["A. Pen", "B. Book", "C. Table", "D. Chair", "E. Door"],
-                    correctAnswer: 1,
-                    explanation: "The English translation for 'buku' is 'book'."
-                }
-            ]
-        };
+            }
+        }
+        
+        // Get questions from localStorage
+        function getQuestionsFromStorage() {
+            try {
+                const storedQuestions = JSON.parse(localStorage.getItem('pergunusmart_question_bank'));
+                return storedQuestions || {
+                    'TES_IQ': [],
+                    'CPNS_P3K': []
+                };
+            } catch (e) {
+                console.error('Error loading questions from storage:', e);
+                return {
+                    'TES_IQ': [],
+                    'CPNS_P3K': []
+                };
+            }
+        }
         
         // Motivational messages based on score
         const MOTIVATIONAL_MESSAGES = {
@@ -1784,6 +1840,9 @@
         
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize question bank if not exists
+            initializeQuestionBank();
+            
             // Initialize particles.js for background
             particlesJS('particles-js', {
                 "particles": {
@@ -1902,7 +1961,7 @@
                         }
                     },
                     "color": {
-                        "value": ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF"]
+                        "value": ["#FF6B35", "#FFA630", "#EF8A17", "#FF9E4F", "#D45B00", "#FF8C42"]
                     },
                     "shape": {
                         "type": ["circle", "triangle", "star"],
@@ -1970,36 +2029,24 @@
             // Load admin settings
             loadAdminSettings();
             
-            // Set greeting message from admin settings
-            document.getElementById('greeting-text').textContent = adminSettings.greetingMessage;
-            document.getElementById('admin-message').textContent = adminSettings.adminMessage;
-            
-            // Event listeners for buttons with sound
+            // Event listeners for all buttons to play click sound
             document.querySelectorAll('button').forEach(button => {
                 button.addEventListener('click', function() {
-                    // Play button sound if not disabled
-                    if (!this.disabled) {
-                        buttonSound.currentTime = 0;
-                        buttonSound.play().catch(e => console.log("Button sound prevented:", e));
-                    }
+                    playButtonClickSound();
                 });
             });
             
-            // Event listeners
+            // Main event listeners
             document.getElementById('login-btn').addEventListener('click', handleLogin);
             document.getElementById('agree-terms').addEventListener('change', toggleContinueButton);
             document.getElementById('continue-btn').addEventListener('click', showParticipantForm);
             
-            // Status radio buttons
-            document.querySelectorAll('input[name="status"]').forEach(radio => {
-                radio.addEventListener('change', toggleParticipantFields);
+            // Purpose radio buttons
+            document.querySelectorAll('input[name="purpose"]').forEach(radio => {
+                radio.addEventListener('change', toggleCPNSLicenseSection);
             });
             
-            // School level radio buttons
-            document.querySelectorAll('input[name="level"]').forEach(radio => {
-                radio.addEventListener('change', showGradeSelection);
-            });
-            
+            document.getElementById('get-location-btn').addEventListener('click', getLocation);
             document.getElementById('save-participant-btn').addEventListener('click', startExam);
             document.getElementById('finish-exam-btn').addEventListener('click', finishExam);
             document.getElementById('skip-question-btn').addEventListener('click', skipQuestion);
@@ -2016,6 +2063,7 @@
             document.getElementById('close-question-bank-modal').addEventListener('click', hideQuestionBankModal);
             document.getElementById('close-admin-panel-modal').addEventListener('click', hideAdminPanelModal);
             document.getElementById('close-edit-question-modal').addEventListener('click', hideEditQuestionModal);
+            document.getElementById('close-view-question-modal').addEventListener('click', hideViewQuestionModal);
             document.getElementById('close-edit-participant-modal').addEventListener('click', hideEditParticipantModal);
             
             // Modal submit buttons
@@ -2023,26 +2071,11 @@
             document.getElementById('submit-admin-panel-code').addEventListener('click', submitAdminPanelCode);
             
             // Check form validity when fields change
-            document.getElementById('fullname').addEventListener('input', function() {
-                // Convert input to uppercase automatically
-                this.value = this.value.toUpperCase();
-                checkParticipantFormValidity();
-            });
-            
-            document.getElementById('school-name').addEventListener('input', checkParticipantFormValidity);
-            document.getElementById('student-id').addEventListener('input', checkParticipantFormValidity);
-            document.querySelectorAll('input[name="purpose"]').forEach(radio => {
-                radio.addEventListener('change', checkParticipantFormValidity);
-            });
-            document.querySelectorAll('input[name="level"]').forEach(radio => {
-                radio.addEventListener('change', checkParticipantFormValidity);
-            });
-            document.querySelectorAll('input[name="grade"]').forEach(radio => {
-                radio.addEventListener('change', checkParticipantFormValidity);
-            });
-            document.querySelectorAll('input[name="subject"]').forEach(radio => {
-                radio.addEventListener('change', checkParticipantFormValidity);
-            });
+            document.getElementById('fullname').addEventListener('input', checkParticipantFormValidity);
+            document.getElementById('address').addEventListener('input', checkParticipantFormValidity);
+            document.getElementById('phone').addEventListener('input', checkParticipantFormValidity);
+            document.getElementById('email').addEventListener('input', checkParticipantFormValidity);
+            document.getElementById('cpns-license').addEventListener('input', checkParticipantFormValidity);
 
             // Admin panel toggle switches
             document.querySelectorAll('.toggle-switch input').forEach(toggle => {
@@ -2065,77 +2098,124 @@
             document.getElementById('save-content-btn').addEventListener('click', saveContent);
             document.getElementById('save-settings-btn').addEventListener('click', saveSettings);
             
-            // Participant management buttons
-            document.getElementById('select-all-participants').addEventListener('click', toggleSelectAllParticipants);
-            document.getElementById('edit-selected-participants').addEventListener('click', editSelectedParticipants);
-            document.getElementById('delete-selected-participants').addEventListener('click', deleteSelectedParticipants);
+            // Participant selection and bulk actions
+            document.getElementById('select-all-participants').addEventListener('change', toggleSelectAllParticipants);
+            document.getElementById('select-all-header').addEventListener('change', toggleSelectAllParticipantsHeader);
+            document.getElementById('edit-selected-btn').addEventListener('click', editSelectedParticipants);
+            document.getElementById('delete-selected-btn').addEventListener('click', deleteSelectedParticipants);
+            
+            // Edit participant modal buttons
+            document.getElementById('save-edit-participant-btn').addEventListener('click', saveEditedParticipant);
+            document.getElementById('cancel-edit-participant-btn').addEventListener('click', hideEditParticipantModal);
+            
+            // Certificate validation
             document.getElementById('validate-certificate-btn').addEventListener('click', validateCertificate);
             
-            // Search functionality
+            // Participant search functionality
             document.getElementById('participant-search').addEventListener('input', searchParticipants);
-            
-            // Edit participant form
-            document.getElementById('save-edit-participant-btn').addEventListener('click', saveEditedParticipant);
-            document.querySelectorAll('input[name="edit-status"]').forEach(radio => {
-                radio.addEventListener('change', toggleEditParticipantFields);
-            });
-            document.querySelectorAll('input[name="edit-level"]').forEach(radio => {
-                radio.addEventListener('change', showEditGradeSelection);
-            });
             
             // Load participants data for admin panel
             loadParticipantsData();
-            
-            // Auto uppercase for edit fullname field
-            document.getElementById('edit-fullname').addEventListener('input', function() {
-                this.value = this.value.toUpperCase();
-            });
         });
+
+        // Function to play button click sound
+        function playButtonClickSound() {
+            // Mute other sounds when playing button click
+            audioOpening.muted = true;
+            audioCorrect.muted = true;
+            audioWrong.muted = true;
+            audioApplause.muted = true;
+            
+            audioButtonClick.currentTime = 0;
+            audioButtonClick.muted = false;
+            audioButtonClick.play().catch(e => console.log("Button click sound prevented:", e));
+            
+            // Unmute other sounds after button click plays
+            setTimeout(() => {
+                audioOpening.muted = false;
+                audioCorrect.muted = false;
+                audioWrong.muted = false;
+                audioApplause.muted = false;
+            }, 500);
+        }
+
+        // Function to validate name input (letters only)
+        function validateNameInput(input) {
+            // Remove any numbers or special characters
+            input.value = input.value.replace(/[^a-zA-Z\s]/g, '');
+            
+            // Convert to uppercase
+            input.value = input.value.toUpperCase();
+            
+            // Update form validity
+            checkParticipantFormValidity();
+        }
+
+        // Function to validate phone input (numbers only)
+        function validatePhoneInput(input) {
+            // Remove any non-numeric characters
+            input.value = input.value.replace(/\D/g, '');
+            
+            // Update form validity
+            checkParticipantFormValidity();
+        }
         
-        // Functions
+        // Load admin settings into the form
         function loadAdminSettings() {
-            // Load exam duration
+            document.getElementById('greeting-text').textContent = adminSettings.greetingMessage;
+            document.getElementById('admin-message').textContent = adminSettings.adminMessage;
+            
+            // Set admin panel form values
+            document.getElementById('new-login-code').value = adminSettings.loginCode;
+            document.getElementById('new-question-bank-code').value = adminSettings.questionBankCode;
+            document.getElementById('new-cpns-code').value = adminSettings.cpnsLicenseCode;
+            document.getElementById('new-admin-code').value = adminSettings.adminPanelCode;
+            
             document.getElementById('exam-duration').value = adminSettings.examDuration;
-            
-            // Load question count
             document.getElementById('question-count').value = adminSettings.questionCount;
-            
-            // Load randomize questions setting
             document.getElementById('randomize-questions').checked = adminSettings.randomizeQuestions;
             document.getElementById('randomize-status').textContent = adminSettings.randomizeQuestions ? 'Aktif' : 'Nonaktif';
             
-            // Load greeting message
             document.getElementById('greeting-message-input').value = adminSettings.greetingMessage;
-            
-            // Load admin message
             document.getElementById('admin-message-input').value = adminSettings.adminMessage;
-            
-            // Load chairman name
             document.getElementById('chairman-name').value = adminSettings.chairmanName;
+            document.getElementById('motivation-message-input').value = adminSettings.motivationMessage;
             
-            // Load subject toggles
-            document.getElementById('toggle-science').checked = adminSettings.enabledSubjects.IPA;
-            document.getElementById('science-status').textContent = adminSettings.enabledSubjects.IPA ? 'Aktif' : 'Nonaktif';
+            document.getElementById('toggle-iq').checked = adminSettings.iqEnabled;
+            document.getElementById('iq-status').textContent = adminSettings.iqEnabled ? 'Aktif' : 'Nonaktif';
             
-            document.getElementById('toggle-social').checked = adminSettings.enabledSubjects.IPS;
-            document.getElementById('social-status').textContent = adminSettings.enabledSubjects.IPS ? 'Aktif' : 'Nonaktif';
-            
-            document.getElementById('toggle-math').checked = adminSettings.enabledSubjects.MATEMATIKA;
-            document.getElementById('math-status').textContent = adminSettings.enabledSubjects.MATEMATIKA ? 'Aktif' : 'Nonaktif';
-            
-            document.getElementById('toggle-indonesian').checked = adminSettings.enabledSubjects.BAHASA_INDONESIA;
-            document.getElementById('indonesian-status').textContent = adminSettings.enabledSubjects.BAHASA_INDONESIA ? 'Aktif' : 'Nonaktif';
-            
-            document.getElementById('toggle-english').checked = adminSettings.enabledSubjects.BAHASA_INGGRIS;
-            document.getElementById('english-status').textContent = adminSettings.enabledSubjects.BAHASA_INGGRIS ? 'Aktif' : 'Nonaktif';
+            document.getElementById('toggle-cpns').checked = adminSettings.cpnsEnabled;
+            document.getElementById('cpns-status').textContent = adminSettings.cpnsEnabled ? 'Aktif' : 'Nonaktif';
         }
         
+        // Save admin settings to localStorage with enhanced storage mechanism
+        function saveAdminSettings() {
+            try {
+                localStorage.setItem('pergunusmart_admin_settings', JSON.stringify(adminSettings));
+                console.log('Admin settings saved successfully');
+            } catch (e) {
+                console.error('Error saving admin settings:', e);
+                // Try to clear some space and try again
+                try {
+                    localStorage.clear();
+                    localStorage.setItem('pergunusmart_admin_settings', JSON.stringify(adminSettings));
+                    console.log('Admin settings saved after clearing storage');
+                } catch (e2) {
+                    console.error('Failed to save admin settings after clearing storage:', e2);
+                    alert('Gagal menyimpan pengaturan. Penyimpanan lokal penuh. Silakan coba lagi atau hubungi admin.');
+                }
+            }
+        }
+        
+        // Functions
         function handleLogin() {
             const loginCode = document.getElementById('login-code').value;
             
             if (loginCode === adminSettings.loginCode) {
-                // Play opening sound
-                openingSound.play().catch(e => console.log("Opening sound prevented:", e));
+                // Play opening audio
+                audioOpening.currentTime = 0;
+                audioOpening.muted = false;
+                audioOpening.play().catch(e => console.log("Audio play prevented:", e));
                 
                 // Hide welcome screen with slide out animation
                 document.getElementById('welcome-screen').classList.add('slide-out');
@@ -2170,96 +2250,91 @@
             }, 500);
         }
         
-        function toggleParticipantFields() {
-            // Only student status is available now
-            document.getElementById('student-fields').style.display = 'block';
-            checkParticipantFormValidity();
-        }
-        
-        function showGradeSelection() {
-            const level = document.querySelector('input[name="level"]:checked').value;
-            const gradeOptions = document.getElementById('grade-options');
+        function toggleCPNSLicenseSection() {
+            const purpose = document.querySelector('input[name="purpose"]:checked').value;
             
-            // Clear previous options
-            gradeOptions.innerHTML = '';
-            
-            // Add options based on level
-            if (level === 'SD') {
-                addGradeOption('grade-4', 'Kelas <span class="roman">IV</span>', '4');
-                addGradeOption('grade-5', 'Kelas <span class="roman">V</span>', '5');
-                addGradeOption('grade-6', 'Kelas <span class="roman">VI</span>', '6');
-            } else if (level === 'SMP') {
-                addGradeOption('grade-7', 'Kelas <span class="roman">VII</span>', '7');
-                addGradeOption('grade-8', 'Kelas <span class="roman">VIII</span>', '8');
-                addGradeOption('grade-9', 'Kelas <span class="roman">IX</span>', '9');
-            } else if (level === 'SMA/SMK') {
-                addGradeOption('grade-10', 'Kelas <span class="roman">X</span>', '10');
-                addGradeOption('grade-11', 'Kelas <span class="roman">XI</span>', '11');
-                addGradeOption('grade-12', 'Kelas <span class="roman">XII</span>', '12');
+            if (purpose === 'Ujian CPNS/P3K') {
+                document.getElementById('cpns-license-section').style.display = 'block';
+            } else {
+                document.getElementById('cpns-license-section').style.display = 'none';
             }
             
-            document.getElementById('grade-selection').style.display = 'block';
             checkParticipantFormValidity();
         }
         
-        function addGradeOption(id, label, value) {
-            const container = document.getElementById('grade-options');
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    showPosition,
+                    showError,
+                    { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+                );
+            } else {
+                alert("Geolocation tidak didukung oleh browser Anda.");
+            }
+        }
+        
+        function showPosition(position) {
+            // In a real implementation, you would reverse geocode the coordinates to get an address
+            // For demo purposes, we'll just show a mock address
+            const address = "Jl. Raya Situbondo No. 123, Kec. Situbondo, Kab. Situbondo, Jawa Timur";
             
-            const radio = document.createElement('input');
-            radio.type = 'radio';
-            radio.id = id;
-            radio.name = 'grade';
-            radio.value = value;
-            radio.className = 'radio-option';
+            document.getElementById('address').value = address;
+            document.getElementById('gps-result').textContent = `Lokasi terdeteksi: ${address}`;
+            document.getElementById('gps-result').style.display = 'block';
             
-            const radioLabel = document.createElement('label');
-            radioLabel.htmlFor = id;
-            radioLabel.className = 'radio-label';
-            radioLabel.innerHTML = label;
+            checkParticipantFormValidity();
+        }
+        
+        function showError(error) {
+            let message = "Error mendapatkan lokasi: ";
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    message += "Pengguna menolak permintaan geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    message += "Informasi lokasi tidak tersedia.";
+                    break;
+                case error.TIMEOUT:
+                    message += "Permintaan untuk mendapatkan lokasi pengguna timeout.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    message += "Terjadi error yang tidak diketahui.";
+                    break;
+            }
             
-            // Add event listener for grade selection
-            radio.addEventListener('change', function() {
-                document.getElementById('subject-selection').style.display = 'block';
-                checkParticipantFormValidity();
-            });
-            
-            container.appendChild(radio);
-            container.appendChild(radioLabel);
+            alert(message);
         }
         
         function checkParticipantFormValidity() {
             let isValid = true;
             
-            // Check common fields
-            const fullname = document.getElementById('fullname').value.trim();
-            if (!fullname || !/^[A-Za-z ]+$/.test(fullname)) {
+            // Check required fields
+            if (!document.getElementById('fullname').value.trim()) {
                 isValid = false;
             }
             
-            // Check student fields
-            if (!document.getElementById('school-name').value.trim()) {
+            if (!document.getElementById('address').value.trim()) {
                 isValid = false;
             }
             
-            const studentId = document.getElementById('student-id').value.trim();
-            if (!studentId || !/^[0-9]+$/.test(studentId)) {
+            if (!document.getElementById('phone').value.trim() || 
+                !document.getElementById('phone').checkValidity()) {
                 isValid = false;
             }
             
-            if (!document.querySelector('input[name="purpose"]:checked')) {
+            if (!document.getElementById('email').value.trim() || 
+                !document.getElementById('email').checkValidity()) {
                 isValid = false;
             }
             
-            if (!document.querySelector('input[name="level"]:checked')) {
-                isValid = false;
-            }
-            
-            if (!document.querySelector('input[name="grade"]:checked')) {
-                isValid = false;
-            }
-            
-            if (!document.querySelector('input[name="subject"]:checked')) {
-                isValid = false;
+            // Check CPNS license if purpose is CPNS
+            const purpose = document.querySelector('input[name="purpose"]:checked').value;
+            if (purpose === 'Ujian CPNS/P3K') {
+                const cpnsLicense = document.getElementById('cpns-license').value;
+                if (cpnsLicense !== adminSettings.cpnsLicenseCode) {
+                    isValid = false;
+                }
             }
             
             document.getElementById('save-participant-btn').disabled = !isValid;
@@ -2269,30 +2344,46 @@
             // Collect participant data
             participantData = {
                 fullname: document.getElementById('fullname').value.trim(),
-                status: 'pelajar',
-                purpose: document.querySelector('input[name="purpose"]:checked')?.value,
-                level: document.querySelector('input[name="level"]:checked')?.value,
-                grade: document.querySelector('input[name="grade"]:checked')?.value,
-                subject: document.querySelector('input[name="subject"]:checked')?.value,
-                school: document.getElementById('school-name')?.value.trim(),
-                studentId: document.getElementById('student-id')?.value.trim(),
+                address: document.getElementById('address').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                purpose: document.querySelector('input[name="purpose"]:checked').value,
                 examDate: new Date().toISOString()
             };
             
-            // Load questions based on subject
-            if (participantData.subject && SAMPLE_QUESTIONS[participantData.subject]) {
-                questions = SAMPLE_QUESTIONS[participantData.subject];
+            // Get questions from storage
+            const questionBank = getQuestionsFromStorage();
+            
+            // Load questions based on purpose - DIPERBAHARUI UNTUK MENGAMBIL DARI LOCALSTORAGE DENGAN BENAR
+            if (participantData.purpose === 'Ujian CPNS/P3K') {
+                if (!questionBank['CPNS_P3K'] || questionBank['CPNS_P3K'].length === 0) {
+                    alert('Maaf, belum ada soal CPNS/P3K yang tersedia. Silakan hubungi admin.');
+                    return;
+                }
+                questions = questionBank['CPNS_P3K'];
             } else {
-                // Default questions if subject not found
-                questions = SAMPLE_QUESTIONS['IPA'];
+                // Default to IQ test
+                if (!questionBank['TES_IQ'] || questionBank['TES_IQ'].length === 0) {
+                    alert('Maaf, belum ada soal Tes IQ yang tersedia. Silakan hubungi admin.');
+                    return;
+                }
+                questions = questionBank['TES_IQ'];
             }
             
-            // Randomize questions if setting is enabled
-            if (adminSettings.randomizeQuestions) {
-                questions = shuffleArray(questions).slice(0, adminSettings.questionCount);
-            } else {
-                questions = questions.slice(0, adminSettings.questionCount);
+            // Check if there are enough questions
+            if (questions.length === 0) {
+                alert('Maaf, belum ada soal yang tersedia untuk ujian ini. Silakan hubungi admin.');
+                return;
             }
+            
+            // Randomize questions if enabled
+            if (adminSettings.randomizeQuestions) {
+                questions = shuffleArray(questions);
+            }
+            
+            // Limit number of questions based on admin setting
+            const questionCount = Math.min(adminSettings.questionCount, questions.length);
+            questions = questions.slice(0, questionCount);
             
             // Initialize exam data
             examData = {
@@ -2304,7 +2395,7 @@
                 answers: Array(questions.length).fill(null)
             };
             
-            // Set exam time from admin settings
+            // Set exam time based on admin settings
             examTimeLeft = adminSettings.examDuration * 60;
             
             // Hide participant form with slide out animation
@@ -2325,6 +2416,7 @@
             }, 500);
         }
         
+        // Helper function to shuffle array
         function shuffleArray(array) {
             const newArray = [...array];
             for (let i = newArray.length - 1; i > 0; i--) {
@@ -2459,13 +2551,15 @@
             if (answerIndex === question.correctAnswer) {
                 examData.correct++;
                 // Play correct answer sound
-                correctAnswerSound.currentTime = 0;
-                correctAnswerSound.play().catch(e => console.log("Correct answer sound prevented:", e));
+                audioCorrect.currentTime = 0;
+                audioCorrect.muted = false;
+                audioCorrect.play().catch(e => console.log("Audio play prevented:", e));
             } else {
                 examData.wrong++;
                 // Play wrong answer sound
-                wrongAnswerSound.currentTime = 0;
-                wrongAnswerSound.play().catch(e => console.log("Wrong answer sound prevented:", e));
+                audioWrong.currentTime = 0;
+                audioWrong.muted = false;
+                audioWrong.play().catch(e => console.log("Audio play prevented:", e));
             }
             
             // Reload question to show result
@@ -2503,17 +2597,48 @@
             examData.unanswered = examData.answers.filter(answer => answer === null).length;
             
             // Generate certificate code
-            const certificateCode = generateUniqueCode();
+            const certificateCode = generateCertificateCode(participantData.fullname, participantData.purpose);
             
-            // Add participant to data store
+            // Add participant to data store with enhanced storage mechanism
             const score = Math.round((examData.correct / questions.length) * 100);
-            participantsData.push({
+            const participantRecord = {
                 ...participantData,
                 score: score,
                 examDate: new Date().toISOString(),
-                certificateCode: certificateCode
-            });
-            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+                certificateCode: certificateCode,
+                examResults: {
+                    totalQuestions: questions.length,
+                    correctAnswers: examData.correct,
+                    wrongAnswers: examData.wrong,
+                    unanswered: examData.unanswered
+                }
+            };
+            
+            try {
+                // Load existing participants
+                const existingParticipants = JSON.parse(localStorage.getItem('pergunusmart_participants')) || [];
+                
+                // Add new participant
+                existingParticipants.push(participantRecord);
+                
+                // Save back to localStorage
+                localStorage.setItem('pergunusmart_participants', JSON.stringify(existingParticipants));
+                participantsData = existingParticipants;
+                
+                console.log('Participant data saved successfully:', participantRecord);
+            } catch (e) {
+                console.error('Error saving participant data:', e);
+                // Try to clear some space and try again
+                try {
+                    localStorage.clear();
+                    localStorage.setItem('pergunusmart_participants', JSON.stringify([participantRecord]));
+                    participantsData = [participantRecord];
+                    console.log('Participant data saved after clearing storage');
+                } catch (e2) {
+                    console.error('Failed to save participant data after clearing storage:', e2);
+                    alert('Gagal menyimpan data peserta. Penyimpanan lokal penuh. Silakan hubungi admin.');
+                }
+            }
             
             // Hide exam screen with slide out animation
             document.getElementById('exam-screen').classList.add('slide-out');
@@ -2534,18 +2659,84 @@
                 // Show celebration particles
                 showCelebration();
                 
-                // Play certificate sound (applause)
-                certificateSound.currentTime = 0;
-                certificateSound.play().catch(e => console.log("Certificate sound prevented:", e));
+                // Play applause sound (mute other sounds)
+                audioOpening.muted = true;
+                audioCorrect.muted = true;
+                audioWrong.muted = true;
+                audioButtonClick.muted = true;
+                
+                audioApplause.currentTime = 0;
+                audioApplause.muted = false;
+                audioApplause.play().catch(e => console.log("Audio play prevented:", e));
+                
+                // Reload participants data in admin panel if it's open
+                if (document.getElementById('admin-panel-content').style.display === 'block') {
+                    loadParticipantsData();
+                }
             }, 500);
+        }
+        
+        function generateCertificateCode(fullname, purpose) {
+            // Get current date components
+            const now = new Date();
+            const day = now.getDate().toString().padStart(2, '0');
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const year = now.getFullYear().toString().slice(-2);
+            
+            // Clean and format the name
+            const cleanedName = fullname.replace(/[^a-zA-Z\s]/g, '').toUpperCase();
+            const nameParts = cleanedName.split(' ');
+            
+            // Create name code - use first 3 letters of first name and last name
+            let nameCode = '';
+            if (nameParts.length === 1) {
+                nameCode = nameParts[0].substring(0, 6).padEnd(6, 'X');
+            } else {
+                const firstName = nameParts[0];
+                const lastName = nameParts[nameParts.length - 1];
+                nameCode = (firstName.substring(0, 3) + lastName.substring(0, 3)).padEnd(6, 'X');
+            }
+            
+            // Get purpose code
+            const purposeCode = purpose === 'Ujian CPNS/P3K' ? 'CPNS' : 'TESIQ';
+            
+            // Generate unique 8-digit alphanumeric code
+            const uniqueCode = generateUniqueCode(fullname + now.getTime());
+            
+            // Combine all components
+            return `${nameCode}/${purposeCode}/${day}${month}${year}/${uniqueCode}`;
+        }
+        
+        function generateUniqueCode(input) {
+            // Create a hash from the input string
+            let hash = 0;
+            for (let i = 0; i < input.length; i++) {
+                const char = input.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            
+            // Convert hash to alphanumeric string (excluding similar characters like 0/O, 1/I)
+            const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+            let result = '';
+            let remaining = Math.abs(hash);
+            
+            for (let i = 0; i < 8; i++) {
+                const index = remaining % chars.length;
+                result += chars.charAt(index);
+                remaining = Math.floor(remaining / chars.length);
+            }
+            
+            // Format as XXXX-XXXX
+            return result.substring(0, 4) + '-' + result.substring(4, 8);
         }
         
         function displayResults() {
             document.getElementById('result-name').textContent = participantData.fullname;
-            document.getElementById('result-status').textContent = 'Pelajar';
-            document.getElementById('result-level').textContent = participantData.level || '-';
-            document.getElementById('result-grade').textContent = participantData.grade ? `Kelas ${participantData.grade}` : '-';
-            document.getElementById('result-subject').textContent = participantData.subject || '-';
+            document.getElementById('result-address').textContent = participantData.address;
+            document.getElementById('result-phone').textContent = participantData.phone;
+            document.getElementById('result-email').textContent = participantData.email;
+            document.getElementById('result-purpose').textContent = participantData.purpose;
             document.getElementById('total-questions').textContent = questions.length;
             document.getElementById('correct-answers').textContent = examData.correct;
             document.getElementById('wrong-answers').textContent = examData.wrong;
@@ -2581,6 +2772,11 @@
                 }
             }
             
+            // Use custom motivation message if available
+            if (adminSettings.motivationMessage) {
+                motivation = adminSettings.motivationMessage;
+            }
+            
             // Create certificate HTML
             const certificate = document.createElement('div');
             certificate.className = 'certificate';
@@ -2588,12 +2784,12 @@
             certificate.innerHTML = `
                 <div class="certificate-content">
                     <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
-                    <p class="certificate-code">${formatName(participantData.fullname)}/PELAJAR/${participantData.level || 'UMUM'}/${participantData.subject || 'UMUM'}/${dateString}/${certificateCode}/PERGUNU-STB</p>
+                    <p class="certificate-code">${certificateCode}</p>
                     <p>Diberikan Kepada</p>
                     <h2 class="certificate-recipient">${formatName(participantData.fullname)}</h2>
                     <p class="certificate-body">
                         Atas Partisipasi & Pencapaian Luar Biasa Dalam<br>
-                        Ujian Pergunu Situbondo
+                        <strong>Ujian PERGUNUSMART</strong>
                     </p>
                     <p class="certificate-body">
                         Sebagai penghargaan atas dedikasi dalam memahami materi ujian dan mengasah logika, 
@@ -2604,10 +2800,10 @@
                     <div class="certificate-footer">
                         <p>Ditetapkan di: Situbondo, ${now.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                         <div class="certificate-signature">
-                            <p>Ketua Pergunu Situbondo</p>
+                            <p>Ketua PERGUNUSMART</p>
                             <p><strong>${adminSettings.chairmanName}</strong></p>
                         </div>
-                        <img src="https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/BARCODE.png" alt="Barcode" class="certificate-barcode">
+                        <img src="https://raw.githubusercontent.com/pergunu/pergunusmart/main/assets/images/BARCODE.png" alt="Barcode" class="certificate-barcode">
                     </div>
                 </div>
             `;
@@ -2630,23 +2826,6 @@
             return name.split(' ').map(word => 
                 word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
             ).join(' ');
-        }
-        
-        function generateUniqueCode() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let result = '';
-            
-            for (let i = 0; i < 4; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            
-            result += '-';
-            
-            for (let i = 0; i < 4; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            
-            return result;
         }
         
         function printCertificate() {
@@ -2685,7 +2864,7 @@
         }
         
         function contactAdmin() {
-            const message = encodeURIComponent("Assalamualaikum mas admin, saya mau tanya sesuatu nih...");
+            const message = encodeURIComponent("Assalamualaikum mas admin, saya mau tanya tentang soal ujian umum nih....");
             window.open(`https://wa.me/6285647709114?text=${message}`, '_blank');
         }
         
@@ -2720,9 +2899,10 @@
         function submitAdminPanelCode() {
             const code = document.getElementById('admin-panel-code').value;
             
-            if (code === adminSettings.adminCode) {
+            if (code === adminSettings.adminPanelCode) {
                 // Show admin panel content
                 document.getElementById('admin-panel-content').style.display = 'block';
+                loadParticipantsData();
             } else {
                 alert('Kode admin salah. Silakan coba lagi.');
             }
@@ -2757,20 +2937,30 @@
                 return;
             }
             
-            // Add question to sample questions
-            if (!SAMPLE_QUESTIONS[category]) {
-                SAMPLE_QUESTIONS[category] = [];
+            // Get current questions from storage
+            const questionBank = getQuestionsFromStorage();
+            
+            // Add question to the category
+            if (!questionBank[category]) {
+                questionBank[category] = [];
             }
             
-            SAMPLE_QUESTIONS[category].push({
+            questionBank[category].push({
                 question: questionText,
                 options: options.map((opt, i) => `${String.fromCharCode(65 + i)}. ${opt}`),
                 correctAnswer: correctAnswer,
                 explanation: explanation
             });
             
-            // Save to localStorage
-            localStorage.setItem('questionBank', JSON.stringify(SAMPLE_QUESTIONS));
+            // Save to localStorage with enhanced storage mechanism
+            try {
+                localStorage.setItem('pergunusmart_question_bank', JSON.stringify(questionBank));
+                console.log('Question added to bank');
+            } catch (e) {
+                console.error('Error saving question bank:', e);
+                alert('Gagal menyimpan soal. Penyimpanan lokal penuh. Silakan hubungi admin.');
+                return;
+            }
             
             // Clear form
             document.getElementById('question-text-input').value = '';
@@ -2793,21 +2983,26 @@
             
             questionsList.innerHTML = '';
             
+            // Get questions from storage
+            const questionBank = getQuestionsFromStorage();
+            
             if (category === 'all') {
                 let hasQuestions = false;
                 
-                for (const cat in SAMPLE_QUESTIONS) {
-                    if (SAMPLE_QUESTIONS[cat].length > 0) {
+                for (const cat in questionBank) {
+                    if (questionBank[cat].length > 0) {
                         hasQuestions = true;
-                        questionsList.innerHTML += `<h6>${cat}</h6>`;
+                        questionsList.innerHTML += `<h6>${cat.replace('_', ' ')}</h6>`;
                         
-                        SAMPLE_QUESTIONS[cat].forEach((q, i) => {
+                        questionBank[cat].forEach((q, i) => {
                             const questionItem = document.createElement('div');
                             questionItem.className = 'question-item';
                             
                             questionItem.innerHTML = `
                                 <p><strong>Soal ${i + 1}:</strong> ${q.question}</p>
-                                <p>${q.options.join('<br>')}</p>
+                                <div class="options-container">
+                                    ${q.options.map(opt => `<p>${opt}</p>`).join('')}
+                                </div>
                                 <p><strong>Jawaban:</strong> ${q.options[q.correctAnswer]}</p>
                                 <p><strong>Penjelasan:</strong> ${q.explanation}</p>
                                 <div class="question-actions">
@@ -2816,6 +3011,9 @@
                                     </button>
                                     <button class="question-action-btn delete-btn" data-category="${cat}" data-index="${i}">
                                         <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                    <button class="question-action-btn view-btn" data-category="${cat}" data-index="${i}">
+                                        <i class="fas fa-eye"></i> View
                                     </button>
                                 </div>
                             `;
@@ -2828,14 +3026,16 @@
                 if (!hasQuestions) {
                     questionsList.innerHTML = '<p id="no-questions-message">Belum ada soal yang tersedia.</p>';
                 }
-            } else if (SAMPLE_QUESTIONS[category] && SAMPLE_QUESTIONS[category].length > 0) {
-                SAMPLE_QUESTIONS[category].forEach((q, i) => {
+            } else if (questionBank[category] && questionBank[category].length > 0) {
+                questionBank[category].forEach((q, i) => {
                     const questionItem = document.createElement('div');
                     questionItem.className = 'question-item';
                     
                     questionItem.innerHTML = `
                         <p><strong>Soal ${i + 1}:</strong> ${q.question}</p>
-                        <p>${q.options.join('<br>')}</p>
+                        <div class="options-container">
+                            ${q.options.map(opt => `<p>${opt}</p>`).join('')}
+                        </div>
                         <p><strong>Jawaban:</strong> ${q.options[q.correctAnswer]}</p>
                         <p><strong>Penjelasan:</strong> ${q.explanation}</p>
                         <div class="question-actions">
@@ -2844,6 +3044,9 @@
                             </button>
                             <button class="question-action-btn delete-btn" data-category="${category}" data-index="${i}">
                                 <i class="fas fa-trash"></i> Hapus
+                            </button>
+                            <button class="question-action-btn view-btn" data-category="${category}" data-index="${i}">
+                                <i class="fas fa-eye"></i> View
                             </button>
                         </div>
                     `;
@@ -2854,7 +3057,7 @@
                 questionsList.innerHTML = '<p id="no-questions-message">Belum ada soal yang tersedia untuk kategori ini.</p>';
             }
             
-            // Add event listeners to edit and delete buttons
+            // Add event listeners to edit, delete and view buttons
             document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const category = this.getAttribute('data-category');
@@ -2873,10 +3076,19 @@
                     }
                 });
             });
+            
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    const index = parseInt(this.getAttribute('data-index'));
+                    viewQuestion(category, index);
+                });
+            });
         }
         
         function editQuestion(category, index) {
-            const question = SAMPLE_QUESTIONS[category][index];
+            const questionBank = getQuestionsFromStorage();
+            const question = questionBank[category][index];
             
             // Fill the edit form
             document.getElementById('edit-question-category').value = category;
@@ -2902,6 +3114,35 @@
         
         function hideEditQuestionModal() {
             document.getElementById('edit-question-modal').style.display = 'none';
+        }
+        
+        function viewQuestion(category, index) {
+            const questionBank = getQuestionsFromStorage();
+            const question = questionBank[category][index];
+            
+            // Fill the view form
+            document.getElementById('view-question-category').textContent = category.replace('_', ' ');
+            document.getElementById('view-question-text').textContent = question.question;
+            
+            // Display options
+            const optionsContainer = document.getElementById('view-options-container');
+            optionsContainer.innerHTML = '';
+            question.options.forEach(opt => {
+                const p = document.createElement('p');
+                p.textContent = opt;
+                optionsContainer.appendChild(p);
+            });
+            
+            // Display correct answer and explanation
+            document.getElementById('view-correct-answer').textContent = question.options[question.correctAnswer];
+            document.getElementById('view-explanation').textContent = question.explanation;
+            
+            // Show the modal
+            document.getElementById('view-question-modal').style.display = 'flex';
+        }
+        
+        function hideViewQuestionModal() {
+            document.getElementById('view-question-modal').style.display = 'none';
         }
         
         function saveEditedQuestion() {
@@ -2935,6 +3176,9 @@
                 return;
             }
             
+            // Get current questions from storage
+            const questionBank = getQuestionsFromStorage();
+            
             // Create updated question
             const updatedQuestion = {
                 question: questionText,
@@ -2945,20 +3189,27 @@
             
             // If category changed, remove from old and add to new
             if (originalCategory !== newCategory) {
-                SAMPLE_QUESTIONS[originalCategory].splice(index, 1);
+                questionBank[originalCategory].splice(index, 1);
                 
-                if (!SAMPLE_QUESTIONS[newCategory]) {
-                    SAMPLE_QUESTIONS[newCategory] = [];
+                if (!questionBank[newCategory]) {
+                    questionBank[newCategory] = [];
                 }
                 
-                SAMPLE_QUESTIONS[newCategory].push(updatedQuestion);
+                questionBank[newCategory].push(updatedQuestion);
             } else {
                 // Just update the question
-                SAMPLE_QUESTIONS[originalCategory][index] = updatedQuestion;
+                questionBank[originalCategory][index] = updatedQuestion;
             }
             
-            // Save to localStorage
-            localStorage.setItem('questionBank', JSON.stringify(SAMPLE_QUESTIONS));
+            // Save to localStorage with enhanced storage mechanism
+            try {
+                localStorage.setItem('pergunusmart_question_bank', JSON.stringify(questionBank));
+                console.log('Question updated successfully');
+            } catch (e) {
+                console.error('Error saving question bank:', e);
+                alert('Gagal menyimpan perubahan soal. Penyimpanan lokal penuh. Silakan hubungi admin.');
+                return;
+            }
             
             // Refresh questions list
             filterQuestions();
@@ -2970,16 +3221,26 @@
         }
         
         function deleteQuestion(category, index) {
+            // Get current questions from storage
+            const questionBank = getQuestionsFromStorage();
+            
             // Remove question from the array
-            SAMPLE_QUESTIONS[category].splice(index, 1);
+            questionBank[category].splice(index, 1);
             
             // If category is empty, remove it
-            if (SAMPLE_QUESTIONS[category].length === 0) {
-                delete SAMPLE_QUESTIONS[category];
+            if (questionBank[category].length === 0) {
+                delete questionBank[category];
             }
             
-            // Save to localStorage
-            localStorage.setItem('questionBank', JSON.stringify(SAMPLE_QUESTIONS));
+            // Save to localStorage with enhanced storage mechanism
+            try {
+                localStorage.setItem('pergunusmart_question_bank', JSON.stringify(questionBank));
+                console.log('Question deleted successfully');
+            } catch (e) {
+                console.error('Error saving question bank:', e);
+                alert('Gagal menghapus soal. Penyimpanan lokal penuh. Silakan hubungi admin.');
+                return;
+            }
             
             // Refresh questions list
             filterQuestions();
@@ -2991,117 +3252,143 @@
             const tableBody = document.getElementById('participants-table-body');
             tableBody.innerHTML = '';
             
-            if (participantsData.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="10" style="text-align: center;">Belum ada data peserta</td></tr>';
-                return;
-            }
-            
-            // Sort by date (newest first)
-            const sortedData = [...participantsData].sort((a, b) => 
-                new Date(b.examDate) - new Date(a.examDate));
-            
-            sortedData.forEach((participant, index) => {
-                const date = new Date(participant.examDate);
-                const dateStr = date.toLocaleDateString('id-ID', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+            try {
+                // Load participants with enhanced storage mechanism
+                participantsData = JSON.parse(localStorage.getItem('pergunusmart_participants')) || [];
+                
+                if (participantsData.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="9" style="text-align: center;">Belum ada data peserta</td></tr>';
+                    return;
+                }
+                
+                // Sort by date (newest first)
+                const sortedData = [...participantsData].sort((a, b) => 
+                    new Date(b.examDate) - new Date(a.examDate));
+                
+                sortedData.forEach((participant, i) => {
+                    const date = new Date(participant.examDate);
+                    const dateStr = date.toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><input type="checkbox" class="select-checkbox participant-checkbox" data-index="${i}"></td>
+                        <td>${dateStr}</td>
+                        <td>${participant.fullname}</td>
+                        <td>${participant.phone}</td>
+                        <td>${participant.email}</td>
+                        <td>${participant.purpose}</td>
+                        <td>${participant.score}%</td>
+                        <td>${participant.certificateCode || '-'}</td>
+                        <td>
+                            <button class="question-action-btn edit-btn edit-participant-btn" data-index="${i}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="question-action-btn delete-btn delete-participant-btn" data-index="${i}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+                    
+                    tableBody.appendChild(row);
                 });
                 
-                const row = document.createElement('tr');
-                row.dataset.index = index;
-                row.innerHTML = `
-                    <td>
-                        <input type="checkbox" class="select-checkbox" data-index="${index}" onchange="toggleParticipantSelection(${index})">
-                    </td>
-                    <td>${dateStr}</td>
-                    <td>${participant.fullname}</td>
-                    <td>${participant.studentId || '-'}</td>
-                    <td>Pelajar</td>
-                    <td>${participant.level || '-'}</td>
-                    <td>${participant.grade ? `Kelas ${participant.grade}` : '-'}</td>
-                    <td>${participant.subject || '-'}</td>
-                    <td>${participant.score}%</td>
-                    <td>${participant.certificateCode || '-'}</td>
-                `;
+                // Add event listeners to participant checkboxes
+                document.querySelectorAll('.participant-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', updateSelectedCount);
+                });
                 
-                tableBody.appendChild(row);
-            });
-            
-            // Reset selected participants
-            selectedParticipants = [];
-            updateParticipantActionButtons();
+                // Add event listeners to edit and delete buttons for individual participants
+                document.querySelectorAll('.edit-participant-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        editParticipant(index);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-participant-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        
+                        if (confirm('Apakah Anda yakin ingin menghapus peserta ini?')) {
+                            deleteParticipant(index);
+                        }
+                    });
+                });
+                
+            } catch (e) {
+                console.error('Error loading participants data:', e);
+                tableBody.innerHTML = '<tr><td colspan="9" style="text-align: center; color: red;">Error memuat data peserta</td></tr>';
+            }
         }
         
-        function toggleParticipantSelection(index) {
-            const checkbox = document.querySelector(`.select-checkbox[data-index="${index}"]`);
-            if (checkbox.checked) {
-                if (!selectedParticipants.includes(index)) {
-                    selectedParticipants.push(index);
+        function searchParticipants() {
+            const searchTerm = document.getElementById('participant-search').value.toLowerCase();
+            const rows = document.querySelectorAll('#participants-table-body tr');
+            
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                let shouldShow = false;
+                
+                // Check each cell (except the first and last which are checkboxes and actions)
+                for (let i = 1; i < cells.length - 1; i++) {
+                    if (cells[i].textContent.toLowerCase().includes(searchTerm)) {
+                        shouldShow = true;
+                        break;
+                    }
                 }
-            } else {
-                selectedParticipants = selectedParticipants.filter(i => i !== index);
-            }
+                
+                row.style.display = shouldShow ? '' : 'none';
+            });
+        }
+        
+        function updateSelectedCount() {
+            const selectedCount = document.querySelectorAll('.participant-checkbox:checked').length;
+            document.getElementById('selected-count').textContent = `${selectedCount} dipilih`;
             
-            // Update select all checkbox
-            updateSelectAllCheckbox();
-            
-            // Update action buttons
-            updateParticipantActionButtons();
+            // Enable/disable bulk action buttons
+            document.getElementById('edit-selected-btn').disabled = selectedCount === 0;
+            document.getElementById('delete-selected-btn').disabled = selectedCount === 0;
         }
         
         function toggleSelectAllParticipants() {
-            const selectAllCheckbox = document.getElementById('select-all-checkbox');
-            const checkboxes = document.querySelectorAll('.select-checkbox');
-            
-            selectAllCheckbox.checked = !selectAllCheckbox.checked;
-            const isChecked = selectAllCheckbox.checked;
-            
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = isChecked;
-                const index = parseInt(checkbox.dataset.index);
-                
-                if (isChecked) {
-                    if (!selectedParticipants.includes(index)) {
-                        selectedParticipants.push(index);
-                    }
-                } else {
-                    selectedParticipants = selectedParticipants.filter(i => i !== index);
-                }
+            const selectAll = document.getElementById('select-all-participants').checked;
+            document.querySelectorAll('.participant-checkbox').forEach(checkbox => {
+                checkbox.checked = selectAll;
             });
             
-            // Update action buttons
-            updateParticipantActionButtons();
+            updateSelectedCount();
         }
         
-        function updateSelectAllCheckbox() {
-            const checkboxes = document.querySelectorAll('.select-checkbox');
-            const selectAllCheckbox = document.getElementById('select-all-checkbox');
+        function toggleSelectAllParticipantsHeader() {
+            const selectAll = document.getElementById('select-all-header').checked;
+            document.getElementById('select-all-participants').checked = selectAll;
+            document.querySelectorAll('.participant-checkbox').forEach(checkbox => {
+                checkbox.checked = selectAll;
+            });
             
-            if (checkboxes.length === 0) {
-                selectAllCheckbox.checked = false;
-                return;
-            }
-            
-            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-            selectAllCheckbox.checked = allChecked;
-        }
-        
-        function updateParticipantActionButtons() {
-            const hasSelection = selectedParticipants.length > 0;
-            
-            document.getElementById('edit-selected-participants').disabled = !hasSelection;
-            document.getElementById('delete-selected-participants').disabled = !hasSelection;
+            updateSelectedCount();
         }
         
         function editSelectedParticipants() {
-            if (selectedParticipants.length === 0) return;
+            const selectedCheckboxes = document.querySelectorAll('.participant-checkbox:checked');
             
-            // For now, we'll just edit the first selected participant
-            // In a real app, you might want to implement bulk editing
-            const index = selectedParticipants[0];
+            if (selectedCheckboxes.length === 0) {
+                alert('Tidak ada peserta yang dipilih');
+                return;
+            }
+            
+            if (selectedCheckboxes.length > 1) {
+                alert('Hanya bisa mengedit satu peserta sekaligus');
+                return;
+            }
+            
+            const index = parseInt(selectedCheckboxes[0].getAttribute('data-index'));
             editParticipant(index);
         }
         
@@ -3110,124 +3397,53 @@
             
             // Fill the edit form
             document.getElementById('edit-fullname').value = participant.fullname;
-            
-            // Set status to student (only option now)
-            document.getElementById('edit-status-student').checked = true;
-            document.getElementById('edit-student-fields').style.display = 'block';
-            
-            // Fill student fields
-            document.getElementById('edit-school-name').value = participant.school || '';
-            document.getElementById('edit-student-id').value = participant.studentId || '';
-            
-            // Set purpose
-            if (participant.purpose) {
-                const purposeRadio = document.querySelector(`input[name="edit-purpose"][value="${participant.purpose}"]`);
-                if (purposeRadio) purposeRadio.checked = true;
-            }
-            
-            // Set level
-            if (participant.level) {
-                const levelRadio = document.querySelector(`input[name="edit-level"][value="${participant.level}"]`);
-                if (levelRadio) levelRadio.checked = true;
-                
-                // Show grade selection
-                showEditGradeSelection();
-                
-                // Set grade
-                if (participant.grade) {
-                    const gradeRadio = document.querySelector(`input[name="edit-grade"][value="${participant.grade}"]`);
-                    if (gradeRadio) gradeRadio.checked = true;
-                }
-            }
-            
-            // Set subject
-            if (participant.subject) {
-                document.getElementById('edit-subject').value = participant.subject;
-            }
-            
-            // Set score
+            document.getElementById('edit-address').value = participant.address;
+            document.getElementById('edit-phone').value = participant.phone;
+            document.getElementById('edit-email').value = participant.email;
             document.getElementById('edit-score').value = participant.score;
-            
-            // Set certificate code
             document.getElementById('edit-certificate-code').value = participant.certificateCode || '-';
             
-            // Store index for saving
+            // Set purpose radio button
+            if (participant.purpose === 'Ujian CPNS/P3K') {
+                document.getElementById('edit-purpose-cpns').checked = true;
+            } else {
+                document.getElementById('edit-purpose-iq').checked = true;
+            }
+            
+            // Store participant index
             document.getElementById('edit-participant-index').value = index;
             
             // Show the modal
             document.getElementById('edit-participant-modal').style.display = 'flex';
         }
         
-        function toggleEditParticipantFields() {
-            // Only student status is available now
-            document.getElementById('edit-student-fields').style.display = 'block';
-        }
-        
-        function showEditGradeSelection() {
-            const level = document.querySelector('input[name="edit-level"]:checked')?.value;
-            const gradeOptions = document.getElementById('edit-grade-options');
-            
-            // Clear previous options
-            gradeOptions.innerHTML = '';
-            
-            if (!level) return;
-            
-            // Add options based on level
-            if (level === 'SD') {
-                addEditGradeOption('edit-grade-4', 'Kelas <span class="roman">IV</span>', '4');
-                addEditGradeOption('edit-grade-5', 'Kelas <span class="roman">V</span>', '5');
-                addEditGradeOption('edit-grade-6', 'Kelas <span class="roman">VI</span>', '6');
-            } else if (level === 'SMP') {
-                addEditGradeOption('edit-grade-7', 'Kelas <span class="roman">VII</span>', '7');
-                addEditGradeOption('edit-grade-8', 'Kelas <span class="roman">VIII</span>', '8');
-                addEditGradeOption('edit-grade-9', 'Kelas <span class="roman">IX</span>', '9');
-            } else if (level === 'SMA/SMK') {
-                addEditGradeOption('edit-grade-10', 'Kelas <span class="roman">X</span>', '10');
-                addEditGradeOption('edit-grade-11', 'Kelas <span class="roman">XI</span>', '11');
-                addEditGradeOption('edit-grade-12', 'Kelas <span class="roman">XII</span>', '12');
-            }
-        }
-        
-        function addEditGradeOption(id, label, value) {
-            const container = document.getElementById('edit-grade-options');
-            
-            const radio = document.createElement('input');
-            radio.type = 'radio';
-            radio.id = id;
-            radio.name = 'edit-grade';
-            radio.value = value;
-            radio.className = 'radio-option';
-            
-            const radioLabel = document.createElement('label');
-            radioLabel.htmlFor = id;
-            radioLabel.className = 'radio-label';
-            radioLabel.innerHTML = label;
-            
-            container.appendChild(radio);
-            container.appendChild(radioLabel);
+        function hideEditParticipantModal() {
+            document.getElementById('edit-participant-modal').style.display = 'none';
         }
         
         function saveEditedParticipant() {
-            const index = document.getElementById('edit-participant-index').value;
-            if (!index) return;
-            
+            const index = parseInt(document.getElementById('edit-participant-index').value);
             const participant = participantsData[index];
             
             // Update participant data
             participant.fullname = document.getElementById('edit-fullname').value.trim();
-            participant.status = 'pelajar';
-            participant.school = document.getElementById('edit-school-name').value.trim();
-            participant.studentId = document.getElementById('edit-student-id').value.trim();
-            participant.purpose = document.querySelector('input[name="edit-purpose"]:checked')?.value || '';
-            participant.level = document.querySelector('input[name="edit-level"]:checked')?.value || '';
-            participant.grade = document.querySelector('input[name="edit-grade"]:checked')?.value || '';
-            participant.subject = document.getElementById('edit-subject').value;
+            participant.address = document.getElementById('edit-address').value.trim();
+            participant.phone = document.getElementById('edit-phone').value.trim();
+            participant.email = document.getElementById('edit-email').value.trim();
             participant.score = parseInt(document.getElementById('edit-score').value);
+            participant.purpose = document.querySelector('input[name="edit-purpose"]:checked').value;
             
-            // Save to localStorage
-            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+            // Save to localStorage with enhanced storage mechanism
+            try {
+                localStorage.setItem('pergunusmart_participants', JSON.stringify(participantsData));
+                console.log('Participant data updated successfully');
+            } catch (e) {
+                console.error('Error saving participant data:', e);
+                alert('Gagal menyimpan perubahan data peserta. Penyimpanan lokal penuh. Silakan hubungi admin.');
+                return;
+            }
             
-            // Reload participants data
+            // Refresh participants list
             loadParticipantsData();
             
             // Hide modal
@@ -3236,127 +3452,143 @@
             alert('Perubahan data peserta berhasil disimpan!');
         }
         
-        function hideEditParticipantModal() {
-            document.getElementById('edit-participant-modal').style.display = 'none';
-        }
-        
         function deleteSelectedParticipants() {
-            if (selectedParticipants.length === 0) return;
+            const selectedCheckboxes = document.querySelectorAll('.participant-checkbox:checked');
             
-            if (!confirm(`Apakah Anda yakin ingin menghapus ${selectedParticipants.length} peserta terpilih?`)) {
+            if (selectedCheckboxes.length === 0) {
+                alert('Tidak ada peserta yang dipilih');
                 return;
             }
             
-            // Sort in descending order to avoid index issues when deleting
-            const sortedIndices = [...selectedParticipants].sort((a, b) => b - a);
+            if (!confirm(`Apakah Anda yakin ingin menghapus ${selectedCheckboxes.length} peserta terpilih?`)) {
+                return;
+            }
             
-            // Delete participants
-            sortedIndices.forEach(index => {
+            // Get indices of selected participants (sorted in descending order to avoid index shifting)
+            const indices = Array.from(selectedCheckboxes)
+                .map(checkbox => parseInt(checkbox.getAttribute('data-index')))
+                .sort((a, b) => b - a);
+            
+            // Remove participants from array
+            indices.forEach(index => {
                 participantsData.splice(index, 1);
             });
             
-            // Save to localStorage
-            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+            // Save to localStorage with enhanced storage mechanism
+            try {
+                localStorage.setItem('pergunusmart_participants', JSON.stringify(participantsData));
+                console.log('Participants deleted successfully');
+            } catch (e) {
+                console.error('Error saving participant data:', e);
+                alert('Gagal menghapus peserta. Penyimpanan lokal penuh. Silakan hubungi admin.');
+                return;
+            }
             
-            // Reload participants data
+            // Refresh participants list
             loadParticipantsData();
             
-            alert(`${sortedIndices.length} peserta berhasil dihapus!`);
+            alert(`${indices.length} peserta berhasil dihapus!`);
         }
         
-        function searchParticipants() {
-            const searchTerm = document.getElementById('participant-search').value.toLowerCase();
-            const rows = document.querySelectorAll('#participants-table-body tr');
+        function deleteParticipant(index) {
+            participantsData.splice(index, 1);
             
-            rows.forEach(row => {
-                const index = parseInt(row.dataset.index);
-                const participant = participantsData[index];
-                const rowText = `
-                    ${participant.fullname.toLowerCase()} 
-                    ${participant.studentId || ''} 
-                    ${participant.certificateCode || ''}
-                `;
-                
-                if (rowText.includes(searchTerm)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
+            // Save to localStorage with enhanced storage mechanism
+            try {
+                localStorage.setItem('pergunusmart_participants', JSON.stringify(participantsData));
+                console.log('Participant deleted successfully');
+            } catch (e) {
+                console.error('Error saving participant data:', e);
+                alert('Gagal menghapus peserta. Penyimpanan lokal penuh. Silakan hubungi admin.');
+                return;
+            }
+            
+            // Refresh participants list
+            loadParticipantsData();
+            
+            alert('Peserta berhasil dihapus!');
         }
         
         function validateCertificate() {
-            const code = document.getElementById('certificate-code-input').value.trim();
+            const certificateCode = document.getElementById('certificate-code-input').value.trim();
             const validationResult = document.getElementById('validation-result');
+            const certificateInfo = document.getElementById('certificate-info');
             
-            if (!code) {
+            if (!certificateCode) {
                 alert('Silakan masukkan kode sertifikat');
                 return;
             }
             
             // Find participant with this certificate code
-            const participant = participantsData.find(p => p.certificateCode === code);
+            const participant = participantsData.find(p => p.certificateCode === certificateCode);
             
             if (participant) {
-                validationResult.innerHTML = `
-                    <p class="valid-certificate">Sertifikat Valid!</p>
-                    <p>Nama: ${participant.fullname}</p>
-                    <p>Status: Pelajar</p>
-                    <p>Tingkat: ${participant.level || '-'}</p>
-                    <p>Kelas: ${participant.grade ? `Kelas ${participant.grade}` : '-'}</p>
-                    <p>Mata Ujian: ${participant.subject || '-'}</p>
-                    <p>Nilai: ${participant.score}%</p>
-                    <p>Tanggal Ujian: ${new Date(participant.examDate).toLocaleDateString('id-ID')}</p>
+                validationResult.textContent = 'Sertifikat Valid';
+                validationResult.className = 'validation-result valid';
+                
+                // Display participant info
+                certificateInfo.innerHTML = `
+                    <p><strong>Nama:</strong> ${participant.fullname}</p>
+                    <p><strong>Tanggal Ujian:</strong> ${new Date(participant.examDate).toLocaleDateString('id-ID')}</p>
+                    <p><strong>Tujuan Ujian:</strong> ${participant.purpose}</p>
+                    <p><strong>Nilai:</strong> ${participant.score}%</p>
                 `;
-                validationResult.style.display = 'block';
+                certificateInfo.style.display = 'block';
             } else {
-                validationResult.innerHTML = '<p class="invalid-certificate">Sertifikat Tidak Valid!</p>';
-                validationResult.style.display = 'block';
+                validationResult.textContent = 'Sertifikat Tidak Valid';
+                validationResult.className = 'validation-result invalid';
+                certificateInfo.style.display = 'none';
             }
+            
+            validationResult.style.display = 'block';
         }
         
         function saveCodes() {
             const newLoginCode = document.getElementById('new-login-code').value;
             const newQuestionBankCode = document.getElementById('new-question-bank-code').value;
+            const newCpnsCode = document.getElementById('new-cpns-code').value;
             const newAdminCode = document.getElementById('new-admin-code').value;
             
-            if (newLoginCode) {
-                adminSettings.loginCode = newLoginCode;
+            if (newLoginCode || newQuestionBankCode || newCpnsCode || newAdminCode) {
+                // Update admin settings
+                if (newLoginCode) adminSettings.loginCode = newLoginCode;
+                if (newQuestionBankCode) adminSettings.questionBankCode = newQuestionBankCode;
+                if (newCpnsCode) adminSettings.cpnsLicenseCode = newCpnsCode;
+                if (newAdminCode) adminSettings.adminPanelCode = newAdminCode;
+                
+                // Save to localStorage
+                saveAdminSettings();
+                
+                // Clear the fields
                 document.getElementById('new-login-code').value = '';
-            }
-            
-            if (newQuestionBankCode) {
-                adminSettings.questionBankCode = newQuestionBankCode;
                 document.getElementById('new-question-bank-code').value = '';
-            }
-            
-            if (newAdminCode) {
-                adminSettings.adminCode = newAdminCode;
+                document.getElementById('new-cpns-code').value = '';
                 document.getElementById('new-admin-code').value = '';
+                
+                alert('Kode berhasil diubah!');
+            } else {
+                alert('Silakan masukkan setidaknya satu kode baru');
             }
-            
-            // Save to localStorage
-            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
-            
-            alert('Kode berhasil diubah!');
         }
         
         function saveContent() {
             const greetingMessage = document.getElementById('greeting-message-input').value;
             const adminMessage = document.getElementById('admin-message-input').value;
             const chairmanName = document.getElementById('chairman-name').value;
+            const motivationMessage = document.getElementById('motivation-message-input').value;
             
             // Update admin settings
             adminSettings.greetingMessage = greetingMessage;
             adminSettings.adminMessage = adminMessage;
             adminSettings.chairmanName = chairmanName;
+            adminSettings.motivationMessage = motivationMessage;
+            
+            // Save to localStorage
+            saveAdminSettings();
             
             // Update UI
             document.getElementById('greeting-text').textContent = greetingMessage;
             document.getElementById('admin-message').textContent = adminMessage;
-            
-            // Save to localStorage
-            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
             
             alert('Perubahan konten berhasil disimpan!');
         }
@@ -3365,25 +3597,20 @@
             const examDuration = parseInt(document.getElementById('exam-duration').value);
             const questionCount = parseInt(document.getElementById('question-count').value);
             const randomizeQuestions = document.getElementById('randomize-questions').checked;
+            const iqEnabled = document.getElementById('toggle-iq').checked;
+            const cpnsEnabled = document.getElementById('toggle-cpns').checked;
             
             // Update admin settings
             adminSettings.examDuration = examDuration;
             adminSettings.questionCount = questionCount;
             adminSettings.randomizeQuestions = randomizeQuestions;
-            
-            // Update subject toggles
-            adminSettings.enabledSubjects = {
-                IPA: document.getElementById('toggle-science').checked,
-                IPS: document.getElementById('toggle-social').checked,
-                MATEMATIKA: document.getElementById('toggle-math').checked,
-                BAHASA_INDONESIA: document.getElementById('toggle-indonesian').checked,
-                BAHASA_INGGRIS: document.getElementById('toggle-english').checked
-            };
+            adminSettings.iqEnabled = iqEnabled;
+            adminSettings.cpnsEnabled = cpnsEnabled;
             
             // Save to localStorage
-            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
+            saveAdminSettings();
             
-            alert('Pengaturan berhasil disimpan!');
+            alert('Pengaturan ujian berhasil disimpan!');
         }
     </script>
 </body>
