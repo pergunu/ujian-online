@@ -1813,79 +1813,145 @@
             }
         };
         
-        // Question bank structure with levels
-        let QUESTION_BANK = JSON.parse(localStorage.getItem('questionBank')) || {
+        // Question bank structure with levels - MODIFIED TO INCLUDE MANUAL QUESTIONS
+        let QUESTION_BANK = {
             'SD': {
-                'IPA': [],
-                'IPS': []
+                'IPA': [
+                    // Sample question 1
+                    {
+                        question: "Planet terdekat dari matahari adalah?",
+                        options: ["A. Venus", "B. Bumi", "C. Mars", "D. Merkurius", "E. Jupiter"],
+                        correctAnswer: 3,
+                        explanation: "Merkurius adalah planet terdekat dari matahari dalam tata surya kita.",
+                        image: null
+                    },
+                    // Sample question 2
+                    {
+                        question: "Hewan yang mengalami metamorfosis sempurna adalah?",
+                        options: ["A. Katak", "B. Kadal", "C. Ular", "D. Kura-kura", "E. Ikan"],
+                        correctAnswer: 0,
+                        explanation: "Katak mengalami metamorfosis sempurna dari telur -> berudu -> katak muda -> katak dewasa.",
+                        image: null
+                    },
+                    // Add more questions here as needed
+                    // Format: 
+                    // {
+                    //     question: "Your question here?",
+                    //     options: ["A. Option 1", "B. Option 2", "C. Option 3", "D. Option 4", "E. Option 5"],
+                    //     correctAnswer: 0, // Index of correct answer (0 for A, 1 for B, etc.)
+                    //     explanation: "Explanation for the correct answer",
+                    //     image: null // URL or base64 string if you want to include an image
+                    // }
+                ],
+                'IPS': [
+                    // Sample question 1
+                    {
+                        question: "Ibu kota negara Indonesia adalah?",
+                        options: ["A. Jakarta", "B. Bandung", "C. Surabaya", "D. Medan", "E. Makassar"],
+                        correctAnswer: 0,
+                        explanation: "Jakarta adalah ibu kota negara Indonesia.",
+                        image: null
+                    },
+                    // Sample question 2
+                    {
+                        question: "Lagu kebangsaan Indonesia adalah?",
+                        options: ["A. Indonesia Raya", "B. Garuda Pancasila", "C. Bagimu Negeri", "D. Syukur", "E. Hari Merdeka"],
+                        correctAnswer: 0,
+                        explanation: "Indonesia Raya adalah lagu kebangsaan Republik Indonesia.",
+                        image: null
+                    }
+                    // Add more questions here as needed
+                ]
             },
             'SMP': {
-                'IPA': [],
-                'IPS': []
+                'IPA': [
+                    // Sample question 1
+                    {
+                        question: "Zat yang diperlukan tumbuhan untuk fotosintesis adalah?",
+                        options: ["A. Oksigen dan air", "B. Karbon dioksida dan air", "C. Nitrogen dan oksigen", "D. Hidrogen dan nitrogen", "E. Karbon monoksida dan air"],
+                        correctAnswer: 1,
+                        explanation: "Tumbuhan memerlukan karbon dioksida dan air untuk melakukan fotosintesis.",
+                        image: null
+                    },
+                    // Sample question 2
+                    {
+                        question: "Bagian sel yang berfungsi sebagai tempat berlangsungnya respirasi sel adalah?",
+                        options: ["A. Nukleus", "B. Mitokondria", "C. Ribosom", "D. Badan Golgi", "E. Retikulum Endoplasma"],
+                        correctAnswer: 1,
+                        explanation: "Mitokondria adalah organel sel yang berfungsi sebagai tempat respirasi sel untuk menghasilkan energi.",
+                        image: null
+                    }
+                    // Add more questions here as needed
+                ],
+                'IPS': [
+                    // Sample question 1
+                    {
+                        question: "Lembaga negara yang bertugas membuat undang-undang adalah?",
+                        options: ["A. Presiden", "B. DPR", "C. Mahkamah Agung", "D. BPK", "E. KPK"],
+                        correctAnswer: 1,
+                        explanation: "DPR (Dewan Perwakilan Rakyat) adalah lembaga negara yang bertugas membuat undang-undang.",
+                        image: null
+                    },
+                    // Sample question 2
+                    {
+                        question: "Peninggalan sejarah berupa candi Hindu terbesar di Indonesia adalah?",
+                        options: ["A. Candi Borobudur", "B. Candi Prambanan", "C. Candi Mendut", "D. Candi Sewu", "E. Candi Kalasan"],
+                        correctAnswer: 1,
+                        explanation: "Candi Prambanan adalah kompleks candi Hindu terbesar di Indonesia yang dibangun pada abad ke-9.",
+                        image: null
+                    }
+                    // Add more questions here as needed
+                ]
             },
             'SMA/SMK': {
-                'IPA': [],
-                'IPS': []
+                'IPA': [
+                    // Sample question 1
+                    {
+                        question: "Proses pembuatan makanan pada tumbuhan hijau dengan bantuan cahaya matahari disebut?",
+                        options: ["A. Respirasi", "B. Fotosintesis", "C. Transpirasi", "D. Evaporasi", "E. Gutasi"],
+                        correctAnswer: 1,
+                        explanation: "Fotosintesis adalah proses pembuatan makanan pada tumbuhan hijau dengan bantuan cahaya matahari.",
+                        image: null
+                    },
+                    // Sample question 2
+                    {
+                        question: "Hukum Mendel I dikenal juga dengan hukum?",
+                        options: ["A. Segregasi", "B. Asortasi", "C. Dominansi", "D. Pautan", "E. Gagal berpisah"],
+                        correctAnswer: 0,
+                        explanation: "Hukum Mendel I atau Hukum Segregasi menyatakan bahwa pada pembentukan gamet, kedua gen induk yang merupakan pasangan alel akan dipisahkan ke dalam gamet-gamet yang berbeda.",
+                        image: null
+                    }
+                    // Add more questions here as needed
+                ],
+                'IPS': [
+                    // Sample question 1
+                    {
+                        question: "Pasar dimana penjual dan pembeli berada di tempat yang berbeda disebut pasar?",
+                        options: ["A. Pasar konkret", "B. Pasar abstrak", "C. Pasar tradisional", "D. Pasar modern", "E. Pasar monopoli"],
+                        correctAnswer: 1,
+                        explanation: "Pasar abstrak adalah pasar dimana penjual dan pembeli berada di tempat yang berbeda.",
+                        image: null
+                    },
+                    // Sample question 2
+                    {
+                        question: "Tokoh yang dikenal sebagai Bapak Koperasi Indonesia adalah?",
+                        options: ["A. Soekarno", "B. Mohammad Hatta", "C. Sutan Sjahrir", "D. Tan Malaka", "E. Ki Hajar Dewantara"],
+                        correctAnswer: 1,
+                        explanation: "Mohammad Hatta dikenal sebagai Bapak Koperasi Indonesia karena peran pentingnya dalam pengembangan koperasi di Indonesia.",
+                        image: null
+                    }
+                    // Add more questions here as needed
+                ]
             }
         };
-        
-        // Sample questions for demonstration
-        function initializeSampleQuestions() {
-            if (QUESTION_BANK['SD']['IPA'].length === 0) {
-                // Sample questions for SD
-                QUESTION_BANK['SD']['IPA'].push({
-                    question: "Planet terdekat dari matahari adalah?",
-                    options: ["A. Venus", "B. Bumi", "C. Mars", "D. Merkurius", "E. Jupiter"],
-                    correctAnswer: 3,
-                    explanation: "Merkurius adalah planet terdekat dari matahari dalam tata surya kita.",
-                    image: null
-                });
-                
-                QUESTION_BANK['SD']['IPS'].push({
-                    question: "Ibu kota negara Indonesia adalah?",
-                    options: ["A. Jakarta", "B. Bandung", "C. Surabaya", "D. Medan", "E. Makassar"],
-                    correctAnswer: 0,
-                    explanation: "Jakarta adalah ibu kota negara Indonesia.",
-                    image: null
-                });
-                
-                // Sample questions for SMP
-                QUESTION_BANK['SMP']['IPA'].push({
-                    question: "Zat yang diperlukan tumbuhan untuk fotosintesis adalah?",
-                    options: ["A. Oksigen dan air", "B. Karbon dioksida dan air", "C. Nitrogen dan oksigen", "D. Hidrogen dan nitrogen", "E. Karbon monoksida dan air"],
-                    correctAnswer: 1,
-                    explanation: "Tumbuhan memerlukan karbon dioksida dan air untuk melakukan fotosintesis.",
-                    image: null
-                });
-                
-                QUESTION_BANK['SMP']['IPS'].push({
-                    question: "Lembaga negara yang bertugas membuat undang-undang adalah?",
-                    options: ["A. Presiden", "B. DPR", "C. Mahkamah Agung", "D. BPK", "E. KPK"],
-                    correctAnswer: 1,
-                    explanation: "DPR (Dewan Perwakilan Rakyat) adalah lembaga negara yang bertugas membuat undang-undang.",
-                    image: null
-                });
-                
-                // Sample questions for SMA
-                QUESTION_BANK['SMA/SMK']['IPA'].push({
-                    question: "Proses pembuatan makanan pada tumbuhan hijau dengan bantuan cahaya matahari disebut?",
-                    options: ["A. Respirasi", "B. Fotosintesis", "C. Transpirasi", "D. Evaporasi", "E. Gutasi"],
-                    correctAnswer: 1,
-                    explanation: "Fotosintesis adalah proses pembuatan makanan pada tumbuhan hijau dengan bantuan cahaya matahari.",
-                    image: null
-                });
-                
-                QUESTION_BANK['SMA/SMK']['IPS'].push({
-                    question: "Pasar dimana penjual dan pembeli berada di tempat yang berbeda disebut pasar?",
-                    options: ["A. Pasar konkret", "B. Pasar abstrak", "C. Pasar tradisional", "D. Pasar modern", "E. Pasar monopoli"],
-                    correctAnswer: 1,
-                    explanation: "Pasar abstrak adalah pasar dimana penjual dan pembeli berada di tempat yang berbeda.",
-                    image: null
-                });
-                
-                // Save to localStorage
-                saveQuestionBank();
-            }
+
+        // Load questions from localStorage if available
+        const savedQuestions = JSON.parse(localStorage.getItem('questionBank'));
+        if (savedQuestions) {
+            QUESTION_BANK = savedQuestions;
+        } else {
+            // Save initial questions to localStorage
+            localStorage.setItem('questionBank', JSON.stringify(QUESTION_BANK));
         }
         
         // Motivational messages based on score
@@ -2082,9 +2148,6 @@
                 },
                 "retina_detect": true
             });
-            
-            // Initialize sample questions if empty
-            initializeSampleQuestions();
             
             // Load admin settings
             loadAdminSettings();
