@@ -1813,11 +1813,10 @@
             }
         };
         
-        // Question bank structure with levels - MODIFIED TO INCLUDE MANUAL QUESTIONS
+        // Question bank structure with levels
         let QUESTION_BANK = {
             'SD': {
                 'IPA': [
-                    // Sample question 1
                     {
                         question: "Planet terdekat dari matahari adalah?",
                         options: ["A. Venus", "B. Bumi", "C. Mars", "D. Merkurius", "E. Jupiter"],
@@ -1825,97 +1824,15 @@
                         explanation: "Merkurius adalah planet terdekat dari matahari dalam tata surya kita.",
                         image: null
                     },
-                    // Sample question 2
                     {
                         question: "Hewan yang mengalami metamorfosis sempurna adalah?",
                         options: ["A. Katak", "B. Kadal", "C. Ular", "D. Kura-kura", "E. Ikan"],
                         correctAnswer: 0,
                         explanation: "Katak mengalami metamorfosis sempurna dari telur -> berudu -> katak muda -> katak dewasa.",
                         image: null
-                    },
-                    // Add more questions here as needed
-                    // Format: 
-                    // {
-                    //     question: "Your question here?",
-                    //     options: ["A. Option 1", "B. Option 2", "C. Option 3", "D. Option 4", "E. Option 5"],
-                    //     correctAnswer: 0, // Index of correct answer (0 for A, 1 for B, etc.)
-                    //     explanation: "Explanation for the correct answer",
-                    //     image: null // URL or base64 string if you want to include an image
-                    // }
-                [
-    {
-        question: "Planet mana yang memiliki cincin paling terang dan mudah dilihat dari Bumi?",
-        options: ["A. Mars", "B. Jupiter", "C. Saturnus", "D. Uranus", "E. Neptunus"],
-        correctAnswer: 2,
-        explanation: "Saturnus memiliki sistem cincin paling spektakuler dan mudah diamati dari Bumi dengan teleskop sederhana.",
-        image: null
-    },
-    {
-        question: "Proses fotosintesis pada tumbuhan menghasilkan?",
-        options: ["A. Oksigen dan air", "B. Karbon dioksida dan glukosa", "C. Oksigen dan glukosa", "D. Nitrogen dan protein", "E. Air dan mineral"],
-        correctAnswer: 2,
-        explanation: "Fotosintesis mengubah karbon dioksida dan air menjadi glukosa dan oksigen dengan bantuan sinar matahari.",
-        image: null
-    },
-    {
-        question: "Bagian sel yang berfungsi sebagai 'otak' sel adalah?",
-        options: ["A. Mitokondria", "B. Kloroplas", "C. Membran sel", "D. Inti sel (nukleus)", "E. Sitoplasma"],
-        correctAnswer: 3,
-        explanation: "Nukleus mengandung materi genetik (DNA) yang mengendalikan seluruh aktivitas sel.",
-        image: null
-    },
-    {
-        question: "Penyebab utama terjadinya siang dan malam adalah?",
-        options: ["A. Revolusi Bumi", "B. Rotasi Bumi", "C. Kemiringan sumbu Bumi", "D. Gerak Bulan mengelilingi Bumi", "E. Gerak Matahari"],
-        correctAnswer: 1,
-        explanation: "Rotasi Bumi pada porosnya menyebabkan bagian Bumi yang menghadap Matahari mengalami siang dan yang membelakangi mengalami malam.",
-        image: null
-    },
-    {
-        question: "Zat yang dihasilkan oleh kelenjar ludah untuk mulai mencerna karbohidrat adalah?",
-        options: ["A. Asam lambung", "B. Enzim amilase", "C. Enzim pepsin", "D. Hormon insulin", "E. Asam klorida"],
-        correctAnswer: 1,
-        explanation: "Enzim amilase dalam ludah mulai memecah karbohidrat kompleks menjadi molekul yang lebih sederhana.",
-        image: null
-    },
-    {
-        question: "Peristiwa penguapan air dari permukaan daun tumbuhan disebut?",
-        options: ["A. Evaporasi", "B. Kondensasi", "C. Transpirasi", "D. Presipitasi", "E. Respirasi"],
-        correctAnswer: 2,
-        explanation: "Transpirasi adalah proses pelepasan uap air melalui stomata di daun tumbuhan.",
-        image: null
-    },
-    {
-        question: "Benda langit yang disebut 'bintang jatuh' sebenarnya adalah?",
-        options: ["A. Komet", "B. Meteor", "C. Asteroid", "D. Planet kecil", "E. Satelit alami"],
-        correctAnswer: 1,
-        explanation: "Meteor adalah partikel kecil dari luar angkasa yang terbakar saat memasuki atmosfer Bumi, menciptakan cahaya terang yang disebut 'bintang jatuh'.",
-        image: null
-    },
-    {
-        question: "Hewan yang termasuk dalam kelompok avertebrata adalah?",
-        options: ["A. Ikan", "B. Katak", "C. Ular", "D. Kupu-kupu", "E. Burung"],
-        correctAnswer: 3,
-        explanation: "Kupu-kupu tidak memiliki tulang belakang sehingga termasuk avertebrata, sementara pilihan lain adalah vertebrata.",
-        image: null
-    },
-    {
-        question: "Proses perubahan wujud dari gas menjadi cair disebut?",
-        options: ["A. Mencair", "B. Membeku", "C. Menguap", "D. Mengembun", "E. Menyublim"],
-        correctAnswer: 3,
-        explanation: "Pengembunan (kondensasi) adalah proses perubahan wujud dari gas menjadi cair, seperti terbentuknya embun di pagi hari.",
-        image: null
-    },
-    {
-        question: "Bagian bunga yang berfungsi sebagai alat kelamin betina adalah?",
-        options: ["A. Kelopak", "B. Mahkota", "C. Benang sari", "D. Putik", "E. Tangkai bunga"],
-        correctAnswer: 3,
-        explanation: "Putik (pistil) adalah organ reproduksi betina pada bunga yang terdiri dari stigma, stilus, dan ovarium.",
-        image: null
-    }
-],
+                    }
+                ],
                 'IPS': [
-                    // Sample question 1
                     {
                         question: "Ibu kota negara Indonesia adalah?",
                         options: ["A. Jakarta", "B. Bandung", "C. Surabaya", "D. Medan", "E. Makassar"],
@@ -1923,7 +1840,6 @@
                         explanation: "Jakarta adalah ibu kota negara Indonesia.",
                         image: null
                     },
-                    // Sample question 2
                     {
                         question: "Lagu kebangsaan Indonesia adalah?",
                         options: ["A. Indonesia Raya", "B. Garuda Pancasila", "C. Bagimu Negeri", "D. Syukur", "E. Hari Merdeka"],
@@ -1931,12 +1847,10 @@
                         explanation: "Indonesia Raya adalah lagu kebangsaan Republik Indonesia.",
                         image: null
                     }
-                    // Add more questions here as needed
                 ]
             },
             'SMP': {
                 'IPA': [
-                    // Sample question 1
                     {
                         question: "Zat yang diperlukan tumbuhan untuk fotosintesis adalah?",
                         options: ["A. Oksigen dan air", "B. Karbon dioksida dan air", "C. Nitrogen dan oksigen", "D. Hidrogen dan nitrogen", "E. Karbon monoksida dan air"],
@@ -1944,7 +1858,6 @@
                         explanation: "Tumbuhan memerlukan karbon dioksida dan air untuk melakukan fotosintesis.",
                         image: null
                     },
-                    // Sample question 2
                     {
                         question: "Bagian sel yang berfungsi sebagai tempat berlangsungnya respirasi sel adalah?",
                         options: ["A. Nukleus", "B. Mitokondria", "C. Ribosom", "D. Badan Golgi", "E. Retikulum Endoplasma"],
@@ -1952,10 +1865,8 @@
                         explanation: "Mitokondria adalah organel sel yang berfungsi sebagai tempat respirasi sel untuk menghasilkan energi.",
                         image: null
                     }
-                    // Add more questions here as needed
                 ],
                 'IPS': [
-                    // Sample question 1
                     {
                         question: "Lembaga negara yang bertugas membuat undang-undang adalah?",
                         options: ["A. Presiden", "B. DPR", "C. Mahkamah Agung", "D. BPK", "E. KPK"],
@@ -1963,7 +1874,6 @@
                         explanation: "DPR (Dewan Perwakilan Rakyat) adalah lembaga negara yang bertugas membuat undang-undang.",
                         image: null
                     },
-                    // Sample question 2
                     {
                         question: "Peninggalan sejarah berupa candi Hindu terbesar di Indonesia adalah?",
                         options: ["A. Candi Borobudur", "B. Candi Prambanan", "C. Candi Mendut", "D. Candi Sewu", "E. Candi Kalasan"],
@@ -1971,12 +1881,10 @@
                         explanation: "Candi Prambanan adalah kompleks candi Hindu terbesar di Indonesia yang dibangun pada abad ke-9.",
                         image: null
                     }
-                    // Add more questions here as needed
                 ]
             },
             'SMA/SMK': {
                 'IPA': [
-                    // Sample question 1
                     {
                         question: "Proses pembuatan makanan pada tumbuhan hijau dengan bantuan cahaya matahari disebut?",
                         options: ["A. Respirasi", "B. Fotosintesis", "C. Transpirasi", "D. Evaporasi", "E. Gutasi"],
@@ -1984,7 +1892,6 @@
                         explanation: "Fotosintesis adalah proses pembuatan makanan pada tumbuhan hijau dengan bantuan cahaya matahari.",
                         image: null
                     },
-                    // Sample question 2
                     {
                         question: "Hukum Mendel I dikenal juga dengan hukum?",
                         options: ["A. Segregasi", "B. Asortasi", "C. Dominansi", "D. Pautan", "E. Gagal berpisah"],
@@ -1992,10 +1899,8 @@
                         explanation: "Hukum Mendel I atau Hukum Segregasi menyatakan bahwa pada pembentukan gamet, kedua gen induk yang merupakan pasangan alel akan dipisahkan ke dalam gamet-gamet yang berbeda.",
                         image: null
                     }
-                    // Add more questions here as needed
                 ],
                 'IPS': [
-                    // Sample question 1
                     {
                         question: "Pasar dimana penjual dan pembeli berada di tempat yang berbeda disebut pasar?",
                         options: ["A. Pasar konkret", "B. Pasar abstrak", "C. Pasar tradisional", "D. Pasar modern", "E. Pasar monopoli"],
@@ -2003,7 +1908,6 @@
                         explanation: "Pasar abstrak adalah pasar dimana penjual dan pembeli berada di tempat yang berbeda.",
                         image: null
                     },
-                    // Sample question 2
                     {
                         question: "Tokoh yang dikenal sebagai Bapak Koperasi Indonesia adalah?",
                         options: ["A. Soekarno", "B. Mohammad Hatta", "C. Sutan Sjahrir", "D. Tan Malaka", "E. Ki Hajar Dewantara"],
@@ -2011,7 +1915,6 @@
                         explanation: "Mohammad Hatta dikenal sebagai Bapak Koperasi Indonesia karena peran pentingnya dalam pengembangan koperasi di Indonesia.",
                         image: null
                     }
-                    // Add more questions here as needed
                 ]
             }
         };
