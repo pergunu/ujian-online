@@ -1221,11 +1221,11 @@
                 <div class="form-group">
                     <label class="form-label">Pilih Jenis Ujian</label>
                     <div class="radio-group">
-                        <input type="radio" id="subject-science" name="subject" value="IPA" class="radio-option">
-                        <label for="subject-science" class="radio-label">IPA</label>
+                        <input type="radio" id="subject-science" name="subject" value="Matematika" class="radio-option">
+                        <label for="subject-science" class="radio-label">Matematika</label>
                         
-                        <input type="radio" id="subject-social" name="subject" value="IPS" class="radio-option">
-                        <label for="subject-social" class="radio-label">IPS</label>
+                        <input type="radio" id="subject-social" name="subject" value="akademik" class="radio-option">
+                        <label for="subject-social" class="radio-label">akademik</label>
                     </div>
                 </div>
             </div>
@@ -1341,8 +1341,8 @@
                         <div class="form-group">
                             <label class="form-label">Kategori Ujian</label>
                             <select id="question-category" class="form-control" style="color: #333;">
-                                <option value="IPA">IPA</option>
-                                <option value="IPS">IPS</option>
+                                <option value="Matematika">Matematika</option>
+                                <option value="akademik">Akademik</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -1405,8 +1405,8 @@
                                     <label class="admin-control-label">Filter Kategori</label>
                                     <select id="filter-category" class="admin-control-input" style="color: #333;">
                                         <option value="all">Semua Kategori</option>
-                                        <option value="IPA">IPA</option>
-                                        <option value="IPS">IPS</option>
+                                        <option value="Matematika">Matematika</option>
+                                        <option value="Akademik">Akademik</option>
                                     </select>
                                 </div>
                             </div>
@@ -1567,7 +1567,7 @@
                         <h5>Aktifkan/Nonaktifkan Ujian</h5>
                         <div class="admin-controls">
                             <div class="admin-control-group">
-                                <label class="admin-control-label">IPA</label>
+                                <label class="admin-control-label">Matematika</label>
                                 <div class="admin-toggle">
                                     <label class="toggle-switch">
                                         <input type="checkbox" id="toggle-science" checked>
@@ -1577,7 +1577,7 @@
                                 </div>
                             </div>
                             <div class="admin-control-group">
-                                <label class="admin-control-label">IPS</label>
+                                <label class="admin-control-label">Akademik</label>
                                 <div class="admin-toggle">
                                     <label class="toggle-switch">
                                         <input type="checkbox" id="toggle-social" checked>
@@ -1611,8 +1611,8 @@
             <div class="form-group">
                 <label class="form-label">Kategori Ujian</label>
                 <select id="edit-question-category" class="form-control" style="color: #333;">
-                    <option value="IPA">IPA</option>
-                    <option value="IPS">IPS</option>
+                    <option value="Matematika"matematika</option>
+                    <option value="Akademik">Akademik</option>
                 </select>
             </div>
             <div class="form-group">
@@ -1735,8 +1735,8 @@
             <div class="form-group">
                 <label class="form-label">Mata Ujian</label>
                 <select id="edit-subject" class="form-control" style="color: #333;">
-                    <option value="IPA">IPA</option>
-                    <option value="IPS">IPS</option>
+                    <option value="Matematika">matematika</option>
+                    <option value="akademik">Akademik</option>
                 </select>
             </div>
             
@@ -1802,7 +1802,7 @@
             questionBankCode: DEFAULT_QUESTION_BANK_CODE,
             adminCode: DEFAULT_ADMIN_PANEL_CODE,
             examDuration: 120,
-            questionCount: 20,
+            questionCount: 50,
             randomizeQuestions: true,
             greetingMessage: "Selamat datang di sistem ujian online PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.",
             adminMessage: "Tidak ada informasi terbaru saat ini.",
@@ -1817,7 +1817,7 @@
         // Update the QUESTION_BANK variable in the existing code with this content
 let QUESTION_BANK = {
     'SD': {
-        'IPA': [
+        'Matematika': [
             {
                 question: "Perhatikan pernyataan berikut tentang ciri-ciri makhluk hidup: 1) Bernapas, 2) Tumbuh, 3) Bergerak, 4) Berkembang biak. Manakah yang merupakan ciri utama yang membedakan makhluk hidup dengan benda mati?",
                 options: [
@@ -1843,7 +1843,7 @@ let QUESTION_BANK = {
                 explanation: "Mars dikenal sebagai planet merah karena permukaannya yang berwarna kemerahan akibat kandungan besi oksida. Mars memiliki dua satelit kecil (Phobos dan Deimos) dan gunung Olympus Mons yang merupakan gunung berapi tertinggi di tata surya dengan tinggi sekitar 21 km."
             }
         ],
-        'IPS': [
+        'Akademik': [
             {
                 question: "Perhatikan peta provinsi di Indonesia! Provinsi yang terletak paling timur dan berbatasan langsung dengan Papua Nugini adalah...",
                 options: [
@@ -1871,7 +1871,7 @@ let QUESTION_BANK = {
         ]
     },
     'SMP': {
-        'IPA': [
+        'Matematika': [
             {
                 question: "Perhatikan gambar sel tumbuhan! Organel sel yang berfungsi sebagai tempat berlangsungnya fotosintesis dan hanya dimiliki oleh sel tumbuhan adalah...",
                 options: [
@@ -1897,7 +1897,7 @@ let QUESTION_BANK = {
                 explanation: "Kekuatan elektromagnet dipengaruhi oleh: 1) Jumlah lilitan (semakin banyak semakin kuat), 2) Kuat arus (semakin besar arus semakin kuat), 3) Jenis inti besi (besi lunak lebih baik daripada baja). Ukuran baterai tidak langsung mempengaruhi selama tegangan tetap."
             }
         ],
-        'IPS': [
+        'Akademik': [
             {
                 question: "Perhatikan peta persebaran kerajaan Hindu-Buddha di Indonesia! Kerajaan yang mencapai puncak kejayaan pada masa pemerintahan Raja Hayam Wuruk dengan patih Gajah Mada adalah...",
                 options: [
@@ -1925,7 +1925,7 @@ let QUESTION_BANK = {
         ]
     },
     'SMA/SMK': {
-        'IPA': [
+        'Matematika': [
             {
                 question: "Perhatikan reaksi kimia berikut: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + Energi. Reaksi ini terjadi di organel sel yang memiliki ciri-ciri: 1) Memiliki membran dalam yang berlipat-lipat (krista), 2) Mengandung enzim untuk siklus Krebs, 3) Dikenal sebagai 'powerhouse of the cell'. Organel yang dimaksud adalah...",
                 options: [
@@ -1951,7 +1951,7 @@ let QUESTION_BANK = {
                 explanation: "Vena pulmonalis adalah pembuluh darah yang membawa darah kaya oksigen dari paru-paru ke atrium kiri jantung. Ini satu-satunya vena yang membawa darah bersih. Arteri pulmonalis membawa darah kotor dari jantung ke paru-paru."
             }
         ],
-        'IPS': [
+        'Akademik': [
             {
                 question: "Perhatikan peta wilayah kekuasaan Majapahit! Faktor utama yang mendorong Majapahit menjadi kerajaan besar pada abad ke-14 adalah...",
                 options: [
@@ -1981,10 +1981,10 @@ let QUESTION_BANK = {
 };
 
 // Add more questions to reach 100 for each level and subject
-// SD IPA (already has 10, need 10 more)
+// SD Matematika (already has 10, need 10 more)
 for (let i = 0; i < 10; i++) {
-    QUESTION_BANK['SD']['IPA'].push({
-        question: `Soal SD IPA tambahan ${i+11}: Proses perubahan wujud dari gas menjadi cair disebut...`,
+    QUESTION_BANK['SD']['Matematika'].push({
+        question: `Soal SD Matematika tambahan ${i+11}: Proses perubahan wujud dari gas menjadi cair disebut...`,
         options: [
             "A. Membeku",
             "B. Mencair",
@@ -1993,14 +1993,14 @@ for (let i = 0; i < 10; i++) {
             "E. Menyublim"
         ],
         correctAnswer: 3,
-        explanation: `Penjelasan untuk soal SD IPA tambahan ${i+11}: Mengembun adalah proses perubahan wujud dari gas menjadi cair, contohnya ketika uap air di udara berubah menjadi titik-titik air di daun di pagi hari.`
+        explanation: `Penjelasan untuk soal SD Matematika tambahan ${i+11}: Mengembun adalah proses perubahan wujud dari gas menjadi cair, contohnya ketika uap air di udara berubah menjadi titik-titik air di daun di pagi hari.`
     });
 }
 
-// SD IPS (already has 10, need 10 more)
+// SD Akademik (already has 10, need 10 more)
 for (let i = 0; i < 10; i++) {
-    QUESTION_BANK['SD']['IPS'].push({
-        question: `Soal SD IPS tambahan ${i+11}: Mata uang resmi yang digunakan di Jepang adalah...`,
+    QUESTION_BANK['SD']['Akademik'].push({
+        question: `Soal SD Akademik tambahan ${i+11}: Mata uang resmi yang digunakan di Jepang adalah...`,
         options: [
             "A. Dollar",
             "B. Euro",
@@ -2009,14 +2009,14 @@ for (let i = 0; i < 10; i++) {
             "E. Ringgit"
         ],
         correctAnswer: 2,
-        explanation: `Penjelasan untuk soal SD IPS tambahan ${i+11}: Yen adalah mata uang resmi Jepang. Simbol untuk yen adalah ¥, dan kode ISO-nya adalah JPY.`
+        explanation: `Penjelasan untuk soal SD Akademik tambahan ${i+11}: Yen adalah mata uang resmi Jepang. Simbol untuk yen adalah ¥, dan kode ISO-nya adalah JPY.`
     });
 }
 
-// SMP IPA (already has 10, need 10 more)
+// SMP matematika (already has 10, need 10 more)
 for (let i = 0; i < 10; i++) {
-    QUESTION_BANK['SMP']['IPA'].push({
-        question: `Soal SMP IPA tambahan ${i+11}: Besaran yang satuannya dinyatakan dalam joule adalah...`,
+    QUESTION_BANK['SMP']['Matematika'].push({
+        question: `Soal SMP matematika tambahan ${i+11}: Besaran yang satuannya dinyatakan dalam joule adalah...`,
         options: [
             "A. Gaya",
             "B. Daya",
@@ -2025,14 +2025,14 @@ for (let i = 0; i < 10; i++) {
             "E. Massa"
         ],
         correctAnswer: 2,
-        explanation: `Penjelasan untuk soal SMP IPA tambahan ${i+11}: Joule adalah satuan untuk usaha dan energi. Usaha didefinisikan sebagai gaya kali perpindahan (W = F × s).`
+        explanation: `Penjelasan untuk soal SMP Matematika tambahan ${i+11}: Joule adalah satuan untuk usaha dan energi. Usaha didefinisikan sebagai gaya kali perpindahan (W = F × s).`
     });
 }
 
-// SMP IPS (already has 10, need 10 more)
+// SMP Akademik (already has 10, need 10 more)
 for (let i = 0; i < 10; i++) {
-    QUESTION_BANK['SMP']['IPS'].push({
-        question: `Soal SMP IPS tambahan ${i+11}: Lembaga negara yang bertugas membuat undang-undang adalah...`,
+    QUESTION_BANK['SMP']['Akademik'].push({
+        question: `Soal SMP Akademik tambahan ${i+11}: Lembaga negara yang bertugas membuat undang-undang adalah...`,
         options: [
             "A. Presiden",
             "B. DPR",
@@ -2041,14 +2041,14 @@ for (let i = 0; i < 10; i++) {
             "E. KPK"
         ],
         correctAnswer: 1,
-        explanation: `Penjelasan untuk soal SMP IPS tambahan ${i+11}: DPR (Dewan Perwakilan Rakyat) adalah lembaga legislatif yang bertugas membuat undang-undang bersama Presiden.`
+        explanation: `Penjelasan untuk soal SMP Akademik tambahan ${i+11}: DPR (Dewan Perwakilan Rakyat) adalah lembaga legislatif yang bertugas membuat undang-undang bersama Presiden.`
     });
 }
 
-// SMA IPA (already has 10, need 10 more)
+// SMA Matematika (already has 10, need 10 more)
 for (let i = 0; i < 10; i++) {
-    QUESTION_BANK['SMA/SMK']['IPA'].push({
-        question: `Soal SMA IPA tambahan ${i+11}: Senyawa dengan rumus molekul C₂H₅OH termasuk dalam golongan...`,
+    QUESTION_BANK['SMA/SMK']['Matematika'].push({
+        question: `Soal SMA Matematika tambahan ${i+11}: Senyawa dengan rumus molekul C₂H₅OH termasuk dalam golongan...`,
         options: [
             "A. Alkanon",
             "B. Alkanal",
@@ -2057,14 +2057,14 @@ for (let i = 0; i < 10; i++) {
             "E. Alkuna"
         ],
         correctAnswer: 2,
-        explanation: `Penjelasan untuk soal SMA IPA tambahan ${i+11}: C₂H₅OH (etanol) termasuk alkohol (alkanol) karena memiliki gugus fungsi -OH yang terikat pada atom karbon jenuh.`
+        explanation: `Penjelasan untuk soal SMA Matematika tambahan ${i+11}: C₂H₅OH (etanol) termasuk alkohol (alkanol) karena memiliki gugus fungsi -OH yang terikat pada atom karbon jenuh.`
     });
 }
 
-// SMA IPS (already has 10, need 10 more)
+// SMA Akademik (already has 10, need 10 more)
 for (let i = 0; i < 10; i++) {
-    QUESTION_BANK['SMA/SMK']['IPS'].push({
-        question: `Soal SMA IPS tambahan ${i+11}: Kebijakan moneter yang dilakukan bank sentral untuk mengatasi inflasi adalah...`,
+    QUESTION_BANK['SMA/SMK']['Akademik'].push({
+        question: `Soal SMA akademik tambahan ${i+11}: Kebijakan moneter yang dilakukan bank sentral untuk mengatasi inflasi adalah...`,
         options: [
             "A. Menurunkan suku bunga",
             "B. Meningkatkan giro wajib minimum",
@@ -2073,7 +2073,7 @@ for (let i = 0; i < 10; i++) {
             "E. Menurunkan pajak penghasilan"
         ],
         correctAnswer: 1,
-        explanation: `Penjelasan untuk soal SMA IPS tambahan ${i+11}: Untuk mengatasi inflasi, bank sentral dapat melakukan kebijakan moneter kontraktif seperti menaikkan GWM (Giro Wajib Minimum) untuk mengurangi jumlah uang beredar.`
+        explanation: `Penjelasan untuk soal SMA Akademik tambahan ${i+11}: Untuk mengatasi inflasi, bank sentral dapat melakukan kebijakan moneter kontraktif seperti menaikkan GWM (Giro Wajib Minimum) untuk mengurangi jumlah uang beredar.`
     });
 }
 
@@ -2498,11 +2498,11 @@ localStorage.setItem('questionBank', JSON.stringify(QUESTION_BANK));
             document.getElementById('chairman-name').value = adminSettings.chairmanName;
             
             // Load subject toggles
-            document.getElementById('toggle-science').checked = adminSettings.enabledSubjects.IPA;
-            document.getElementById('science-status').textContent = adminSettings.enabledSubjects.IPA ? 'Aktif' : 'Nonaktif';
+            document.getElementById('toggle-science').checked = adminSettings.enabledSubjects.Matematika;
+            document.getElementById('science-status').textContent = adminSettings.enabledSubjects.Matematika ? 'Aktif' : 'Nonaktif';
             
-            document.getElementById('toggle-social').checked = adminSettings.enabledSubjects.IPS;
-            document.getElementById('social-status').textContent = adminSettings.enabledSubjects.IPS ? 'Aktif' : 'Nonaktif';
+            document.getElementById('toggle-social').checked = adminSettings.enabledSubjects.Akademik;
+            document.getElementById('social-status').textContent = adminSettings.enabledSubjects.Akademik ? 'Aktif' : 'Nonaktif';
         }
         
         function handleLogin() {
