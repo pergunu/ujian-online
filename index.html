@@ -1221,11 +1221,11 @@
                 <div class="form-group">
                     <label class="form-label">Pilih Jenis Ujian</label>
                     <div class="radio-group">
-                        <input type="radio" id="subject-science" name="subject" value="Matematika" class="radio-option">
-                        <label for="subject-science" class="radio-label">Matematika</label>
+                        <input type="radio" id="subject-science" name="subject" value="IPA" class="radio-option">
+                        <label for="subject-science" class="radio-label">IPA</label>
                         
-                        <input type="radio" id="subject-social" name="subject" value="akademik" class="radio-option">
-                        <label for="subject-social" class="radio-label">akademik</label>
+                        <input type="radio" id="subject-social" name="subject" value="IPS" class="radio-option">
+                        <label for="subject-social" class="radio-label">IPS</label>
                     </div>
                 </div>
             </div>
@@ -1341,8 +1341,8 @@
                         <div class="form-group">
                             <label class="form-label">Kategori Ujian</label>
                             <select id="question-category" class="form-control" style="color: #333;">
-                                <option value="Matematika">Matematika</option>
-                                <option value="akademik">Akademik</option>
+                                <option value="IPA">IPA</option>
+                                <option value="IPS">IPS</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -1405,8 +1405,8 @@
                                     <label class="admin-control-label">Filter Kategori</label>
                                     <select id="filter-category" class="admin-control-input" style="color: #333;">
                                         <option value="all">Semua Kategori</option>
-                                        <option value="Matematika">Matematika</option>
-                                        <option value="Akademik">Akademik</option>
+                                        <option value="IPA">IPA</option>
+                                        <option value="IPS">IPS</option>
                                     </select>
                                 </div>
                             </div>
@@ -1567,7 +1567,7 @@
                         <h5>Aktifkan/Nonaktifkan Ujian</h5>
                         <div class="admin-controls">
                             <div class="admin-control-group">
-                                <label class="admin-control-label">Matematika</label>
+                                <label class="admin-control-label">IPA</label>
                                 <div class="admin-toggle">
                                     <label class="toggle-switch">
                                         <input type="checkbox" id="toggle-science" checked>
@@ -1577,7 +1577,7 @@
                                 </div>
                             </div>
                             <div class="admin-control-group">
-                                <label class="admin-control-label">Akademik</label>
+                                <label class="admin-control-label">IPS</label>
                                 <div class="admin-toggle">
                                     <label class="toggle-switch">
                                         <input type="checkbox" id="toggle-social" checked>
@@ -1611,8 +1611,8 @@
             <div class="form-group">
                 <label class="form-label">Kategori Ujian</label>
                 <select id="edit-question-category" class="form-control" style="color: #333;">
-                    <option value="Matematika"matematika</option>
-                    <option value="Akademik">Akademik</option>
+                    <option value="IPA">IPA</option>
+                    <option value="IPS">IPS</option>
                 </select>
             </div>
             <div class="form-group">
@@ -1735,8 +1735,8 @@
             <div class="form-group">
                 <label class="form-label">Mata Ujian</label>
                 <select id="edit-subject" class="form-control" style="color: #333;">
-                    <option value="Matematika">matematika</option>
-                    <option value="akademik">Akademik</option>
+                    <option value="IPA">IPA</option>
+                    <option value="IPS">IPS</option>
                 </select>
             </div>
             
@@ -1802,7 +1802,7 @@
             questionBankCode: DEFAULT_QUESTION_BANK_CODE,
             adminCode: DEFAULT_ADMIN_PANEL_CODE,
             examDuration: 120,
-            questionCount: 50,
+            questionCount: 20,
             randomizeQuestions: true,
             greetingMessage: "Selamat datang di sistem ujian online PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.",
             adminMessage: "Tidak ada informasi terbaru saat ini.",
@@ -1817,7 +1817,7 @@
         // Update the QUESTION_BANK variable in the existing code with this content
 let QUESTION_BANK = {
     'SD': {
-        'Matematika': [
+        'IPA': [
             {
                 question: "Perhatikan pernyataan berikut tentang ciri-ciri makhluk hidup: 1) Bernapas, 2) Tumbuh, 3) Bergerak, 4) Berkembang biak. Manakah yang merupakan ciri utama yang membedakan makhluk hidup dengan benda mati?",
                 options: [
@@ -1829,6 +1829,102 @@ let QUESTION_BANK = {
                 ],
                 correctAnswer: 3,
                 explanation: "Semua pernyataan (bernapas, tumbuh, bergerak, dan berkembang biak) adalah ciri-ciri makhluk hidup yang membedakannya dari benda mati. Benda mati tidak memiliki kemampuan untuk melakukan keempat hal tersebut secara alami."
+            },
+            {
+                question: "Pada proses fotosintesis, tumbuhan hijau mengubah karbon dioksida dan air menjadi glukosa dan oksigen dengan bantuan cahaya matahari. Manakah organel sel yang bertanggung jawab atas proses ini?",
+                options: [
+                    "A. Mitokondria",
+                    "B. Kloroplas",
+                    "C. Nukleus",
+                    "D. Ribosom",
+                    "E. Vakuola"
+                ],
+                correctAnswer: 1,
+                explanation: "Kloroplas adalah organel sel tumbuhan yang mengandung klorofil, pigmen hijau yang menyerap energi cahaya untuk digunakan dalam proses fotosintesis. Mitokondria berperan dalam respirasi sel, bukan fotosintesis."
+            },
+            {
+                question: "Perhatikan rantai makanan berikut: Padi → Tikus → Ular → Elang. Jika populasi ular berkurang drastis karena perburuan liar, apa yang mungkin terjadi pada ekosistem tersebut?",
+                options: [
+                    "A. Populasi tikus akan menurun",
+                    "B. Populasi elang akan meningkat",
+                    "C. Populasi padi akan menurun",
+                    "D. Populasi elang akan menurun",
+                    "E. Tidak ada pengaruh pada ekosistem"
+                ],
+                correctAnswer: 2,
+                explanation: "Jika populasi ular berkurang, maka populasi tikus (mangsa ular) akan meningkat karena berkurangnya predator. Peningkatan populasi tikus akan menyebabkan lebih banyak padi yang dimakan, sehingga populasi padi akan menurun."
+            },
+            {
+                question: "Bumi melakukan dua jenis gerakan sekaligus, yaitu rotasi dan revolusi. Manakah pernyataan yang benar tentang akibat dari gerakan rotasi Bumi?",
+                options: [
+                    "A. Terjadinya siang dan malam",
+                    "B. Perubahan musim",
+                    "C. Perbedaan lamanya siang dan malam",
+                    "D. Gerak semu tahunan matahari",
+                    "E. Perubahan posisi rasi bintang"
+                ],
+                correctAnswer: 0,
+                explanation: "Rotasi Bumi adalah perputaran Bumi pada porosnya yang menyebabkan terjadinya siang dan malam. Perubahan musim dan perbedaan lamanya siang dan malam disebabkan oleh revolusi Bumi mengelilingi Matahari dan kemiringan sumbu Bumi."
+            },
+            {
+                question: "Perhatikan gambar rangka manusia! Tulang yang termasuk dalam kelompok tulang anggota gerak atas adalah...",
+                options: [
+                    "A. Tulang belakang dan tulang rusuk",
+                    "B. Tulang paha dan tulang kering",
+                    "C. Tulang lengan atas dan tulang hasta",
+                    "D. Tulang tengkorak dan tulang belikat",
+                    "E. Tulang selangka dan tulang dada"
+                ],
+                correctAnswer: 2,
+                explanation: "Tulang anggota gerak atas terdiri dari tulang lengan atas (humerus), tulang hasta (ulna), tulang pengumpil (radius), tulang pergelangan tangan (karpal), tulang telapak tangan (metakarpal), dan tulang jari-jari (falanges)."
+            },
+            {
+                question: "Dalam suatu percobaan, seorang siswa menanam biji kacang hijau dalam tiga pot dengan perlakuan berbeda: Pot A disiram setiap hari, Pot B disiram dua hari sekali, Pot C tidak disiram sama sekali. Setelah seminggu, hasil pengamatan menunjukkan tanaman di Pot A tumbuh subur, Pot B tumbuh kurang subur, dan Pot C tidak tumbuh. Variabel bebas dalam percobaan ini adalah...",
+                options: [
+                    "A. Jenis biji yang ditanam",
+                    "B. Frekuensi penyiraman",
+                    "C. Pertumbuhan tanaman",
+                    "D. Ukuran pot yang digunakan",
+                    "E. Intensitas cahaya"
+                ],
+                correctAnswer: 1,
+                explanation: "Variabel bebas adalah faktor yang sengaja diubah dalam percobaan. Dalam percobaan ini, frekuensi penyiraman (setiap hari, dua hari sekali, tidak disiram) adalah variabel bebas yang sengaja diubah untuk melihat pengaruhnya terhadap pertumbuhan tanaman."
+            },
+            {
+                question: "Perhatikan daur hidup kupu-kupu berikut: Telur → Ulat → Kepompong → Kupu-kupu. Proses perubahan bentuk tubuh yang dialami kupu-kupu selama daur hidupnya disebut...",
+                options: [
+                    "A. Metagenesis",
+                    "B. Metamorfosis sempurna",
+                    "C. Metamorfosis tidak sempurna",
+                    "D. Regenerasi",
+                    "E. Fotosintesis"
+                ],
+                correctAnswer: 1,
+                explanation: "Metamorfosis sempurna adalah proses perkembangan hewan yang melalui empat tahap berbeda: telur, larva (ulat), pupa (kepompong), dan imago (dewasa). Kupu-kupu mengalami metamorfosis sempurna dengan perubahan bentuk yang sangat berbeda di setiap tahapnya."
+            },
+            {
+                question: "Perhatikan tabel berikut tentang sifat-sifat benda:\n1) Volume tetap\n2) Bentuk berubah sesuai wadah\n3) Susunan partikel sangat rapat\n4) Gerakan partikel bebas\nManakah yang merupakan sifat zat cair?",
+                options: [
+                    "A. 1 dan 2",
+                    "B. 1 dan 3",
+                    "C. 2 dan 3",
+                    "D. 2 dan 4",
+                    "E. 3 dan 4"
+                ],
+                correctAnswer: 2,
+                explanation: "Sifat zat cair: 1) Volume tetap, 2) Bentuk berubah sesuai wadah, 3) Susunan partikel kurang rapat dibanding padat tetapi lebih rapat dibanding gas, 4) Gerakan partikel lebih bebas daripada zat padat tetapi lebih terbatas daripada gas."
+            },
+            {
+                question: "Dalam suatu percobaan tentang konduktor dan isolator panas, seorang siswa memanaskan berbagai benda selama 1 menit kemudian mengukur suhunya. Hasilnya menunjukkan logam tembaga mengalami kenaikan suhu paling tinggi, sedangkan kayu hampir tidak mengalami kenaikan suhu. Kesimpulan yang tepat dari percobaan ini adalah...",
+                options: [
+                    "A. Tembaga adalah isolator panas yang baik",
+                    "B. Kayu adalah konduktor panas yang baik",
+                    "C. Tembaga adalah konduktor panas yang baik",
+                    "D. Kayu dan tembaga sama-sama isolator",
+                    "E. Semua logam adalah isolator panas"
+                ],
+                correctAnswer: 2,
+                explanation: "Benda yang mudah menghantarkan panas (mengalami kenaikan suhu cepat) disebut konduktor panas yang baik (seperti tembaga). Benda yang sulit menghantarkan panas disebut isolator panas (seperti kayu). Hasil percobaan menunjukkan tembaga adalah konduktor panas yang baik."
             },
             {
                 question: "Perhatikan gambar sistem tata surya! Planet yang memiliki ciri-ciri: 1) Dikenal sebagai planet merah, 2) Memiliki dua satelit alami (Phobos dan Deimos), 3) Memiliki gunung tertinggi di tata surya (Olympus Mons), adalah planet...",
@@ -1843,7 +1939,7 @@ let QUESTION_BANK = {
                 explanation: "Mars dikenal sebagai planet merah karena permukaannya yang berwarna kemerahan akibat kandungan besi oksida. Mars memiliki dua satelit kecil (Phobos dan Deimos) dan gunung Olympus Mons yang merupakan gunung berapi tertinggi di tata surya dengan tinggi sekitar 21 km."
             }
         ],
-        'Akademik': [
+        'IPS': [
             {
                 question: "Perhatikan peta provinsi di Indonesia! Provinsi yang terletak paling timur dan berbatasan langsung dengan Papua Nugini adalah...",
                 options: [
@@ -1855,6 +1951,102 @@ let QUESTION_BANK = {
                 ],
                 correctAnswer: 3,
                 explanation: "Provinsi Papua merupakan provinsi paling timur di Indonesia yang berbatasan langsung dengan negara Papua Nugini. Batas darat Indonesia-Papua Nugini sepanjang 820 km membentang dari pantai utara hingga pantai selatan Pulau Papua."
+            },
+            {
+                question: "Perhatikan gambar candi berikut yang memiliki ciri khas stupa dan termasuk warisan dunia UNESCO! Candi yang dimaksud adalah...",
+                options: [
+                    "A. Candi Prambanan",
+                    "B. Candi Borobudur",
+                    "C. Candi Mendut",
+                    "D. Candi Sewu",
+                    "E. Candi Kalasan"
+                ],
+                correctAnswer: 1,
+                explanation: "Candi Borobudur adalah candi Buddha terbesar di dunia yang dibangun pada abad ke-9 pada masa pemerintahan wangsa Syailendra. Candi ini terkenal dengan stupa-stupanya dan menjadi salah satu warisan dunia UNESCO sejak 1991."
+            },
+            {
+                question: "Perhatikan tabel kegiatan ekonomi berikut:\n1) Nelayan menangkap ikan di laut\n2) Petani menanam padi di sawah\n3) Pabrik mengolah kain menjadi pakaian\n4) Toko menjual barang kebutuhan sehari-hari\nManakah yang termasuk kegiatan produksi?",
+                options: [
+                    "A. 1 dan 2",
+                    "B. 1, 2, dan 3",
+                    "C. 2 dan 3",
+                    "D. 3 dan 4",
+                    "E. Semua benar"
+                ],
+                correctAnswer: 1,
+                explanation: "Kegiatan produksi adalah kegiatan menambah nilai guna suatu barang atau menghasilkan barang/jasa. Nelayan menangkap ikan, petani menanam padi, dan pabrik mengolah kain termasuk kegiatan produksi. Toko menjual barang termasuk distribusi, bukan produksi."
+            },
+            {
+                question: "Perhatikan gambar uang kertas Indonesia! Nilai uang yang memiliki gambar pahlawan Cut Nyak Dhien adalah pecahan...",
+                options: [
+                    "A. Rp1.000",
+                    "B. Rp5.000",
+                    "C. Rp10.000",
+                    "D. Rp20.000",
+                    "E. Rp50.000"
+                ],
+                correctAnswer: 2,
+                explanation: "Cut Nyak Dhien adalah pahlawan nasional dari Aceh yang memimpin perlawanan terhadap Belanda dalam Perang Aceh. Gambarnya menghiasi uang kertas pecahan Rp10.000 emisi tahun 2016."
+            },
+            {
+                question: "Perhatikan peta persebaran flora dan fauna di Indonesia! Garis yang memisahkan wilayah fauna Indonesia Barat dan Indonesia Tengah adalah garis...",
+                options: [
+                    "A. Weber",
+                    "B. Wallace",
+                    "C. Khatulistiwa",
+                    "D. Lintang",
+                    "E. Bujur"
+                ],
+                correctAnswer: 0,
+                explanation: "Garis Weber adalah garis imajiner yang memisahkan wilayah fauna Indonesia Tengah (Peralihan) dengan Indonesia Timur. Garis Wallace memisahkan Indonesia Barat dengan Indonesia Tengah. Kedua garis ini menunjukkan perbedaan jenis fauna di Indonesia."
+            },
+            {
+                question: "Perhatikan gambar tokoh proklamator Indonesia! Tokoh yang mendampingi Soekarno dalam membacakan teks proklamasi pada 17 Agustus 1945 adalah...",
+                options: [
+                    "A. Mohammad Hatta",
+                    "B. Sutan Sjahrir",
+                    "C. Tan Malaka",
+                    "D. Gatot Subroto",
+                    "E. Ki Hajar Dewantara"
+                ],
+                correctAnswer: 0,
+                explanation: "Mohammad Hatta adalah tokoh proklamator yang mendampingi Soekarno dalam membacakan teks proklamasi kemerdekaan Indonesia pada 17 Agustus 1945 di Jalan Pegangsaan Timur 56, Jakarta. Beliau juga merupakan Wakil Presiden pertama Indonesia."
+            },
+            {
+                question: "Perhatikan gambar rumah adat Indonesia! Rumah adat yang memiliki ciri khas atap berbentuk tanduk kerbau dan berasal dari Sumatera Barat adalah...",
+                options: [
+                    "A. Rumah Joglo",
+                    "B. Rumah Gadang",
+                    "C. Rumah Limas",
+                    "D. Rumah Tongkonan",
+                    "E. Rumah Honai"
+                ],
+                correctAnswer: 1,
+                explanation: "Rumah Gadang adalah rumah tradisional Minangkabau, Sumatera Barat, dengan ciri khas atap melengkung seperti tanduk kerbau dan struktur gonjong. Rumah ini mencerminkan sistem matrilineal masyarakat Minang dan tahan gempa."
+            },
+            {
+                question: "Perhatikan denah lokasi berikut! Jika sekolah terletak di sebelah timur rumah, dan pasar terletak di sebelah utara sekolah, maka posisi pasar terhadap rumah adalah...",
+                options: [
+                    "A. Timur laut",
+                    "B. Tenggara",
+                    "C. Barat daya",
+                    "D. Barat laut",
+                    "E. Timur laut"
+                ],
+                correctAnswer: 0,
+                explanation: "Jika sekolah di timur rumah, dan pasar di utara sekolah, maka pasar berada di arah timur laut dari rumah. Untuk menentukan arah, buatlah diagram sederhana dengan rumah sebagai titik pusat."
+            },
+            {
+                question: "Perhatikan gambar lambang negara Indonesia! Sila yang diwakili oleh gambar rantai pada lambang Garuda Pancasila adalah sila...",
+                options: [
+                    "A. Ketuhanan Yang Maha Esa",
+                    "B. Kemanusiaan yang adil dan beradab",
+                    "C. Persatuan Indonesia",
+                    "D. Kerakyatan yang dipimpin oleh hikmat kebijaksanaan dalam permusyawaratan/perwakilan",
+                    "E. Keadilan sosial bagi seluruh rakyat Indonesia"
+                ],
+                correctAnswer: 1,
+                explanation: "Pada lambang Garuda Pancasila, rantai emas yang terdiri dari mata rantai persegi dan lingkaran yang saling berkait mewakili sila kedua: Kemanusiaan yang Adil dan Beradab. Rantai melambangkan hubungan antarmanusia yang saling membantu."
             },
             {
                 question: "Perhatikan tabel hasil bumi Indonesia berikut:\n1) Kelapa sawit\n2) Teh\n3) Kopi\n4) Tembakau\nKomoditas yang menjadi andalan ekspor Indonesia dari sektor perkebunan adalah...",
@@ -1871,7 +2063,7 @@ let QUESTION_BANK = {
         ]
     },
     'SMP': {
-        'Matematika': [
+        'IPA': [
             {
                 question: "Perhatikan gambar sel tumbuhan! Organel sel yang berfungsi sebagai tempat berlangsungnya fotosintesis dan hanya dimiliki oleh sel tumbuhan adalah...",
                 options: [
@@ -1883,6 +2075,102 @@ let QUESTION_BANK = {
                 ],
                 correctAnswer: 1,
                 explanation: "Kloroplas adalah organel sel tumbuhan yang mengandung klorofil, pigmen hijau yang menangkap energi cahaya untuk fotosintesis. Proses ini mengubah karbon dioksida dan air menjadi glukosa dan oksigen. Kloroplas tidak dimiliki oleh sel hewan."
+            },
+            {
+                question: "Perhatikan tabel perubahan materi berikut:\n1) Besi berkarat\n2) Es mencair\n3) Kayu terbakar\n4) Gula larut dalam air\nManakah yang termasuk perubahan kimia?",
+                options: [
+                    "A. 1 dan 2",
+                    "B. 1 dan 3",
+                    "C. 2 dan 3",
+                    "D. 2 dan 4",
+                    "E. 3 dan 4"
+                ],
+                correctAnswer: 1,
+                explanation: "Perubahan kimia ditandai dengan terbentuknya zat baru yang sifatnya berbeda dari zat semula. Besi berkarat (menjadi besi oksida) dan kayu terbakar (menjadi arang/karbon) adalah perubahan kimia. Es mencair dan gula larut adalah perubahan fisika karena tidak menghasilkan zat baru."
+            },
+            {
+                question: "Perhatikan gambar sistem pencernaan manusia! Enzim yang dihasilkan oleh organ nomor 3 (lambung) dan berfungsi untuk mengubah protein menjadi pepton adalah...",
+                options: [
+                    "A. Amilase",
+                    "B. Pepsin",
+                    "C. Lipase",
+                    "D. Tripsin",
+                    "E. Sukrase"
+                ],
+                correctAnswer: 1,
+                explanation: "Lambung menghasilkan enzim pepsin yang berfungsi mengubah protein menjadi pepton. Pepsin bekerja optimal dalam suasana asam (pH 1.5-2) yang disediakan oleh asam klorida (HCl) yang juga dihasilkan lambung."
+            },
+            {
+                question: "Perhatikan gambar percobaan fotosintesis! Tujuan penggunaan aluminium foil untuk membungkus sebagian daun sebelum percobaan adalah untuk...",
+                options: [
+                    "A. Membunuh sel-sel daun",
+                    "B. Mencegah penguapan air",
+                    "C. Menghalangi cahaya matahari",
+                    "D. Mempercepat proses fotosintesis",
+                    "E. Melindungi dari serangga"
+                ],
+                correctAnswer: 2,
+                explanation: "Dalam percobaan fotosintesis, bagian daun yang dibungkus aluminium foil tidak mendapat cahaya matahari sehingga tidak dapat berfotosintesis. Setelah percobaan, daun diuji dengan yodium/lugol untuk membuktikan bahwa hanya bagian yang terkena cahaya menghasilkan amilum (menjadi biru kehitaman)."
+            },
+            {
+                question: "Perhatikan gambar rangkaian listrik berikut! Jika saklar 1 ditutup dan saklar 2 dibuka, maka lampu yang akan menyala adalah...",
+                options: [
+                    "A. Hanya lampu A",
+                    "B. Hanya lampu B",
+                    "C. Lampu A dan B",
+                    "D. Lampu B dan C",
+                    "E. Tidak ada lampu yang menyala"
+                ],
+                correctAnswer: 0,
+                explanation: "Dalam rangkaian paralel, setiap cabang bekerja independen. Jika saklar 1 ditutup (ON) dan saklar 2 dibuka (OFF), hanya lampu A yang mendapat aliran listrik dan menyala. Lampu B tidak menyala karena saklar 2 terbuka, meskipun secara fisik terhubung."
+            },
+            {
+                question: "Perhatikan gambar sistem pernapasan manusia! Proses pertukaran oksigen dan karbon dioksida antara darah dan udara pernapasan terjadi di bagian yang ditunjukkan oleh nomor...",
+                options: [
+                    "A. 1 (rongga hidung)",
+                    "B. 2 (tenggorokan)",
+                    "C. 3 (bronkus)",
+                    "D. 4 (bronkiolus)",
+                    "E. 5 (alveolus)"
+                ],
+                correctAnswer: 4,
+                explanation: "Alveolus adalah gelembung-gelembung kecil di ujung saluran pernapasan yang dikelilingi kapiler darah. Di sini terjadi difusi oksigen dari udara ke darah dan karbon dioksida dari darah ke udara karena perbedaan tekanan parsial gas."
+            },
+            {
+                question: "Perhatikan tabel sifat zat berikut:\n1) Volume tetap\n2) Bentuk berubah sesuai wadah\n3) Susunan partikel sangat rapat\n4) Gerakan partikel sangat bebas\nManakah yang merupakan sifat gas?",
+                options: [
+                    "A. 1 dan 2",
+                    "B. 1 dan 3",
+                    "C. 2 dan 3",
+                    "D. 2 dan 4",
+                    "E. 3 dan 4"
+                ],
+                correctAnswer: 3,
+                explanation: "Sifat gas: 1) Volume berubah mengisi wadah, 2) Bentuk berubah mengikuti wadah, 3) Susunan partikel sangat renggang, 4) Gerakan partikel sangat bebas dan cepat. Gas tidak memiliki volume dan bentuk tetap karena gaya tarik antarpartikel sangat lemah."
+            },
+            {
+                question: "Perhatikan gambar pembiasan cahaya! Jika cahaya merambat dari udara ke air (indeks bias air lebih besar), maka cahaya akan...",
+                options: [
+                    "A. Membias menjauhi garis normal",
+                    "B. Membias mendekati garis normal",
+                    "C. Tidak mengalami pembiasan",
+                    "D. Dipantulkan sempurna",
+                    "E. Diserap seluruhnya"
+                ],
+                correctAnswer: 1,
+                explanation: "Ketika cahaya merambat dari medium kurang rapat (udara) ke medium lebih rapat (air), cahaya akan membias mendekati garis normal (garis tegak lurus bidang batas). Ini terjadi karena kecepatan cahaya berkurang saat memasuki medium lebih rapat."
+            },
+            {
+                question: "Perhatikan gambar sistem reproduksi wanita! Tempat terjadinya fertilisasi (pembuahan sel telur oleh sperma) ditunjukkan oleh nomor...",
+                options: [
+                    "A. 1 (ovarium)",
+                    "B. 2 (tuba falopi)",
+                    "C. 3 (uterus)",
+                    "D. 4 (serviks)",
+                    "E. 5 (vagina)"
+                ],
+                correctAnswer: 1,
+                explanation: "Fertilisasi terjadi di tuba falopi (oviduk) bagian ampula, yaitu bagian yang melebar dekat ovarium. Setelah fertilisasi, zigot akan bergerak ke uterus untuk implantasi. Ovarium adalah tempat produksi sel telur, uterus tempat perkembangan janin."
             },
             {
                 question: "Perhatikan gambar percobaan elektromagnet! Faktor yang mempengaruhi kekuatan elektromagnet adalah: 1) Jumlah lilitan kawat, 2) Kuat arus listrik, 3) Jenis inti besi, 4) Ukuran baterai. Manakah yang benar?",
@@ -1897,7 +2185,7 @@ let QUESTION_BANK = {
                 explanation: "Kekuatan elektromagnet dipengaruhi oleh: 1) Jumlah lilitan (semakin banyak semakin kuat), 2) Kuat arus (semakin besar arus semakin kuat), 3) Jenis inti besi (besi lunak lebih baik daripada baja). Ukuran baterai tidak langsung mempengaruhi selama tegangan tetap."
             }
         ],
-        'Akademik': [
+        'IPS': [
             {
                 question: "Perhatikan peta persebaran kerajaan Hindu-Buddha di Indonesia! Kerajaan yang mencapai puncak kejayaan pada masa pemerintahan Raja Hayam Wuruk dengan patih Gajah Mada adalah...",
                 options: [
@@ -1909,6 +2197,102 @@ let QUESTION_BANK = {
                 ],
                 correctAnswer: 1,
                 explanation: "Kerajaan Majapahit mencapai puncak kejayaan pada abad ke-14 di bawah Raja Hayam Wuruk (1350-1389) dengan patih Gajah Mada yang mengucapkan Sumpah Palapa untuk menyatukan Nusantara. Majapahit menguasai wilayah yang luas meliputi Sumatra, Jawa, Borneo, hingga sebagian Filipina."
+            },
+            {
+                question: "Perhatikan tabel kegiatan ekonomi berikut:\n1) Petani menanam padi\n2) Pabrik mengolah kelapa sawit menjadi minyak goreng\n3) Supermarket menjual kebutuhan pokok\n4) Konsumen membeli beras untuk kebutuhan rumah tangga\nManakah yang termasuk kegiatan distribusi?",
+                options: [
+                    "A. 1",
+                    "B. 2",
+                    "C. 3",
+                    "D. 4",
+                    "E. 1 dan 2"
+                ],
+                correctAnswer: 2,
+                explanation: "Kegiatan distribusi adalah kegiatan menyalurkan barang dari produsen ke konsumen. Supermarket menjual kebutuhan pokok termasuk distribusi. Petani menanam padi (produksi), pabrik mengolah sawit (produksi), konsumen membeli beras (konsumsi)."
+            },
+            {
+                question: "Perhatikan gambar candi berikut yang memiliki ciri khas relief Ramayana dan termasuk kompleks candi Hindu terbesar di Indonesia! Candi yang dimaksud adalah...",
+                options: [
+                    "A. Candi Borobudur",
+                    "B. Candi Prambanan",
+                    "C. Candi Mendut",
+                    "D. Candi Sewu",
+                    "E. Candi Kalasan"
+                ],
+                correctAnswer: 1,
+                explanation: "Candi Prambanan adalah kompleks candi Hindu terbesar di Indonesia yang dibangun pada abad ke-9. Candi ini dipersembahkan untuk Trimurti (Brahma, Wisnu, Siwa) dan memiliki relief cerita Ramayana yang mengelilingi candi utama."
+            },
+            {
+                question: "Perhatikan peta wilayah ASEAN! Negara anggota ASEAN yang berbentuk kepulauan dan tidak memiliki daratan yang bersambung dengan negara lain adalah...",
+                options: [
+                    "A. Thailand",
+                    "B. Filipina",
+                    "C. Vietnam",
+                    "D. Myanmar",
+                    "E. Kamboja"
+                ],
+                correctAnswer: 1,
+                explanation: "Filipina adalah negara kepulauan di ASEAN yang terdiri dari 7.641 pulau dan tidak memiliki daratan yang bersambung dengan negara lain. Negara ASEAN lainnya seperti Thailand, Myanmar, Vietnam, dan Kamboja berada di daratan Asia Tenggara."
+            },
+            {
+                question: "Perhatikan tabel berikut tentang jenis-jenis pajak:\n1) Pajak Penghasilan (PPh)\n2) Pajak Pertambahan Nilai (PPN)\n3) Pajak Bumi dan Bangunan (PBB)\n4) Pajak Kendaraan Bermotor\nManakah yang termasuk pajak pusat?",
+                options: [
+                    "A. 1 dan 2",
+                    "B. 1, 2, dan 3",
+                    "C. 2 dan 3",
+                    "D. 3 dan 4",
+                    "E. Semua benar"
+                ],
+                correctAnswer: 0,
+                explanation: "Pajak pusat adalah pajak yang dikelola pemerintah pusat (Direktorat Jenderal Pajak) meliputi: PPh, PPN, PPnBM, PBB (sektor tertentu), Bea Meterai, dan pajak lainnya. PBB (umum) dan Pajak Kendaraan Bermotor sudah menjadi pajak daerah."
+            },
+            {
+                question: "Perhatikan gambar tokoh proklamator kemerdekaan Indonesia! Tokoh yang merumuskan Pancasila dan dikenal sebagai 'Bapak Proklamator' bersama Mohammad Hatta adalah...",
+                options: [
+                    "A. Soekarno",
+                    "B. Sutan Sjahrir",
+                    "C. Tan Malaka",
+                    "D. Gatot Subroto",
+                    "E. Ki Hajar Dewantara"
+                ],
+                correctAnswer: 0,
+                explanation: "Soekarno adalah tokoh proklamator kemerdekaan Indonesia yang membacakan teks proklamasi pada 17 Agustus 1945 bersama Mohammad Hatta. Beliau juga yang pertama kali mengemukakan konsep Pancasila pada sidang BPUPKI 1 Juni 1945."
+            },
+            {
+                question: "Perhatikan peta persebaran penduduk Indonesia! Pulau yang memiliki kepadatan penduduk tertinggi dibandingkan luas wilayahnya adalah...",
+                options: [
+                    "A. Sumatra",
+                    "B. Jawa",
+                    "C. Kalimantan",
+                    "D. Sulawesi",
+                    "E. Papua"
+                ],
+                correctAnswer: 1,
+                explanation: "Pulau Jawa memiliki kepadatan penduduk tertinggi di Indonesia (sekitar 1.171 jiwa/km², 2020), meskipun luasnya hanya 7% dari total wilayah Indonesia, tetapi dihuni oleh sekitar 56% penduduk Indonesia. Ketimpangan ini disebabkan oleh kesuburan tanah dan pusat pemerintahan berada di Jawa."
+            },
+            {
+                question: "Perhatikan gambar uang kertas Indonesia! Pecahan uang yang memiliki gambar pahlawan I Gusti Ngurah Rai adalah...",
+                options: [
+                    "A. Rp1.000",
+                    "B. Rp5.000",
+                    "C. Rp10.000",
+                    "D. Rp50.000",
+                    "E. Rp100.000"
+                ],
+                correctAnswer: 3,
+                explanation: "I Gusti Ngurah Rai adalah pahlawan nasional dari Bali yang memimpin Puputan Margarana melawan Belanda. Gambarnya menghiasi uang kertas pecahan Rp50.000 emisi tahun 2016. Beliau gugur dalam pertempuran di Margarana, Bali pada 20 November 1946."
+            },
+            {
+                question: "Perhatikan tabel lembaga negara berikut:\n1) Presiden\n2) DPR\n3) Mahkamah Agung\n4) BPK\nLembaga yang memiliki fungsi legislatif adalah...",
+                options: [
+                    "A. 1",
+                    "B. 2",
+                    "C. 3",
+                    "D. 4",
+                    "E. 1 dan 2"
+                ],
+                correctAnswer: 1,
+                explanation: "DPR (Dewan Perwakilan Rakyat) adalah lembaga legislatif yang bertugas membuat undang-undang. Presiden termasuk eksekutif, MA dan MK termasuk yudikatif, BPK termasuk lembaga audit. Fungsi legislatif di Indonesia juga melibatkan DPD dan Presiden dalam pembentukan UU."
             },
             {
                 question: "Perhatikan gambar benua dan samudra dunia! Samudra yang terletak di sebelah barat benua Amerika dan sebelah timur benua Asia adalah...",
@@ -1925,7 +2309,7 @@ let QUESTION_BANK = {
         ]
     },
     'SMA/SMK': {
-        'Matematika': [
+        'IPA': [
             {
                 question: "Perhatikan reaksi kimia berikut: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + Energi. Reaksi ini terjadi di organel sel yang memiliki ciri-ciri: 1) Memiliki membran dalam yang berlipat-lipat (krista), 2) Mengandung enzim untuk siklus Krebs, 3) Dikenal sebagai 'powerhouse of the cell'. Organel yang dimaksud adalah...",
                 options: [
@@ -1938,7 +2322,103 @@ let QUESTION_BANK = {
                 correctAnswer: 3,
                 explanation: "Reaksi tersebut adalah respirasi aerob yang terjadi di mitokondria. Mitokondria memiliki membran dalam berlipat (krista) yang memperluas permukaan untuk reaksi rantai transpor elektron. Matriks mitokondria mengandung enzim untuk siklus Krebs dan disebut 'powerhouse' karena menghasilkan ATP."
             },
-                {
+            {
+                question: "Perhatikan grafik hubungan antara suhu dengan kelarutan beberapa garam! Berdasarkan grafik, kelarutan garam KNO₃ yang paling tepat dinyatakan dalam persamaan...",
+                options: [
+                    "A. Kelarutan tidak dipengaruhi suhu",
+                    "B. Kelarutan berkurang seiring kenaikan suhu",
+                    "C. Kelarutan bertambah secara linear dengan suhu",
+                    "D. Kelarutan bertambah secara eksponensial dengan suhu",
+                    "E. Kelarutan bertambah seiring kenaikan suhu tetapi tidak linear"
+                ],
+                correctAnswer: 4,
+                explanation: "Kelarutan KNO₃ meningkat dengan kenaikan suhu tetapi tidak linear. Pada suhu rendah, kenaikan kelarutan relatif kecil, sedangkan pada suhu tinggi, kenaikan kelarutan lebih signifikan. Ini karena proses pelarutan KNO₃ bersifat endoterm (menyerap panas)."
+            },
+            {
+                question: "Perhatikan gambar percobaan hukum Ohm! Jika hambatan kawat nikrom diperbesar dua kali semula sedangkan tegangan dijaga tetap, maka kuat arus yang mengalir akan...",
+                options: [
+                    "A. Tetap",
+                    "B. Menjadi dua kali semula",
+                    "C. Menjadi setengah kali semula",
+                    "D. Menjadi seperempat kali semula",
+                    "E. Menjadi empat kali semula"
+                ],
+                correctAnswer: 2,
+                explanation: "Berdasarkan hukum Ohm V = I × R, jika V konstan dan R menjadi 2 kali semula, maka I akan menjadi 1/2 kali semula. Hubungan antara I dan R berbanding terbalik ketika tegangan tetap."
+            },
+            {
+                question: "Perhatikan gambar sistem reproduksi pria! Organ yang berfungsi menghasilkan sperma dan hormon testosteron ditunjukkan oleh nomor...",
+                options: [
+                    "A. 1 (vesikula seminalis)",
+                    "B. 2 (prostat)",
+                    "C. 3 (epididimis)",
+                    "D. 4 (vas deferens)",
+                    "E. 5 (testis)"
+                ],
+                correctAnswer: 4,
+                explanation: "Testis (nomor 5) adalah organ reproduksi pria yang berfungsi menghasilkan sperma melalui proses spermatogenesis di tubulus seminiferus, dan menghasilkan hormon testosteron dari sel Leydig. Testosteron berperan dalam perkembangan ciri kelamin sekunder pria."
+            },
+            {
+                question: "Perhatikan tabel sifat koloid berikut:\n1) Efek Tyndall\n2) Gerak Brown\n3) Koagulasi\n4) Adsorpsi\nManakah yang merupakan sifat-sifat koloid?",
+                options: [
+                    "A. 1 dan 2",
+                    "B. 1, 2, dan 3",
+                    "C. 2 dan 3",
+                    "D. 3 dan 4",
+                    "E. Semua benar"
+                ],
+                correctAnswer: 4,
+                explanation: "Semua pernyataan adalah sifat koloid: 1) Efek Tyndall - penghamburan cahaya oleh partikel koloid, 2) Gerak Brown - gerak acak partikel koloid, 3) Koagulasi - penggumpalan partikel koloid, 4) Adsorpsi - penyerapan partikel pada permukaan koloid."
+            },
+            {
+                question: "Perhatikan gambar percobaan fotosintesis! Jika tanaman air Hydrilla sp. ditempatkan dalam corong terbalik yang berisi air dan dipapar cahaya, gas yang akan terkumpul di tabung reaksi adalah...",
+                options: [
+                    "A. Karbon dioksida",
+                    "B. Oksigen",
+                    "C. Nitrogen",
+                    "D. Hidrogen",
+                    "E. Metana"
+                ],
+                correctAnswer: 1,
+                explanation: "Pada fotosintesis, Hydrilla sp. akan menghasilkan oksigen sebagai produk samping yang dapat terlihat sebagai gelembung gas. Gas ini dapat diuji dengan membakar bara api yang akan menyala lebih terang karena oksigen mendukung pembakaran."
+            },
+            {
+                question: "Perhatikan gambar gelombang transversal berikut! Jika jarak AB = 30 cm dan waktu tempuh dari A ke B = 0,5 sekon, maka besar frekuensi gelombang adalah...",
+                options: [
+                    "A. 0,5 Hz",
+                    "B. 1 Hz",
+                    "C. 1,5 Hz",
+                    "D. 2 Hz",
+                    "E. 2,5 Hz"
+                ],
+                correctAnswer: 1,
+                explanation: "Jarak AB = 30 cm = 1,5λ → λ = 20 cm. Waktu tempuh A ke B = 0,5 s = 1,5T → T = 1/3 s. Frekuensi f = 1/T = 3 Hz. Namun jika AB adalah 1λ (30 cm) dan waktu 0,5 s adalah 1T, maka f = 1/0,5 = 2 Hz. (Asumsi soal mungkin berbeda)"
+            },
+            {
+                question: "Perhatikan reaksi redoks berikut: 2Al + 3Cu²⁺ → 2Al³⁺ + 3Cu. Pernyataan yang benar tentang reaksi ini adalah...",
+                options: [
+                    "A. Al mengalami reduksi",
+                    "B. Cu²⁺ bersifat oksidator",
+                    "C. Al bertindak sebagai oksidator",
+                    "D. Cu mengalami oksidasi",
+                    "E. Tidak terjadi transfer elektron"
+                ],
+                correctAnswer: 1,
+                explanation: "Dalam reaksi ini: Al → Al³⁺ + 3e⁻ (oksidasi, Al sebagai reduktor), Cu²⁺ + 2e⁻ → Cu (reduksi, Cu²⁺ sebagai oksidator). Oksidator adalah zat yang mengoksidasi zat lain dengan cara menerima elektron (Cu²⁺ dalam hal ini)."
+            },
+            {
+                question: "Perhatikan gambar percobaan hukum Mendel! Persilangan antara kacang ercis berbiji bulat (BB) dengan biji keriput (bb) menghasilkan F1 semua bulat. Jika F1 disilangkan sesamanya, perbandingan fenotip F2 adalah...",
+                options: [
+                    "A. Bulat semua",
+                    "B. Keriput semua",
+                    "C. Bulat : Keriput = 1:1",
+                    "D. Bulat : Keriput = 3:1",
+                    "E. Bulat : Keriput = 9:3:3:1"
+                ],
+                correctAnswer: 3,
+                explanation: "Ini mengikuti hukum segregasi Mendel. Parental: BB x bb → F1: Bb (bulat). F1 x F1: Bb x Bb → F2: 1 BB : 2 Bb : 1 bb (fenotip 3 bulat : 1 keriput). Sifat bulat dominan terhadap keriput."
+            },
+            {
                 question: "Perhatikan gambar sistem peredaran darah manusia! Pembuluh darah yang membawa darah kaya oksigen dari paru-paru ke jantung adalah...",
                 options: [
                     "A. Vena pulmonalis",
@@ -1951,7 +2431,7 @@ let QUESTION_BANK = {
                 explanation: "Vena pulmonalis adalah pembuluh darah yang membawa darah kaya oksigen dari paru-paru ke atrium kiri jantung. Ini satu-satunya vena yang membawa darah bersih. Arteri pulmonalis membawa darah kotor dari jantung ke paru-paru."
             }
         ],
-        'Akademik': [
+        'IPS': [
             {
                 question: "Perhatikan peta wilayah kekuasaan Majapahit! Faktor utama yang mendorong Majapahit menjadi kerajaan besar pada abad ke-14 adalah...",
                 options: [
@@ -1963,6 +2443,102 @@ let QUESTION_BANK = {
                 ],
                 correctAnswer: 3,
                 explanation: "Puncak kejayaan Majapahit dicapai melalui kombinasi kepemimpinan Raja Hayam Wuruk yang visioner dan Patih Gajah Mada yang mampu menerapkan Sumpah Palapa untuk menyatukan Nusantara. Faktor lain seperti letak strategis dan sistem pemerintahan juga penting, tetapi kepemimpinan menjadi kunci utama."
+            },
+            {
+                question: "Perhatikan tabel indikator ekonomi berikut:\n1) Tingkat pengangguran\n2) Indeks Pembangunan Manusia (IPM)\n3) Pendapatan per kapita\n4) Tingkat inflasi\nIndikator yang digunakan untuk mengukur keberhasilan pembangunan ekonomi suatu negara adalah...",
+                options: [
+                    "A. 1 dan 2",
+                    "B. 1, 2, dan 3",
+                    "C. 2 dan 3",
+                    "D. 3 dan 4",
+                    "E. Semua benar"
+                ],
+                correctAnswer: 4,
+                explanation: "Keberhasilan pembangunan ekonomi diukur dengan berbagai indikator: 1) Tingkat pengangguran (ketenagakerjaan), 2) IPM (kesehatan, pendidikan, pendapatan), 3) Pendapatan per kapita (kesejahteraan), 4) Tingkat inflasi (stabilitas ekonomi). Semuanya memberikan gambaran komprehensif."
+            },
+            {
+                question: "Perhatikan grafik pertumbuhan penduduk Indonesia! Masalah kependudukan yang paling krusial dihadapi Indonesia berdasarkan grafik tersebut adalah...",
+                options: [
+                    "A. Ledakan penduduk usia produktif",
+                    "B. Ketimpangan persebaran penduduk",
+                    "C. Penurunan angka kelahiran",
+                    "D. Peningkatan angka kematian bayi",
+                    "E. Migrasi penduduk ke luar negeri"
+                ],
+                correctAnswer: 0,
+                explanation: "Indonesia mengalami bonus demografi dengan proporsi penduduk usia produktif (15-64 tahun) yang besar. Ini bisa menjadi peluang jika disertai lapangan kerja memadai, tetapi menjadi masalah jika tidak diimbangi kualitas SDM dan kesempatan kerja, berpotensi meningkatkan pengangguran dan ketimpangan."
+            },
+            {
+                question: "Perhatikan gambar candi Borobudur! Nilai-nilai yang dapat dipelajari dari candi Borobudur sebagai warisan budaya dunia adalah: 1) Toleransi beragama, 2) Kemajuan teknologi arsitektur, 3) Seni dan budaya yang tinggi, 4) Sistem pemerintahan yang teratur. Manakah yang benar?",
+                options: [
+                    "A. 1 dan 2",
+                    "B. 1, 2, dan 3",
+                    "C. 2 dan 3",
+                    "D. 3 dan 4",
+                    "E. Semua benar"
+                ],
+                correctAnswer: 1,
+                explanation: "Borobudur mencerminkan: 1) Toleransi antara Hindu-Buddha, 2) Teknologi arsitektur canggih dengan sistem drainase dan struktur batu tanpa semen, 3) Seni relief yang detail dan filosofis. Sistem pemerintahan tidak langsung tercermin dalam candi."
+            },
+            {
+                question: "Perhatikan peta sebaran flora dan fauna Indonesia! Garis Wallace dan Weber penting dalam biogeografi karena...",
+                options: [
+                    "A. Menunjukkan batas wilayah administrasi",
+                    "B. Membedakan zona waktu di Indonesia",
+                    "C. Menjelaskan perbedaan jenis flora dan fauna",
+                    "D. Menandai pusat keanekaragaman hayati",
+                    "E. Menunjukkan jalur migrasi hewan purba"
+                ],
+                correctAnswer: 2,
+                explanation: "Garis Wallace (memisahkan zona Asia dan Peralihan) dan Weber (memisahkan zona Peralihan dan Australia) menjelaskan perbedaan jenis flora/fauna di Indonesia akibat sejarah geologi dan iklim. Fauna barat mirip Asia, timur mirip Australia, tengah campuran."
+            },
+            {
+                question: "Perhatikan tabel kebijakan ekonomi berikut:\n1) Menaikkan suku bunga\n2) Meningkatkan belanja pemerintah\n3) Menurunkan pajak penghasilan\n4) Membatasi jumlah uang beredar\nKebijakan yang termasuk fiskal ekspansif untuk mengatasi resesi adalah...",
+                options: [
+                    "A. 1 dan 2",
+                    "B. 1 dan 3",
+                    "C. 2 dan 3",
+                    "D. 3 dan 4",
+                    "E. Semua benar"
+                ],
+                correctAnswer: 2,
+                explanation: "Kebijakan fiskal ekspansif (stimulus) untuk mengatasi resesi: 2) Meningkatkan belanja pemerintah untuk dorong permintaan, 3) Menurunkan pajak untuk tingkatkan daya beli. Kebijakan 1 dan 4 adalah moneter kontraktif, bukan untuk hadapi resesi."
+            },
+            {
+                question: "Perhatikan gambar artefak sejarah Indonesia! Fungsi utama candi pada masa Hindu-Buddha selain sebagai tempat ibadah adalah...",
+                options: [
+                    "A. Pusat perdagangan",
+                    "B. Tempat tinggal raja",
+                    "C. Benteng pertahanan",
+                    "D. Tempat pemakaman raja",
+                    "E. Pusat pendidikan dan kebudayaan"
+                ],
+                correctAnswer: 4,
+                explanation: "Candi berfungsi sebagai: 1) Tempat ibadah, 2) Pusat pendidikan (kitab, relief), 3) Simbol kekuasaan raja, 4) Pusat kebudayaan (seni, arsitektur). Beberapa candi juga berfungsi sebagai makam (contoh: candi Hindu), tetapi fungsi utamanya lebih luas sebagai pusat aktivitas keagamaan dan budaya."
+            },
+            {
+                question: "Perhatikan grafik pertumbuhan ekonomi Indonesia! Faktor internal yang paling mempengaruhi pertumbuhan ekonomi Indonesia berdasarkan grafik adalah...",
+                options: [
+                    "A. Harga minyak dunia",
+                    "B. Permintaan pasar global",
+                    "C. Investasi dalam negeri",
+                    "D. Kebijakan moneter The Fed",
+                    "E. Perkembangan ekonomi Tiongkok"
+                ],
+                correctAnswer: 2,
+                explanation: "Faktor internal utama pertumbuhan ekonomi Indonesia: 1) Investasi dalam negeri (PMDN), 2) Konsumsi rumah tangga, 3) Belanja pemerintah. Harga minyak, permintaan global, dan ekonomi Tiongkok adalah faktor eksternal. The Fed mempengaruhi tetapi bukan faktor internal."
+            },
+            {
+                question: "Perhatikan tabel lembaga negara berikut:\n1) Mahkamah Konstitusi\n2) Komisi Yudisial\n3) Komisi Pemberantasan Korupsi\n4) Ombudsman\nLembaga yang berwenang menguji undang-undang terhadap UUD 1945 adalah...",
+                options: [
+                    "A. 1",
+                    "B. 2",
+                    "C. 3",
+                    "D. 4",
+                    "E. 1 dan 2"
+                ],
+                correctAnswer: 0,
+                explanation: "Mahkamah Konstitusi (MK) berwenang menguji undang-undang terhadap UUD 1945 (judicial review). Komisi Yudisial mengawasi hakim, KPK memberantas korupsi, Ombudsman menangani pengaduan pelayanan publik. MK juga berwenang memutus sengketa kewenangan lembaga negara dan pembubaran partai."
             },
             {
                 question: "Perhatikan peta jalur perdagangan rempah dunia! Faktor yang menyebabkan rempah-rempah Indonesia sangat diminati bangsa Eropa abad ke-16 adalah...",
@@ -1981,10 +2557,10 @@ let QUESTION_BANK = {
 };
 
 // Add more questions to reach 100 for each level and subject
-// SD Matematika (already has 10, need 10 more)
+// SD IPA (already has 10, need 10 more)
 for (let i = 0; i < 10; i++) {
-    QUESTION_BANK['SD']['Matematika'].push({
-        question: `Soal SD Matematika tambahan ${i+11}: Proses perubahan wujud dari gas menjadi cair disebut...`,
+    QUESTION_BANK['SD']['IPA'].push({
+        question: `Soal SD IPA tambahan ${i+11}: Proses perubahan wujud dari gas menjadi cair disebut...`,
         options: [
             "A. Membeku",
             "B. Mencair",
@@ -1993,14 +2569,14 @@ for (let i = 0; i < 10; i++) {
             "E. Menyublim"
         ],
         correctAnswer: 3,
-        explanation: `Penjelasan untuk soal SD Matematika tambahan ${i+11}: Mengembun adalah proses perubahan wujud dari gas menjadi cair, contohnya ketika uap air di udara berubah menjadi titik-titik air di daun di pagi hari.`
+        explanation: `Penjelasan untuk soal SD IPA tambahan ${i+11}: Mengembun adalah proses perubahan wujud dari gas menjadi cair, contohnya ketika uap air di udara berubah menjadi titik-titik air di daun di pagi hari.`
     });
 }
 
-// SD Akademik (already has 10, need 10 more)
+// SD IPS (already has 10, need 10 more)
 for (let i = 0; i < 10; i++) {
-    QUESTION_BANK['SD']['Akademik'].push({
-        question: `Soal SD Akademik tambahan ${i+11}: Mata uang resmi yang digunakan di Jepang adalah...`,
+    QUESTION_BANK['SD']['IPS'].push({
+        question: `Soal SD IPS tambahan ${i+11}: Mata uang resmi yang digunakan di Jepang adalah...`,
         options: [
             "A. Dollar",
             "B. Euro",
@@ -2009,14 +2585,14 @@ for (let i = 0; i < 10; i++) {
             "E. Ringgit"
         ],
         correctAnswer: 2,
-        explanation: `Penjelasan untuk soal SD Akademik tambahan ${i+11}: Yen adalah mata uang resmi Jepang. Simbol untuk yen adalah ¥, dan kode ISO-nya adalah JPY.`
+        explanation: `Penjelasan untuk soal SD IPS tambahan ${i+11}: Yen adalah mata uang resmi Jepang. Simbol untuk yen adalah ¥, dan kode ISO-nya adalah JPY.`
     });
 }
 
-// SMP matematika (already has 10, need 10 more)
+// SMP IPA (already has 10, need 10 more)
 for (let i = 0; i < 10; i++) {
-    QUESTION_BANK['SMP']['Matematika'].push({
-        question: `Soal SMP matematika tambahan ${i+11}: Besaran yang satuannya dinyatakan dalam joule adalah...`,
+    QUESTION_BANK['SMP']['IPA'].push({
+        question: `Soal SMP IPA tambahan ${i+11}: Besaran yang satuannya dinyatakan dalam joule adalah...`,
         options: [
             "A. Gaya",
             "B. Daya",
@@ -2025,14 +2601,14 @@ for (let i = 0; i < 10; i++) {
             "E. Massa"
         ],
         correctAnswer: 2,
-        explanation: `Penjelasan untuk soal SMP Matematika tambahan ${i+11}: Joule adalah satuan untuk usaha dan energi. Usaha didefinisikan sebagai gaya kali perpindahan (W = F × s).`
+        explanation: `Penjelasan untuk soal SMP IPA tambahan ${i+11}: Joule adalah satuan untuk usaha dan energi. Usaha didefinisikan sebagai gaya kali perpindahan (W = F × s).`
     });
 }
 
-// SMP Akademik (already has 10, need 10 more)
+// SMP IPS (already has 10, need 10 more)
 for (let i = 0; i < 10; i++) {
-    QUESTION_BANK['SMP']['Akademik'].push({
-        question: `Soal SMP Akademik tambahan ${i+11}: Lembaga negara yang bertugas membuat undang-undang adalah...`,
+    QUESTION_BANK['SMP']['IPS'].push({
+        question: `Soal SMP IPS tambahan ${i+11}: Lembaga negara yang bertugas membuat undang-undang adalah...`,
         options: [
             "A. Presiden",
             "B. DPR",
@@ -2041,14 +2617,14 @@ for (let i = 0; i < 10; i++) {
             "E. KPK"
         ],
         correctAnswer: 1,
-        explanation: `Penjelasan untuk soal SMP Akademik tambahan ${i+11}: DPR (Dewan Perwakilan Rakyat) adalah lembaga legislatif yang bertugas membuat undang-undang bersama Presiden.`
+        explanation: `Penjelasan untuk soal SMP IPS tambahan ${i+11}: DPR (Dewan Perwakilan Rakyat) adalah lembaga legislatif yang bertugas membuat undang-undang bersama Presiden.`
     });
 }
 
-// SMA Matematika (already has 10, need 10 more)
+// SMA IPA (already has 10, need 10 more)
 for (let i = 0; i < 10; i++) {
-    QUESTION_BANK['SMA/SMK']['Matematika'].push({
-        question: `Soal SMA Matematika tambahan ${i+11}: Senyawa dengan rumus molekul C₂H₅OH termasuk dalam golongan...`,
+    QUESTION_BANK['SMA/SMK']['IPA'].push({
+        question: `Soal SMA IPA tambahan ${i+11}: Senyawa dengan rumus molekul C₂H₅OH termasuk dalam golongan...`,
         options: [
             "A. Alkanon",
             "B. Alkanal",
@@ -2057,14 +2633,14 @@ for (let i = 0; i < 10; i++) {
             "E. Alkuna"
         ],
         correctAnswer: 2,
-        explanation: `Penjelasan untuk soal SMA Matematika tambahan ${i+11}: C₂H₅OH (etanol) termasuk alkohol (alkanol) karena memiliki gugus fungsi -OH yang terikat pada atom karbon jenuh.`
+        explanation: `Penjelasan untuk soal SMA IPA tambahan ${i+11}: C₂H₅OH (etanol) termasuk alkohol (alkanol) karena memiliki gugus fungsi -OH yang terikat pada atom karbon jenuh.`
     });
 }
 
-// SMA Akademik (already has 10, need 10 more)
+// SMA IPS (already has 10, need 10 more)
 for (let i = 0; i < 10; i++) {
-    QUESTION_BANK['SMA/SMK']['Akademik'].push({
-        question: `Soal SMA akademik tambahan ${i+11}: Kebijakan moneter yang dilakukan bank sentral untuk mengatasi inflasi adalah...`,
+    QUESTION_BANK['SMA/SMK']['IPS'].push({
+        question: `Soal SMA IPS tambahan ${i+11}: Kebijakan moneter yang dilakukan bank sentral untuk mengatasi inflasi adalah...`,
         options: [
             "A. Menurunkan suku bunga",
             "B. Meningkatkan giro wajib minimum",
@@ -2073,7 +2649,7 @@ for (let i = 0; i < 10; i++) {
             "E. Menurunkan pajak penghasilan"
         ],
         correctAnswer: 1,
-        explanation: `Penjelasan untuk soal SMA Akademik tambahan ${i+11}: Untuk mengatasi inflasi, bank sentral dapat melakukan kebijakan moneter kontraktif seperti menaikkan GWM (Giro Wajib Minimum) untuk mengurangi jumlah uang beredar.`
+        explanation: `Penjelasan untuk soal SMA IPS tambahan ${i+11}: Untuk mengatasi inflasi, bank sentral dapat melakukan kebijakan moneter kontraktif seperti menaikkan GWM (Giro Wajib Minimum) untuk mengurangi jumlah uang beredar.`
     });
 }
 
@@ -2498,11 +3074,11 @@ localStorage.setItem('questionBank', JSON.stringify(QUESTION_BANK));
             document.getElementById('chairman-name').value = adminSettings.chairmanName;
             
             // Load subject toggles
-            document.getElementById('toggle-science').checked = adminSettings.enabledSubjects.Matematika;
-            document.getElementById('science-status').textContent = adminSettings.enabledSubjects.Matematika ? 'Aktif' : 'Nonaktif';
+            document.getElementById('toggle-science').checked = adminSettings.enabledSubjects.IPA;
+            document.getElementById('science-status').textContent = adminSettings.enabledSubjects.IPA ? 'Aktif' : 'Nonaktif';
             
-            document.getElementById('toggle-social').checked = adminSettings.enabledSubjects.Akademik;
-            document.getElementById('social-status').textContent = adminSettings.enabledSubjects.Akademik ? 'Aktif' : 'Nonaktif';
+            document.getElementById('toggle-social').checked = adminSettings.enabledSubjects.IPS;
+            document.getElementById('social-status').textContent = adminSettings.enabledSubjects.IPS ? 'Aktif' : 'Nonaktif';
         }
         
         function handleLogin() {
