@@ -9,14 +9,27 @@
     <style>
         :root {
             --color-primary: #6a11cb;
+            --color-primary-dark: #4d0d99;
             --color-secondary: #2575fc;
+            --color-secondary-dark: #1a5fd3;
             --color-tertiary: #00c6fb;
-            --color-success: #4CAF50;
-            --color-error: #f44336;
-            --color-warning: #ff9800;
-            --color-info: #2196F3;
+            --color-tertiary-dark: #00a8d8;
+            --color-success: #28a745;
+            --color-success-dark: #218838;
+            --color-error: #dc3545;
+            --color-error-dark: #c82333;
+            --color-warning: #ffc107;
+            --color-warning-dark: #e0a800;
+            --color-info: #17a2b8;
+            --color-info-dark: #138496;
             --color-dark: #1a1a2e;
+            --color-darker: #12121a;
             --color-light: #f8f9fa;
+            --color-lighter: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
@@ -60,20 +73,34 @@
         }
 
         .logo {
-            height: 80px;
+            height: 100px;
             margin-bottom: 15px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
         /* Card Styles */
         .card {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-lg);
             margin-bottom: 30px;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--color-secondary), var(--color-tertiary));
         }
 
         .card:hover {
@@ -83,7 +110,9 @@
 
         /* Button Styles */
         .btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             padding: 12px 25px;
             border-radius: 50px;
             background: linear-gradient(to right, var(--color-secondary), var(--color-tertiary));
@@ -92,10 +121,28 @@
             font-weight: 500;
             border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
             margin: 5px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, var(--color-secondary-dark), var(--color-tertiary-dark));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .btn:hover::after {
+            opacity: 1;
         }
 
         .btn:hover {
@@ -107,20 +154,46 @@
             transform: translateY(1px);
         }
 
+        .btn i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
         .btn-success {
             background: linear-gradient(to right, var(--color-success), #2ecc71);
+        }
+
+        .btn-success::after {
+            background: linear-gradient(to right, var(--color-success-dark), #27ae60);
         }
 
         .btn-danger {
             background: linear-gradient(to right, var(--color-error), #e74c3c);
         }
 
+        .btn-danger::after {
+            background: linear-gradient(to right, var(--color-error-dark), #c0392b);
+        }
+
         .btn-warning {
             background: linear-gradient(to right, var(--color-warning), #f39c12);
         }
 
+        .btn-warning::after {
+            background: linear-gradient(to right, var(--color-warning-dark), #d35400);
+        }
+
         .btn-info {
             background: linear-gradient(to right, var(--color-info), #3498db);
+        }
+
+        .btn-info::after {
+            background: linear-gradient(to right, var(--color-info-dark), #2980b9);
         }
 
         /* Form Styles */
@@ -136,7 +209,11 @@
             background: rgba(255, 255, 255, 0.1);
             color: white;
             font-size: 16px;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .form-control:focus {
@@ -150,6 +227,13 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
+        }
+
+        .text-muted {
+            display: block;
+            margin-top: 8px;
+            font-size: 13px;
+            opacity: 0.8;
         }
 
         /* Animation Classes */
@@ -203,6 +287,7 @@
             animation: slideUp 0.5s forwards;
             max-width: 90%;
             text-align: center;
+            box-shadow: var(--shadow-md);
         }
 
         @keyframes slideUp {
@@ -223,35 +308,55 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 25px 20px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exam-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--color-secondary), var(--color-tertiary));
         }
 
         .exam-button:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-md);
         }
 
         .exam-button i {
             font-size: 40px;
             margin-bottom: 15px;
-            color: var(--color-secondary);
+            color: white;
+            background: linear-gradient(to right, var(--color-secondary), var(--color-tertiary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .exam-button h3 {
             margin-bottom: 10px;
             font-size: 18px;
+            position: relative;
+            z-index: 1;
         }
 
         .exam-button p {
             font-size: 14px;
             opacity: 0.8;
+            position: relative;
+            z-index: 1;
         }
 
         /* Floating Button Styles */
@@ -266,43 +371,67 @@
         }
 
         .floating-btn {
-            width: 50px;
-            height: 50px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             background: linear-gradient(to right, var(--color-secondary), var(--color-tertiary));
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            font-size: 22px;
+            box-shadow: var(--shadow-md);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .floating-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, var(--color-secondary-dark), var(--color-tertiary-dark));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .floating-btn:hover::after {
+            opacity: 1;
         }
 
         .floating-btn:hover {
             transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .floating-btn i {
+            position: relative;
+            z-index: 1;
         }
 
         .floating-btn .tooltip {
             position: absolute;
-            right: 60px;
+            right: 70px;
             background: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 5px 10px;
+            padding: 8px 12px;
             border-radius: 5px;
             font-size: 14px;
             opacity: 0;
             pointer-events: none;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             white-space: nowrap;
+            box-shadow: var(--shadow-sm);
         }
 
         .floating-btn:hover .tooltip {
             opacity: 1;
-            right: 70px;
+            right: 80px;
         }
 
         /* Modal Styles */
@@ -317,6 +446,8 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         .modal-content {
@@ -330,6 +461,7 @@
             overflow-y: auto;
             position: relative;
             animation: modalFadeIn 0.3s;
+            box-shadow: var(--shadow-lg);
         }
 
         @keyframes modalFadeIn {
@@ -342,6 +474,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
         }
 
         .modal-title {
@@ -356,19 +490,48 @@
             font-size: 24px;
             cursor: pointer;
             color: #666;
+            transition: var(--transition);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-close:hover {
+            background-color: #f5f5f5;
+            color: #333;
         }
 
         /* Admin Panel Specific Styles */
         .admin-section {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 1px solid #eee;
+        }
+
+        .admin-section:last-child {
+            border-bottom: none;
         }
 
         .admin-section h5 {
             color: var(--color-primary);
             margin-bottom: 15px;
             font-size: 18px;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .admin-section h5::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--color-secondary), var(--color-tertiary));
+            border-radius: 3px;
         }
 
         .admin-controls {
@@ -394,6 +557,12 @@
             border-radius: 6px;
             border: 1px solid #ddd;
             font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .admin-control-input:focus {
+            border-color: var(--color-secondary);
+            box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.2);
         }
 
         .admin-toggle {
@@ -484,7 +653,7 @@
         }
 
         .data-table th, .data-table td {
-            padding: 10px;
+            padding: 12px 10px;
             text-align: left;
             border-bottom: 1px solid #eee;
         }
@@ -492,6 +661,7 @@
         .data-table th {
             background-color: #f5f5f5;
             font-weight: 600;
+            color: var(--color-dark);
         }
 
         .data-table tr:hover {
@@ -519,14 +689,29 @@
         /* Search Box */
         .search-box {
             margin-bottom: 15px;
+            position: relative;
         }
 
         .search-input {
             width: 100%;
-            padding: 10px 15px;
+            padding: 10px 15px 10px 35px;
             border-radius: 8px;
             border: 1px solid #ddd;
             font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--color-secondary);
+            box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.2);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
         }
 
         /* Alert Styles */
@@ -535,6 +720,7 @@
             margin-bottom: 20px;
             border-radius: 8px;
             font-size: 14px;
+            position: relative;
         }
 
         .alert-success {
@@ -569,9 +755,9 @@
             }
             
             .floating-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 18px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
             }
 
             .modal-content {
@@ -593,6 +779,14 @@
             
             .button-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .logo {
+                height: 80px;
+            }
+
+            .header h1 {
+                font-size: 24px;
             }
         }
     </style>
@@ -618,7 +812,10 @@
                 <small class="text-muted">Kode login diberikan oleh admin</small>
             </div>
             
-            <button id="login-btn" class="btn">Masuk</button>
+            <button id="login-btn" class="btn">
+                <i class="fas fa-sign-in-alt"></i>
+                <span>Masuk</span>
+            </button>
         </div>
         
         <!-- Main Menu Screen (Hidden Initially) -->
@@ -664,7 +861,10 @@
                 <div class="form-group">
                     <label for="admin-panel-code" class="form-label">Kode Admin</label>
                     <input type="password" id="admin-panel-code" class="form-control" placeholder="Masukkan kode admin" style="color: #333;">
-                    <button id="submit-admin-panel-code" class="btn">Masuk</button>
+                    <button id="submit-admin-panel-code" class="btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Masuk</span>
+                    </button>
                 </div>
                 
                 <div id="admin-panel-content" style="display: none;">
@@ -680,7 +880,10 @@
                             <input type="password" id="new-admin-code" class="form-control" placeholder="Masukkan kode admin baru" style="color: #333;">
                         </div>
                         
-                        <button id="save-codes-btn" class="btn btn-success">Simpan Kode</button>
+                        <button id="save-codes-btn" class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            <span>Simpan Kode</span>
+                        </button>
                     </div>
                     
                     <div class="admin-section">
@@ -693,7 +896,10 @@
                             <label class="form-label">Pesan Informasi Berkala</label>
                             <textarea id="admin-message-input" class="form-control" rows="3" style="color: #333;">Tidak ada informasi terbaru saat ini.</textarea>
                         </div>
-                        <button id="save-content-btn" class="btn btn-success">Simpan Perubahan</button>
+                        <button id="save-content-btn" class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            <span>Simpan Perubahan</span>
+                        </button>
                     </div>
                     
                     <div class="admin-section">
@@ -715,10 +921,14 @@
                                     <input type="text" id="new-button-icon" class="admin-control-input" placeholder="Contoh: fa-calculator">
                                 </div>
                             </div>
-                            <button id="add-new-button" class="btn btn-info">Tambah Tombol</button>
+                            <button id="add-new-button" class="btn btn-info">
+                                <i class="fas fa-plus"></i>
+                                <span>Tambah Tombol</span>
+                            </button>
                         </div>
                         
                         <div class="search-box">
+                            <i class="fas fa-search"></i>
                             <input type="text" id="button-search" class="search-input" placeholder="Cari tombol berdasarkan nama...">
                         </div>
                         
@@ -970,6 +1180,19 @@
             
             // Search functionality
             document.getElementById('button-search').addEventListener('input', searchButtons);
+            
+            // Allow pressing Enter in login fields
+            document.getElementById('login-code').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleLogin();
+                }
+            });
+            
+            document.getElementById('admin-panel-code').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    submitAdminPanelCode();
+                }
+            });
         });
         
         // Functions
@@ -1007,7 +1230,7 @@
                     currentScreen = 'main-menu';
                 }, 500);
             } else {
-                alert('Kode login salah. Silakan coba lagi.');
+                showNotification('Kode login salah. Silakan coba lagi.', 'error');
             }
         }
         
@@ -1016,7 +1239,7 @@
             buttonsContainer.innerHTML = '';
             
             if (examButtons.length === 0) {
-                buttonsContainer.innerHTML = '<p>Tidak ada ujian yang tersedia saat ini.</p>';
+                buttonsContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px;">Tidak ada ujian yang tersedia saat ini.</p>';
                 return;
             }
             
@@ -1044,10 +1267,13 @@
         
         function showAdminPanelModal() {
             document.getElementById('admin-panel-modal').style.display = 'flex';
+            document.getElementById('admin-panel-code').focus();
         }
         
         function hideAdminPanelModal() {
             document.getElementById('admin-panel-modal').style.display = 'none';
+            document.getElementById('admin-panel-content').style.display = 'none';
+            document.getElementById('admin-panel-code').value = '';
         }
         
         function submitAdminPanelCode() {
@@ -1058,7 +1284,7 @@
                 document.getElementById('admin-panel-content').style.display = 'block';
                 loadButtonsData();
             } else {
-                alert('Kode admin salah. Silakan coba lagi.');
+                showNotification('Kode admin salah. Silakan coba lagi.', 'error');
             }
         }
 
@@ -1082,8 +1308,14 @@
                     <td>${button.url}</td>
                     <td><i class="fas ${button.icon}"></i> ${button.icon}</td>
                     <td>
-                        <button class="btn btn-warning btn-sm" onclick="editButton(${index})">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="deleteButton(${index})">Hapus</button>
+                        <button class="btn btn-warning btn-sm" onclick="editButton(${index})">
+                            <i class="fas fa-edit"></i>
+                            <span>Edit</span>
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteButton(${index})">
+                            <i class="fas fa-trash"></i>
+                            <span>Hapus</span>
+                        </button>
                     </td>
                 `;
                 
@@ -1111,13 +1343,13 @@
             const icon = document.getElementById('new-button-icon').value.trim();
             
             if (!name || !url) {
-                alert('Nama ujian dan URL tujuan harus diisi!');
+                showNotification('Nama ujian dan URL tujuan harus diisi!', 'error');
                 return;
             }
             
             // Validate URL format
             if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                alert('URL harus dimulai dengan http:// atau https://');
+                showNotification('URL harus dimulai dengan http:// atau https://', 'error');
                 return;
             }
             
@@ -1140,7 +1372,7 @@
             document.getElementById('new-button-url').value = '';
             document.getElementById('new-button-icon').value = '';
             
-            alert('Tombol ujian baru berhasil ditambahkan!');
+            showNotification('Tombol ujian baru berhasil ditambahkan!', 'success');
         }
         
         function editButton(index) {
@@ -1154,7 +1386,7 @@
             
             // Validate URL format
             if (newUrl && !newUrl.startsWith('http://') && !newUrl.startsWith('https://')) {
-                alert('URL harus dimulai dengan http:// atau https://');
+                showNotification('URL harus dimulai dengan http:// atau https://', 'error');
                 return;
             }
             
@@ -1172,7 +1404,7 @@
             loadButtonsData();
             loadExamButtons();
             
-            alert('Tombol ujian berhasil diperbarui!');
+            showNotification('Tombol ujian berhasil diperbarui!', 'success');
         }
         
         function deleteButton(index) {
@@ -1190,7 +1422,7 @@
             loadButtonsData();
             loadExamButtons();
             
-            alert('Tombol ujian berhasil dihapus!');
+            showNotification('Tombol ujian berhasil dihapus!', 'success');
         }
         
         function searchButtons() {
@@ -1227,7 +1459,7 @@
             // Save to localStorage
             saveAdminSettings();
             
-            alert('Kode berhasil diubah!');
+            showNotification('Kode berhasil diubah!', 'success');
         }
         
         function saveContent() {
@@ -1245,7 +1477,31 @@
             // Save to localStorage
             saveAdminSettings();
             
-            alert('Perubahan konten berhasil disimpan!');
+            showNotification('Perubahan konten berhasil disimpan!', 'success');
+        }
+        
+        function showNotification(message, type = 'info') {
+            // Remove any existing notification
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // Create new notification
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            // Add to body
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('fade-out');
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 3000);
         }
     </script>
 </body>
