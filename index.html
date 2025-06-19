@@ -157,11 +157,22 @@
         .btn i {
             margin-right: 8px;
             font-size: 16px;
+            color: white;
+            position: relative;
+            z-index: 2;
         }
 
         .btn span {
             position: relative;
             z-index: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+        }
+
+        .btn-primary::after {
+            background: linear-gradient(to right, var(--color-primary-dark), var(--color-secondary-dark));
         }
 
         .btn-success {
@@ -288,6 +299,23 @@
             max-width: 90%;
             text-align: center;
             box-shadow: var(--shadow-md);
+        }
+
+        .notification.success {
+            background: rgba(40, 167, 69, 0.9);
+        }
+
+        .notification.error {
+            background: rgba(220, 53, 69, 0.9);
+        }
+
+        .notification.warning {
+            background: rgba(255, 193, 7, 0.9);
+            color: var(--color-dark);
+        }
+
+        .notification.info {
+            background: rgba(23, 162, 184, 0.9);
         }
 
         @keyframes slideUp {
@@ -812,7 +840,7 @@
                 <small class="text-muted">Kode login diberikan oleh admin</small>
             </div>
             
-            <button id="login-btn" class="btn">
+            <button id="login-btn" class="btn btn-primary">
                 <i class="fas fa-sign-in-alt"></i>
                 <span>Masuk</span>
             </button>
@@ -861,7 +889,7 @@
                 <div class="form-group">
                     <label for="admin-panel-code" class="form-label">Kode Admin</label>
                     <input type="password" id="admin-panel-code" class="form-control" placeholder="Masukkan kode admin" style="color: #333;">
-                    <button id="submit-admin-panel-code" class="btn">
+                    <button id="submit-admin-panel-code" class="btn btn-primary">
                         <i class="fas fa-sign-in-alt"></i>
                         <span>Masuk</span>
                     </button>
