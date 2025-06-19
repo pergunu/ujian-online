@@ -647,6 +647,10 @@
             ]
         };
 
+        // Audio elements
+        const buttonSound = document.getElementById('button-sound');
+        const openingSound = document.getElementById('opening-sound');
+
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize particles.js for background
@@ -791,6 +795,20 @@
             document.getElementById('save-codes-btn').addEventListener('click', saveCodes);
             document.getElementById('save-content-btn').addEventListener('click', saveContent);
             document.getElementById('add-button-link').addEventListener('click', addButtonLink);
+            
+            // Allow login with Enter key
+            document.getElementById('login-code').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleLogin();
+                }
+            });
+            
+            // Allow admin panel login with Enter key
+            document.getElementById('admin-panel-code').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    submitAdminPanelCode();
+                }
+            });
         });
         
         // Functions
@@ -831,6 +849,7 @@
                 }, 500);
             } else {
                 alert('Kode login salah. Silakan coba lagi.');
+                document.getElementById('login-code').focus();
             }
         }
         
@@ -903,6 +922,14 @@
                 return;
             }
             
+            // Validate URL format
+            try {
+                new URL(url);
+            } catch (e) {
+                alert('URL tidak valid. Pastikan URL dimulai dengan http:// atau https://');
+                return;
+            }
+            
             // Add new button link
             adminSettings.buttonLinks.push({ text, url });
             
@@ -916,7 +943,12 @@
             // Reload button links
             loadButtonLinks();
             
-            alert('Tombol ujian berhasil ditambahkan!');
+            // If portal is active, reload portal buttons
+            if (currentScreen === 'portal') {
+                loadPortalButtons();
+            }
+            
+            showNotification('Tombol ujian berhasil ditambahkan!');
         }
         
         function editButtonLink(index) {
@@ -928,6 +960,14 @@
             
             const newUrl = prompt('Edit URL tujuan:', button.url);
             if (newUrl === null) return;
+            
+            // Validate URL format
+            try {
+                new URL(newUrl);
+            } catch (e) {
+                alert('URL tidak valid. Pastikan URL dimulai dengan http:// atau https://');
+                return;
+            }
             
             // Update button link
             adminSettings.buttonLinks[index] = {
@@ -941,7 +981,12 @@
             // Reload button links
             loadButtonLinks();
             
-            alert('Tombol ujian berhasil diubah!');
+            // If portal is active, reload portal buttons
+            if (currentScreen === 'portal') {
+                loadPortalButtons();
+            }
+            
+            showNotification('Tombol ujian berhasil diubah!');
         }
         
         function deleteButtonLink(index) {
@@ -958,7 +1003,12 @@
             // Reload button links
             loadButtonLinks();
             
-            alert('Tombol ujian berhasil dihapus!');
+            // If portal is active, reload portal buttons
+            if (currentScreen === 'portal') {
+                loadPortalButtons();
+            }
+            
+            showNotification('Tombol ujian berhasil dihapus!');
         }
         
         function contactAdmin() {
@@ -968,10 +1018,15 @@
         
         function showAdminPanelModal() {
             document.getElementById('admin-panel-modal').style.display = 'flex';
+            document.getElementById('admin-panel-code').focus();
         }
         
         function hideAdminPanelModal() {
             document.getElementById('admin-panel-modal').style.display = 'none';
+            // Reset admin panel content visibility
+            document.getElementById('admin-panel-content').style.display = 'none';
+            // Clear admin code input
+            document.getElementById('admin-panel-code').value = '';
         }
         
         function submitAdminPanelCode() {
@@ -980,8 +1035,10 @@
             if (code === adminSettings.adminCode) {
                 // Show admin panel content
                 document.getElementById('admin-panel-content').style.display = 'block';
+                showNotification('Berhasil masuk sebagai admin!');
             } else {
                 alert('Kode admin salah. Silakan coba lagi.');
+                document.getElementById('admin-panel-code').focus();
             }
         }
         
@@ -1002,7 +1059,7 @@
             // Save to localStorage
             saveAdminSettings();
             
-            alert('Kode berhasil diubah!');
+            showNotification('Kode berhasil diubah!');
         }
         
         function saveContent() {
@@ -1020,7 +1077,19 @@
             // Save to localStorage
             saveAdminSettings();
             
-            alert('Perubahan konten berhasil disimpan!');
+            showNotification('Perubahan konten berhasil disimpan!');
+        }
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
         }
     </script>
 </body>
