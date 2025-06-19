@@ -189,36 +189,6 @@
             to { opacity: 0; }
         }
 
-        /* Button Grid Styles */
-        .button-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .portal-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            text-align: center;
-            min-height: 80px;
-        }
-
-        .portal-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
         /* Notification Styles */
         .notification {
             position: fixed;
@@ -238,6 +208,50 @@
         @keyframes slideUp {
             from { bottom: -50px; opacity: 0; }
             to { bottom: 20px; opacity: 1; }
+        }
+
+        /* Button Grid Styles */
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .exam-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .exam-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .exam-button i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: var(--color-secondary);
+        }
+
+        .exam-button h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .exam-button p {
+            font-size: 14px;
+            opacity: 0.8;
         }
 
         /* Floating Button Styles */
@@ -382,6 +396,85 @@
             font-size: 14px;
         }
 
+        .admin-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--color-success);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Button Management Styles */
+        .button-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .button-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .button-item:last-child {
+            border-bottom: none;
+        }
+
+        .button-item-actions {
+            display: flex;
+            gap: 5px;
+        }
+
         /* Table Styles */
         .data-table {
             width: 100%;
@@ -405,39 +498,55 @@
             background-color: #f9f9f9;
         }
 
-        /* Button Link Editor Styles */
-        .button-link-editor {
-            margin-bottom: 15px;
-            padding: 15px;
-            background-color: #f5f5f5;
-            border-radius: 8px;
+        /* Checkbox styles for selection */
+        .select-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
 
-        .button-link-list {
-            max-height: 300px;
-            overflow-y: auto;
-            margin-top: 15px;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 10px;
+        .select-all-checkbox {
+            margin-right: 5px;
         }
 
-        .button-link-item {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
+        .button-actions {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* Search Box */
+        .search-box {
+            margin-bottom: 15px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
             font-size: 14px;
         }
 
-        .button-link-item:last-child {
-            border-bottom: none;
+        /* Alert Styles */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 14px;
         }
 
-        .button-link-actions {
-            display: flex;
-            gap: 5px;
+        .alert-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+
+        .alert-danger {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
         }
 
         /* Responsive Styles */
@@ -448,6 +557,10 @@
             
             .card {
                 padding: 20px;
+            }
+            
+            .button-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
             
             .floating-buttons {
@@ -508,16 +621,17 @@
             <button id="login-btn" class="btn">Masuk</button>
         </div>
         
-        <!-- Portal Screen (Hidden Initially) -->
-        <div id="portal-screen" class="card" style="display: none;">
+        <!-- Main Menu Screen (Hidden Initially) -->
+        <div id="main-menu" class="card" style="display: none;">
             <h2>Pilih Jenis Ujian</h2>
-            <p>Silakan pilih jenis ujian yang ingin Anda ikuti:</p>
+            <p>Silakan pilih salah satu ujian di bawah ini:</p>
             
-            <div class="button-grid" id="button-grid">
-                <!-- Buttons will be populated by JavaScript -->
+            <div class="button-grid" id="exam-buttons">
+                <!-- Exam buttons will be populated by JavaScript -->
             </div>
             
-            <div class="admin-info" style="margin-top: 30px;">
+            <!-- Admin Information -->
+            <div class="form-group" id="admin-info" style="margin-top: 30px;">
                 <p>Informasi berkala dari admin:</p>
                 <div style="padding: 15px; background: rgba(0, 0, 0, 0.1); border-radius: 8px;">
                     <p id="admin-message">Tidak ada informasi terbaru saat ini.</p>
@@ -584,28 +698,45 @@
                     
                     <div class="admin-section">
                         <h5>Manajemen Tombol Ujian</h5>
-                        <div class="button-link-editor">
-                            <div class="form-group">
-                                <label class="form-label">Teks Tombol Baru</label>
-                                <input type="text" id="new-button-text" class="form-control" placeholder="Contoh: Ujian Matematika" style="color: #333;">
+                        
+                        <div class="form-group">
+                            <label class="form-label">Tambah Tombol Ujian Baru</label>
+                            <div class="admin-controls">
+                                <div class="admin-control-group">
+                                    <label class="admin-control-label">Nama Ujian</label>
+                                    <input type="text" id="new-button-name" class="admin-control-input" placeholder="Contoh: Ujian Matematika">
+                                </div>
+                                <div class="admin-control-group">
+                                    <label class="admin-control-label">URL Tujuan</label>
+                                    <input type="text" id="new-button-url" class="admin-control-input" placeholder="Contoh: https://pergunu.github.io/ujian-online-matematika/">
+                                </div>
+                                <div class="admin-control-group">
+                                    <label class="admin-control-label">Ikon (Font Awesome)</label>
+                                    <input type="text" id="new-button-icon" class="admin-control-input" placeholder="Contoh: fa-calculator">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">URL Tujuan</label>
-                                <input type="url" id="new-button-url" class="form-control" placeholder="Contoh: https://pergunu.github.io/ujian-online-matematika/" style="color: #333;">
-                            </div>
-                            <button id="add-button-link" class="btn btn-info">Tambah Tombol</button>
+                            <button id="add-new-button" class="btn btn-info">Tambah Tombol</button>
                         </div>
-                        <div class="button-link-list">
+                        
+                        <div class="search-box">
+                            <input type="text" id="button-search" class="search-input" placeholder="Cari tombol berdasarkan nama...">
+                        </div>
+                        
+                        <div class="button-list">
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th>Teks Tombol</th>
+                                        <th width="30px">
+                                            <!-- Select all checkbox -->
+                                        </th>
+                                        <th>Nama Ujian</th>
                                         <th>URL Tujuan</th>
+                                        <th>Ikon</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody id="button-links-table-body">
-                                    <!-- Button links will be loaded here -->
+                                <tbody id="buttons-table-body">
+                                    <!-- Button data will be loaded here -->
                                 </tbody>
                             </table>
                         </div>
@@ -614,7 +745,7 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Audio Elements -->
     <audio id="button-sound" src="https://github.com/pergunu/pergunusmart/raw/main/assets/audio/audiotombol.mp3" preload="auto"></audio>
     <audio id="opening-sound" src="https://github.com/pergunu/ujian-online/raw/main/assets/audio/opening.mp3" preload="auto"></audio>
@@ -623,33 +754,71 @@
     <script>
         // Global variables
         let currentScreen = 'welcome';
+        let selectedButtons = [];
+        
+        // Audio elements
+        const buttonSound = document.getElementById('button-sound');
+        const openingSound = document.getElementById('opening-sound');
         
         // Default codes (should be changed in production)
         const DEFAULT_LOGIN_CODE = '12345';
         const DEFAULT_ADMIN_PANEL_CODE = '65614222';
         
-        // Store admin settings
+        // Store admin settings and buttons
         let adminSettings = JSON.parse(localStorage.getItem('adminSettings')) || {
             loginCode: DEFAULT_LOGIN_CODE,
             adminCode: DEFAULT_ADMIN_PANEL_CODE,
             greetingMessage: "Selamat datang di portal ujian online PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.",
-            adminMessage: "Tidak ada informasi terbaru saat ini.",
-            buttonLinks: [
-                { text: "Ujian Matematika", url: "https://pergunu.github.io/ujian-online-matematika/" },
-                { text: "Ujian IPA", url: "https://pergunu.github.io/ujian-online-ipa/" },
-                { text: "Ujian IPS", url: "https://pergunu.github.io/ujian-online-ips/" },
-                { text: "Ujian Agama", url: "https://pergunu.github.io/ujian-online-agama/" },
-                { text: "Ujian Sejarah", url: "https://pergunu.github.io/ujian-online-sejarah/" },
-                { text: "Ujian PPKN", url: "https://pergunu.github.io/ujian-online-ppkn/" },
-                { text: "Ujian Bahasa Indonesia", url: "https://pergunu.github.io/ujian-online-bahasa-indonesia/" },
-                { text: "Ujian Bahasa Inggris", url: "https://pergunu.github.io/ujian-online-bahasa-inggris/" },
-                { text: "Ujian CPNS & Umum", url: "https://pergunu.github.io/pergunusmart/" }
-            ]
+            adminMessage: "Tidak ada informasi terbaru saat ini."
         };
 
-        // Audio elements
-        const buttonSound = document.getElementById('button-sound');
-        const openingSound = document.getElementById('opening-sound');
+        let examButtons = JSON.parse(localStorage.getItem('examButtons')) || [
+            {
+                name: "Ujian Matematika",
+                url: "https://pergunu.github.io/ujian-online-matematika/",
+                icon: "fa-calculator"
+            },
+            {
+                name: "Ujian IPA",
+                url: "https://pergunu.github.io/ujian-online-ipa/",
+                icon: "fa-flask"
+            },
+            {
+                name: "Ujian IPS",
+                url: "https://pergunu.github.io/ujian-online-ips/",
+                icon: "fa-globe-asia"
+            },
+            {
+                name: "Ujian Agama",
+                url: "https://pergunu.github.io/ujian-online-agama/",
+                icon: "fa-mosque"
+            },
+            {
+                name: "Ujian Sejarah",
+                url: "https://pergunu.github.io/ujian-online-sejarah/",
+                icon: "fa-landmark"
+            },
+            {
+                name: "Ujian PPKN",
+                url: "https://pergunu.github.io/ujian-online-ppkn/",
+                icon: "fa-flag"
+            },
+            {
+                name: "Ujian Bahasa Indonesia",
+                url: "https://pergunu.github.io/ujian-online-bahasa-indonesia/",
+                icon: "fa-book"
+            },
+            {
+                name: "Ujian Bahasa Inggris",
+                url: "https://pergunu.github.io/ujian-online-bahasa-inggris/",
+                icon: "fa-language"
+            },
+            {
+                name: "Ujian CPNS & Umum",
+                url: "https://pergunu.github.io/pergunusmart/",
+                icon: "fa-user-tie"
+            }
+        ];
 
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
@@ -767,6 +936,9 @@
             document.getElementById('greeting-text').textContent = adminSettings.greetingMessage;
             document.getElementById('admin-message').textContent = adminSettings.adminMessage;
             
+            // Load exam buttons
+            loadExamButtons();
+            
             // Event listeners for buttons with sound
             document.querySelectorAll('button').forEach(button => {
                 button.addEventListener('click', function() {
@@ -794,21 +966,10 @@
             // Admin panel buttons
             document.getElementById('save-codes-btn').addEventListener('click', saveCodes);
             document.getElementById('save-content-btn').addEventListener('click', saveContent);
-            document.getElementById('add-button-link').addEventListener('click', addButtonLink);
+            document.getElementById('add-new-button').addEventListener('click', addNewButton);
             
-            // Allow login with Enter key
-            document.getElementById('login-code').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    handleLogin();
-                }
-            });
-            
-            // Allow admin panel login with Enter key
-            document.getElementById('admin-panel-code').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    submitAdminPanelCode();
-                }
-            });
+            // Search functionality
+            document.getElementById('button-search').addEventListener('input', searchButtons);
         });
         
         // Functions
@@ -818,13 +979,14 @@
             
             // Load admin message
             document.getElementById('admin-message-input').value = adminSettings.adminMessage;
-            
-            // Load button links
-            loadButtonLinks();
         }
         
         function saveAdminSettings() {
             localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
+        }
+        
+        function saveExamButtons() {
+            localStorage.setItem('examButtons', JSON.stringify(examButtons));
         }
         
         function handleLogin() {
@@ -837,178 +999,42 @@
                 // Hide welcome screen with slide out animation
                 document.getElementById('welcome-screen').classList.add('slide-out');
                 
-                // Show portal screen after animation completes
+                // Show main menu after animation completes
                 setTimeout(() => {
                     document.getElementById('welcome-screen').style.display = 'none';
-                    document.getElementById('portal-screen').style.display = 'block';
-                    document.getElementById('portal-screen').classList.add('slide-in');
-                    currentScreen = 'portal';
-                    
-                    // Load button links
-                    loadPortalButtons();
+                    document.getElementById('main-menu').style.display = 'block';
+                    document.getElementById('main-menu').classList.add('slide-in');
+                    currentScreen = 'main-menu';
                 }, 500);
             } else {
                 alert('Kode login salah. Silakan coba lagi.');
-                document.getElementById('login-code').focus();
             }
         }
         
-        function loadPortalButtons() {
-            const buttonGrid = document.getElementById('button-grid');
-            buttonGrid.innerHTML = '';
+        function loadExamButtons() {
+            const buttonsContainer = document.getElementById('exam-buttons');
+            buttonsContainer.innerHTML = '';
             
-            adminSettings.buttonLinks.forEach(button => {
-                const buttonElement = document.createElement('a');
-                buttonElement.className = 'portal-btn';
-                buttonElement.textContent = button.text;
-                buttonElement.href = button.url;
-                buttonElement.target = '_blank';
-                buttonGrid.appendChild(buttonElement);
-            });
-        }
-        
-        function loadButtonLinks() {
-            const tableBody = document.getElementById('button-links-table-body');
-            tableBody.innerHTML = '';
-            
-            if (adminSettings.buttonLinks.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="3" style="text-align: center;">Belum ada tombol ujian</td></tr>';
+            if (examButtons.length === 0) {
+                buttonsContainer.innerHTML = '<p>Tidak ada ujian yang tersedia saat ini.</p>';
                 return;
             }
             
-            adminSettings.buttonLinks.forEach((button, index) => {
-                const row = document.createElement('tr');
-                row.dataset.index = index;
-                row.innerHTML = `
-                    <td>${button.text}</td>
-                    <td>${button.url}</td>
-                    <td>
-                        <div class="button-link-actions">
-                            <button class="btn btn-warning btn-sm edit-button-link" data-index="${index}">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm delete-button-link" data-index="${index}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
+            examButtons.forEach((button, index) => {
+                const buttonElement = document.createElement('div');
+                buttonElement.className = 'exam-button';
+                buttonElement.innerHTML = `
+                    <i class="fas ${button.icon}"></i>
+                    <h3>${button.name}</h3>
+                    <p>Klik untuk mengikuti ujian</p>
                 `;
                 
-                tableBody.appendChild(row);
-            });
-            
-            // Add event listeners to edit and delete buttons
-            document.querySelectorAll('.edit-button-link').forEach(button => {
-                button.addEventListener('click', function() {
-                    const index = parseInt(this.dataset.index);
-                    editButtonLink(index);
+                buttonElement.addEventListener('click', function() {
+                    window.open(button.url, '_blank');
                 });
+                
+                buttonsContainer.appendChild(buttonElement);
             });
-            
-            document.querySelectorAll('.delete-button-link').forEach(button => {
-                button.addEventListener('click', function() {
-                    const index = parseInt(this.dataset.index);
-                    deleteButtonLink(index);
-                });
-            });
-        }
-        
-        function addButtonLink() {
-            const text = document.getElementById('new-button-text').value.trim();
-            const url = document.getElementById('new-button-url').value.trim();
-            
-            if (!text || !url) {
-                alert('Silakan isi teks tombol dan URL tujuan');
-                return;
-            }
-            
-            // Validate URL format
-            try {
-                new URL(url);
-            } catch (e) {
-                alert('URL tidak valid. Pastikan URL dimulai dengan http:// atau https://');
-                return;
-            }
-            
-            // Add new button link
-            adminSettings.buttonLinks.push({ text, url });
-            
-            // Save to localStorage
-            saveAdminSettings();
-            
-            // Clear input fields
-            document.getElementById('new-button-text').value = '';
-            document.getElementById('new-button-url').value = '';
-            
-            // Reload button links
-            loadButtonLinks();
-            
-            // If portal is active, reload portal buttons
-            if (currentScreen === 'portal') {
-                loadPortalButtons();
-            }
-            
-            showNotification('Tombol ujian berhasil ditambahkan!');
-        }
-        
-        function editButtonLink(index) {
-            const button = adminSettings.buttonLinks[index];
-            if (!button) return;
-            
-            const newText = prompt('Edit teks tombol:', button.text);
-            if (newText === null) return;
-            
-            const newUrl = prompt('Edit URL tujuan:', button.url);
-            if (newUrl === null) return;
-            
-            // Validate URL format
-            try {
-                new URL(newUrl);
-            } catch (e) {
-                alert('URL tidak valid. Pastikan URL dimulai dengan http:// atau https://');
-                return;
-            }
-            
-            // Update button link
-            adminSettings.buttonLinks[index] = {
-                text: newText.trim(),
-                url: newUrl.trim()
-            };
-            
-            // Save to localStorage
-            saveAdminSettings();
-            
-            // Reload button links
-            loadButtonLinks();
-            
-            // If portal is active, reload portal buttons
-            if (currentScreen === 'portal') {
-                loadPortalButtons();
-            }
-            
-            showNotification('Tombol ujian berhasil diubah!');
-        }
-        
-        function deleteButtonLink(index) {
-            if (!confirm('Apakah Anda yakin ingin menghapus tombol ini?')) {
-                return;
-            }
-            
-            // Remove button link
-            adminSettings.buttonLinks.splice(index, 1);
-            
-            // Save to localStorage
-            saveAdminSettings();
-            
-            // Reload button links
-            loadButtonLinks();
-            
-            // If portal is active, reload portal buttons
-            if (currentScreen === 'portal') {
-                loadPortalButtons();
-            }
-            
-            showNotification('Tombol ujian berhasil dihapus!');
         }
         
         function contactAdmin() {
@@ -1018,15 +1044,10 @@
         
         function showAdminPanelModal() {
             document.getElementById('admin-panel-modal').style.display = 'flex';
-            document.getElementById('admin-panel-code').focus();
         }
         
         function hideAdminPanelModal() {
             document.getElementById('admin-panel-modal').style.display = 'none';
-            // Reset admin panel content visibility
-            document.getElementById('admin-panel-content').style.display = 'none';
-            // Clear admin code input
-            document.getElementById('admin-panel-code').value = '';
         }
         
         function submitAdminPanelCode() {
@@ -1035,11 +1056,158 @@
             if (code === adminSettings.adminCode) {
                 // Show admin panel content
                 document.getElementById('admin-panel-content').style.display = 'block';
-                showNotification('Berhasil masuk sebagai admin!');
+                loadButtonsData();
             } else {
                 alert('Kode admin salah. Silakan coba lagi.');
-                document.getElementById('admin-panel-code').focus();
             }
+        }
+
+        function loadButtonsData() {
+            const tableBody = document.getElementById('buttons-table-body');
+            tableBody.innerHTML = '';
+            
+            if (examButtons.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Belum ada tombol ujian</td></tr>';
+                return;
+            }
+            
+            examButtons.forEach((button, index) => {
+                const row = document.createElement('tr');
+                row.dataset.index = index;
+                row.innerHTML = `
+                    <td>
+                        <input type="checkbox" class="select-checkbox" data-index="${index}" onchange="toggleButtonSelection(${index})">
+                    </td>
+                    <td>${button.name}</td>
+                    <td>${button.url}</td>
+                    <td><i class="fas ${button.icon}"></i> ${button.icon}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="editButton(${index})">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteButton(${index})">Hapus</button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            
+            // Reset selected buttons
+            selectedButtons = [];
+        }
+        
+        function toggleButtonSelection(index) {
+            const checkbox = document.querySelector(`.select-checkbox[data-index="${index}"]`);
+            if (checkbox.checked) {
+                if (!selectedButtons.includes(index)) {
+                    selectedButtons.push(index);
+                }
+            } else {
+                selectedButtons = selectedButtons.filter(i => i !== index);
+            }
+        }
+        
+        function addNewButton() {
+            const name = document.getElementById('new-button-name').value.trim();
+            const url = document.getElementById('new-button-url').value.trim();
+            const icon = document.getElementById('new-button-icon').value.trim();
+            
+            if (!name || !url) {
+                alert('Nama ujian dan URL tujuan harus diisi!');
+                return;
+            }
+            
+            // Validate URL format
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                alert('URL harus dimulai dengan http:// atau https://');
+                return;
+            }
+            
+            // Add new button
+            examButtons.push({
+                name: name,
+                url: url,
+                icon: icon || 'fa-link'
+            });
+            
+            // Save to localStorage
+            saveExamButtons();
+            
+            // Reload buttons data
+            loadButtonsData();
+            loadExamButtons();
+            
+            // Clear form
+            document.getElementById('new-button-name').value = '';
+            document.getElementById('new-button-url').value = '';
+            document.getElementById('new-button-icon').value = '';
+            
+            alert('Tombol ujian baru berhasil ditambahkan!');
+        }
+        
+        function editButton(index) {
+            const button = examButtons[index];
+            
+            const newName = prompt("Edit Nama Ujian:", button.name);
+            if (newName === null) return;
+            
+            const newUrl = prompt("Edit URL Tujuan:", button.url);
+            if (newUrl === null) return;
+            
+            // Validate URL format
+            if (newUrl && !newUrl.startsWith('http://') && !newUrl.startsWith('https://')) {
+                alert('URL harus dimulai dengan http:// atau https://');
+                return;
+            }
+            
+            const newIcon = prompt("Edit Ikon (Font Awesome):", button.icon);
+            
+            // Update button data
+            button.name = newName.trim();
+            button.url = newUrl.trim();
+            button.icon = newIcon ? newIcon.trim() : button.icon;
+            
+            // Save to localStorage
+            saveExamButtons();
+            
+            // Reload buttons data
+            loadButtonsData();
+            loadExamButtons();
+            
+            alert('Tombol ujian berhasil diperbarui!');
+        }
+        
+        function deleteButton(index) {
+            if (!confirm('Apakah Anda yakin ingin menghapus tombol ujian ini?')) {
+                return;
+            }
+            
+            // Delete button
+            examButtons.splice(index, 1);
+            
+            // Save to localStorage
+            saveExamButtons();
+            
+            // Reload buttons data
+            loadButtonsData();
+            loadExamButtons();
+            
+            alert('Tombol ujian berhasil dihapus!');
+        }
+        
+        function searchButtons() {
+            const searchTerm = document.getElementById('button-search').value.toLowerCase();
+            const rows = document.querySelectorAll('#buttons-table-body tr');
+            
+            rows.forEach(row => {
+                const index = parseInt(row.dataset.index);
+                const button = examButtons[index];
+                const rowText = button.name.toLowerCase() + ' ' + button.url.toLowerCase();
+                
+                if (rowText.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         }
         
         function saveCodes() {
@@ -1059,7 +1227,7 @@
             // Save to localStorage
             saveAdminSettings();
             
-            showNotification('Kode berhasil diubah!');
+            alert('Kode berhasil diubah!');
         }
         
         function saveContent() {
@@ -1077,19 +1245,7 @@
             // Save to localStorage
             saveAdminSettings();
             
-            showNotification('Perubahan konten berhasil disimpan!');
-        }
-        
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            // Remove notification after 3 seconds
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
+            alert('Perubahan konten berhasil disimpan!');
         }
     </script>
 </body>
